@@ -16,7 +16,6 @@ public class PlayerEntity : NetworkBehaviour
     public void Move()
     {
         // Erikseen Run?
-        Data.PlayerData.
     }
 
     public void Aim()
