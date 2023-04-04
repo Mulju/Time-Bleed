@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerProfile : MonoBehaviour
+namespace Data
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerProfile
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public string displayName;
+        public Loadout loadout;
     }
 }

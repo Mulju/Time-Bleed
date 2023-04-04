@@ -1,18 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.Networking.PlayerConnection;
 
-public class PlayerData : MonoBehaviour
+namespace Data
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerData
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public PlayerConnection connection;
+        public PlayerProfile profile;
+        public int walkSpeed, runSpeed, jumpForce, maxHealth;
     }
 }

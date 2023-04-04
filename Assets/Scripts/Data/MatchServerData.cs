@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MatchServerData : MonoBehaviour
+namespace Data
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MatchServerData
     {
-        
-    }
+        public enum MatchState
+        {
+            NONE,
+            WAITING_FOR_PLAYERS,
+            IN_PROGRESS,
+            RESTARTING,
+            FINISHED
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public MatchState state = MatchState.NONE;
+        public Dictionary<int, PlayerData> players = new Dictionary<int, PlayerData>();
     }
 }

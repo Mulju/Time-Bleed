@@ -1,18 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking.PlayerConnection;
 
-public class ConnectionManager : MonoBehaviour
+namespace Logic
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ConnectionManager
     {
-        
-    }
+        public event Action<int, PlayerConnection> PlayerJoined;
+        public event Action<int> PlayerLeft;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void OnPlayerConnected(Data.PlayerProfile profile)
+        {
+
+        }
+
+        public void OnPlayerLeft()
+        {
+
+        }
     }
 }

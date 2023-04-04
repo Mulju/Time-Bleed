@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+namespace Data
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Weapon
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public int id, damage, clipSize, reloadTime;
     }
 }

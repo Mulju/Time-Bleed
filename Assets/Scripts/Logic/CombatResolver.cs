@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatResolver : MonoBehaviour
+namespace Logic
 {
-    // Start is called before the first frame update
-    void Start()
+    public class CombatResolver
     {
-        
-    }
+        public Data.WeaponLibrary data;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void ResolveShot(int connectionID)
+        {
+
+        }
     }
 }
