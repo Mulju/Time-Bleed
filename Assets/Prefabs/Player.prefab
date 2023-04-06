@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2036797969853407666}
   - component: {fileID: 9099728965979668064}
   - component: {fileID: 8279258441362849588}
+  - component: {fileID: 2398481856868434712}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -166,6 +167,9 @@ MonoBehaviour:
   ammoSpawn: {fileID: 2472639725123539552}
   ammoPrefab: {fileID: 5890851403942761072, guid: 2ef6ebce66a47a540b8397bdaa991d8f,
     type: 3}
+  timeSlow: 0
+  maxAmmo: 0
+  ammoLeft: 0
   walkingSpeed: 7.5
   runningSpeed: 11.5
   jumpSpeed: 8
@@ -174,6 +178,20 @@ MonoBehaviour:
   lookXLimit: 45
   canMove: 1
   cameraYOffset: 0.4
+--- !u!136 &2398481856868434712
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823353294823369346}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25660193
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0.002826929, y: 0, z: -0.0017108321}
 --- !u!1 &2472639725123539552
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +400,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 3542491589387581788}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1

@@ -13,6 +13,8 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject ammoPrefab;
 
     public float timeSlow;
+    public float shootSpeed;
+    public float reloadTime;
 
     public int maxAmmo, ammoLeft;
 
@@ -55,8 +57,9 @@ public class PlayerEntity : NetworkBehaviour
     {
         maxAmmo = 30;
         ammoLeft = maxAmmo;
-
-        timeSlow = 1f;
+        shootSpeed = 1;
+        reloadTime = 1;
+        timeSlow = 1;
 
         characterController = GetComponent<CharacterController>();
 
@@ -66,11 +69,15 @@ public class PlayerEntity : NetworkBehaviour
 
     void Update()
     {
+        shootSpeed += Time.deltaTime;
+        reloadTime += Time.deltaTime;
+
         Move();
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && ammoLeft > 0)
+        if (Input.GetKey(KeyCode.Mouse0) && ammoLeft > 0 && shootSpeed >= 0.1f && reloadTime >= 1)
         {
             ShootServer(gameObject);
+            shootSpeed = 0;
         }
 
         if(Input.GetKeyDown(KeyCode.R))
@@ -127,20 +134,25 @@ public class PlayerEntity : NetworkBehaviour
     public void Reload()
     {
         ammoLeft = maxAmmo;
+        reloadTime = 0;
     }
 
     [ServerRpc]
     public void ShootServer(GameObject shooter)
     {
-        Vector3 direction;
+        Vector3 direction = shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.forward;
 
-        if (Physics.Raycast(shooter.GetComponent<PlayerEntity>().playerCamera.transform.position, shooter.GetComponent<PlayerEntity>().playerCamera.transform.forward, out RaycastHit hit, Mathf.Infinity))
+        RaycastHit[] allHits;
+
+        allHits = Physics.RaycastAll(shooter.GetComponent<PlayerEntity>().playerCamera.transform.position, shooter.GetComponent<PlayerEntity>().playerCamera.transform.forward, Mathf.Infinity);
+        
+        foreach (RaycastHit hit in allHits)
         {
-            direction = hit.point - shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position;
-        }
-        else
-        {
-            direction = shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.forward;
+            if (!hit.collider.CompareTag("TimeSphere"))
+            {
+                direction = hit.point - shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position;
+                break;
+            }
         }
 
         direction = direction.normalized;
@@ -154,10 +166,26 @@ public class PlayerEntity : NetworkBehaviour
     public void Shoot(GameObject shooter, Vector3 direction)
     {
         GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
-        ammoInstance.GetComponent<Rigidbody>().velocity = direction * 15;
-        Destroy(ammoInstance, 2);
+        //ammoInstance.GetComponent<Rigidbody>().velocity = direction * 50;
+        ammoInstance.GetComponent<AmmoController>().direction = direction;
+        Destroy(ammoInstance, 120);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("TimeSphere"))
+        {
+            timeSlow = 0.25f;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("TimeSphere"))
+        {
+            timeSlow = 1f;
+        }
+    }
 
     public void Aim()
     {
