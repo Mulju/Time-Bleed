@@ -46,12 +46,14 @@ public class AmmoController : MonoBehaviour
         {
             rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
         }
+
+        speed = timeNotSlowed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void CheckForTimeSpheres()
@@ -73,13 +75,17 @@ public class AmmoController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(!other.CompareTag("Ammo") && !other.CompareTag("TimeSphere"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
         if (other.CompareTag("TimeSphere"))
         {
             speed = timeSlowed;
-        }
-        else if(!other.CompareTag("Ammo"))
-        {
-            Destroy(this.gameObject);
         }
 
         sphere = false;
@@ -90,6 +96,9 @@ public class AmmoController : MonoBehaviour
         if (other.CompareTag("TimeSphere"))
         {
             speed = timeNotSlowed;
+
+            // BUGIBUGIBUGI tätä ei ajeta kun pelaajan timesphere deaktivoidaan
+            // Ammukset ei pysähdy seuraavan time spheren reunalle oikein.
             CheckForTimeSpheres();
         }
     }

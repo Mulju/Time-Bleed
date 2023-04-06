@@ -72,12 +72,17 @@ public class PlayerEntity : NetworkBehaviour
         Cursor.visible = false;
     }
 
+    private void FixedUpdate()
+    {
+        timeSlow = 1;
+    }
+
     void Update()
     {
         shootSpeed += Time.deltaTime;
         reloadTime += Time.deltaTime;
 
-        if (reloadTime >= 1.1f)
+        if (reloadTime >= 1)
         {
             reloading = false;
         }
@@ -192,7 +197,15 @@ public class PlayerEntity : NetworkBehaviour
         Destroy(ammoInstance, 120);
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("TimeSphere"))
+    //    {
+    //        timeSlow = 0.25f;
+    //    }
+    //}
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("TimeSphere"))
         {
@@ -202,10 +215,7 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("TimeSphere"))
-        {
-            timeSlow = 1f;
-        }
+
     }
 
     public void Aim()
