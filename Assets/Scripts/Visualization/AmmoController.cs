@@ -7,7 +7,7 @@ public class AmmoController : MonoBehaviour
     public Rigidbody rb;
 
     public float timeSlowed;
-    public float timenNotSlowed;
+    public float timeNotSlowed;
 
     private float speed;
 
@@ -22,8 +22,8 @@ public class AmmoController : MonoBehaviour
     void Start()
     {
         timeSlowed = 0.15f;
-        timenNotSlowed = 100f;
-        speed = timenNotSlowed;
+        timeNotSlowed = 100f;
+        speed = timeNotSlowed;
 
         CheckForTimeSpheres();
     }
@@ -89,7 +89,7 @@ public class AmmoController : MonoBehaviour
     {
         if (other.CompareTag("TimeSphere"))
         {
-            speed = timenNotSlowed;
+            speed = timeNotSlowed;
             CheckForTimeSpheres();
         }
     }

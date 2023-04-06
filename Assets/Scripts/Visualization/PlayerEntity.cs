@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class PlayerEntity : NetworkBehaviour
 {
-    public int connectionID;
-    public Logic.CombatResolver resolver;
-
     public GameObject gunRotator;
     public GameObject ammoSpawn;
     public GameObject ammoPrefab;
+    public GameObject timeField;
 
     public float timeSlow;
     public float shootSpeed;
     public float reloadTime;
 
     public int maxAmmo, ammoLeft;
+
+    private bool reloading;
 
     [Header("Base setup")]
     public float walkingSpeed = 7.5f;
@@ -59,7 +59,12 @@ public class PlayerEntity : NetworkBehaviour
         ammoLeft = maxAmmo;
         shootSpeed = 1;
         reloadTime = 1;
+
+        reloading = false;
+
         timeSlow = 1;
+
+        timeField.SetActive(false);
 
         characterController = GetComponent<CharacterController>();
 
@@ -72,6 +77,22 @@ public class PlayerEntity : NetworkBehaviour
         shootSpeed += Time.deltaTime;
         reloadTime += Time.deltaTime;
 
+        if (reloadTime >= 1.1f)
+        {
+            reloading = false;
+        }
+
+
+        if(!Input.anyKey)
+        {
+            timeField.SetActive(true);
+
+        }
+        else
+        {
+            timeField.SetActive(false);
+        }
+
         Move();
 
         if (Input.GetKey(KeyCode.Mouse0) && ammoLeft > 0 && shootSpeed >= 0.1f && reloadTime >= 1)
@@ -80,8 +101,9 @@ public class PlayerEntity : NetworkBehaviour
             shootSpeed = 0;
         }
 
-        if(Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(KeyCode.R) && !reloading && ammoLeft != maxAmmo)
         {
+            reloading = true;
             Reload();
         }
     }
@@ -166,7 +188,6 @@ public class PlayerEntity : NetworkBehaviour
     public void Shoot(GameObject shooter, Vector3 direction)
     {
         GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
-        //ammoInstance.GetComponent<Rigidbody>().velocity = direction * 50;
         ammoInstance.GetComponent<AmmoController>().direction = direction;
         Destroy(ammoInstance, 120);
     }

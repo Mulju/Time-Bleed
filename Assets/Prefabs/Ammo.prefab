@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 968226405467186918}
   - component: {fileID: 3565118902085526776}
   - component: {fileID: 4566269594910552448}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Ammo
   m_TagString: Ammo
   m_Icon: {fileID: 0}
@@ -128,4 +128,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3565118902085526776}
+  timeSlowed: 0
+  timenNotSlowed: 0
   direction: {x: 0, y: 0, z: 0}
