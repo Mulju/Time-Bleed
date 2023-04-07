@@ -14,6 +14,7 @@ public class AmmoController : MonoBehaviour
 
     private Vector3 timeSphere;
     public Vector3 direction;
+    public GameObject shooter;
 
     private bool sphere;
 
@@ -26,7 +27,6 @@ public class AmmoController : MonoBehaviour
 
         CheckForTimeSpheres();
     }
-
 
     private void FixedUpdate()
     {
@@ -76,7 +76,7 @@ public class AmmoController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerEntity player = other.GetComponent<PlayerEntity>();
-            player.Hit(other.gameObject, this.gameObject);
+            player.Hit(other.gameObject, this.gameObject, shooter);
         }
         else if (!other.CompareTag("Ammo") && !other.CompareTag("TimeSphere"))
         {

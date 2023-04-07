@@ -24,7 +24,7 @@ public class PlayerEntity : NetworkBehaviour
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     public float lookSpeed = 2.0f;
-    public float lookXLimit = 45.0f;
+    public float lookXLimit = 90f;
 
     CharacterController characterController;
     Vector3 moveDirection = Vector3.zero;
@@ -37,7 +37,6 @@ public class PlayerEntity : NetworkBehaviour
     private float cameraYOffset = 0.4f;
     private Camera playerCamera;
     PlayerManager playerManager;
-
 
     public override void OnStartClient()
     {
@@ -61,12 +60,13 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    public void Hit(GameObject player, GameObject bullet)
+    public void Hit(GameObject player, GameObject bullet, GameObject shooter)
     {
         if (!base.IsOwner)
             return;
         Debug.Log("Player ID: " + player.GetInstanceID());
-        PlayerManager.instance.DamagePlayer(player.GetInstanceID(), 50);
+        Debug.Log("Shooter ID: " + shooter.GetInstanceID());
+        PlayerManager.instance.DamagePlayer(player.GetInstanceID(), 50, shooter.GetInstanceID());
         Destroy(bullet);
     }
 
@@ -212,6 +212,7 @@ public class PlayerEntity : NetworkBehaviour
     {
         GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
         ammoInstance.GetComponent<AmmoController>().direction = direction;
+        ammoInstance.GetComponent<AmmoController>().shooter = shooter;
         Destroy(ammoInstance, 120);
     }
 

@@ -12,14 +12,14 @@ public class Clock : MonoBehaviour
     [SerializeField] private TextMeshPro secondText, minuteText;
 
     public float remainingSeconds = 60, remainingMinutes = 9;
-    
+
     void Update()
     {
         rotation += 6 * Time.deltaTime + 30 * hitChronades * Time.deltaTime;
 
         // Need to round up or down to display it nicely
         remainingSeconds = 60 - rotation / 6;
-        if(remainingSeconds < 0)
+        if (remainingSeconds < 0)
         {
             rotation = 0;
             remainingMinutes--;
@@ -34,14 +34,14 @@ public class Clock : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("ChronoGrenade"))
+        if (collision.gameObject.CompareTag("ChronoGrenade"))
         {
             hitChronades++;
             StartCoroutine(GrenadeTimer());
 
             // Destroy the grenade
             Destroy(collision.gameObject);
-            
+
             // Should play some kind of animation here
         }
     }
@@ -50,7 +50,7 @@ public class Clock : MonoBehaviour
     {
         float remainingTime = 1;
 
-        while(remainingTime > 0)
+        while (remainingTime > 0)
         {
             remainingTime -= Time.deltaTime;
             yield return null;
