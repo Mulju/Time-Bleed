@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2398481856868434712}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 0
+  <PrefabId>k__BackingField: 2
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -163,7 +163,6 @@ MonoBehaviour:
   _componentIndexCache: 1
   _addedNetworkObject: {fileID: 8492805507051383199}
   _networkObjectCache: {fileID: 8492805507051383199}
-  connectionID: 0
   gunRotator: {fileID: 7420047900754856243}
   ammoSpawn: {fileID: 2472639725123539552}
   ammoPrefab: {fileID: 5890851403942761072, guid: 2ef6ebce66a47a540b8397bdaa991d8f,

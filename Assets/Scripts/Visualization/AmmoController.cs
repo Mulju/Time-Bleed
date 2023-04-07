@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
 public class AmmoController : MonoBehaviour
 {
@@ -15,8 +16,6 @@ public class AmmoController : MonoBehaviour
     public Vector3 direction;
 
     private bool sphere;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -51,14 +50,14 @@ public class AmmoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void CheckForTimeSpheres()
     {
-        if(Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
         {
-            if(hit.collider.CompareTag("TimeSphere"))
+            if (hit.collider.CompareTag("TimeSphere"))
             {
                 timeSphere = hit.point;
                 sphere = true;
@@ -70,14 +69,18 @@ public class AmmoController : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("TimeSphere"))
+        if (other.CompareTag("Player"))
+        {
+            PlayerEntity player = other.GetComponent<PlayerEntity>();
+            player.Hit(other.gameObject, this.gameObject);
+        }
+        else if (other.CompareTag("TimeSphere"))
         {
             speed = timeSlowed;
         }
-        else if(!other.CompareTag("Ammo"))
+        else if (!other.CompareTag("Ammo"))
         {
             Destroy(this.gameObject);
         }

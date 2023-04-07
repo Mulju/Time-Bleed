@@ -36,6 +36,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField]
     private float cameraYOffset = 0.4f;
     private Camera playerCamera;
+    PlayerManager playerManager;
 
 
     public override void OnStartClient()
@@ -43,6 +44,13 @@ public class PlayerEntity : NetworkBehaviour
         base.OnStartClient();
         if (base.IsOwner)
         {
+            playerManager = PlayerManager.instance;
+            Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
+            int id = gameObject.GetInstanceID();
+            Debug.Log("Player ID: " + id);
+
+            playerManager.players.Add(id, player);
+
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
@@ -51,6 +59,15 @@ public class PlayerEntity : NetworkBehaviour
         {
             gameObject.GetComponent<PlayerEntity>().enabled = false;
         }
+    }
+
+    public void Hit(GameObject player, GameObject bullet)
+    {
+        if (!base.IsOwner)
+            return;
+        Debug.Log("Player ID: " + player.GetInstanceID());
+        PlayerManager.instance.DamagePlayer(player.GetInstanceID(), 50);
+        Destroy(bullet);
     }
 
     void Start()
@@ -83,7 +100,7 @@ public class PlayerEntity : NetworkBehaviour
         }
 
 
-        if(!Input.anyKey)
+        if (!Input.anyKey)
         {
             timeField.SetActive(true);
 
@@ -93,6 +110,7 @@ public class PlayerEntity : NetworkBehaviour
             timeField.SetActive(false);
         }
 
+        Physics.SyncTransforms();
         Move();
 
         if (Input.GetKey(KeyCode.Mouse0) && ammoLeft > 0 && shootSpeed >= 0.1f && reloadTime >= 1)
@@ -101,7 +119,7 @@ public class PlayerEntity : NetworkBehaviour
             shootSpeed = 0;
         }
 
-        if(Input.GetKeyDown(KeyCode.R) && !reloading && ammoLeft != maxAmmo)
+        if (Input.GetKeyDown(KeyCode.R) && !reloading && ammoLeft != maxAmmo)
         {
             reloading = true;
             Reload();
@@ -167,7 +185,7 @@ public class PlayerEntity : NetworkBehaviour
         RaycastHit[] allHits;
 
         allHits = Physics.RaycastAll(shooter.GetComponent<PlayerEntity>().playerCamera.transform.position, shooter.GetComponent<PlayerEntity>().playerCamera.transform.forward, Mathf.Infinity);
-        
+
         foreach (RaycastHit hit in allHits)
         {
             if (!hit.collider.CompareTag("TimeSphere"))
@@ -183,7 +201,7 @@ public class PlayerEntity : NetworkBehaviour
 
         shooter.GetComponent<PlayerEntity>().ammoLeft -= 1;
     }
-     
+
     [ObserversRpc]
     public void Shoot(GameObject shooter, Vector3 direction)
     {
