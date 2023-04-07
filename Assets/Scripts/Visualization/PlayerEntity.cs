@@ -128,14 +128,14 @@ public class PlayerEntity : NetworkBehaviour
             ThrowGrenadeServer();
         }
 
-        if (!Input.GetKeyDown(KeyCode.Mouse0) && !isMoving)
+        if (!Input.GetKeyDown(KeyCode.Mouse0) && !isMoving && timeField.activeSelf == false)
         {
-            timeField.SetActive(true);
+            TimeFieldServerActivate(this.gameObject);
 
         }
-        else
+        else if (timeField.activeSelf == true)
         {
-            timeField.SetActive(false);
+            TimeFieldServerDeactivate(this.gameObject);
         }
     }
 
@@ -194,6 +194,31 @@ public class PlayerEntity : NetworkBehaviour
         ammoLeft = maxAmmo;
         reloadTime = 0;
     }
+
+    [ServerRpc]
+    public void TimeFieldServerDeactivate(GameObject player)
+    {
+        TimeFieldDeactivate(player);
+    }
+
+    [ObserversRpc]
+    public void TimeFieldDeactivate(GameObject player)
+    {
+        player.GetComponent<PlayerEntity>().timeField.SetActive(false);
+    }
+
+    [ServerRpc]
+    public void TimeFieldServerActivate(GameObject player)
+    {
+        TimeFieldActivate(player);
+    }
+
+    [ObserversRpc]
+    public void TimeFieldActivate(GameObject player)
+    {
+        player.GetComponent<PlayerEntity>().timeField.SetActive(true);
+    }
+
 
     [ServerRpc]
     public void ShootServer(GameObject shooter)

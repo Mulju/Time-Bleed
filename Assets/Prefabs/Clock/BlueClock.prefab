@@ -126,9 +126,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8276606e33a92489391a31a7ffa249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   clockHand: {fileID: 5466631004647058405}
   secondText: {fileID: 4457425306244140164}
   minuteText: {fileID: 8276639534791218508}
+  rotation: 0
   remainingSeconds: 0
   remainingMinutes: 9
   remainingTime: 600
