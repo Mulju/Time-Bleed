@@ -8,7 +8,8 @@ public class ChronoGrenade : MonoBehaviour
     {
         if(col.CompareTag("TimeSphere"))
         {
-            // Jotain tapahtuu kun osutaan aikakuplaan
+            // Reduce the timesphere when hit with Chronade
+            col.GetComponent<TimeSphere>().ReduceCircumference();
         }
 
         if(col.CompareTag("Clock"))
