@@ -30,10 +30,13 @@ public class AmmoController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log(sphere);
+
         if (sphere)
         {
             if (Mathf.Abs((direction * speed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - timeSphere).magnitude))
             {
+                CheckForTimeSpheres();
                 rb.MovePosition(timeSphere);
             }
             else
