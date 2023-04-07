@@ -10,6 +10,8 @@ public class ChronoGrenade : MonoBehaviour
         {
             // Reduce the timesphere when hit with Chronade
             col.GetComponent<TimeSphere>().ReduceCircumference();
+            Destroy(gameObject);
+            // Tee joku hieno animaatio tässä
         }
 
         if(col.CompareTag("Clock"))

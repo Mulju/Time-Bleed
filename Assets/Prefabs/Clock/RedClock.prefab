@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7088014965217703184}
   m_Layer: 0
   m_Name: RedClock
-  m_TagString: Untagged
+  m_TagString: Clock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,9 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8276606e33a92489391a31a7ffa249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
   clockHand: {fileID: 5451869113569281336}
   secondText: {fileID: 4444566086484206169}
   minuteText: {fileID: 8262194586593016721}

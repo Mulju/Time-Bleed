@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class TimeSphere : MonoBehaviour
 {
-    Vector3 originalScale, currentScale;
+    private Vector3 originalScale, currentScale;
+    private int expansionMultiplier = 3;
 
     private void Awake()
     {
@@ -15,20 +16,23 @@ public class TimeSphere : MonoBehaviour
 
     public void ReduceCircumference()
     {
+        //transform.position = new Vector3(transform.position.x + 3,
+        //                                 transform.position.y, transform.position.z);
         StartCoroutine(GetSmaller());
     }
 
     IEnumerator GetSmaller()
     {
-        while(currentScale.x > 0.2)
+        while(currentScale.x > 0.01)
         {
-            currentScale = new Vector3(currentScale.x - Time.deltaTime, 
-                                       currentScale.y - Time.deltaTime,
-                                       currentScale.z - Time.deltaTime);
+            currentScale = new Vector3(currentScale.x - Time.deltaTime * expansionMultiplier, 
+                                       currentScale.y - Time.deltaTime * expansionMultiplier,
+                                       currentScale.z - Time.deltaTime * expansionMultiplier);
+            transform.localScale = currentScale;
             yield return null;
         }
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
         StartCoroutine(GetBigger());
     }
 
@@ -36,9 +40,10 @@ public class TimeSphere : MonoBehaviour
     {
         while (currentScale.x < originalScale.x)
         {
-            currentScale = new Vector3(currentScale.x + Time.deltaTime,
-                                       currentScale.y + Time.deltaTime,
-                                       currentScale.z + Time.deltaTime);
+            currentScale = new Vector3(currentScale.x + Time.deltaTime * expansionMultiplier,
+                                       currentScale.y + Time.deltaTime * expansionMultiplier,
+                                       currentScale.z + Time.deltaTime * expansionMultiplier);
+            transform.localScale = currentScale;
             yield return null;
         }
     }
