@@ -11,7 +11,8 @@ public class Clock : MonoBehaviour
     private int hitChronades = 0;
     [SerializeField] private TextMeshPro secondText, minuteText;
 
-    public float remainingSeconds = 60, remainingMinutes = 9;
+    public float remainingSeconds = 60, remainingMinutes = 9, remainingTime = 600;
+    public int teamIdentifier;
 
     void Update()
     {
@@ -30,6 +31,13 @@ public class Clock : MonoBehaviour
         minuteText.text = "Remaining minutes: " + remainingMinutes;
 
         clockHand.transform.localRotation = Quaternion.Euler(0, rotation, 0);
+
+        remainingTime = remainingSeconds + remainingMinutes * 60;
+    }
+
+    public int GetIdentifier()
+    {
+        return teamIdentifier;
     }
 
     private void OnCollisionEnter(Collision collision)

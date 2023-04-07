@@ -9,6 +9,7 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject ammoSpawn;
     public GameObject ammoPrefab;
     public GameObject timeField;
+    [SerializeField] private GameObject chronade;
 
     public float timeSlow;
     public float shootSpeed;
@@ -129,6 +130,11 @@ public class PlayerEntity : NetworkBehaviour
             reloading = true;
             Reload();
         }
+
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            ThrowGrenade();
+        }
     }
 
     public void Move()
@@ -223,6 +229,12 @@ public class PlayerEntity : NetworkBehaviour
     //        timeSlow = 0.25f;
     //    }
     //}
+
+    public void ThrowGrenade()
+    {
+        GameObject chronadeInstance = Instantiate(chronade, ammoSpawn.transform.position, Quaternion.identity);
+        chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(transform.forward * 3, ForceMode.Impulse);
+    }
 
     private void OnTriggerStay(Collider other)
     {
