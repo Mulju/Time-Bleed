@@ -129,8 +129,20 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0) && ammoLeft > 0 && shootSpeed >= 0.1f && reloadTime >= 1)
         {
-            ShootServer(gameObject, playerCamera.transform.position, playerCamera.transform.forward);
+            Vector3 direction;
+            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, Mathf.Infinity))
+            {
+                direction = hit.point - ammoSpawn.transform.position;
+            }
+            else
+            {
+                direction = ammoSpawn.transform.forward;
+            }
+            direction = direction.normalized;
+
+            ShootServer(gameObject, direction);
             shootSpeed = 0;
+            ammoLeft -= 1;
         }
 
         if (Input.GetKeyDown(KeyCode.R) && !reloading && ammoLeft != maxAmmo)
@@ -244,16 +256,9 @@ public class PlayerEntity : NetworkBehaviour
 
 
     [ServerRpc]
-    public void ShootServer(GameObject shooter, Vector3 startPos, Vector3 endPos)
+    public void ShootServer(GameObject shooter, Vector3 direction)
     {
-        Vector3 direction;
-        Physics.Raycast(startPos, endPos, out RaycastHit hit, Mathf.Infinity);
-        direction = hit.point - shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position;
-        direction = direction.normalized;
-
         Shoot(shooter, direction);
-
-        shooter.GetComponent<PlayerEntity>().ammoLeft -= 1;
     }
 
     [ObserversRpc]

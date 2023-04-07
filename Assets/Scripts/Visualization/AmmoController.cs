@@ -30,8 +30,6 @@ public class AmmoController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(sphere);
-
         if (sphere)
         {
             if (Mathf.Abs((direction * speed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - timeSphere).magnitude))
@@ -60,17 +58,14 @@ public class AmmoController : MonoBehaviour
 
     private void CheckForTimeSpheres()
     {
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity) && hit.collider.CompareTag("TimeSphere"))
         {
-            if (hit.collider.CompareTag("TimeSphere"))
-            {
-                timeSphere = hit.point;
-                sphere = true;
-            }
-            else
-            {
-                sphere = false;
-            }
+            timeSphere = hit.point;
+            sphere = true;
+        }
+        else
+        {
+            sphere = false;
         }
     }
 
