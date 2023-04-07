@@ -1,23 +1,32 @@
+using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
-    public enum MatchState
+    public static GameManager manager;
+
+    private enum MatchState
     {
         NONE,
         WAITING_FOR_PLAYERS,
         IN_PROGRESS,
         MATCH_ENDED
     }
-    public static GameManager manager;
-    public float redTeamTime, blueTeamTime;
 
-    public GameObject redClock, blueClock;
+    private enum VictoryState
+    {
+        NONE,
+        DRAW,
+        RED_TEAM_WIN,
+        BLUE_TEAM_WIN
+    }
 
-    // Syncvar?
-    private MatchState currentState = MatchState.NONE;
+    // Syncvar for the time..?
+    private Clock redClock, blueClock;
+    private MatchState currentMatchState = MatchState.NONE;
+    private VictoryState currentVictoryState = VictoryState.NONE;
 
 
     private void Awake()
@@ -25,28 +34,73 @@ public class GameManager : MonoBehaviour
         // Singleton
         if (manager == null)
         {
-            DontDestroyOnLoad(gameObject);
             manager = this;
         }
         else
         {
             Destroy(gameObject);
         }
+
+        GameObject[] clocks = GameObject.FindGameObjectsWithTag("Clock");
+        foreach(GameObject clock in clocks)
+        {
+            if(clock.GetComponent<Clock>().teamIdentifier == 0)
+            {
+                redClock = clock.GetComponent<Clock>();
+            }
+            else if (clock.GetComponent<Clock>().teamIdentifier == 1)
+            {
+                blueClock = clock.GetComponent<Clock>();
+            }
+        }
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        if (!base.IsServer)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void Update()
     {
-        if(redTeamTime < 0 && blueTeamTime < 0)
+        if(currentMatchState == MatchState.MATCH_ENDED)
         {
-            // Draw
+            // If match has ended, stop going to update
+            return;
         }
-        else if (redTeamTime < 0)
+
+        if(redClock.remainingTime < 0 || blueClock.remainingTime < 0)
         {
-            // Blue team won
+            // Match ended
+            currentMatchState = MatchState.MATCH_ENDED;
+
+            if(redClock.remainingTime < 0 && blueClock.remainingTime < 0)
+            {
+                // Draw
+                currentVictoryState = VictoryState.DRAW;
+            }
+            else if (redClock.remainingTime < 0)
+            {
+                // Blue team won
+                currentVictoryState = VictoryState.BLUE_TEAM_WIN;
+            }
+            else if (blueClock.remainingTime < 0)
+            {
+                // Red team won
+                currentVictoryState = VictoryState.RED_TEAM_WIN;
+            }
+
+            // Show scoreboard at the end of match
+            DisplayScoreboard();
         }
-        else if (blueTeamTime < 0)
-        {
-            // Red team won
-        }
+    }
+
+    private void DisplayScoreboard()
+    {
+
     }
 }
