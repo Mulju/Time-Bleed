@@ -21,7 +21,7 @@ public class AmmoController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timeSlowed = 0.15f;
+        timeSlowed = 0.2f;
         timeNotSlowed = 100f;
         speed = timeNotSlowed;
 
@@ -102,6 +102,7 @@ public class AmmoController : MonoBehaviour
 
             // BUGIBUGIBUGI t�t� ei ajeta kun pelaajan timesphere deaktivoidaan
             // Ammukset ei pys�hdy seuraavan time spheren reunalle oikein.
+            // Fixed ?? kai
             CheckForTimeSpheres();
         }
     }

@@ -18,7 +18,9 @@ public class PlayerEntity : NetworkBehaviour
     public int maxAmmo, ammoLeft;
 
     private bool reloading;
-    private bool isMoving;
+    private bool timeFieldIsActive;
+
+    private Vector3 timeFieldOriginalScale;
 
     [Header("Base setup")]
     public float walkingSpeed = 7.5f;
@@ -58,7 +60,7 @@ public class PlayerEntity : NetworkBehaviour
         }
         else
         {
-            gameObject.GetComponent<PlayerEntity>().enabled = false;
+            //gameObject.GetComponent<PlayerEntity>().enabled = false;
         }
     }
 
@@ -72,6 +74,7 @@ public class PlayerEntity : NetworkBehaviour
         Destroy(bullet);
     }
 
+
     void Start()
     {
         maxAmmo = 30;
@@ -81,9 +84,9 @@ public class PlayerEntity : NetworkBehaviour
 
         reloading = false;
 
+        timeFieldOriginalScale = timeField.transform.localScale;
         timeSlow = 1;
-
-        timeField.SetActive(false);
+        timeFieldIsActive = true;
 
         characterController = GetComponent<CharacterController>();
 
@@ -93,15 +96,28 @@ public class PlayerEntity : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        timeSlow = 1;
+        if (!base.IsOwner)
+        {
+            return;
+        }
+            timeSlow = 1;
     }
 
     void Update()
     {
-        isMoving = false;
+        if (!base.IsOwner)
+        {
+            return;
+        }
 
-        shootSpeed += Time.deltaTime;
-        reloadTime += Time.deltaTime;
+        if (shootSpeed < 1)
+        {
+            shootSpeed += Time.deltaTime;
+        }
+        if(reloadTime < 2)
+        {
+            reloadTime += Time.deltaTime;
+        }
 
         if (reloadTime >= 1)
         {
@@ -113,7 +129,7 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0) && ammoLeft > 0 && shootSpeed >= 0.1f && reloadTime >= 1)
         {
-            ShootServer(gameObject);
+            ShootServer(gameObject, playerCamera.transform.position, playerCamera.transform.forward);
             shootSpeed = 0;
         }
 
@@ -128,15 +144,27 @@ public class PlayerEntity : NetworkBehaviour
             ThrowGrenadeServer();
         }
 
-        if (!Input.GetKeyDown(KeyCode.Mouse0) && !isMoving && timeField.activeSelf == false)
+        if (!Input.GetKey(KeyCode.Mouse0) && !IsMoving() && !timeFieldIsActive)
         {
-            TimeFieldServerActivate(this.gameObject);
+            TimeFieldServerActivate(gameObject);
+            timeFieldIsActive = true;
+        }
+        else if (timeFieldIsActive && (IsMoving() || Input.GetKey(KeyCode.Mouse0)))
+        {
+            TimeFieldServerDeactivate(gameObject);
+            timeFieldIsActive = false;
+        }
+    }
 
-        }
-        else if (timeField.activeSelf == true)
+    public bool IsMoving()
+    {
+        // Reload? other actions?
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.D) || Input.GetButton("Jump") || !characterController.isGrounded || Input.GetKey(KeyCode.G))
         {
-            TimeFieldServerDeactivate(this.gameObject);
+            return true;
         }
+
+        return false;
     }
 
     public void Move()
@@ -172,11 +200,6 @@ public class PlayerEntity : NetworkBehaviour
         // Move the controller
         characterController.Move(moveDirection * Time.deltaTime * timeSlow);
 
-        if (moveDirection.magnitude != 0)
-        {
-            isMoving = true;
-        }
-
         // Player and Camera rotation
         if (canMove && playerCamera != null)
         {
@@ -196,48 +219,36 @@ public class PlayerEntity : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void TimeFieldServerDeactivate(GameObject player)
+    public void TimeFieldServerDeactivate(GameObject timeField)
     {
-        TimeFieldDeactivate(player);
+        TimeFieldDeactivate(timeField);
     }
 
     [ObserversRpc]
-    public void TimeFieldDeactivate(GameObject player)
+    public void TimeFieldDeactivate(GameObject timeField)
     {
-        player.GetComponent<PlayerEntity>().timeField.SetActive(false);
+        timeField.GetComponent<PlayerEntity>().timeField.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
     }
 
     [ServerRpc]
-    public void TimeFieldServerActivate(GameObject player)
+    public void TimeFieldServerActivate(GameObject timeField)
     {
-        TimeFieldActivate(player);
+        TimeFieldActivate(timeField);
     }
 
     [ObserversRpc]
-    public void TimeFieldActivate(GameObject player)
+    public void TimeFieldActivate(GameObject timeField)
     {
-        player.GetComponent<PlayerEntity>().timeField.SetActive(true);
+        timeField.GetComponent<PlayerEntity>().timeField.transform.localScale = timeFieldOriginalScale;
     }
 
 
     [ServerRpc]
-    public void ShootServer(GameObject shooter)
+    public void ShootServer(GameObject shooter, Vector3 startPos, Vector3 endPos)
     {
-        Vector3 direction = shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.forward;
-
-        RaycastHit[] allHits;
-
-        allHits = Physics.RaycastAll(shooter.GetComponent<PlayerEntity>().playerCamera.transform.position, shooter.GetComponent<PlayerEntity>().playerCamera.transform.forward, Mathf.Infinity);
-
-        foreach (RaycastHit hit in allHits)
-        {
-            if (!hit.collider.CompareTag("TimeSphere"))
-            {
-                direction = hit.point - shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position;
-                break;
-            }
-        }
-
+        Vector3 direction;
+        Physics.Raycast(startPos, endPos, out RaycastHit hit, Mathf.Infinity);
+        direction = hit.point - shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position;
         direction = direction.normalized;
 
         Shoot(shooter, direction);
@@ -254,14 +265,6 @@ public class PlayerEntity : NetworkBehaviour
         Destroy(ammoInstance, 120);
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("TimeSphere"))
-    //    {
-    //        timeSlow = 0.25f;
-    //    }
-    //}
-
     [ServerRpc]
     public void ThrowGrenadeServer()
     {
@@ -277,15 +280,10 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("TimeSphere"))
+        if (other.CompareTag("TimeSphere") && !other.transform.parent.CompareTag("Player"))
         {
             timeSlow = 0.25f;
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-
     }
 
     public void Aim()
