@@ -230,13 +230,13 @@ public class PlayerEntity : NetworkBehaviour
     //    }
     //}
 
-    //[ServerRpc]
+    [ServerRpc]
     public void ThrowGrenadeServer()
     {
         ThrowGrenade();
     }
 
-    //[ObserversRpc]
+    [ObserversRpc]
     public void ThrowGrenade(/*GameObject shooter, Vector3 direction*/)
     {
         GameObject chronadeInstance = Instantiate(chronade, ammoSpawn.transform.position, Quaternion.identity);

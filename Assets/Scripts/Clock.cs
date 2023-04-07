@@ -18,6 +18,12 @@ public class Clock : NetworkBehaviour
 
     void Update()
     {
+        UpdateClock();
+    }
+
+    //[ServerRpc]
+    public void UpdateClock()
+    {
         // Turn clock handle
         rotation += 6 * Time.deltaTime + 30 * hitChronades * Time.deltaTime;
 
@@ -36,12 +42,6 @@ public class Clock : NetworkBehaviour
         clockHand.transform.localRotation = Quaternion.Euler(0, rotation, 0);
 
         remainingTime = remainingSeconds + remainingMinutes * 60;
-    }
-
-    //[ServerRpc]
-    public void UpdateClock()
-    {
-        
     }
 
     public int GetIdentifier()
