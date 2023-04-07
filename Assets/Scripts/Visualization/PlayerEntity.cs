@@ -133,7 +133,7 @@ public class PlayerEntity : NetworkBehaviour
 
         if(Input.GetKeyDown(KeyCode.G))
         {
-            ThrowGrenade();
+            ThrowGrenadeServer();
         }
     }
 
@@ -230,10 +230,17 @@ public class PlayerEntity : NetworkBehaviour
     //    }
     //}
 
-    public void ThrowGrenade()
+    [ServerRpc]
+    public void ThrowGrenadeServer()
+    {
+        ThrowGrenade();
+    }
+
+    [ObserversRpc]
+    public void ThrowGrenade(/*GameObject shooter, Vector3 direction*/)
     {
         GameObject chronadeInstance = Instantiate(chronade, ammoSpawn.transform.position, Quaternion.identity);
-        chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(transform.forward * 3, ForceMode.Impulse);
+        chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(transform.forward * 6, ForceMode.Impulse);
     }
 
     private void OnTriggerStay(Collider other)
