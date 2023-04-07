@@ -13,15 +13,10 @@ public class Clock : NetworkBehaviour
 
     [SyncVar] private float rotation;
     [SyncVar] public float remainingSeconds = 60, remainingMinutes = 9, remainingTime = 600;
+    
     public int teamIdentifier;
 
     void Update()
-    {
-        UpdateClock();
-    }
-
-    //[ServerRpc]
-    public void UpdateClock()
     {
         // Turn clock handle
         rotation += 6 * Time.deltaTime + 30 * hitChronades * Time.deltaTime;
@@ -41,6 +36,12 @@ public class Clock : NetworkBehaviour
         clockHand.transform.localRotation = Quaternion.Euler(0, rotation, 0);
 
         remainingTime = remainingSeconds + remainingMinutes * 60;
+    }
+
+    //[ServerRpc]
+    public void UpdateClock()
+    {
+        
     }
 
     public int GetIdentifier()
