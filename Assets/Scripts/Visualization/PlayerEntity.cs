@@ -18,6 +18,7 @@ public class PlayerEntity : NetworkBehaviour
     public int maxAmmo, ammoLeft;
 
     private bool reloading;
+    private bool isMoving;
 
     [Header("Base setup")]
     public float walkingSpeed = 7.5f;
@@ -97,23 +98,14 @@ public class PlayerEntity : NetworkBehaviour
 
     void Update()
     {
+        isMoving = false;
+
         shootSpeed += Time.deltaTime;
         reloadTime += Time.deltaTime;
 
         if (reloadTime >= 1)
         {
             reloading = false;
-        }
-
-
-        if (!Input.anyKey)
-        {
-            timeField.SetActive(true);
-
-        }
-        else
-        {
-            timeField.SetActive(false);
         }
 
         Physics.SyncTransforms();
@@ -134,6 +126,16 @@ public class PlayerEntity : NetworkBehaviour
         if(Input.GetKeyDown(KeyCode.G))
         {
             ThrowGrenade();
+        }
+
+        if (!Input.GetKeyDown(KeyCode.Mouse0) && !isMoving)
+        {
+            timeField.SetActive(true);
+
+        }
+        else
+        {
+            timeField.SetActive(false);
         }
     }
 
@@ -169,6 +171,11 @@ public class PlayerEntity : NetworkBehaviour
 
         // Move the controller
         characterController.Move(moveDirection * Time.deltaTime * timeSlow);
+
+        if (moveDirection.magnitude != 0)
+        {
+            isMoving = true;
+        }
 
         // Player and Camera rotation
         if (canMove && playerCamera != null)
