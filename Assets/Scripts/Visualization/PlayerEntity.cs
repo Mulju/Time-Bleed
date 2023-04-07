@@ -275,7 +275,7 @@ public class PlayerEntity : NetworkBehaviour
     public void ThrowGrenade(/*GameObject shooter, Vector3 direction*/)
     {
         GameObject chronadeInstance = Instantiate(chronade, ammoSpawn.transform.position, Quaternion.identity);
-        chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(transform.forward * 6, ForceMode.Impulse);
+        chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
     }
 
     private void OnTriggerStay(Collider other)

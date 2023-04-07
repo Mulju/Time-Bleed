@@ -6,7 +6,7 @@ using UnityEngine;
 public class TimeSphere : MonoBehaviour
 {
     private Vector3 originalScale, currentScale;
-    private int expansionMultiplier = 3;
+    private int expansionMultiplier = 5;
 
     private void Awake()
     {

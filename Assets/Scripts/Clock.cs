@@ -12,7 +12,7 @@ public class Clock : NetworkBehaviour
     private int hitChronades = 0;
 
     [SyncVar] private float rotation;
-    [SyncVar] public float remainingSeconds = 60, remainingMinutes = 9, remainingTime = 600;
+    [SyncVar] public float remainingSeconds = 60, remainingMinutes = 14, remainingTime = 900;
     
     public int teamIdentifier;
 
@@ -25,7 +25,7 @@ public class Clock : NetworkBehaviour
     public void UpdateClock()
     {
         // Turn clock handle
-        rotation += 6 * Time.deltaTime + 30 * hitChronades * Time.deltaTime;
+        rotation += 6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime;
 
         // Need to round up or down to display it nicely
         remainingSeconds = 60 - rotation / 6;
