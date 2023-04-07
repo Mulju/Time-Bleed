@@ -1,21 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Timeline;
 using UnityEngine;
 using TMPro;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
 
-public class Clock : MonoBehaviour
+public class Clock : NetworkBehaviour
 {
     [SerializeField] private GameObject clockHand;
-    private float rotation;
-    private int hitChronades = 0;
     [SerializeField] private TextMeshPro secondText, minuteText;
+    private int hitChronades = 0;
 
-    public float remainingSeconds = 60, remainingMinutes = 9, remainingTime = 600;
+    [SyncVar] private float rotation;
+    [SyncVar] public float remainingSeconds = 60, remainingMinutes = 9, remainingTime = 600;
     public int teamIdentifier;
 
     void Update()
     {
+        UpdateClock();
+    }
+
+    //[ServerRpc]
+    public void UpdateClock()
+    {
+        // Turn clock handle
         rotation += 6 * Time.deltaTime + 30 * hitChronades * Time.deltaTime;
 
         // Need to round up or down to display it nicely
