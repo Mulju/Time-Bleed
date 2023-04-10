@@ -58,7 +58,7 @@ public class AmmoController : MonoBehaviour
 
     private void CheckForTimeSpheres()
     {
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity) && hit.collider.CompareTag("TimeSphere"))
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
         {
             timeSphere = hit.point;
             sphere = true;
