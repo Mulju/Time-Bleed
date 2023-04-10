@@ -19,6 +19,7 @@ public class AmmoController : MonoBehaviour
     private bool sphere;
 
     [SerializeField] private GameObject bulletHole;
+    private RaycastHit raycastHit;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +63,7 @@ public class AmmoController : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
         {
+            raycastHit = hit;
             objHitByRaycast = hit.point;
             sphere = true;
         }
@@ -80,7 +82,7 @@ public class AmmoController : MonoBehaviour
         }
         else if (!other.CompareTag("Ammo") && !other.CompareTag("TimeSphere"))
         {
-            GameObject instantiatedHole = Instantiate(bulletHole, objHitByRaycast, Quaternion.identity);
+            GameObject instantiatedHole = Instantiate(bulletHole, objHitByRaycast + raycastHit.normal * 0.0001f, Quaternion.LookRotation(raycastHit.normal));
             Destroy(instantiatedHole, 10);
             Destroy(this.gameObject);
         }
