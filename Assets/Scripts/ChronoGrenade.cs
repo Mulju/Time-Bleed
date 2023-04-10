@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class ChronoGrenade : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem chronadeEffect;
+    private float animationLength = 1;
     private void OnTriggerEnter(Collider col)
     {
         if(col.CompareTag("TimeSphere"))
         {
             // Reduce the timesphere when hit with Chronade
             col.GetComponent<TimeSphere>().ReduceCircumference();
-            Destroy(gameObject);
+            
             // Tee joku hieno animaatio tässä
+            ParticleSystem instantiatedEffect = Instantiate(chronadeEffect, transform.position, Quaternion.identity);
+            instantiatedEffect.Play();
+            Destroy(instantiatedEffect, animationLength);
+            Destroy(gameObject);
         }
 
         if(col.CompareTag("Clock"))

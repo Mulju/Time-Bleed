@@ -965,9 +965,9 @@ MonoBehaviour:
   <SceneId>k__BackingField: 2603441584621131941
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects:
-  - {fileID: 0}
-  - {fileID: 1084728511}
+  - {fileID: 46985599}
   - {fileID: 918670143}
+  - {fileID: 1084728511}
 --- !u!114 &918670144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1069,7 +1069,8 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours: []
   <ParentNetworkObject>k__BackingField: {fileID: 0}
-  <ChildNetworkObjects>k__BackingField: []
+  <ChildNetworkObjects>k__BackingField:
+  - {fileID: 46985599}
   _isNetworked: 1
   _isGlobal: 0
   _initializeOrder: 0
@@ -1082,8 +1083,8 @@ MonoBehaviour:
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects:
   - {fileID: 46985599}
-  - {fileID: 1084728511}
   - {fileID: 918670143}
+  - {fileID: 1084728511}
 --- !u!1 &1150365013
 GameObject:
   m_ObjectHideFlags: 0
