@@ -151,10 +151,6 @@ public class PlayerEntity : NetworkBehaviour
             Reload();
         }
 
-        if(Input.GetKeyDown(KeyCode.G))
-        {
-            ThrowGrenadeServer();
-        }
 
         if (!Input.GetKey(KeyCode.Mouse0) && !IsMoving() && !timeFieldIsActive)
         {
@@ -165,6 +161,11 @@ public class PlayerEntity : NetworkBehaviour
         {
             TimeFieldServerDeactivate(gameObject);
             timeFieldIsActive = false;
+        }
+        
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            ThrowGrenadeServer();
         }
     }
 
@@ -280,6 +281,7 @@ public class PlayerEntity : NetworkBehaviour
     public void ThrowGrenade(/*GameObject shooter, Vector3 direction*/)
     {
         GameObject chronadeInstance = Instantiate(chronade, ammoSpawn.transform.position, Quaternion.identity);
+        chronadeInstance.GetComponent<ChronoGrenade>().ownerID = gameObject.GetInstanceID();
         chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
     }
 
