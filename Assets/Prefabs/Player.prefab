@@ -184,6 +184,7 @@ MonoBehaviour:
   lookXLimit: 45
   canMove: 1
   cameraYOffset: 0.4
+  tmpPlayerName: {fileID: 2372661360542935777}
 --- !u!1 &2472639725123539552
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8548186689763426969
 RectTransform:
   m_ObjectHideFlags: 0
@@ -334,7 +335,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.696}
+  m_AnchoredPosition: {x: 0, y: 1.193}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &7968843526104716960
@@ -742,7 +743,7 @@ PrefabInstance:
     - target: {fileID: 5257232343283234115, guid: 384d48edb5b59c9448e4ec399a7784b5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9073479887607717663, guid: 384d48edb5b59c9448e4ec399a7784b5,
         type: 3}

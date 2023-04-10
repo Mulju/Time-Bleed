@@ -1,6 +1,7 @@
 using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerEntity : NetworkBehaviour
@@ -42,18 +43,24 @@ public class PlayerEntity : NetworkBehaviour
     private Camera playerCamera;
     PlayerManager playerManager;
 
-    private GameObject clientGameManager;
+    private Data.Player player;
+    [SerializeField] public TextMeshPro tmpPlayerName;
 
     public override void OnStartClient()
     {
         base.OnStartClient();
         if (base.IsOwner)
         {
-            //clientGameManager = GameObject.FindGameObjectWithTag("ClientGameManager");
-            //Data.Player player = clientGameManager.GetComponent<ClientGameManager>().playerData;
+            // Sisältääkö "player" nyt kopion "playerData"sta, vai onko se referenssi tähän? Vanha syntaksi alla
+            //Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
+            player = GameObject.FindGameObjectWithTag("ClientGameManager").GetComponent<ClientGameManager>().playerData;
+            player.health = 100;
+            player.playerObject = gameObject;
+            player.connection = GetComponent<NetworkObject>().Owner;
+
+            tmpPlayerName.text = player.name;
 
             playerManager = PlayerManager.instance;
-            Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
             int id = gameObject.GetInstanceID();
             Debug.Log("Player ID: " + id);
 
@@ -69,13 +76,13 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    public void Hit(GameObject player, GameObject shooter)
+    public void Hit(GameObject hitPlayer, GameObject shooter)
     {
         if (!base.IsOwner)
             return;
-        Debug.Log("Player ID: " + player.GetInstanceID());
+        Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
-        PlayerManager.instance.DamagePlayer(player.GetInstanceID(), 50, shooter.GetInstanceID());
+        PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), 50, shooter.GetInstanceID());
     }
 
 
