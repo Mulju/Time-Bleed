@@ -6,18 +6,20 @@ public class ChronoGrenade : MonoBehaviour
 {
     [SerializeField] private ParticleSystem chronadeEffect;
     private float animationLength = 1;
-    public int ownerID;
+    public GameObject ownerObject;
+    public int updateID;
 
     private void OnTriggerEnter(Collider col)
     {
         if(col.CompareTag("TimeSphere"))
         {
-            if(ownerID == col.transform.parent.GetInstanceID())
+            //Debug.Log("OwnerID: " + ownerID + "\nColliderID: " + col.transform.parent.GetInstanceID() + "\nUpdateID: " + updateID);
+            if(ownerObject == col.transform.parent.gameObject)
             {
                 // Did we hit the players own timesphere?
                 return;
             }
-            
+
             // Reduce the timesphere when hit with Chronade
             col.GetComponent<TimeSphere>().ReduceCircumference();
 
