@@ -78,14 +78,14 @@ public class AmmoController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerEntity player = other.GetComponent<PlayerEntity>();
-            Destroy(gameObject);
             player.Hit(other.gameObject, shooter);
+            Destroy(this.gameObject);
         }
-        else if(other.CompareTag("TimeSphere") || other.CompareTag("Ammo"))
+        else if (other.CompareTag("TimeSphere") || other.CompareTag("Ammo"))
         {
 
         }
-        else if(other.gameObject.layer == 6)
+        else if (other.gameObject.layer == 6)
         {
             GameObject instantiatedHole = Instantiate(bulletHole, objHitByRaycast + raycastHit.normal * 0.0001f, Quaternion.LookRotation(raycastHit.normal));
             Destroy(instantiatedHole, 10);
