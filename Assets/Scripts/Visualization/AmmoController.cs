@@ -12,13 +12,11 @@ public class AmmoController : MonoBehaviour
 
     private float speed;
 
-    private Vector3 objHitByRaycast;
+    private Vector3 timeSphere;
     public Vector3 direction;
     public GameObject shooter;
 
     private bool sphere;
-
-    [SerializeField] private GameObject bulletHole;
 
     // Start is called before the first frame update
     void Start()
@@ -27,17 +25,17 @@ public class AmmoController : MonoBehaviour
         timeNotSlowed = 100f;
         speed = timeNotSlowed;
 
-        CheckForCollisions();
+        CheckForTimeSpheres();
     }
 
     private void FixedUpdate()
     {
         if (sphere)
         {
-            if (Mathf.Abs((direction * speed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - objHitByRaycast).magnitude))
+            if (Mathf.Abs((direction * speed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - timeSphere).magnitude))
             {
-                CheckForCollisions();
-                rb.MovePosition(objHitByRaycast);
+                CheckForTimeSpheres();
+                rb.MovePosition(timeSphere);
             }
             else
             {
@@ -58,11 +56,11 @@ public class AmmoController : MonoBehaviour
 
     }
 
-    private void CheckForCollisions()
+    private void CheckForTimeSpheres()
     {
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity) && hit.collider.CompareTag("TimeSphere"))
         {
-            objHitByRaycast = hit.point;
+            timeSphere = hit.point;
             sphere = true;
         }
         else
@@ -80,8 +78,6 @@ public class AmmoController : MonoBehaviour
         }
         else if (!other.CompareTag("Ammo") && !other.CompareTag("TimeSphere"))
         {
-            GameObject instantiatedHole = Instantiate(bulletHole, objHitByRaycast, Quaternion.identity);
-            Destroy(instantiatedHole, 10);
             Destroy(this.gameObject);
         }
     }
@@ -105,7 +101,7 @@ public class AmmoController : MonoBehaviour
             // BUGIBUGIBUGI t�t� ei ajeta kun pelaajan timesphere deaktivoidaan
             // Ammukset ei pys�hdy seuraavan time spheren reunalle oikein.
             // Fixed ?? kai
-            CheckForCollisions();
+            CheckForTimeSpheres();
         }
     }
 }
