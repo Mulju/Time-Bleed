@@ -42,11 +42,16 @@ public class PlayerEntity : NetworkBehaviour
     private Camera playerCamera;
     PlayerManager playerManager;
 
+    private GameObject clientGameManager;
+
     public override void OnStartClient()
     {
         base.OnStartClient();
         if (base.IsOwner)
         {
+            //clientGameManager = GameObject.FindGameObjectWithTag("ClientGameManager");
+            //Data.Player player = clientGameManager.GetComponent<ClientGameManager>().playerData;
+
             playerManager = PlayerManager.instance;
             Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
             int id = gameObject.GetInstanceID();

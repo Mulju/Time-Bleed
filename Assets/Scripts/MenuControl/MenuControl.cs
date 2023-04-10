@@ -11,6 +11,7 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private TMP_Dropdown resolutionsDropdown;
 
     private string currentScene;
+    private GameObject clientGameManager;
 
     void Start()
     {
@@ -19,6 +20,9 @@ public class MenuControl : MonoBehaviour
         currentScene = SceneManager.GetActiveScene().name;
         if (currentScene == "MainMenu")
         {
+            // Fetch ClientGameManager
+            clientGameManager = GameObject.FindGameObjectWithTag("ClientGameManager");
+
             // Vain main menussa on resoluution vaihto mahdollisuus
             resolutionsDropdown.ClearOptions();
             List<string> options = new List<string>();
@@ -59,6 +63,7 @@ public class MenuControl : MonoBehaviour
 
     public void StoreName(string name)
     {
-        // Tallentaa pelaajan nimen
+        // Stores the players name
+        clientGameManager.GetComponent<ClientGameManager>().playerData.name = name;
     }
 }

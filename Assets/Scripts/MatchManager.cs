@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : NetworkBehaviour
+public class MatchManager : NetworkBehaviour
 {
-    public static GameManager manager;
+    public static MatchManager manager;
 
     private enum MatchState
     {
