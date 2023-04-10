@@ -64,14 +64,13 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    public void Hit(GameObject player, GameObject bullet, GameObject shooter)
+    public void Hit(GameObject player, GameObject shooter)
     {
         if (!base.IsOwner)
             return;
         Debug.Log("Player ID: " + player.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
         PlayerManager.instance.DamagePlayer(player.GetInstanceID(), 50, shooter.GetInstanceID());
-        Destroy(bullet);
     }
 
 
