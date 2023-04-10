@@ -12,11 +12,13 @@ public class AmmoController : MonoBehaviour
 
     private float speed;
 
-    private Vector3 timeSphere;
+    private Vector3 objHitByRaycast;
     public Vector3 direction;
     public GameObject shooter;
 
     private bool sphere;
+
+    [SerializeField] private GameObject bulletHole;
 
     // Start is called before the first frame update
     void Start()
@@ -25,17 +27,17 @@ public class AmmoController : MonoBehaviour
         timeNotSlowed = 100f;
         speed = timeNotSlowed;
 
-        CheckForTimeSpheres();
+        CheckForCollisions();
     }
 
     private void FixedUpdate()
     {
         if (sphere)
         {
-            if (Mathf.Abs((direction * speed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - timeSphere).magnitude))
+            if (Mathf.Abs((direction * speed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - objHitByRaycast).magnitude))
             {
-                CheckForTimeSpheres();
-                rb.MovePosition(timeSphere);
+                CheckForCollisions();
+                rb.MovePosition(objHitByRaycast);
             }
             else
             {
@@ -56,11 +58,11 @@ public class AmmoController : MonoBehaviour
 
     }
 
-    private void CheckForTimeSpheres()
+    private void CheckForCollisions()
     {
         if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
         {
-            timeSphere = hit.point;
+            objHitByRaycast = hit.point;
             sphere = true;
         }
         else
@@ -78,6 +80,8 @@ public class AmmoController : MonoBehaviour
         }
         else if (!other.CompareTag("Ammo") && !other.CompareTag("TimeSphere"))
         {
+            GameObject instantiatedHole = Instantiate(bulletHole, objHitByRaycast, Quaternion.identity);
+            Destroy(instantiatedHole, 10);
             Destroy(this.gameObject);
         }
     }
@@ -101,7 +105,7 @@ public class AmmoController : MonoBehaviour
             // BUGIBUGIBUGI t�t� ei ajeta kun pelaajan timesphere deaktivoidaan
             // Ammukset ei pys�hdy seuraavan time spheren reunalle oikein.
             // Fixed ?? kai
-            CheckForTimeSpheres();
+            CheckForCollisions();
         }
     }
 }
