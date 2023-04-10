@@ -81,11 +81,19 @@ public class AmmoController : MonoBehaviour
             Destroy(gameObject);
             player.Hit(other.gameObject, shooter);
         }
+        else if(other.CompareTag("TimeSphere") || other.CompareTag("Ammo"))
+        {
+
+        }
         else if(other.gameObject.layer == 6)
         {
             GameObject instantiatedHole = Instantiate(bulletHole, objHitByRaycast + raycastHit.normal * 0.0001f, Quaternion.LookRotation(raycastHit.normal));
             Destroy(instantiatedHole, 10);
             Destroy(this.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
