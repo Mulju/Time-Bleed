@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
-public class AmmoController : MonoBehaviour
+public class AmmoController : NetworkBehaviour
 {
     public Rigidbody rb;
 
@@ -72,15 +73,8 @@ public class AmmoController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("TimeSphere") || other.CompareTag("Ammo") || other.CompareTag("Player"))
         {
-            PlayerEntity player = other.GetComponent<PlayerEntity>();
-            player.Hit(other.gameObject, shooter);
-            Destroy(this.gameObject);
-        }
-        else if (other.CompareTag("TimeSphere") || other.CompareTag("Ammo"))
-        {
-
         }
         else if (other.gameObject.layer == 6)
         {

@@ -19,7 +19,7 @@ public class PlayerManager : NetworkBehaviour
         if (!base.IsServer)
             return;
 
-        players[playerID].health -= 50;
+        players[playerID].health -= damage;
 
         if (players[playerID].health <= 0)
         {
