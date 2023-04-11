@@ -51,19 +51,6 @@ public class PlayerEntity : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-        if (base.IsServer)
-        {
-
-            playerManager = PlayerManager.instance;
-            Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
-            int id = gameObject.GetInstanceID();
-            Debug.Log("Player ID: " + id);
-
-            debugConsole.text = "Player ID: " + id;
-
-            playerManager.players.Add(id, player);
-        }
-
         if (base.IsOwner)
         {
             // Sis�lt��k� "player" nyt kopion "playerData"sta, vai onko se referenssi t�h�n? Vanha syntaksi alla
@@ -83,6 +70,25 @@ public class PlayerEntity : NetworkBehaviour
         else
         {
             //gameObject.GetComponent<PlayerEntity>().enabled = false;
+        }
+        
+        if (base.IsServer)
+        {
+
+            playerManager = PlayerManager.instance;
+            Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
+            int id = gameObject.GetInstanceID();
+            Debug.Log("Player ID: " + id);
+
+            debugConsole.text = "Player ID: " + id;
+
+            playerManager.players.Add(id, player);
+
+            if (playerName != null)
+            {
+                tmpPlayerName.text = playerName;
+                UpdateNameServer(this, playerName);
+            }
         }
     }
 
