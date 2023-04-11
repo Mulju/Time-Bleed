@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: 7946791890396349386}
   - {fileID: 8279258441362849588}
   - {fileID: 1986948161563127830}
-  - {fileID: 1823549334026037038}
+  - {fileID: 0}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -316,7 +316,6 @@ GameObject:
   - component: {fileID: 7968843526104716960}
   - component: {fileID: 2372661360542935777}
   - component: {fileID: 4714565345768944177}
-  - component: {fileID: 1823549334026037038}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -490,22 +489,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d9f9fcea8a1f4849ba8db05b1bd8da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1823549334026037038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2965983112874546699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 767fbeabd70f17f478630012e11d8b33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 3
-  _addedNetworkObject: {fileID: 8492805507051383199}
-  _networkObjectCache: {fileID: 8492805507051383199}
-  _text: {fileID: 2372661360542935777}
 --- !u!1 &3542491589387581788
 GameObject:
   m_ObjectHideFlags: 0
