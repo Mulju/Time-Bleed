@@ -72,7 +72,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             //gameObject.GetComponent<PlayerEntity>().enabled = false;
         }
-        
+
         if (base.IsServer)
         {
 
@@ -336,5 +336,16 @@ public class PlayerEntity : NetworkBehaviour
     public void Aim()
     {
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ammo"))
+        {
+            AmmoController ammo = other.GetComponent<AmmoController>();
+            PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
+            player.Hit(gameObject, ammo.shooter);
+            Destroy(other.gameObject);
+        }
     }
 }
