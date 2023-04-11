@@ -64,6 +64,6 @@ public class MenuControl : MonoBehaviour
     public void StoreName(string name)
     {
         // Stores the players name
-        clientGameManager.GetComponent<ClientGameManager>().playerData.name = name;
+        clientGameManager.GetComponent<ClientGameManager>().playerName = name;
     }
 }
