@@ -52,11 +52,6 @@ public class PlayerEntity : NetworkBehaviour
         base.OnStartClient();
         if (base.IsServer)
         {
-            playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
-            if(playerName != null)
-            {
-                tmpPlayerName.text = playerName;
-            }
 
             playerManager = PlayerManager.instance;
             Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
@@ -67,6 +62,7 @@ public class PlayerEntity : NetworkBehaviour
 
             playerManager.players.Add(id, player);
         }
+
         if (base.IsOwner)
         {
             // Sis�lt��k� "player" nyt kopion "playerData"sta, vai onko se referenssi t�h�n? Vanha syntaksi alla
@@ -75,6 +71,12 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
+            
+            playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
+            if(playerName != null)
+            {
+                tmpPlayerName.text = playerName;
+            }
         }
         else
         {
