@@ -25,12 +25,18 @@ public class AmmoController : MonoBehaviour
     {
         timeSlowed = 0.2f;
         timeNotSlowed = 100f;
-        speed = timeSlowed;
+        //speed = timeSlowed;
 
         CheckForCollisions();
     }
 
     private void FixedUpdate()
+    {
+        speed = timeNotSlowed;
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         if (collide)
         {
@@ -49,14 +55,6 @@ public class AmmoController : MonoBehaviour
             rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
             CheckForCollisions();
         }
-
-        speed = timeNotSlowed;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void CheckForCollisions()
