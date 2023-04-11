@@ -3,7 +3,6 @@ using UnityEngine;
 using FishNet.Object;
 using FishNet.Connection;
 
-//This is made by Bobsi Unity - Youtube
 public class PlayerManager : NetworkBehaviour
 {
     public static PlayerManager instance;
