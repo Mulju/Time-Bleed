@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FishNet.Object;
 
-public class AmmoController : NetworkBehaviour
+public class AmmoController : MonoBehaviour
 {
     public Rigidbody rb;
 
@@ -77,9 +76,6 @@ public class AmmoController : NetworkBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (!base.IsServer)
-                return;
-
             PlayerEntity player = other.GetComponent<PlayerEntity>();
             player.Hit(other.gameObject, shooter);
             Destroy(this.gameObject);

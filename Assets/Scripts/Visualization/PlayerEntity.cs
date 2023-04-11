@@ -88,9 +88,6 @@ public class PlayerEntity : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter)
     {
-        if (!base.IsOwner)
-            return;
-
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), 50, shooter.GetInstanceID());
