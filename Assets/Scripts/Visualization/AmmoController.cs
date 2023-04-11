@@ -25,7 +25,6 @@ public class AmmoController : MonoBehaviour
     {
         timeSlowed = 0.2f;
         timeNotSlowed = 100f;
-        //speed = timeSlowed;
 
         CheckForCollisions();
     }
