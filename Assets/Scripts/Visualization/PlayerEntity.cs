@@ -59,7 +59,7 @@ public class PlayerEntity : NetworkBehaviour
             int id = gameObject.GetInstanceID();
             Debug.Log("Player ID: " + id);
 
-            debugConsole.text = "Player ID: " + id; 
+            debugConsole.text = "Player ID: " + id;
 
             playerManager.players.Add(id, player);
         }
@@ -72,9 +72,9 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
-            
+
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
-            if(playerName != null)
+            if (playerName != null)
             {
                 tmpPlayerName.text = playerName;
             }
@@ -90,6 +90,7 @@ public class PlayerEntity : NetworkBehaviour
     {
         if (!base.IsOwner)
             return;
+
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), 50, shooter.GetInstanceID());
