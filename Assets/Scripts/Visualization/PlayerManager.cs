@@ -30,7 +30,7 @@ public class PlayerManager : NetworkBehaviour
     void PlayerKilled(int playerID, int shooterID)
     {
         Data.Player player = players[playerID];
-        Data.Player shooter = players[playerID];
+        Data.Player shooter = players[shooterID];
 
         player.health = 100;
         player.deaths++;

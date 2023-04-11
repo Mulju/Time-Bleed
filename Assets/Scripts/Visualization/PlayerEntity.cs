@@ -49,10 +49,8 @@ public class PlayerEntity : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-        if (base.IsOwner)
+        if (base.IsServer)
         {
-            // Sisältääkö "player" nyt kopion "playerData"sta, vai onko se referenssi tähän? Vanha syntaksi alla
-            //Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
             player = GameObject.FindGameObjectWithTag("ClientGameManager").GetComponent<ClientGameManager>().playerData;
             player.health = 100;
             player.playerObject = gameObject;
@@ -65,6 +63,11 @@ public class PlayerEntity : NetworkBehaviour
             Debug.Log("Player ID: " + id);
 
             playerManager.players.Add(id, player);
+        }
+        if (base.IsOwner)
+        {
+            // Sisï¿½ltï¿½ï¿½kï¿½ "player" nyt kopion "playerData"sta, vai onko se referenssi tï¿½hï¿½n? Vanha syntaksi alla
+            //Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
 
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
@@ -76,6 +79,7 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
+    [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter)
     {
         if (!base.IsOwner)
@@ -111,7 +115,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             return;
         }
-            timeSlow = 1;
+        timeSlow = 1;
     }
 
     void Update()
@@ -125,7 +129,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             shootSpeed += Time.deltaTime;
         }
-        if(reloadTime < 2)
+        if (reloadTime < 2)
         {
             reloadTime += Time.deltaTime;
         }
@@ -174,8 +178,8 @@ public class PlayerEntity : NetworkBehaviour
             TimeFieldServerDeactivate(gameObject);
             timeFieldIsActive = false;
         }
-        
-        if(Input.GetKeyDown(KeyCode.G))
+
+        if (Input.GetKeyDown(KeyCode.G))
         {
             ThrowGrenadeServer();
         }
@@ -184,7 +188,7 @@ public class PlayerEntity : NetworkBehaviour
     public bool IsMoving()
     {
         // Reload? other actions?
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.D) || Input.GetButton("Jump") || !characterController.isGrounded || Input.GetKey(KeyCode.G))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetButton("Jump") || !characterController.isGrounded || Input.GetKey(KeyCode.G))
         {
             return true;
         }
