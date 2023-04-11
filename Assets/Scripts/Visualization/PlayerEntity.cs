@@ -92,21 +92,21 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void UpdateNameServer(string name)
     {
         UpdateName(name);
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach(GameObject p in players)
+        {
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
+        }
     }
 
     [ObserversRpc]
     public void UpdateName(string name)
     {
         tmpPlayerName.text = name;
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach(GameObject p in players)
-        {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
-        }
     }
 
     [ServerRpc(RequireOwnership = false)]
