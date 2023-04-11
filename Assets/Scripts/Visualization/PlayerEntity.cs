@@ -63,8 +63,9 @@ public class PlayerEntity : NetworkBehaviour
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
             {
-                tmpPlayerName.text = playerName;
-                UpdateNameServer(this, playerName);
+                PlayerNameTracker.SetName(playerName);
+                //tmpPlayerName.text = playerName;
+                //UpdateNameServer(this, playerName);
             }
         }
         else
