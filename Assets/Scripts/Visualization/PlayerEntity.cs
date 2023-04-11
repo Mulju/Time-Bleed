@@ -101,9 +101,6 @@ public class PlayerEntity : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter)
     {
-        if (!base.IsOwner)
-            return;
-
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), 50, shooter.GetInstanceID());
@@ -165,7 +162,7 @@ public class PlayerEntity : NetworkBehaviour
         if (Input.GetKey(KeyCode.Mouse0) && ammoLeft > 0 && shootSpeed >= 0.1f && reloadTime >= 1)
         {
             Vector3 direction;
-            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, Mathf.Infinity) && Mathf.Abs((ammoSpawn.transform.position - hit.point).magnitude) >= 2f)
+            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, Mathf.Infinity) && Mathf.Abs((ammoSpawn.transform.position - hit.point).magnitude) >= 0.6f)
             {
                 direction = hit.point - ammoSpawn.transform.position;
             }

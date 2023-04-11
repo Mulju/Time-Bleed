@@ -1,22 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FishNet.Object;
 
-public class AmmoController : NetworkBehaviour
+public class AmmoController : MonoBehaviour
 {
     public Rigidbody rb;
 
     public float timeSlowed;
     public float timeNotSlowed;
 
-    private float speed;
+    public float speed;
 
     private Vector3 objHitByRaycast;
     public Vector3 direction;
     public GameObject shooter;
 
-    private bool sphere;
+    private bool collide;
 
     [SerializeField] private GameObject bulletHole;
     private RaycastHit raycastHit;
@@ -26,19 +25,19 @@ public class AmmoController : NetworkBehaviour
     {
         timeSlowed = 0.2f;
         timeNotSlowed = 100f;
-        speed = timeNotSlowed;
+        speed = timeSlowed;
 
         CheckForCollisions();
     }
 
     private void FixedUpdate()
     {
-        if (sphere)
+        if (collide)
         {
-            if (Mathf.Abs((direction * speed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - objHitByRaycast).magnitude))
+            if (Mathf.Abs((direction * timeNotSlowed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - objHitByRaycast).magnitude))
             {
-                CheckForCollisions();
                 rb.MovePosition(objHitByRaycast);
+                CheckForCollisions();
             }
             else
             {
@@ -48,6 +47,7 @@ public class AmmoController : NetworkBehaviour
         else
         {
             rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+            CheckForCollisions();
         }
 
         speed = timeNotSlowed;
@@ -65,11 +65,11 @@ public class AmmoController : NetworkBehaviour
         {
             raycastHit = hit;
             objHitByRaycast = hit.point;
-            sphere = true;
+            collide = true;
         }
         else
         {
-            sphere = false;
+            collide = false;
         }
     }
 
@@ -77,9 +77,6 @@ public class AmmoController : NetworkBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (!base.IsServer)
-                return;
-
             PlayerEntity player = other.GetComponent<PlayerEntity>();
             player.Hit(other.gameObject, shooter);
             Destroy(this.gameObject);
@@ -107,7 +104,7 @@ public class AmmoController : NetworkBehaviour
             speed = timeSlowed;
         }
 
-        sphere = false;
+        collide = false;
     }
 
     private void OnTriggerExit(Collider other)
@@ -115,10 +112,6 @@ public class AmmoController : NetworkBehaviour
         if (other.CompareTag("TimeSphere"))
         {
             speed = timeNotSlowed;
-
-            // BUGIBUGIBUGI t�t� ei ajeta kun pelaajan timesphere deaktivoidaan
-            // Ammukset ei pys�hdy seuraavan time spheren reunalle oikein.
-            // Fixed ?? kai
             CheckForCollisions();
         }
     }
