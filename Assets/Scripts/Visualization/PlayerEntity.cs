@@ -43,7 +43,7 @@ public class PlayerEntity : NetworkBehaviour
     private Camera playerCamera;
     PlayerManager playerManager;
 
-    private Data.Player player;
+    private string playerName;
     [SerializeField] public TextMeshPro tmpPlayerName;
 
     public override void OnStartClient()
@@ -51,14 +51,11 @@ public class PlayerEntity : NetworkBehaviour
         base.OnStartClient();
         if (base.IsServer)
         {
-            player = GameObject.FindGameObjectWithTag("ClientGameManager").GetComponent<ClientGameManager>().playerData;
-            player.health = 100;
-            player.playerObject = gameObject;
-            player.connection = GetComponent<NetworkObject>().Owner;
-
-            tmpPlayerName.text = player.name;
+            playerName = GameObject.FindGameObjectWithTag("ClientGameManager").GetComponent<ClientGameManager>().playerName;
+            tmpPlayerName.text = playerName;
 
             playerManager = PlayerManager.instance;
+            Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
             int id = gameObject.GetInstanceID();
             Debug.Log("Player ID: " + id);
 
