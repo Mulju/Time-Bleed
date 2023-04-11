@@ -185,6 +185,7 @@ MonoBehaviour:
   lookXLimit: 45
   canMove: 1
   cameraYOffset: 0.4
+  playerName: 
   tmpPlayerName: {fileID: 2372661360542935777}
   debugConsole: {fileID: 9168593485926318496}
 --- !u!1 &2472639725123539552
@@ -196,8 +197,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 270671906995910440}
-  - component: {fileID: 506885201613974981}
-  - component: {fileID: 4793258264244689978}
   m_Layer: 0
   m_Name: AmmoSpawn
   m_TagString: Ammo
@@ -220,32 +219,6 @@ Transform:
   m_Father: {fileID: 6930692056177264275}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &506885201613974981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2472639725123539552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7617815e89d4dbf479791f6970f8080f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isInsideTimeField: 0
---- !u!65 &4793258264244689978
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2472639725123539552}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2698213798680177080
 GameObject:
   m_ObjectHideFlags: 0
