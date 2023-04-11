@@ -342,8 +342,8 @@ public class PlayerEntity : NetworkBehaviour
         if (other.CompareTag("Ammo"))
         {
             AmmoController ammo = other.GetComponent<AmmoController>();
-            PlayerEntity player = other.GetComponent<PlayerEntity>();
-            player.Hit(other.gameObject, ammo.shooter);
+            PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
+            player.Hit(gameObject, ammo.shooter);
             Destroy(other.gameObject);
         }
     }
