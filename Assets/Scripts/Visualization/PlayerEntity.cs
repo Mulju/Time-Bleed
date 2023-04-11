@@ -169,18 +169,19 @@ public class PlayerEntity : NetworkBehaviour
         if (Input.GetKey(KeyCode.Mouse0) && ammoLeft > 0 && shootSpeed >= 0.1f && reloadTime >= 1)
         {
             Vector3 direction;
-            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, Mathf.Infinity) && Mathf.Abs((ammoSpawn.transform.position - hit.point).magnitude) >= 0.6f)
-            {
-                direction = hit.point - ammoSpawn.transform.position;
-            }
-            else
-            {
-                direction = ammoSpawn.transform.forward;
-            }
+            //if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, Mathf.Infinity) && Mathf.Abs((ammoSpawn.transform.position - hit.point).magnitude) >= 0.6f)
+            //{
+            //    direction = hit.point - ammoSpawn.transform.position;
+            //}
+            //else
+            //{
+            //    direction = ammoSpawn.transform.forward;
+            //}
+            //direction = direction.normalized;
 
-            direction = direction.normalized;
+            direction = (playerCamera.transform.forward);
 
-            ShootServer(gameObject, direction);
+            ShootServer(gameObject, direction, playerCamera.transform.position);
             shootSpeed = 0;
             ammoLeft -= 1;
         }
@@ -297,18 +298,40 @@ public class PlayerEntity : NetworkBehaviour
 
 
     [ServerRpc]
-    public void ShootServer(GameObject shooter, Vector3 direction)
+    public void ShootServer(GameObject shooter, Vector3 direction, Vector3 startPos)
     {
-        Shoot(shooter, direction);
+        Shoot(shooter, direction, startPos);
     }
 
     [ObserversRpc]
-    public void Shoot(GameObject shooter, Vector3 direction)
+    public void Shoot(GameObject shooter, Vector3 direction, Vector3 startPos)
     {
-        GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
-        ammoInstance.GetComponent<AmmoController>().direction = direction;
-        ammoInstance.GetComponent<AmmoController>().shooter = shooter;
-        Destroy(ammoInstance, 120);
+        if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
+        {
+            if (hit.collider.CompareTag("TimeSphere"))
+            {
+                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
+                ammoInstance.GetComponent<AmmoController>().direction = direction;
+                ammoInstance.GetComponent<AmmoController>().shooter = shooter;
+                Destroy(ammoInstance, 120);
+            }
+            else
+            {
+                // bullet holet, hit() jne...
+                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
+                ammoInstance.GetComponent<AmmoController>().direction = direction;
+                ammoInstance.GetComponent<AmmoController>().shooter = shooter;
+                Destroy(ammoInstance, 2);
+            }
+           
+        }
+
+
+
+        //GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
+        //ammoInstance.GetComponent<AmmoController>().direction = direction;
+        //ammoInstance.GetComponent<AmmoController>().shooter = shooter;
+        //Destroy(ammoInstance, 120);
     }
 
     [ServerRpc]
