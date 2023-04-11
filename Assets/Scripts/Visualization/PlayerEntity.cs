@@ -44,20 +44,26 @@ public class PlayerEntity : NetworkBehaviour
     PlayerManager playerManager;
 
     private string playerName;
-    [SerializeField] public TextMeshPro tmpPlayerName;
+    [SerializeField] private TextMeshPro tmpPlayerName;
+    [SerializeField] private TextMeshPro debugConsole;
 
     public override void OnStartClient()
     {
         base.OnStartClient();
         if (base.IsServer)
         {
-            playerName = GameObject.FindGameObjectWithTag("ClientGameManager").GetComponent<ClientGameManager>().playerName;
-            tmpPlayerName.text = playerName;
+            playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
+            if(playerName != null)
+            {
+                tmpPlayerName.text = playerName;
+            }
 
             playerManager = PlayerManager.instance;
             Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
             int id = gameObject.GetInstanceID();
             Debug.Log("Player ID: " + id);
+
+            debugConsole.text = "Player ID: " + id; 
 
             playerManager.players.Add(id, player);
         }
