@@ -51,18 +51,18 @@ public class PlayerEntity : NetworkBehaviour
         base.OnStartClient();
         if (base.IsServer)
         {
-            player = GameObject.FindGameObjectWithTag("ClientGameManager").GetComponent<ClientGameManager>().playerData;
-            player.health = 100;
-            player.playerObject = gameObject;
-            player.connection = GetComponent<NetworkObject>().Owner;
+            //player = GameObject.FindGameObjectWithTag("ClientGameManager").GetComponent<ClientGameManager>().playerData;
+            //player.health = 100;
+            //player.playerObject = gameObject;
+            //player.connection = GetComponent<NetworkObject>().Owner;
 
-            tmpPlayerName.text = player.name;
+            //tmpPlayerName.text = player.name;
 
-            playerManager = PlayerManager.instance;
-            int id = gameObject.GetInstanceID();
-            Debug.Log("Player ID: " + id);
+            //playerManager = PlayerManager.instance;
+            //int id = gameObject.GetInstanceID();
+            //Debug.Log("Player ID: " + id);
 
-            playerManager.players.Add(id, player);
+            //playerManager.players.Add(id, player);
         }
         if (base.IsOwner)
         {
