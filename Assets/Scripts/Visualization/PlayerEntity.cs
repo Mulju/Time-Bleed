@@ -90,18 +90,18 @@ public class PlayerEntity : NetworkBehaviour
     public void UpdateNameServer(PlayerEntity script, string name)
     {
         script.playerName = name;
-        //UpdateName(name);
+        UpdateName(script, name);
     }
 
     [ObserversRpc]
-    public void UpdateName(string name)
+    public void UpdateName(PlayerEntity script, string name)
     {
-        tmpPlayerName.text = name;
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        script.tmpPlayerName.text = name;
+        /*GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach(GameObject p in players)
         {
             p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
-        }
+        }*/
     }
 
     [ServerRpc(RequireOwnership = false)]
