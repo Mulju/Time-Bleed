@@ -344,7 +344,12 @@ public class PlayerEntity : NetworkBehaviour
         {
             AmmoController ammo = other.GetComponent<AmmoController>();
             PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
-            player.Hit(gameObject, ammo.shooter);
+
+            if (base.IsOwner)
+            {
+                player.Hit(gameObject, ammo.shooter);
+            }
+
             Destroy(other.gameObject);
         }
     }
