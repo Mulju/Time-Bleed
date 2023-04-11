@@ -37,23 +37,54 @@ public class AmmoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (collide)
+        if (speed == timeNotSlowed)
         {
-            if (Mathf.Abs((direction * timeNotSlowed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - objHitByRaycast).magnitude))
+            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
             {
-                rb.MovePosition(objHitByRaycast);
-                CheckForCollisions();
+                if (hit.collider.CompareTag("TimeSphere"))
+                {
+                    transform.position = hit.point;
+                }
+                else if (hit.collider.CompareTag("Player"))
+                {
+                    //hit.collider.GetComponent<PlayerEntity>().Hit(hit.collider.gameObject, shooter);
+                    Destroy(this.gameObject);
+                }
+                else
+                {
+                    GameObject instantiatedHole = Instantiate(bulletHole, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
+                    Destroy(instantiatedHole, 10);
+                    Destroy(this.gameObject);
+                }
             }
             else
             {
-                rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+                Destroy(this.gameObject);
             }
         }
-        else
-        {
-            rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
-            CheckForCollisions();
-        }
+
+
+
+
+        rb.MovePosition(transform.position + direction * timeSlowed * Time.deltaTime);
+
+        //if (collide)
+        //{
+        //    if (Mathf.Abs((direction * timeNotSlowed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - objHitByRaycast).magnitude))
+        //    {
+        //        rb.MovePosition(objHitByRaycast);
+        //        CheckForCollisions();
+        //    }
+        //    else
+        //    {
+        //        rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+        //    }
+        //}
+        //else
+        //{
+        //    rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+        //    CheckForCollisions();
+        //}
     }
 
     private void CheckForCollisions()
@@ -68,6 +99,7 @@ public class AmmoController : MonoBehaviour
         {
             collide = false;
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -101,25 +133,13 @@ public class AmmoController : MonoBehaviour
     {
         if (other.CompareTag("TimeSphere"))
         {
-            speed = timeNotSlowed;
             CheckForCollisions();
-
-            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
-            {
-                if (hit.collider.CompareTag("TimeSphere"))
-                {
-                    transform.position = hit.point;
-                }
-                else
-                {
-                    // bullet holet, hit() jne...
-                    transform.position = hit.point;
-                }
-            }
-                //Shoot(shooter, direction, transform.position);
-                //Destroy(this.gameObject);
+            speed = timeNotSlowed;
         }
     }
+
+
+
 
     public void Shoot(GameObject shooter, Vector3 direction, Vector3 startPos)
     {
