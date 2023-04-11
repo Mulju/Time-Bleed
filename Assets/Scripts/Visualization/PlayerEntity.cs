@@ -64,7 +64,7 @@ public class PlayerEntity : NetworkBehaviour
             if (playerName != null)
             {
                 tmpPlayerName.text = playerName;
-                UpdateNameServer(playerName);
+                UpdateNameServer(this, playerName);
             }
         }
         else
@@ -83,30 +83,25 @@ public class PlayerEntity : NetworkBehaviour
             debugConsole.text = "Player ID: " + id;
 
             playerManager.players.Add(id, player);
-
-            if (playerName != null)
-            {
-                tmpPlayerName.text = playerName;
-                UpdateNameServer(playerName);
-            }
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void UpdateNameServer(string name)
+    [ServerRpc]
+    public void UpdateNameServer(PlayerEntity script, string name)
     {
-        UpdateName(name);
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach(GameObject p in players)
-        {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
-        }
+        script.name = name;
+        //UpdateName(name);
     }
 
     [ObserversRpc]
     public void UpdateName(string name)
     {
         tmpPlayerName.text = name;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach(GameObject p in players)
+        {
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]
