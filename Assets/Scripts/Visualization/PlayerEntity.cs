@@ -1,4 +1,5 @@
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -43,7 +44,7 @@ public class PlayerEntity : NetworkBehaviour
     private Camera playerCamera;
     PlayerManager playerManager;
 
-    private string playerName;
+    [SyncVar] private string playerName;
     [SerializeField] private TextMeshPro tmpPlayerName;
     [SerializeField] private TextMeshPro debugConsole;
 
