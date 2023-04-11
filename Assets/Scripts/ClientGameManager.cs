@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ClientGameManager : MonoBehaviour
 {
-    public Data.Player playerData = new Data.Player();
+    public string playerName;
 
     private void Awake()
     {

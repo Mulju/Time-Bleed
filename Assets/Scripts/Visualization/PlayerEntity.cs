@@ -1,4 +1,5 @@
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -43,27 +44,26 @@ public class PlayerEntity : NetworkBehaviour
     private Camera playerCamera;
     PlayerManager playerManager;
 
-    private Data.Player player;
-    [SerializeField] public TextMeshPro tmpPlayerName;
+    [SyncVar] private string playerName;
+    [SerializeField] private TextMeshPro tmpPlayerName;
+    [SerializeField] private TextMeshPro debugConsole;
 
     public override void OnStartClient()
     {
         base.OnStartClient();
         if (base.IsServer)
         {
-            //player = GameObject.FindGameObjectWithTag("ClientGameManager").GetComponent<ClientGameManager>().playerData;
-            //player.health = 100;
-            //player.playerObject = gameObject;
-            //player.connection = GetComponent<NetworkObject>().Owner;
 
-            //tmpPlayerName.text = player.name;
+            playerManager = PlayerManager.instance;
+            Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
+            int id = gameObject.GetInstanceID();
+            Debug.Log("Player ID: " + id);
 
-            //playerManager = PlayerManager.instance;
-            //int id = gameObject.GetInstanceID();
-            //Debug.Log("Player ID: " + id);
+            debugConsole.text = "Player ID: " + id;
 
-            //playerManager.players.Add(id, player);
+            playerManager.players.Add(id, player);
         }
+
         if (base.IsOwner)
         {
             // Sis�lt��k� "player" nyt kopion "playerData"sta, vai onko se referenssi t�h�n? Vanha syntaksi alla
@@ -72,6 +72,12 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
+
+            playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
+            if (playerName != null)
+            {
+                tmpPlayerName.text = playerName;
+            }
         }
         else
         {
@@ -82,8 +88,6 @@ public class PlayerEntity : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter)
     {
-        if (!base.IsOwner)
-            return;
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), 50, shooter.GetInstanceID());
