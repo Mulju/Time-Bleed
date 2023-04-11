@@ -9,7 +9,7 @@ public class AmmoController : MonoBehaviour
     public float timeSlowed;
     public float timeNotSlowed;
 
-    public float speed;
+    private float speed;
 
     private Vector3 objHitByRaycast;
     public Vector3 direction;
