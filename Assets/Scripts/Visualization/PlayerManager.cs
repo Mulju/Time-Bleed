@@ -3,6 +3,7 @@ using UnityEngine;
 using FishNet.Object;
 using FishNet.Connection;
 
+//This is made by Bobsi Unity - Youtube
 public class PlayerManager : NetworkBehaviour
 {
     public static PlayerManager instance;
@@ -27,23 +28,18 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    void PlayerKilled(int playerID, int shooterID)
+    void PlayerKilled(int playerID, int attackerID)
     {
-        Data.Player player = players[playerID];
-        Data.Player shooter = players[shooterID];
+        print("Player " + playerID.ToString() + " was killed by " + attackerID.ToString());
+        players[playerID].deaths++;
+        players[playerID].health = 100;
+        players[attackerID].kills++;
 
-        player.health = 100;
-        player.deaths++;
-
-        shooter.kills++;
-
-        Debug.Log("Player " + player.name + ", deaths: " + player.deaths + ", kills: " + player.kills);
-
-        RespawnPlayer(player.connection, player.playerObject, Random.Range(0, spawnPoints.Count));
+        RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, spawnPoints.Count));
     }
 
     [TargetRpc]
-    void RespawnPlayer(NetworkConnection connnection, GameObject player, int spawn)
+    void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn)
     {
         player.transform.position = spawnPoints[spawn].position;
     }
