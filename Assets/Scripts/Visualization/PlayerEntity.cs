@@ -44,7 +44,7 @@ public class PlayerEntity : NetworkBehaviour
     private Camera playerCamera;
     PlayerManager playerManager;
 
-    [SyncVar] private string playerName;
+    [SyncVar] public string playerName;
     [SerializeField] private TextMeshPro tmpPlayerName;
     [SerializeField] private TextMeshPro debugConsole;
 
