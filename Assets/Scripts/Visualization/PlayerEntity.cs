@@ -11,6 +11,7 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject ammoSpawn;
     public GameObject ammoPrefab;
     public GameObject timeField;
+    public GameObject bulletHole;
     [SerializeField] private GameObject chronade;
 
     public float timeSlow;
@@ -21,6 +22,7 @@ public class PlayerEntity : NetworkBehaviour
 
     private bool reloading;
     private bool timeFieldIsActive;
+    private bool isSlowed;
 
     private Vector3 timeFieldOriginalScale;
 
@@ -122,6 +124,7 @@ public class PlayerEntity : NetworkBehaviour
         reloadTime = 1;
 
         reloading = false;
+        isSlowed = false;
 
         timeFieldOriginalScale = timeField.transform.localScale;
         timeSlow = 1;
@@ -140,6 +143,7 @@ public class PlayerEntity : NetworkBehaviour
             return;
         }
         timeSlow = 1;
+        isSlowed = false;
     }
 
     void Update()
@@ -306,24 +310,34 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void Shoot(GameObject shooter, Vector3 direction, Vector3 startPos)
     {
-        if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
         {
-            if (hit.collider.CompareTag("TimeSphere"))
+            if (isSlowed)
+            {
+                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, startPos + direction, Quaternion.identity);
+                ammoInstance.GetComponent<AmmoController>().direction = direction;
+                ammoInstance.GetComponent<AmmoController>().shooter = shooter;
+                Destroy(ammoInstance, 120);
+            }
+            else if (hit.collider.CompareTag("TimeSphere"))
             {
                 GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 Destroy(ammoInstance, 120);
             }
+            else if (hit.collider.CompareTag("Player"))
+            {
+                if (base.IsOwner)
+                {
+                    Hit(hit.collider.gameObject, this.gameObject);
+                }
+            }
             else
             {
-                // bullet holet, hit() jne...
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
-                ammoInstance.GetComponent<AmmoController>().direction = direction;
-                ammoInstance.GetComponent<AmmoController>().shooter = shooter;
-                Destroy(ammoInstance, 2);
+                GameObject instantiatedHole = Instantiate(bulletHole, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
+                Destroy(instantiatedHole, 10);
             }
-           
         }
 
 
@@ -353,6 +367,7 @@ public class PlayerEntity : NetworkBehaviour
         if (other.CompareTag("TimeSphere") && !other.transform.parent.CompareTag("Player"))
         {
             timeSlow = 0.25f;
+            isSlowed = true;
         }
     }
 
@@ -363,7 +378,7 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ammo"))
+        if (other.CompareTag("Ammo") && other.GetComponent<AmmoController>().shooter != this.gameObject)
         {
             AmmoController ammo = other.GetComponent<AmmoController>();
             PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
