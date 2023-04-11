@@ -89,7 +89,7 @@ public class PlayerEntity : NetworkBehaviour
     [ServerRpc]
     public void UpdateNameServer(PlayerEntity script, string name)
     {
-        script.name = name;
+        script.playerName = name;
         //UpdateName(name);
     }
 
