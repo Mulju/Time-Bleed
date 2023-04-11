@@ -77,12 +77,25 @@ public class PlayerEntity : NetworkBehaviour
             if (playerName != null)
             {
                 tmpPlayerName.text = playerName;
+                UpdateNameServer(this, playerName);
             }
         }
         else
         {
             //gameObject.GetComponent<PlayerEntity>().enabled = false;
         }
+    }
+
+    [ServerRpc]
+    public void UpdateNameServer(PlayerEntity script, string name)
+    {
+        UpdateName(script, name);
+    }
+
+    [ObserversRpc]
+    public void UpdateName(PlayerEntity script, string name)
+    {
+        tmpPlayerName.text = name;
     }
 
     [ServerRpc(RequireOwnership = false)]
