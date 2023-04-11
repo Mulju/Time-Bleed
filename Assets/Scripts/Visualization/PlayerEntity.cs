@@ -61,13 +61,11 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
-
+            
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
             {
-                PlayerNameTracker.SetName(playerName);
-                //tmpPlayerName.text = playerName;
-                //UpdateNameServer(this, playerName);
+                UpdateNameServer(playerName);
             }
         }
         else
@@ -77,34 +75,32 @@ public class PlayerEntity : NetworkBehaviour
 
         if (base.IsServer)
         {
-
             playerManager = PlayerManager.instance;
             Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
             int id = gameObject.GetInstanceID();
             Debug.Log("Player ID: " + id);
-
             debugConsole.text = "Player ID: " + id;
 
             playerManager.players.Add(id, player);
         }
     }
 
-    [ServerRpc]
-    public void UpdateNameServer(PlayerEntity script, string name)
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateNameServer(string name)
     {
-        script.playerName = name;
-        UpdateName(script, name);
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach(GameObject p in players)
+        {
+            p.GetComponent<PlayerEntity>().playerName = p.GetComponent<PlayerEntity>().playerName;
+        }
+
+        UpdateName(name);
     }
 
     [ObserversRpc]
-    public void UpdateName(PlayerEntity script, string name)
+    public void UpdateName(string name)
     {
-        script.tmpPlayerName.text = name;
-        /*GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach(GameObject p in players)
-        {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
-        }*/
+        tmpPlayerName.text = name;
     }
 
     [ServerRpc(RequireOwnership = false)]
