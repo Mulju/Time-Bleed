@@ -103,6 +103,44 @@ public class AmmoController : MonoBehaviour
         {
             speed = timeNotSlowed;
             CheckForCollisions();
+
+            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
+            {
+                if (hit.collider.CompareTag("TimeSphere"))
+                {
+                    transform.position = hit.point;
+                }
+                else
+                {
+                    // bullet holet, hit() jne...
+                    transform.position = hit.point;
+                }
+            }
+                //Shoot(shooter, direction, transform.position);
+                //Destroy(this.gameObject);
+        }
+    }
+
+    public void Shoot(GameObject shooter, Vector3 direction, Vector3 startPos)
+    {
+        if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
+        {
+            if (hit.collider.CompareTag("TimeSphere"))
+            {
+                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
+                ammoInstance.GetComponent<AmmoController>().direction = direction;
+                ammoInstance.GetComponent<AmmoController>().shooter = shooter;
+                Destroy(ammoInstance, 120);
+            }
+            else
+            {
+                // bullet holet, hit() jne...
+                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
+                ammoInstance.GetComponent<AmmoController>().direction = direction;
+                ammoInstance.GetComponent<AmmoController>().shooter = shooter;
+                Destroy(ammoInstance, 2);
+            }
+
         }
     }
 }
