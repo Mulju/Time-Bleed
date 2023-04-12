@@ -1,3 +1,4 @@
+using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using System.Collections;
@@ -13,12 +14,12 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject timeField;
     public GameObject bulletHole;
     public GameObject timeBindSkill;
+    public GameObject timeBindSphere;
     [SerializeField] private GameObject chronade;
 
     public float timeSlow;
     public float shootSpeed;
     public float reloadTime;
-    public float timeBindTimer;
 
     public int maxAmmo, ammoLeft;
 
@@ -50,10 +51,15 @@ public class PlayerEntity : NetworkBehaviour
     [SyncVar] public string playerName;
     public TextMeshPro tmpPlayerName;
     [SerializeField] private TextMeshPro debugConsole;
+    public string newPlayersName;
 
     public override void OnStartClient()
     {
+        // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
+        // different behaviours are done.
         base.OnStartClient();
+        
+        // Only run if you are the owner of this object. Skip for all other player entities in the scene.
         if (base.IsOwner)
         {
             // Sis�lt��k� "player" nyt kopion "playerData"sta, vai onko se referenssi t�h�n? Vanha syntaksi alla
@@ -66,10 +72,12 @@ public class PlayerEntity : NetworkBehaviour
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
             {
-                UpdateNameServer(playerName);
+                //PlayerNameTracker.SetName(playerName);
+                //UpdateNameServer(playerName);
             }
         }
 
+        // This part is run for all the entities in the scene if you are the server.
         if (base.IsServer)
         {
             playerManager = PlayerManager.instance;
@@ -79,25 +87,26 @@ public class PlayerEntity : NetworkBehaviour
             debugConsole.text = "Player ID: " + id;
 
             playerManager.players.Add(id, player);
-
+            /*
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
             {
                 UpdateNameServer(playerName);
             }
+            */
         }
     }
 
-    [ServerRpc]
+
+    [ServerRpc(RequireOwnership = false)]
     public void UpdateNameServer(string name)
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in players)
         {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = /*p.GetComponent<PlayerEntity>().playerName*/ name;
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
+            UpdateName(name);
         }
-
-        UpdateName(name);
     }
 
     [ObserversRpc]
@@ -108,7 +117,7 @@ public class PlayerEntity : NetworkBehaviour
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach(GameObject p in players)
         {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = /*p.GetComponent<PlayerEntity>().playerName*/ name;
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
         }
     }
 
@@ -124,7 +133,6 @@ public class PlayerEntity : NetworkBehaviour
     {
         if (base.IsOwner)
         {
-            Debug.Log("ammohit");
             Hit(hitPlayer, shooter);
         }
     }
@@ -136,8 +144,6 @@ public class PlayerEntity : NetworkBehaviour
         ammoLeft = maxAmmo;
         shootSpeed = 1;
         reloadTime = 1;
-
-        timeBindTimer = 2;
 
         reloading = false;
 
@@ -165,11 +171,6 @@ public class PlayerEntity : NetworkBehaviour
         if (!base.IsOwner)
         {
             return;
-        }
-
-        if(timeBindTimer < 2f)
-        {
-            timeBindTimer += Time.deltaTime;
         }
 
         if (shootSpeed < 1)
@@ -228,15 +229,22 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.G))
-        {   
+        {
             ThrowGrenadeServer();
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && timeBindTimer >= 2f)
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            // cooldown
-            //timeBindTimer = 0;
-            TimeBindServer();
+            // Press Esc for pause screen and to lock/unlock cursor
+            Cursor.visible = !Cursor.visible;
+            if(Cursor.visible)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 
@@ -285,7 +293,7 @@ public class PlayerEntity : NetworkBehaviour
         characterController.Move(moveDirection * Time.deltaTime * timeSlow);
 
         // Player and Camera rotation
-        if (canMove && playerCamera != null)
+        if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
@@ -360,7 +368,6 @@ public class PlayerEntity : NetworkBehaviour
             {
                 if (base.IsOwner)
                 {
-                    Debug.Log("ammohit");
                     Hit(hit.collider.gameObject, this.gameObject);
                 }
             }
@@ -389,7 +396,7 @@ public class PlayerEntity : NetworkBehaviour
     public void TimeBind()
     {
         GameObject timeBindInstance = Instantiate(timeBindSkill, ammoSpawn.transform.position, Quaternion.identity);
-        timeBindInstance.GetComponent<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
+        timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
         Destroy(timeBindInstance, 10);
     }
 
@@ -422,7 +429,7 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ammo") && other.GetComponent<AmmoController>()?.shooter != this.gameObject)
+        if (other.CompareTag("Ammo") && other.GetComponent<AmmoController>().shooter != this.gameObject)
         {
             AmmoController ammo = other.GetComponent<AmmoController>();
             PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
