@@ -7,6 +7,7 @@ public class HealthPackController : NetworkBehaviour
 {
     [SerializeField] private int healthAmount = 50;
     [SerializeField] private float respawnTime = 5f;
+    PlayerManager playerManager;
 
     private void OnTriggerEnter(Collider col)
     {
@@ -15,8 +16,8 @@ public class HealthPackController : NetworkBehaviour
 
         if (col.CompareTag("Player"))
         {
-            PlayerManager pm = PlayerManager.instance;
-            pm.RsetoreHealth(col.GetInstanceID());
+            playerManager = PlayerManager.instance;
+            playerManager.RestoreHealth(col.GetInstanceID());
             gameObject.SetActive(false);
             StartCoroutine(RespawnHealthPack());
         }

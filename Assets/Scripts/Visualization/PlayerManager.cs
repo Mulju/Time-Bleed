@@ -46,7 +46,7 @@ public class PlayerManager : NetworkBehaviour
         player.transform.position = spawnPoints[spawn].position;
     }
 
-    void RsetoreHealth(int playerID)
+    public void RestoreHealth(int playerID)
     {
         if (players[playerID].health < 100)
         {
