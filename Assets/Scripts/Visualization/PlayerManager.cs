@@ -6,6 +6,9 @@ using FishNet.Connection;
 public class PlayerManager : NetworkBehaviour
 {
     public static PlayerManager instance;
+
+    [SerializeField] private MenuControl menuControl;
+
     private void Awake()
     {
         instance = this;
@@ -46,6 +49,8 @@ public class PlayerManager : NetworkBehaviour
     public void ChangeCursorLock()
     {
         Cursor.visible = !Cursor.visible;
+        menuControl.OpenCloseMenu();
+
         if (Cursor.visible)
         {
             Cursor.lockState = CursorLockMode.None;

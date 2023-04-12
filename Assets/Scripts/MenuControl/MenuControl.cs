@@ -11,7 +11,8 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private TMP_Dropdown resolutionsDropdown;
 
     private string currentScene;
-    private GameObject clientGameManager;
+
+    [SerializeField] private GameObject pauseMenu;
 
     void Start()
     {
@@ -20,9 +21,6 @@ public class MenuControl : MonoBehaviour
         currentScene = SceneManager.GetActiveScene().name;
         if (currentScene == "MainMenu")
         {
-            // Fetch ClientGameManager
-            clientGameManager = GameObject.FindGameObjectWithTag("ClientGameManager");
-
             // Vain main menussa on resoluution vaihto mahdollisuus
             resolutionsDropdown.ClearOptions();
             List<string> options = new List<string>();
@@ -61,9 +59,18 @@ public class MenuControl : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    public void StoreName(string name)
+    public void OpenCloseMenu()
     {
-        // Stores the players name
-        clientGameManager.GetComponent<ClientGameManager>().playerName = name;
+        if(currentScene == "TimeBleed")
+        {
+            if(pauseMenu.activeSelf)
+            {
+                pauseMenu.SetActive(false);
+            }
+            else
+            {
+                pauseMenu.SetActive(true);
+            }
+        }
     }
 }

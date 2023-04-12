@@ -70,12 +70,13 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
             
+            /*
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
             {
                 //PlayerNameTracker.SetName(playerName);
                 //UpdateNameServer(playerName);
-            }
+            }*/
         }
 
         // This part is run for all the entities in the scene if you are the server.
@@ -98,7 +99,7 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-
+    /*
     [ServerRpc(RequireOwnership = false)]
     public void UpdateNameServer(string name)
     {
@@ -120,7 +121,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
         }
-    }
+    }*/
 
     [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter)
