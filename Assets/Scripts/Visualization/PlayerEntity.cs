@@ -47,7 +47,7 @@ public class PlayerEntity : NetworkBehaviour
     PlayerManager playerManager;
 
     [SyncVar] public string playerName;
-    [SyncVar] public TextMeshPro tmpPlayerName;
+    public TextMeshPro tmpPlayerName;
     [SerializeField] private TextMeshPro debugConsole;
 
     public override void OnStartClient()
@@ -94,7 +94,7 @@ public class PlayerEntity : NetworkBehaviour
             p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
         }
 
-        //UpdateName(name);
+        UpdateName(name);
     }
 
     [ObserversRpc]
