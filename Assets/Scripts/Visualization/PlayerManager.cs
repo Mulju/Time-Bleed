@@ -46,6 +46,18 @@ public class PlayerManager : NetworkBehaviour
         player.transform.position = spawnPoints[spawn].position;
     }
 
+    public void RestoreHealth(int playerID)
+    {
+        if (players[playerID].health < 100)
+        {
+            players[playerID].health += 50;
+            if (players[playerID].health > 100)
+            {
+                players[playerID].health = 100;
+            }
+        }
+    }
+
     public void ChangeCursorLock()
     {
         Cursor.visible = !Cursor.visible;
