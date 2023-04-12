@@ -187,7 +187,7 @@ public class PlayerEntity : NetworkBehaviour
 
             direction = (playerCamera.transform.forward);
 
-            ShootServer(gameObject, direction, playerCamera.transform.position);
+            ShootServer(gameObject);
             shootSpeed = 0;
             ammoLeft -= 1;
         }
@@ -304,17 +304,19 @@ public class PlayerEntity : NetworkBehaviour
 
 
     [ServerRpc]
-    public void ShootServer(GameObject shooter, Vector3 direction, Vector3 startPos)
+    public void ShootServer(GameObject shooter)
     {
-        Shoot(shooter, direction, startPos);
+        Shoot(shooter);
     }
 
     [ObserversRpc]
-    public void Shoot(GameObject shooter, Vector3 direction, Vector3 startPos)
+    public void Shoot(GameObject shooter)
     {
-        startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
+        Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
+        Vector3 direction = shooter.gameObject.transform.forward;
 
-        if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
+
+        if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
         {
             if (isSlowed)
             {
