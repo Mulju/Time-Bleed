@@ -1,3 +1,4 @@
+using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using System.Collections;
@@ -49,10 +50,15 @@ public class PlayerEntity : NetworkBehaviour
     [SyncVar] public string playerName;
     public TextMeshPro tmpPlayerName;
     [SerializeField] private TextMeshPro debugConsole;
+    public string newPlayersName;
 
     public override void OnStartClient()
     {
+        // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
+        // different behaviours are done.
         base.OnStartClient();
+        
+        // Only run if you are the owner of this object. Skip for all other player entities in the scene.
         if (base.IsOwner)
         {
             // Sis�lt��k� "player" nyt kopion "playerData"sta, vai onko se referenssi t�h�n? Vanha syntaksi alla
@@ -65,7 +71,8 @@ public class PlayerEntity : NetworkBehaviour
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
             {
-                UpdateNameServer(playerName);
+                PlayerNameTracker.SetName(playerName);
+                //UpdateNameServer(playerName);
             }
         }
         else
@@ -73,6 +80,7 @@ public class PlayerEntity : NetworkBehaviour
             //gameObject.GetComponent<PlayerEntity>().enabled = false;
         }
 
+        // This part is run for all the entities in the scene if you are the server.
         if (base.IsServer)
         {
             playerManager = PlayerManager.instance;
@@ -82,25 +90,26 @@ public class PlayerEntity : NetworkBehaviour
             debugConsole.text = "Player ID: " + id;
 
             playerManager.players.Add(id, player);
-
+            /*
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
             {
                 UpdateNameServer(playerName);
             }
+            */
         }
     }
 
-    [ServerRpc]
+
+    [ServerRpc(RequireOwnership = false)]
     public void UpdateNameServer(string name)
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in players)
         {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = /*p.GetComponent<PlayerEntity>().playerName*/ name;
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
+            UpdateName(name);
         }
-
-        UpdateName(name);
     }
 
     [ObserversRpc]
@@ -111,7 +120,7 @@ public class PlayerEntity : NetworkBehaviour
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach(GameObject p in players)
         {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = /*p.GetComponent<PlayerEntity>().playerName*/ name;
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
         }
     }
 
