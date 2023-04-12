@@ -6,6 +6,9 @@ using FishNet.Connection;
 public class PlayerManager : NetworkBehaviour
 {
     public static PlayerManager instance;
+
+    [SerializeField] private MenuControl menuControl;
+
     private void Awake()
     {
         instance = this;
@@ -43,9 +46,23 @@ public class PlayerManager : NetworkBehaviour
         player.transform.position = spawnPoints[spawn].position;
     }
 
+    public void RestoreHealth(int playerID)
+    {
+        if (players[playerID].health < 100)
+        {
+            players[playerID].health += 50;
+            if (players[playerID].health > 100)
+            {
+                players[playerID].health = 100;
+            }
+        }
+    }
+
     public void ChangeCursorLock()
     {
         Cursor.visible = !Cursor.visible;
+        menuControl.OpenCloseMenu();
+
         if (Cursor.visible)
         {
             Cursor.lockState = CursorLockMode.None;
