@@ -155,9 +155,6 @@ public class PlayerEntity : NetworkBehaviour
         timeFieldIsActive = true;
 
         characterController = GetComponent<CharacterController>();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private void FixedUpdate()
@@ -251,15 +248,7 @@ public class PlayerEntity : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Press Esc for pause screen and to lock/unlock cursor
-            Cursor.visible = !Cursor.visible;
-            if(Cursor.visible)
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
+            playerManager.ChangeCursorLock();
         }
     }
 
