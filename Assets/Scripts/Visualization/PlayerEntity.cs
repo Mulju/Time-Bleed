@@ -13,7 +13,6 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject timeField;
     public GameObject bulletHole;
     public GameObject timeBindSkill;
-    public GameObject timeBindSphere;
     [SerializeField] private GameObject chronade;
 
     public float timeSlow;

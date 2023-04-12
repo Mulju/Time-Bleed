@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 187960124427144516}
   - component: {fileID: 2147091192152343831}
   - component: {fileID: 7645926696338265796}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ChronoGrenade
   m_TagString: ChronoGrenade
   m_Icon: {fileID: 0}
@@ -113,6 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chronadeEffect: {fileID: 7748674980550532577, guid: bd2717075eec42545b226cc8da6df8b0,
     type: 3}
+  ownerObject: {fileID: 0}
+  updateID: 0
 --- !u!54 &7645926696338265796
 Rigidbody:
   m_ObjectHideFlags: 0
