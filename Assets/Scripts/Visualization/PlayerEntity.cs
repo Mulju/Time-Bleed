@@ -97,7 +97,7 @@ public class PlayerEntity : NetworkBehaviour
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in players)
         {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = /*p.GetComponent<PlayerEntity>().playerName*/ name;
         }
 
         UpdateName(name);
@@ -111,7 +111,7 @@ public class PlayerEntity : NetworkBehaviour
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach(GameObject p in players)
         {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = /*p.GetComponent<PlayerEntity>().playerName*/ name;
         }
     }
 
