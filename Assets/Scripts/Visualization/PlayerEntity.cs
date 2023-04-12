@@ -48,7 +48,7 @@ public class PlayerEntity : NetworkBehaviour
     PlayerManager playerManager;
 
     [SyncVar] public string playerName;
-    [SerializeField] private TextMeshPro tmpPlayerName;
+    public TextMeshPro tmpPlayerName;
     [SerializeField] private TextMeshPro debugConsole;
 
     public override void OnStartClient()
@@ -79,16 +79,22 @@ public class PlayerEntity : NetworkBehaviour
             debugConsole.text = "Player ID: " + id;
 
             playerManager.players.Add(id, player);
+
+            playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
+            if (playerName != null)
+            {
+                UpdateNameServer(playerName);
+            }
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     public void UpdateNameServer(string name)
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach(GameObject p in players)
+        foreach (GameObject p in players)
         {
-            p.GetComponent<PlayerEntity>().playerName = p.GetComponent<PlayerEntity>().playerName;
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = /*p.GetComponent<PlayerEntity>().playerName*/ name;
         }
 
         UpdateName(name);
@@ -97,7 +103,13 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void UpdateName(string name)
     {
-        tmpPlayerName.text = name;
+        //tmpPlayerName.text = name;
+        
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach(GameObject p in players)
+        {
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = /*p.GetComponent<PlayerEntity>().playerName*/ name;
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]
