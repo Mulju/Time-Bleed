@@ -933,6 +933,7 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 795277248}
   _networkObjectCache: {fileID: 795277248}
+  menuControl: {fileID: 0}
   spawnPoints:
   - {fileID: 290631294}
   - {fileID: 1194533869}
@@ -1680,6 +1681,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2683121967844913841, guid: 0b650fca685f2eb41a86538aa883e4c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4393252309867130425, guid: 0b650fca685f2eb41a86538aa883e4c1,
         type: 3}
       propertyPath: m_AnchoredPosition.y
