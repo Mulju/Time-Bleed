@@ -18,6 +18,7 @@ public class PlayerEntity : NetworkBehaviour
     public float timeSlow;
     public float shootSpeed;
     public float reloadTime;
+    public float timeBindTimer;
 
     public int maxAmmo, ammoLeft;
 
@@ -136,6 +137,8 @@ public class PlayerEntity : NetworkBehaviour
         shootSpeed = 1;
         reloadTime = 1;
 
+        timeBindTimer = 2;
+
         reloading = false;
 
         timeFieldOriginalScale = timeField.transform.localScale;
@@ -162,6 +165,11 @@ public class PlayerEntity : NetworkBehaviour
         if (!base.IsOwner)
         {
             return;
+        }
+
+        if(timeBindTimer < 2f)
+        {
+            timeBindTimer += Time.deltaTime;
         }
 
         if (shootSpeed < 1)
@@ -220,8 +228,15 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.G))
-        {
+        {   
             ThrowGrenadeServer();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F) && timeBindTimer >= 2f)
+        {
+            // cooldown
+            //timeBindTimer = 0;
+            TimeBindServer();
         }
     }
 
@@ -374,7 +389,7 @@ public class PlayerEntity : NetworkBehaviour
     public void TimeBind()
     {
         GameObject timeBindInstance = Instantiate(timeBindSkill, ammoSpawn.transform.position, Quaternion.identity);
-        timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
+        timeBindInstance.GetComponent<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
         Destroy(timeBindInstance, 10);
     }
 
@@ -407,7 +422,7 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ammo") && other.GetComponent<AmmoController>().shooter != this.gameObject)
+        if (other.CompareTag("Ammo") && other.GetComponent<AmmoController>()?.shooter != this.gameObject)
         {
             AmmoController ammo = other.GetComponent<AmmoController>();
             PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
