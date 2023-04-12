@@ -19,33 +19,32 @@ public class MenuControl : MonoBehaviour
         resolutions = Screen.resolutions;
 
         currentScene = SceneManager.GetActiveScene().name;
-        if (currentScene == "MainMenu")
+        
+        // Vain main menussa on resoluution vaihto mahdollisuus
+        resolutionsDropdown.ClearOptions();
+        List<string> options = new List<string>();
+
+        int resolutionIndex = 0;
+        int i = 0;
+        foreach (Resolution resolution in resolutions)
         {
-            // Vain main menussa on resoluution vaihto mahdollisuus
-            resolutionsDropdown.ClearOptions();
-            List<string> options = new List<string>();
+            string option = resolution.width + " x " + resolution.height;
+            options.Add(option);
 
-            int resolutionIndex = 0;
-            int i = 0;
-            foreach (Resolution resolution in resolutions)
+            // Alla oleva if jotta valitaan sama resoluutio mikä käyttäjällä
+            // on tällä hetkellä koneessa valittuna
+            if (resolution.width == Screen.width &&
+                resolution.height == Screen.height)
             {
-                string option = resolution.width + " x " + resolution.height;
-                options.Add(option);
-
-                // Alla oleva if jotta valitaan sama resoluutio mikä käyttäjällä
-                // on tällä hetkellä koneessa valittuna
-                if (resolution.width == Screen.width &&
-                    resolution.height == Screen.height)
-                {
-                    resolutionIndex = i;
-                }
-                i++;
+                resolutionIndex = i;
             }
-
-            resolutionsDropdown.AddOptions(options);
-            resolutionsDropdown.value = resolutionIndex;
-            resolutionsDropdown.RefreshShownValue();
+            i++;
         }
+
+        resolutionsDropdown.AddOptions(options);
+        resolutionsDropdown.value = resolutionIndex;
+        resolutionsDropdown.RefreshShownValue();
+        
     }
 
     public void SetFullscreen(bool isFullscreen)

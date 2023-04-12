@@ -49,7 +49,6 @@ public class PlayerManager : NetworkBehaviour
     public void ChangeCursorLock()
     {
         Cursor.visible = !Cursor.visible;
-        menuControl.OpenCloseMenu();
 
         if (Cursor.visible)
         {

@@ -54,6 +54,8 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private TextMeshPro debugConsole;
     public string newPlayersName;
 
+    private MenuControl menuControl;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -156,6 +158,8 @@ public class PlayerEntity : NetworkBehaviour
         timeFieldIsActive = true;
 
         characterController = GetComponent<CharacterController>();
+
+        menuControl = GameObject.FindGameObjectWithTag("MenuControl").GetComponent<MenuControl>();
     }
 
     private void FixedUpdate()
@@ -250,6 +254,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             // Press Esc for pause screen and to lock/unlock cursor
             playerManager.ChangeCursorLock();
+            menuControl.OpenCloseMenu();
         }
     }
 
