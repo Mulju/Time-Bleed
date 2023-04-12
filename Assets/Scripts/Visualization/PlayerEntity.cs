@@ -85,7 +85,7 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     public void UpdateNameServer(string name)
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -100,7 +100,7 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void UpdateName(string name)
     {
-        tmpPlayerName.text = name;
+        //tmpPlayerName.text = name;
         
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach(GameObject p in players)
