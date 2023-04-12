@@ -72,7 +72,7 @@ public class PlayerEntity : NetworkBehaviour
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
             {
-                PlayerNameTracker.SetName(playerName);
+                //PlayerNameTracker.SetName(playerName);
                 //UpdateNameServer(playerName);
             }
         }
@@ -232,6 +232,20 @@ public class PlayerEntity : NetworkBehaviour
         {
             ThrowGrenadeServer();
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            // Press Esc for pause screen and to lock/unlock cursor
+            Cursor.visible = !Cursor.visible;
+            if(Cursor.visible)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
     }
 
     public bool IsMoving()
@@ -279,7 +293,7 @@ public class PlayerEntity : NetworkBehaviour
         characterController.Move(moveDirection * Time.deltaTime * timeSlow);
 
         // Player and Camera rotation
-        if (canMove && playerCamera != null)
+        if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
