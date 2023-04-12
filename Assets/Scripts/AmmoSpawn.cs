@@ -14,7 +14,7 @@ public class AmmoSpawn : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("TimeSphere") && other.gameObject.transform.parent.gameObject != gameObject.transform.parent.parent.parent.gameObject)
+        if (other.CompareTag("TimeSphere") && (other.transform.parent == null || other.gameObject.transform.parent.gameObject != gameObject.transform.parent.parent.parent.gameObject))
         {
             isSlowed = true;
         }
