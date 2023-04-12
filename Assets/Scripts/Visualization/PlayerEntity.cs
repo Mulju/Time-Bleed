@@ -13,6 +13,8 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject ammoPrefab;
     public GameObject timeField;
     public GameObject bulletHole;
+    public GameObject timeBindSkill;
+    public GameObject timeBindSphere;
     [SerializeField] private GameObject chronade;
 
     public float timeSlow;
@@ -23,7 +25,6 @@ public class PlayerEntity : NetworkBehaviour
 
     private bool reloading;
     private bool timeFieldIsActive;
-    private bool isSlowed;
 
     private Vector3 timeFieldOriginalScale;
 
@@ -74,10 +75,6 @@ public class PlayerEntity : NetworkBehaviour
                 PlayerNameTracker.SetName(playerName);
                 //UpdateNameServer(playerName);
             }
-        }
-        else
-        {
-            //gameObject.GetComponent<PlayerEntity>().enabled = false;
         }
 
         // This part is run for all the entities in the scene if you are the server.
@@ -132,6 +129,14 @@ public class PlayerEntity : NetworkBehaviour
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), 50, shooter.GetInstanceID());
     }
 
+    public void AmmoHit(GameObject hitPlayer, GameObject shooter)
+    {
+        if (base.IsOwner)
+        {
+            Hit(hitPlayer, shooter);
+        }
+    }
+
 
     void Start()
     {
@@ -141,7 +146,6 @@ public class PlayerEntity : NetworkBehaviour
         reloadTime = 1;
 
         reloading = false;
-        isSlowed = false;
 
         timeFieldOriginalScale = timeField.transform.localScale;
         timeSlow = 1;
@@ -160,7 +164,6 @@ public class PlayerEntity : NetworkBehaviour
             return;
         }
         timeSlow = 1;
-        isSlowed = false;
     }
 
     void Update()
@@ -189,7 +192,7 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0) && ammoLeft > 0 && shootSpeed >= 0.1f && reloadTime >= 1)
         {
-            Vector3 direction;
+            //Vector3 direction;
             //if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, Mathf.Infinity) && Mathf.Abs((ammoSpawn.transform.position - hit.point).magnitude) >= 0.6f)
             //{
             //    direction = hit.point - ammoSpawn.transform.position;
@@ -200,9 +203,9 @@ public class PlayerEntity : NetworkBehaviour
             //}
             //direction = direction.normalized;
 
-            direction = (playerCamera.transform.forward);
+            //direction = (playerCamera.transform.forward);
 
-            ShootServer(gameObject, direction, playerCamera.transform.position);
+            ShootServer(gameObject);
             shootSpeed = 0;
             ammoLeft -= 1;
         }
@@ -319,19 +322,23 @@ public class PlayerEntity : NetworkBehaviour
 
 
     [ServerRpc]
-    public void ShootServer(GameObject shooter, Vector3 direction, Vector3 startPos)
+    public void ShootServer(GameObject shooter)
     {
-        Shoot(shooter, direction, startPos);
+        Shoot(shooter);
     }
 
     [ObserversRpc]
-    public void Shoot(GameObject shooter, Vector3 direction, Vector3 startPos)
+    public void Shoot(GameObject shooter)
     {
-        if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
+        Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
+        Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
+
+
+        if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
         {
-            if (isSlowed)
+            if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, startPos + direction, Quaternion.identity);
+                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 Destroy(ammoInstance, 120);
@@ -343,7 +350,7 @@ public class PlayerEntity : NetworkBehaviour
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 Destroy(ammoInstance, 120);
             }
-            else if (hit.collider.CompareTag("Player"))
+            else if (hit.collider.CompareTag("Player") && hit.collider.gameObject != this.gameObject)
             {
                 if (base.IsOwner)
                 {
@@ -366,6 +373,20 @@ public class PlayerEntity : NetworkBehaviour
     }
 
     [ServerRpc]
+    public void TimeBindServer()
+    {
+        TimeBind();
+    }
+
+    [ObserversRpc]
+    public void TimeBind()
+    {
+        GameObject timeBindInstance = Instantiate(timeBindSkill, ammoSpawn.transform.position, Quaternion.identity);
+        timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
+        Destroy(timeBindInstance, 10);
+    }
+
+    [ServerRpc]
     public void ThrowGrenadeServer()
     {
         ThrowGrenade();
@@ -384,7 +405,6 @@ public class PlayerEntity : NetworkBehaviour
         if (other.CompareTag("TimeSphere") && !other.transform.parent.CompareTag("Player"))
         {
             timeSlow = 0.25f;
-            isSlowed = true;
         }
     }
 
