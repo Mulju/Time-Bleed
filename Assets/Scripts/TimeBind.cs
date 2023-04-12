@@ -7,14 +7,14 @@ public class TimeBind : MonoBehaviour
     public GameObject timeBindSphere;
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.layer != 2 && !other.CompareTag("TimeSphere"))
+        if (collision.gameObject.layer != 2 && !collision.gameObject.CompareTag("TimeSphere"))
         {
             GameObject timeBindSphereInstance = Instantiate(timeBindSphere, this.gameObject.transform.position, Quaternion.identity);
             timeBindSphereInstance.transform.localScale = new Vector3(5f, 5f, 5f);
             Destroy(timeBindSphereInstance, 10);
-            Destroy(this.gameObject); 
+            Destroy(this.gameObject);
         }
     }
 }
