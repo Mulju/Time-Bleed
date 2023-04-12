@@ -45,9 +45,9 @@ public class AmmoController : MonoBehaviour
                 {
                     transform.position = hit.point;
                 }
-                else if (hit.collider.CompareTag("Player"))
+                else if (hit.collider.CompareTag("Player") && hit.collider.gameObject != shooter.gameObject)
                 {
-                    //hit.collider.GetComponent<PlayerEntity>().Hit(hit.collider.gameObject, shooter);
+                    hit.collider.GetComponent<PlayerEntity>().AmmoHit(hit.collider.gameObject, shooter);
                     Destroy(this.gameObject);
                 }
                 else

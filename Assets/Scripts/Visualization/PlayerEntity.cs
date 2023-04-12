@@ -12,6 +12,8 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject ammoPrefab;
     public GameObject timeField;
     public GameObject bulletHole;
+    public GameObject timeBindSkill;
+    public GameObject timeBindSphere;
     [SerializeField] private GameObject chronade;
 
     public float timeSlow;
@@ -68,10 +70,6 @@ public class PlayerEntity : NetworkBehaviour
                 UpdateNameServer(playerName);
             }
         }
-        else
-        {
-            //gameObject.GetComponent<PlayerEntity>().enabled = false;
-        }
 
         if (base.IsServer)
         {
@@ -109,6 +107,14 @@ public class PlayerEntity : NetworkBehaviour
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), 50, shooter.GetInstanceID());
+    }
+
+    public void AmmoHit(GameObject hitPlayer, GameObject shooter)
+    {
+        if (base.IsOwner)
+        {
+            Hit(hitPlayer, shooter);
+        }
     }
 
 
@@ -306,6 +312,8 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void Shoot(GameObject shooter, Vector3 direction, Vector3 startPos)
     {
+        startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
+
         if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
         {
             if (isSlowed)
@@ -322,7 +330,7 @@ public class PlayerEntity : NetworkBehaviour
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 Destroy(ammoInstance, 120);
             }
-            else if (hit.collider.CompareTag("Player"))
+            else if (hit.collider.CompareTag("Player") && hit.collider.gameObject != this.gameObject)
             {
                 if (base.IsOwner)
                 {
@@ -342,6 +350,20 @@ public class PlayerEntity : NetworkBehaviour
         //ammoInstance.GetComponent<AmmoController>().direction = direction;
         //ammoInstance.GetComponent<AmmoController>().shooter = shooter;
         //Destroy(ammoInstance, 120);
+    }
+
+    [ServerRpc]
+    public void TimeBindServer()
+    {
+        TimeBind();
+    }
+
+    [ObserversRpc]
+    public void TimeBind()
+    {
+        GameObject timeBindInstance = Instantiate(timeBindSkill, ammoSpawn.transform.position, Quaternion.identity);
+        timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
+        Destroy(timeBindInstance, 10);
     }
 
     [ServerRpc]
