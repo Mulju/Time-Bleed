@@ -47,7 +47,7 @@ public class PlayerEntity : NetworkBehaviour
     PlayerManager playerManager;
 
     [SyncVar] public string playerName;
-    [SerializeField] private TextMeshPro tmpPlayerName;
+    [SyncVar] public TextMeshPro tmpPlayerName;
     [SerializeField] private TextMeshPro debugConsole;
 
     public override void OnStartClient()
@@ -91,10 +91,10 @@ public class PlayerEntity : NetworkBehaviour
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach(GameObject p in players)
         {
-            p.GetComponent<PlayerEntity>().playerName = p.GetComponent<PlayerEntity>().playerName;
+            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
         }
 
-        UpdateName(name);
+        //UpdateName(name);
     }
 
     [ObserversRpc]
