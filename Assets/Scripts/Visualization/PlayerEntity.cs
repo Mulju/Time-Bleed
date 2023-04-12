@@ -82,6 +82,12 @@ public class PlayerEntity : NetworkBehaviour
             debugConsole.text = "Player ID: " + id;
 
             playerManager.players.Add(id, player);
+
+            playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
+            if (playerName != null)
+            {
+                UpdateNameServer(playerName);
+            }
         }
     }
 
