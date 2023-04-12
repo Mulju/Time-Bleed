@@ -13,12 +13,14 @@ public class MenuControl : MonoBehaviour
     private string currentScene;
 
     [SerializeField] private GameObject pauseMenu;
+    private EventSystem eventSystem;
 
     void Start()
     {
         resolutions = Screen.resolutions;
 
         currentScene = SceneManager.GetActiveScene().name;
+        eventSystem = EventSystem.current;
         
         // Vain main menussa on resoluution vaihto mahdollisuus
         resolutionsDropdown.ClearOptions();
@@ -45,6 +47,11 @@ public class MenuControl : MonoBehaviour
         resolutionsDropdown.value = resolutionIndex;
         resolutionsDropdown.RefreshShownValue();
         
+    }
+
+    public void SelectActive(GameObject selected)
+    {
+        eventSystem.SetSelectedGameObject(selected);
     }
 
     public void SetFullscreen(bool isFullscreen)
