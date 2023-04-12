@@ -1238,6 +1238,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4393252309867130424, guid: 0b650fca685f2eb41a86538aa883e4c1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4393252310051871674, guid: 0b650fca685f2eb41a86538aa883e4c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4504107339882719289, guid: 0b650fca685f2eb41a86538aa883e4c1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1656,6 +1666,10 @@ MonoBehaviour:
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects:
   - {fileID: 46985599}
+  - {fileID: 439545317}
+  - {fileID: 439545318}
+  - {fileID: 439545319}
+  - {fileID: 439545320}
   - {fileID: 918670143}
   - {fileID: 932175377}
   - {fileID: 1084728511}
@@ -1744,6 +1758,10 @@ MonoBehaviour:
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects:
   - {fileID: 46985599}
+  - {fileID: 439545317}
+  - {fileID: 439545318}
+  - {fileID: 439545319}
+  - {fileID: 439545320}
   - {fileID: 918670143}
   - {fileID: 932175377}
   - {fileID: 1084728511}
