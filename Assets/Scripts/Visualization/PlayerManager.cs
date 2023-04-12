@@ -42,4 +42,17 @@ public class PlayerManager : NetworkBehaviour
     {
         player.transform.position = spawnPoints[spawn].position;
     }
+
+    public void ChangeCursorLock()
+    {
+        Cursor.visible = !Cursor.visible;
+        if (Cursor.visible)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
 }
