@@ -123,6 +123,7 @@ public class PlayerEntity : NetworkBehaviour
     {
         if (base.IsOwner)
         {
+            Debug.Log("ammohit");
             Hit(hitPlayer, shooter);
         }
     }
@@ -344,6 +345,7 @@ public class PlayerEntity : NetworkBehaviour
             {
                 if (base.IsOwner)
                 {
+                    Debug.Log("ammohit");
                     Hit(hit.collider.gameObject, this.gameObject);
                 }
             }
