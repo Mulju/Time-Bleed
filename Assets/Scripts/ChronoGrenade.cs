@@ -14,7 +14,7 @@ public class ChronoGrenade : MonoBehaviour
         if(col.CompareTag("TimeSphere"))
         {
             //Debug.Log("OwnerID: " + ownerID + "\nColliderID: " + col.transform.parent.GetInstanceID() + "\nUpdateID: " + updateID);
-            if(ownerObject == col.transform.parent.gameObject)
+            if(ownerObject == col.transform.parent?.gameObject)
             {
                 // Did we hit the players own timesphere?
                 return;

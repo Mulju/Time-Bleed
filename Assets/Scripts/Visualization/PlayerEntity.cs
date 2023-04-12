@@ -20,6 +20,7 @@ public class PlayerEntity : NetworkBehaviour
     public float timeSlow;
     public float shootSpeed;
     public float reloadTime;
+    public float timeBindTimer;
 
     public int maxAmmo, ammoLeft;
 
@@ -145,6 +146,8 @@ public class PlayerEntity : NetworkBehaviour
         shootSpeed = 1;
         reloadTime = 1;
 
+        timeBindTimer = 2;
+
         reloading = false;
 
         timeFieldOriginalScale = timeField.transform.localScale;
@@ -168,6 +171,11 @@ public class PlayerEntity : NetworkBehaviour
         if (!base.IsOwner)
         {
             return;
+        }
+
+        if (timeBindTimer < 2)
+        {
+            timeBindTimer += Time.deltaTime;
         }
 
         if (shootSpeed < 1)
@@ -230,7 +238,14 @@ public class PlayerEntity : NetworkBehaviour
             ThrowGrenadeServer();
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.F) && timeBindTimer >= 2f)
+        {
+            // cooldown
+            //timeBindTimer = 0;
+            TimeBindServer();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Press Esc for pause screen and to lock/unlock cursor
             playerManager.ChangeCursorLock();
