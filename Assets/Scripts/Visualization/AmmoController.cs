@@ -104,7 +104,7 @@ public class AmmoController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("TimeSphere") || other.CompareTag("Ammo") || other.CompareTag("Player"))
+        if (other.CompareTag("TimeSphere") || other.CompareTag("Ammo") || other.CompareTag("Player") || other.CompareTag("ChronoGrenade") || other.CompareTag("TimeBind"))
         {
         }
         else if (other.gameObject.layer == 6)

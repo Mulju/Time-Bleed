@@ -256,8 +256,7 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.F) && timeBindTimer >= 2f)
         {
-            // cooldown
-            //timeBindTimer = 0;
+            timeBindTimer = 0;
             TimeBindServer();
         }
 
