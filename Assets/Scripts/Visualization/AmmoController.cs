@@ -106,6 +106,7 @@ public class AmmoController : MonoBehaviour
     {
         if (other.CompareTag("TimeSphere") || other.CompareTag("Ammo") || other.CompareTag("Player") || other.CompareTag("ChronoGrenade") || other.CompareTag("TimeBind"))
         {
+
         }
         else if (other.gameObject.layer == 6)
         {
@@ -115,6 +116,7 @@ public class AmmoController : MonoBehaviour
         }
         else
         {
+            Debug.Log(other.name);
             Destroy(gameObject);
         }
     }
