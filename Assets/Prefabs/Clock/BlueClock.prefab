@@ -134,9 +134,10 @@ MonoBehaviour:
   clockHand: {fileID: 5466631004647058405}
   secondText: {fileID: 4457425306244140164}
   minuteText: {fileID: 8276639534791218508}
-  remainingSeconds: 0
-  remainingMinutes: 9
-  remainingTime: 600
+  rotation: 0
+  remainingSeconds: 60
+  remainingMinutes: 14
+  remainingTime: 900
   teamIdentifier: 1
 --- !u!114 &7016806470443810602
 MonoBehaviour:
@@ -162,7 +163,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 0
+  <PrefabId>k__BackingField: 10
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
