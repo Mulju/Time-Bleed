@@ -2,20 +2,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using FishNet.Object;
 using FishNet.Connection;
+using TMPro;
 
 public class PlayerManager : NetworkBehaviour
 {
     public static PlayerManager instance;
 
+    public Dictionary<int, Data.Player> players = new Dictionary<int, Data.Player>();
+    [SerializeField] List<Transform> spawnPoints = new List<Transform>();
+    
     [SerializeField] private MenuControl menuControl;
+
+    public TextMeshProUGUI healthTMP, ammoTMP;
 
     private void Awake()
     {
         instance = this;
     }
-
-    public Dictionary<int, Data.Player> players = new Dictionary<int, Data.Player>();
-    [SerializeField] List<Transform> spawnPoints = new List<Transform>();
 
     public void DamagePlayer(int playerID, int damage, int shooterID)
     {
@@ -23,6 +26,7 @@ public class PlayerManager : NetworkBehaviour
             return;
 
         players[playerID].health -= damage;
+        UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, playerID);
 
         if (players[playerID].health <= 0)
         {
@@ -50,29 +54,23 @@ public class PlayerManager : NetworkBehaviour
     {
         if (players[playerID].health < 100)
         {
-            int changedHealth = 0;
             players[playerID].health += 50;
             
             if (players[playerID].health > 100)
             {
-                changedHealth = 50 - players[playerID].health % 100;
                 players[playerID].health = 100;
 
             }
-            else
-            {
-                changedHealth = 50;
-            }
 
-            UpdateHealthUI(players[playerID].connection, changedHealth);
+            UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, playerID);
         }
 
     }
 
     [TargetRpc]
-    public void UpdateHealthUI(NetworkConnection conn, int healthChange)
+    public void UpdateHealthUI(NetworkConnection conn, GameObject player, int playerID)
     {
-
+        player.GetComponent<PlayerEntity>().healthTMP.text = "HP - " + players[playerID].health;
     }
 
     public void ChangeCursorLock()

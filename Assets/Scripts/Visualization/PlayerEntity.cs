@@ -56,6 +56,9 @@ public class PlayerEntity : NetworkBehaviour
 
     private MenuControl menuControl;
 
+    // For health and ammo UI
+    public TextMeshProUGUI healthTMP, ammoTMP;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -160,6 +163,9 @@ public class PlayerEntity : NetworkBehaviour
         characterController = GetComponent<CharacterController>();
 
         menuControl = GameObject.FindGameObjectWithTag("MenuControl").GetComponent<MenuControl>();
+
+        healthTMP = GameObject.FindGameObjectWithTag("UIHealth").GetComponent<TextMeshProUGUI>();
+        ammoTMP = GameObject.FindGameObjectWithTag("UIAmmo").GetComponent<TextMeshProUGUI>();
     }
 
     private void FixedUpdate()
@@ -226,6 +232,11 @@ public class PlayerEntity : NetworkBehaviour
             Reload();
         }
 
+        if(base.IsOwner)
+        {
+            // If you own this player entity, change the ammo in the UI
+            ammoTMP.text = "Ammo - " + ammoLeft;
+        }
 
         if (!Input.GetKey(KeyCode.Mouse0) && !IsMoving() && !timeFieldIsActive)
         {

@@ -1193,6 +1193,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2108559200980052283, guid: 0b650fca685f2eb41a86538aa883e4c1,
+        type: 3}
+      propertyPath: m_TagString
+      value: UIAmmo
+      objectReference: {fileID: 0}
     - target: {fileID: 2289699875879520069, guid: 0b650fca685f2eb41a86538aa883e4c1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1423,6 +1428,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5587420981548644263, guid: 0b650fca685f2eb41a86538aa883e4c1,
+        type: 3}
+      propertyPath: m_TagString
+      value: UIHealth
+      objectReference: {fileID: 0}
     - target: {fileID: 7443408887813606049, guid: 0b650fca685f2eb41a86538aa883e4c1,
         type: 3}
       propertyPath: m_RootOrder
@@ -1503,6 +1513,30 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 542904163}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &542904167 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8142308574792547386, guid: 0b650fca685f2eb41a86538aa883e4c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 542904163}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746923960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &542904168 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2321271557192229542, guid: 0b650fca685f2eb41a86538aa883e4c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 542904163}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043200138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &746923960 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2108559200980052283, guid: 0b650fca685f2eb41a86538aa883e4c1,
@@ -1800,12 +1834,14 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 918670143}
   _networkObjectCache: {fileID: 918670143}
-  menuControl: {fileID: 477695109}
   spawnPoints:
   - {fileID: 46985598}
   - {fileID: 46985597}
   - {fileID: 46985596}
   - {fileID: 46985595}
+  menuControl: {fileID: 477695109}
+  healthTMP: {fileID: 542904168}
+  ammoTMP: {fileID: 542904167}
 --- !u!4 &918670145
 Transform:
   m_ObjectHideFlags: 0
