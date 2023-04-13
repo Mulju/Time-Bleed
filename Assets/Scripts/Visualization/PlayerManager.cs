@@ -28,7 +28,7 @@ public class PlayerManager : NetworkBehaviour
 
         players[playerID].health -= damage;
         
-        if(players[playerID].health < 0)
+        if(players[playerID].health <= 0)
         {
             // If player dies, update UI with max health
             UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, maxHealth);
