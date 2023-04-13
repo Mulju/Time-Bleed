@@ -34,6 +34,7 @@ public class HealthPackController : NetworkBehaviour
     IEnumerator RespawnHealthPack()
     {
         yield return new WaitForSeconds(respawnTime);
+        ShowHealthPack();
         this.GetComponent<Collider>().enabled = true;
     }
 
