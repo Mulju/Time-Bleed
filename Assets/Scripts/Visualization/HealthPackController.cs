@@ -17,7 +17,7 @@ public class HealthPackController : NetworkBehaviour
         if (col.CompareTag("Player"))
         {
             playerManager = PlayerManager.instance;
-            playerManager.RestoreHealth(col.gameObject.GetInstanceID());
+            playerManager.RestoreHealth(col.gameObject);
             this.GetComponent<Collider>().enabled = false;
             this.GetComponent<MeshRenderer>().enabled = false;
             StartCoroutine(RespawnHealthPack());
