@@ -21,7 +21,7 @@ public class Clock : NetworkBehaviour
         UpdateClock();
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    //[ServerRpc]
     public void UpdateClock()
     {
         // Turn clock handle
