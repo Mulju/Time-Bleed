@@ -26,7 +26,7 @@ public class PlayerManager : NetworkBehaviour
             return;
 
         players[playerID].health -= damage;
-        UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, playerID);
+        UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
 
         if (players[playerID].health <= 0)
         {
@@ -64,15 +64,15 @@ public class PlayerManager : NetworkBehaviour
 
             }
 
-            //UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, playerID);
+            UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
         }
 
     }
 
     [TargetRpc]
-    public void UpdateHealthUI(NetworkConnection conn, GameObject player, int playerID)
+    public void UpdateHealthUI(NetworkConnection conn, GameObject player, int health)
     {
-        player.GetComponent<PlayerEntity>().healthTMP.text = "HP - " + players[playerID].health;
+        player.GetComponent<PlayerEntity>().healthTMP.text = "HP - " + health;
     }
 
     public void ChangeCursorLock()
