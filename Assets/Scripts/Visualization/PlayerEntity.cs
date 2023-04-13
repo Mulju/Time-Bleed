@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerEntity : NetworkBehaviour
 {
@@ -14,7 +15,7 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject timeField;
     public GameObject bulletHole;
     public GameObject timeBindSkill;
-    public GameObject timeBindSphere;
+    public GameObject reloadBar, reloadBackground;
     [SerializeField] private GameObject chronade;
 
     public float timeSlow;
@@ -68,7 +69,7 @@ public class PlayerEntity : NetworkBehaviour
         // different behaviours are done.
         base.OnStartClient();
         playerManager = PlayerManager.instance;
-        
+
         // Only run if you are the owner of this object. Skip for all other player entities in the scene.
         if (base.IsOwner)
         {
@@ -78,7 +79,7 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
-            
+
             /*
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
@@ -169,6 +170,11 @@ public class PlayerEntity : NetworkBehaviour
 
         healthTMP = GameObject.FindGameObjectWithTag("UIHealth").GetComponent<TextMeshProUGUI>();
         ammoTMP = GameObject.FindGameObjectWithTag("UIAmmo").GetComponent<TextMeshProUGUI>();
+
+        reloadBackground = GameObject.FindGameObjectWithTag("ReloadBackground");
+        reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
+
+        reloadBackground.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -196,14 +202,19 @@ public class PlayerEntity : NetworkBehaviour
         {
             shootSpeed += Time.deltaTime;
         }
-        if (reloadTime < 2)
+
+        if (reloadTime < 1)
         {
             reloadTime += Time.deltaTime;
+
+            // reload bar animation
+            reloadBar.GetComponent<RectTransform>().localScale = new Vector3(reloadTime, reloadBar.GetComponent<RectTransform>().localScale.y, reloadBar.GetComponent<RectTransform>().localScale.z);
         }
 
-        if (reloadTime >= 1)
+        if (reloadTime >= 1 && reloading)
         {
             reloading = false;
+            reloadBackground.gameObject.SetActive(false);
         }
 
         Physics.SyncTransforms();
@@ -229,13 +240,13 @@ public class PlayerEntity : NetworkBehaviour
             ammoLeft -= 1;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && !reloading && ammoLeft != maxAmmo)
+        if ((Input.GetKeyDown(KeyCode.R) || ammoLeft == 0 ) && !reloading && ammoLeft != maxAmmo)
         {
             reloading = true;
             Reload();
         }
 
-        if(base.IsOwner)
+        if (base.IsOwner)
         {
             // If you own this player entity, change the ammo in the UI
             ammoTMP.text = "Ammo - " + ammoLeft;
@@ -331,6 +342,8 @@ public class PlayerEntity : NetworkBehaviour
     {
         ammoLeft = maxAmmo;
         reloadTime = 0;
+
+        reloadBackground.gameObject.SetActive(true);
     }
 
     [ServerRpc]
