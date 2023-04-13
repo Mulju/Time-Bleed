@@ -175,7 +175,6 @@ public class PlayerEntity : NetworkBehaviour
 
         foreach (Transform child in reloadParent.transform)
         {
-            Debug.Log("joo ");
             child.gameObject.SetActive(true);
         }
 
