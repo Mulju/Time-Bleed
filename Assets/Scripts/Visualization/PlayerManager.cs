@@ -14,6 +14,7 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private MenuControl menuControl;
 
     public TextMeshProUGUI healthTMP, ammoTMP;
+    private int maxHealth = 100;
 
     private void Awake()
     {
@@ -26,7 +27,16 @@ public class PlayerManager : NetworkBehaviour
             return;
 
         players[playerID].health -= damage;
-        UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
+        
+        if(players[playerID].health < 0)
+        {
+            // If player dies, update UI with max health
+            UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, maxHealth);
+        }
+        else
+        {
+            UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
+        }
 
         if (players[playerID].health <= 0)
         {
@@ -38,7 +48,7 @@ public class PlayerManager : NetworkBehaviour
     {
         print("Player " + playerID.ToString() + " was killed by " + attackerID.ToString());
         players[playerID].deaths++;
-        players[playerID].health = 100;
+        players[playerID].health = maxHealth;
         players[attackerID].kills++;
 
         RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, spawnPoints.Count));
@@ -54,13 +64,13 @@ public class PlayerManager : NetworkBehaviour
     {
         int playerID = player.GetInstanceID();
 
-        if (players[playerID].health < 100)
+        if (players[playerID].health < maxHealth)
         {
             players[playerID].health += 50;
 
-            if (players[playerID].health > 100)
+            if (players[playerID].health > maxHealth)
             {
-                players[playerID].health = 100;
+                players[playerID].health = maxHealth;
 
             }
 
