@@ -54,7 +54,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private TextMeshPro debugConsole;
     public string newPlayersName;
 
-    private MenuControl menuControl;
+    [HideInInspector] public MenuControl menuControl;
 
     // For health and ammo UI
     public TextMeshProUGUI healthTMP, ammoTMP;
