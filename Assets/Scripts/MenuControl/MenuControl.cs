@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
+using FishNet.Transporting.Tugboat;
 
 public class MenuControl : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class MenuControl : MonoBehaviour
 
     [SerializeField] private GameObject pauseMenu;
     private EventSystem eventSystem;
+
+    [SerializeField] private GameObject networkManager;
 
     void Start()
     {
@@ -78,5 +81,10 @@ public class MenuControl : MonoBehaviour
                 pauseMenu.SetActive(true);
             }
         }
+    }
+
+    public void UpdateTugboat(string clientAddress)
+    {
+        networkManager.GetComponent<Tugboat>().SetClientAddress(clientAddress);
     }
 }
