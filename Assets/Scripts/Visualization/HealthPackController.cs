@@ -17,8 +17,9 @@ public class HealthPackController : NetworkBehaviour
         if (col.CompareTag("Player"))
         {
             playerManager = PlayerManager.instance;
-            playerManager.RestoreHealth(col.GetInstanceID());
-            gameObject.SetActive(false);
+            playerManager.RestoreHealth(col.gameObject.GetInstanceID());
+            GetComponent<Collider>().enabled = false;
+            GetComponent<MeshRenderer>().enabled = false;
             StartCoroutine(RespawnHealthPack());
         }
     }
@@ -26,6 +27,7 @@ public class HealthPackController : NetworkBehaviour
     IEnumerator RespawnHealthPack()
     {
         yield return new WaitForSeconds(respawnTime);
-        gameObject.SetActive(true);
+        GetComponent<Collider>().enabled = true;
+        GetComponent<MeshRenderer>().enabled = true;
     }
 }
