@@ -170,6 +170,8 @@ public class PlayerEntity : NetworkBehaviour
 
         reloadBackground = GameObject.FindGameObjectWithTag("ReloadBackground");
         reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
+
+        reloadBackground.SetActive(false);
     }
 
     private void FixedUpdate()
