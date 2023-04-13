@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class TimeSphere : MonoBehaviour
 {
-    private Vector3 originalScale, currentScale;
+    [HideInInspector]
+    public Vector3 originalScale, currentScale;
     private int expansionMultiplier = 5;
+
+    [HideInInspector]
+    public bool isTimeBind;
 
     private void Awake()
     {
+        isTimeBind = false;
+
         originalScale = transform.localScale;
         currentScale = transform.localScale;
     }
@@ -24,6 +30,7 @@ public class TimeSphere : MonoBehaviour
     {
         while(currentScale.x > 0.01)
         {
+            Debug.Log(currentScale.x + " " + currentScale.y + " " + currentScale.z);
             currentScale = new Vector3(currentScale.x - Time.deltaTime * expansionMultiplier, 
                                        currentScale.y - Time.deltaTime * expansionMultiplier,
                                        currentScale.z - Time.deltaTime * expansionMultiplier);
@@ -32,7 +39,15 @@ public class TimeSphere : MonoBehaviour
         }
 
         yield return new WaitForSeconds(10);
-        StartCoroutine(GetBigger());
+
+        if (!isTimeBind)
+        {
+            StartCoroutine(GetBigger());
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     IEnumerator GetBigger()

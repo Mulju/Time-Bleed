@@ -418,7 +418,7 @@ public class PlayerEntity : NetworkBehaviour
     {
         GameObject timeBindInstance = Instantiate(timeBindSkill, ammoSpawn.transform.position, Quaternion.identity);
         timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
-        Destroy(timeBindInstance, 10);
+        Destroy(timeBindInstance, 25);
     }
 
     [ServerRpc]

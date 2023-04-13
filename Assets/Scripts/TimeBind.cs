@@ -28,7 +28,6 @@ public class TimeBind : MonoBehaviour
 
             this.gameObject.GetComponent<Collider>().enabled = false;
             this.gameObject.GetComponent<MeshRenderer>().enabled = false;
-            Destroy(this.gameObject, timeSphereTime + 2f);
             exploded = true;
         }
 
@@ -38,12 +37,12 @@ public class TimeBind : MonoBehaviour
     IEnumerator SpawnTimeSphere()
     {
         GameObject timeBindSphereInstance = Instantiate(timeBindSphere, this.gameObject.transform.position, Quaternion.identity);
-        timeBindSphereInstance.transform.localScale = new Vector3(5f, 5f, 5f);
-        Destroy(timeBindSphereInstance, timeSphereTime + 2f);
+        timeBindSphereInstance.transform.localScale = new Vector3(7f, 7f, 7f);
+        timeBindSphereInstance.GetComponent<TimeSphere>().isTimeBind = true;
+        timeBindSphereInstance.GetComponent<TimeSphere>().currentScale = timeBindSphereInstance.transform.localScale;
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(timeSphereTime);
 
-        Debug.Log("moi");
         timeBindSphereInstance.GetComponent<TimeSphere>().ReduceCircumference();
     }
 }
