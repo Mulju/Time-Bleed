@@ -5,30 +5,45 @@ using UnityEngine;
 public class TimeBind : MonoBehaviour
 {
     public GameObject timeBindSphere;
+    public bool exploded;
 
+    private float timeSphereTime;
     private float timer;
 
-    private void OnCollisionEnter(Collision collision)
+    private void Start()
     {
-        if (collision.gameObject.layer != 2 && !collision.gameObject.CompareTag("TimeSphere"))
-        {
-            //GameObject timeBindSphereInstance = Instantiate(timeBindSphere, this.gameObject.transform.position, Quaternion.identity);
-            //timeBindSphereInstance.transform.localScale = new Vector3(5f, 5f, 5f);
-            //Destroy(timeBindSphereInstance, 10);
-            //Destroy(this.gameObject);
-        }
+        exploded = false;
+        timeSphereTime = 10f;
     }
 
     private void Update()
     {
+        if (exploded)
+            return;
+
+
         if (timer >= 2f)
         {
-            GameObject timeBindSphereInstance = Instantiate(timeBindSphere, this.gameObject.transform.position, Quaternion.identity);
-            timeBindSphereInstance.transform.localScale = new Vector3(5f, 5f, 5f);
-            Destroy(timeBindSphereInstance, 10);
-            Destroy(this.gameObject);
+            StartCoroutine(SpawnTimeSphere());
+
+            this.gameObject.GetComponent<Collider>().enabled = false;
+            this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(this.gameObject, timeSphereTime + 2f);
+            exploded = true;
         }
 
         timer += Time.deltaTime;
+    }
+
+    IEnumerator SpawnTimeSphere()
+    {
+        GameObject timeBindSphereInstance = Instantiate(timeBindSphere, this.gameObject.transform.position, Quaternion.identity);
+        timeBindSphereInstance.transform.localScale = new Vector3(5f, 5f, 5f);
+        Destroy(timeBindSphereInstance, timeSphereTime + 2f);
+
+        yield return new WaitForSeconds(5);
+
+        Debug.Log("moi");
+        timeBindSphereInstance.GetComponent<TimeSphere>().ReduceCircumference();
     }
 }
