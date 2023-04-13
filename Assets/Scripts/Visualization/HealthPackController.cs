@@ -5,7 +5,6 @@ using FishNet.Object;
 
 public class HealthPackController : NetworkBehaviour
 {
-    [SerializeField] private int healthAmount = 50;
     [SerializeField] private float respawnTime = 5f;
     PlayerManager playerManager;
 
