@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6010927597893743525}
   m_Layer: 2
   m_Name: TimeBind
-  m_TagString: Untagged
+  m_TagString: TimeBind
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBindSphere: {fileID: 5257232343283234115, guid: 384d48edb5b59c9448e4ec399a7784b5,
     type: 3}
+  exploded: 0
 --- !u!135 &4911446607131635623
 SphereCollider:
   m_ObjectHideFlags: 0

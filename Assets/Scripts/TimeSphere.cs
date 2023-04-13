@@ -30,7 +30,6 @@ public class TimeSphere : MonoBehaviour
     {
         while(currentScale.x > 0.01)
         {
-            Debug.Log(currentScale.x + " " + currentScale.y + " " + currentScale.z);
             currentScale = new Vector3(currentScale.x - Time.deltaTime * expansionMultiplier, 
                                        currentScale.y - Time.deltaTime * expansionMultiplier,
                                        currentScale.z - Time.deltaTime * expansionMultiplier);

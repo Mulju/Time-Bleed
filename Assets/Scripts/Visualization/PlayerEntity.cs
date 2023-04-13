@@ -256,8 +256,7 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.F) && timeBindTimer >= 2f)
         {
-            // cooldown
-            //timeBindTimer = 0;
+            timeBindTimer = 0;
             TimeBindServer();
         }
 
@@ -450,9 +449,8 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ammo") && other.GetComponent<AmmoController>().shooter != this.gameObject)
+        if (other.CompareTag("Ammo") && other.TryGetComponent<AmmoController>(out AmmoController ammo) && other.GetComponent<AmmoController>().shooter != this.gameObject)
         {
-            AmmoController ammo = other.GetComponent<AmmoController>();
             PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
 
             if (base.IsOwner)
