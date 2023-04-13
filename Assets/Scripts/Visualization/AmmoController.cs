@@ -52,7 +52,7 @@ public class AmmoController : MonoBehaviour
                 {
                     hit.collider.GetComponent<PlayerEntity>().AmmoHit(hit.collider.gameObject, shooter);
                     // Instantiate "blood" effect
-                    Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    //Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(this.gameObject);
                 }
                 else
@@ -111,7 +111,10 @@ public class AmmoController : MonoBehaviour
     {
         if (other.CompareTag("TimeSphere") || other.CompareTag("Ammo") || other.CompareTag("Player") || other.CompareTag("ChronoGrenade") || other.CompareTag("TimeBind"))
         {
-            Instantiate(playerHitEffect, gameObject.transform.position, Quaternion.LookRotation(new Vector3(0, 0, gameObject.transform.rotation.z * -1)));
+            if(other.CompareTag("Player"))
+            {
+                Instantiate(playerHitEffect, gameObject.transform.position, Quaternion.LookRotation(new Vector3(0, 0, gameObject.transform.rotation.z * -1)));
+            }
         }
         else if (other.gameObject.layer == 6)
         {

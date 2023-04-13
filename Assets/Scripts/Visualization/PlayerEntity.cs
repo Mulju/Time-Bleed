@@ -61,6 +61,7 @@ public class PlayerEntity : NetworkBehaviour
     public TextMeshProUGUI healthTMP, ammoTMP;
 
     [SerializeField] private SoundControl soundControl;
+    [SerializeField] private GameObject playerHitEffect;
 
     public override void OnStartClient()
     {
@@ -409,6 +410,7 @@ public class PlayerEntity : NetworkBehaviour
             }
             else if (hit.collider.CompareTag("Player") && hit.collider.gameObject != this.gameObject)
             {
+                Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsOwner)
                 {
                     Hit(hit.collider.gameObject, this.gameObject);
