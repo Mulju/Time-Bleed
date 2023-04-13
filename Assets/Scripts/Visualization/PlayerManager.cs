@@ -26,7 +26,7 @@ public class PlayerManager : NetworkBehaviour
             return;
 
         players[playerID].health -= damage;
-        UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, playerID);
+        //UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, playerID);
 
         if (players[playerID].health <= 0)
         {
@@ -62,7 +62,7 @@ public class PlayerManager : NetworkBehaviour
 
             }
 
-            UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, playerID);
+            //UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, playerID);
         }
 
     }

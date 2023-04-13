@@ -235,7 +235,7 @@ public class PlayerEntity : NetworkBehaviour
         if(base.IsOwner)
         {
             // If you own this player entity, change the ammo in the UI
-            ammoTMP.text = "Ammo - " + ammoLeft;
+            //ammoTMP.text = "Ammo - " + ammoLeft;
         }
 
         if (!Input.GetKey(KeyCode.Mouse0) && !IsMoving() && !timeFieldIsActive)
@@ -450,7 +450,7 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ammo") && other.GetComponent<AmmoController>()?.shooter != this.gameObject)
+        if (other.CompareTag("Ammo") && other.GetComponent<AmmoController>().shooter != this.gameObject)
         {
             AmmoController ammo = other.GetComponent<AmmoController>();
             PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
