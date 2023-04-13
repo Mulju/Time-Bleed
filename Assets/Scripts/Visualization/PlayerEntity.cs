@@ -64,6 +64,7 @@ public class PlayerEntity : NetworkBehaviour
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
         // different behaviours are done.
         base.OnStartClient();
+        playerManager = PlayerManager.instance;
         
         // Only run if you are the owner of this object. Skip for all other player entities in the scene.
         if (base.IsOwner)
@@ -87,7 +88,6 @@ public class PlayerEntity : NetworkBehaviour
         // This part is run for all the entities in the scene if you are the server.
         if (base.IsServer)
         {
-            playerManager = PlayerManager.instance;
             Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
             int id = gameObject.GetInstanceID();
             Debug.Log("Player ID: " + id);
