@@ -10,7 +10,7 @@ public class PlayerManager : NetworkBehaviour
 
     public Dictionary<int, Data.Player> players = new Dictionary<int, Data.Player>();
     [SerializeField] List<Transform> spawnPoints = new List<Transform>();
-    
+
     [SerializeField] private MenuControl menuControl;
 
     public TextMeshProUGUI healthTMP, ammoTMP;
@@ -50,12 +50,14 @@ public class PlayerManager : NetworkBehaviour
         player.transform.position = spawnPoints[spawn].position;
     }
 
-    public void RestoreHealth(int playerID)
+    public void RestoreHealth(GameObject player)
     {
+        int playerID = player.GetInstanceID();
+
         if (players[playerID].health < 100)
         {
             players[playerID].health += 50;
-            
+
             if (players[playerID].health > 100)
             {
                 players[playerID].health = 100;
