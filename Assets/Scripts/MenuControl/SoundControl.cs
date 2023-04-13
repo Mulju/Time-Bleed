@@ -6,7 +6,8 @@ using UnityEngine;
 public class SoundControl : MonoBehaviour
 {
     [SerializeField] private AudioSource[] soundSources;
-    [SerializeField] private AudioClip menuMove, menuSelect;
+    [SerializeField] private AudioClip menuMove, menuSelect, gunShoot;
+
 
     public void PlaySound(AudioClip soundEffect, float volume)
     {
@@ -33,5 +34,11 @@ public class SoundControl : MonoBehaviour
     {
         float volume = 0.2f;
         PlaySound(menuSelect, volume);
+    }
+
+    public void PlayShootSound()
+    {
+        float volume = 0.2f;
+        PlaySound(gunShoot, volume);
     }
 }

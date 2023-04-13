@@ -59,6 +59,8 @@ public class PlayerEntity : NetworkBehaviour
     // For health and ammo UI
     public TextMeshProUGUI healthTMP, ammoTMP;
 
+    [SerializeField] private SoundControl soundControl;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -366,7 +368,7 @@ public class PlayerEntity : NetworkBehaviour
     {
         Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
-
+        soundControl.PlayShootSound();
 
         if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
         {
