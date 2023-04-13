@@ -5,7 +5,6 @@ using FishNet.Object;
 
 public class HealthPackController : NetworkBehaviour
 {
-    [SerializeField] private int healthAmount = 50;
     [SerializeField] private float respawnTime = 5f;
     PlayerManager playerManager;
 
@@ -18,16 +17,29 @@ public class HealthPackController : NetworkBehaviour
         {
             playerManager = PlayerManager.instance;
             playerManager.RestoreHealth(col.gameObject);
+
+            HideHealthPack();
             this.GetComponent<Collider>().enabled = false;
-            this.GetComponent<MeshRenderer>().enabled = false;
             StartCoroutine(RespawnHealthPack());
         }
+    }
+
+    [ObserversRpc]
+    void HideHealthPack()
+    {
+        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
 
     IEnumerator RespawnHealthPack()
     {
         yield return new WaitForSeconds(respawnTime);
+        ShowHealthPack();
         this.GetComponent<Collider>().enabled = true;
-        this.GetComponent<MeshRenderer>().enabled = true;
+    }
+
+    [ObserversRpc]
+    void ShowHealthPack()
+    {
+        this.gameObject.GetComponent<MeshRenderer>().enabled = true;
     }
 }
