@@ -38,7 +38,7 @@ public class SoundControl : MonoBehaviour
 
     public void PlayShootSound()
     {
-        float volume = 0.2f;
+        float volume = 0.4f;
         PlaySound(gunShoot, volume);
     }
 }
