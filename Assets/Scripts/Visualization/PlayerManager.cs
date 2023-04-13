@@ -50,12 +50,29 @@ public class PlayerManager : NetworkBehaviour
     {
         if (players[playerID].health < 100)
         {
+            int changedHealth = 0;
             players[playerID].health += 50;
+            
             if (players[playerID].health > 100)
             {
+                changedHealth = 50 - players[playerID].health % 100;
                 players[playerID].health = 100;
+
             }
+            else
+            {
+                changedHealth = 50;
+            }
+
+            UpdateHealthUI(players[playerID].connection, changedHealth);
         }
+
+    }
+
+    [TargetRpc]
+    public void UpdateHealthUI(NetworkConnection conn, int healthChange)
+    {
+
     }
 
     public void ChangeCursorLock()
