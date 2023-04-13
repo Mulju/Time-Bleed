@@ -15,7 +15,7 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject timeField;
     public GameObject bulletHole;
     public GameObject timeBindSkill;
-    public GameObject reloadBar, reloadBackground;
+    public GameObject reloadBar, reloadBackground, reloadParent;
     [SerializeField] private GameObject chronade;
 
     public float timeSlow;
@@ -169,6 +169,14 @@ public class PlayerEntity : NetworkBehaviour
 
         healthTMP = GameObject.FindGameObjectWithTag("UIHealth").GetComponent<TextMeshProUGUI>();
         ammoTMP = GameObject.FindGameObjectWithTag("UIAmmo").GetComponent<TextMeshProUGUI>();
+
+        reloadParent = GameObject.FindGameObjectWithTag("ReloadParent");
+
+        foreach (Transform child in reloadParent.transform)
+        {
+            Debug.Log("joo ");
+            child.gameObject.SetActive(true);
+        }
 
         reloadBackground = GameObject.FindGameObjectWithTag("ReloadBackground");
         reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
