@@ -402,9 +402,9 @@ public class PlayerEntity : NetworkBehaviour
             }
             else if (hit.collider.CompareTag("Player") && hit.collider.gameObject != this.gameObject)
             {
+                Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsOwner)
                 {
-                    Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     Hit(hit.collider.gameObject, this.gameObject);
                 }
             }
