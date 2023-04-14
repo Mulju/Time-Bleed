@@ -14,9 +14,10 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject ammoPrefab;
     public GameObject timeField;
     public GameObject bulletHole;
-    public GameObject timeBindSkill;
-    public GameObject reloadBar, reloadBackground, reloadParent;
+    public GameObject timeBindSkill
     [SerializeField] private GameObject chronade;
+
+    private GameObject reloadBar, reloadBackground, reloadParent;
 
     public float timeSlow;
     public float shootSpeed;
