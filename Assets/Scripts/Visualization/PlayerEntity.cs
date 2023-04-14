@@ -22,6 +22,7 @@ public class PlayerEntity : NetworkBehaviour
     public float shootSpeed;
     public float reloadTime;
     public float timeBindTimer;
+    public float chronadeTimer;
 
     public int maxAmmo, ammoLeft;
 
@@ -168,6 +169,7 @@ public class PlayerEntity : NetworkBehaviour
         reloadTime = 1;
 
         timeBindTimer = 2;
+        chronadeTimer = 2;
 
         reloading = false;
 
@@ -221,6 +223,11 @@ public class PlayerEntity : NetworkBehaviour
         if (timeBindTimer < 2)
         {
             timeBindTimer += Time.deltaTime;
+        }
+
+        if (chronadeTimer < 2)
+        {
+            chronadeTimer += Time.deltaTime;
         }
 
         if (shootSpeed < 1)
@@ -288,7 +295,7 @@ public class PlayerEntity : NetworkBehaviour
             timeFieldIsActive = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && chronadeTimer >= 2f)
         {
             ThrowGrenadeServer();
         }
