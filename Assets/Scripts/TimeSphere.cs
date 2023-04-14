@@ -27,7 +27,7 @@ public class TimeSphere : MonoBehaviour
     public void ChangeAlpha(float sliderValue)
     {
         // The alpha of the sphere depends on the movement speed of the player
-        gameObject.GetComponent<Renderer>().GetComponent<Material>().color = new Color(71, 255, 188, 31 / sliderValue);
+        gameObject.GetComponent<Renderer>().material.color = new Color(71, 255, 188, 31 / sliderValue);
     }
 
     public void ReduceCircumference()
