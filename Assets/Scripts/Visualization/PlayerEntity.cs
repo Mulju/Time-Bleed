@@ -15,8 +15,9 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject timeField;
     public GameObject bulletHole;
     public GameObject timeBindSkill;
-    public GameObject reloadBar, reloadBackground, reloadParent;
     [SerializeField] private GameObject chronade;
+
+    private GameObject reloadBar, reloadBackground, reloadParent;
 
     public float timeSlow;
     public float shootSpeed;
@@ -326,6 +327,18 @@ public class PlayerEntity : NetworkBehaviour
 
             TimeSpeedSlider(mouseScroll * 0.05f);
         }
+    }
+
+    [ServerRpc]
+    public void RespawnServer()
+    {
+        Respawn();
+    }
+
+    [ObserversRpc]
+    public void Respawn()
+    {
+        timeField.GetComponent<TimeSphere>().IncreaseCircumference();
     }
 
     [ServerRpc]
