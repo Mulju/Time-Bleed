@@ -66,6 +66,8 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private SoundControl soundControl;
     [SerializeField] private GameObject playerHitEffect;
 
+    private Slider speedSlider = null;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -82,6 +84,8 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
+
+            speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
 
             /*
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
@@ -302,6 +306,11 @@ public class PlayerEntity : NetworkBehaviour
             Debug.Log(mouseScroll);
 
             // change slider value 
+            if(speedSlider != null)
+            {
+                speedSlider.value += mouseScroll * 0.05f;
+            }
+
             TimeSpeedSlider(mouseScroll * 0.05f);
         }
     }
