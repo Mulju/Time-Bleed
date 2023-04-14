@@ -329,6 +329,18 @@ public class PlayerEntity : NetworkBehaviour
     }
 
     [ServerRpc]
+    public void RespawnServer()
+    {
+        Respawn();
+    }
+
+    [ObserversRpc]
+    public void Respawn()
+    {
+        timeField.GetComponent<TimeSphere>().IncreaseCircumference();
+    }
+
+    [ServerRpc]
     public void TimeSpeedSlider(float sliderValue)
     {
         timeSpeed += sliderValue;
