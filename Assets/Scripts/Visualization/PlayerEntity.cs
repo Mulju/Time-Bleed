@@ -28,7 +28,7 @@ public class PlayerEntity : NetworkBehaviour
     private bool reloading;
     private bool timeFieldIsActive;
 
-    public float timeSpeed;
+    [SyncVar] public float timeSpeed;
     private float mouseScroll;
 
     private Vector3 timeFieldOriginalScale;
@@ -306,6 +306,7 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
+    [ServerRpc]
     public void TimeSpeedSlider(float sliderValue)
     {
         timeSpeed += sliderValue;
