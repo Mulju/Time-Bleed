@@ -87,6 +87,9 @@ public class PlayerEntity : NetworkBehaviour
 
             speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
 
+
+            TimeSpeedSlider(speedSlider.value);
+
             /*
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
@@ -303,7 +306,6 @@ public class PlayerEntity : NetworkBehaviour
         if(Input.mouseScrollDelta.y != 0)
         {
             mouseScroll = Input.mouseScrollDelta.y;
-            Debug.Log(mouseScroll);
 
             // change slider value 
             if(speedSlider != null)
