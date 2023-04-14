@@ -492,7 +492,7 @@ public class PlayerEntity : NetworkBehaviour
     public void TimeBind()
     {
         GameObject timeBindInstance = Instantiate(timeBindSkill, ammoSpawn.transform.position, Quaternion.identity);
-        timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
+        timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 4, ForceMode.Impulse);
         Destroy(timeBindInstance, 25);
     }
 
@@ -507,7 +507,7 @@ public class PlayerEntity : NetworkBehaviour
     {
         GameObject chronadeInstance = Instantiate(chronade, ammoSpawn.transform.position, Quaternion.identity);
         chronadeInstance.GetComponent<ChronoGrenade>().ownerObject = gameObject;
-        chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
+        chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 4, ForceMode.Impulse);
     }
 
     private void OnTriggerStay(Collider other)
