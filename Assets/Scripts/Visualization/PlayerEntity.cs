@@ -298,6 +298,7 @@ public class PlayerEntity : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.G) && chronadeTimer >= 2f)
         {
             ThrowGrenadeServer();
+            chronadeTimer = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.F) && timeBindTimer >= 2f)
