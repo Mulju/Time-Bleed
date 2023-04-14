@@ -10,7 +10,8 @@ public class AmmoController : MonoBehaviour
     public float timeSlowed;
     public float timeNotSlowed;
 
-    private float speed;
+    private float ammoSpeed;
+    private float timeSpeed;
 
     private Vector3 objHitByRaycast;
     public Vector3 direction;
@@ -34,13 +35,13 @@ public class AmmoController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        speed = timeNotSlowed;
+        ammoSpeed = timeNotSlowed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (speed == timeNotSlowed)
+        if (ammoSpeed == timeNotSlowed)
         {
             if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
             {
@@ -71,7 +72,7 @@ public class AmmoController : MonoBehaviour
 
 
 
-        rb.MovePosition(transform.position + direction * timeSlowed * Time.deltaTime);
+        rb.MovePosition(transform.position + direction * timeSpeed * Time.deltaTime);
 
         //if (collide)
         //{
@@ -133,7 +134,8 @@ public class AmmoController : MonoBehaviour
     {
         if (other.CompareTag("TimeSphere"))
         {
-            speed = timeSlowed;
+            ammoSpeed = timeSlowed;
+            timeSpeed = other.GetComponent<TimeSphere>().timeSpeed;
         }
 
         collide = false;
@@ -144,7 +146,7 @@ public class AmmoController : MonoBehaviour
         if (other.CompareTag("TimeSphere"))
         {
             CheckForCollisions();
-            speed = timeNotSlowed;
+            ammoSpeed = timeNotSlowed;
         }
     }
 
