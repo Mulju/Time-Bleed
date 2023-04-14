@@ -18,6 +18,7 @@ public class AmmoController : MonoBehaviour
     public GameObject shooter;
 
     private bool collide;
+    private bool isInsdeTimeField;
 
     [SerializeField] private GameObject bulletHole;
     private RaycastHit raycastHit;
@@ -35,6 +36,7 @@ public class AmmoController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        isInsdeTimeField = true;
         ammoSpeed = timeNotSlowed;
     }
 
@@ -70,9 +72,16 @@ public class AmmoController : MonoBehaviour
         }
 
 
+        if(isInsdeTimeField)
+        {
+            rb.MovePosition(transform.position + direction * Mathf.Pow(timeSpeed, 2) * 10 * Time.deltaTime);
+        }
+        else
+        {
+            rb.MovePosition(transform.position + direction * timeSlowed * Time.deltaTime);
+        }
 
 
-        rb.MovePosition(transform.position + direction * timeSpeed * Time.deltaTime);
 
         //if (collide)
         //{
@@ -112,7 +121,7 @@ public class AmmoController : MonoBehaviour
     {
         if (other.CompareTag("TimeSphere") || other.CompareTag("Ammo") || other.CompareTag("Player") || other.CompareTag("ChronoGrenade") || other.CompareTag("TimeBind"))
         {
-            if(other.CompareTag("Player"))
+            if (other.CompareTag("Player") && other.gameObject != shooter.gameObject)
             {
                 Instantiate(playerHitEffect, gameObject.transform.position, Quaternion.LookRotation(new Vector3(0, 0, gameObject.transform.rotation.z * -1)));
             }
@@ -136,8 +145,14 @@ public class AmmoController : MonoBehaviour
         {
             ammoSpeed = timeSlowed;
             timeSpeed = other.GetComponent<TimeSphere>().timeSpeed;
+
+            if (!other.gameObject.GetComponent<TimeSphere>().isTimeField)
+            {
+                isInsdeTimeField = false;
+            }
         }
 
+        
         collide = false;
     }
 

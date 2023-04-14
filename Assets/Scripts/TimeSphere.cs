@@ -12,6 +12,7 @@ public class TimeSphere : MonoBehaviour
 
     [HideInInspector]
     public bool isTimeBind;
+    public bool isTimeField;
     public float timeSpeed;
 
     private void Awake()
@@ -19,6 +20,7 @@ public class TimeSphere : MonoBehaviour
         timeSpeed = 0.2f;
 
         isTimeBind = false;
+        isTimeField = false;
 
         originalScale = transform.localScale;
         currentScale = transform.localScale;

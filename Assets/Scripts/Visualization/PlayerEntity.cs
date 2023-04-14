@@ -177,7 +177,7 @@ public class PlayerEntity : NetworkBehaviour
         timeSpeed = 1f;
         mouseScroll = 0f;
 
-        timeField.GetComponent<TimeSphere>().expansionMultiplier = 2;
+        timeField.GetComponent<TimeSphere>().isTimeField = true;
 
         characterController = GetComponent<CharacterController>();
 
@@ -355,7 +355,7 @@ public class PlayerEntity : NetworkBehaviour
         bool isRunning = false;
 
         // Press Left Shift to run
-        isRunning = Input.GetKey(KeyCode.LeftShift);
+        // isRunning = Input.GetKey(KeyCode.LeftShift);
 
         // We are grounded, so recalculate move direction based on axis
         Vector3 forward = transform.TransformDirection(Vector3.forward);
@@ -381,7 +381,7 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Move the controller
-        characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed);
+        characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed * 0.7f);
 
         // Player and Camera rotation
         if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
