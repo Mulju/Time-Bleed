@@ -23,12 +23,13 @@ public class PlayerManager : NetworkBehaviour
 
     public void DamagePlayer(int playerID, int damage, int shooterID)
     {
+
         if (!base.IsServer)
             return;
 
         players[playerID].health -= damage;
-        
-        if(players[playerID].health <= 0)
+
+        if (players[playerID].health <= 0)
         {
             // If player dies, update UI with max health
             UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, maxHealth);
@@ -66,7 +67,7 @@ public class PlayerManager : NetworkBehaviour
 
         if (players[playerID].health < maxHealth)
         {
-            players[playerID].health += 50;
+            players[playerID].health += 40;
 
             if (players[playerID].health > maxHealth)
             {
