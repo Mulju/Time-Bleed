@@ -9,6 +9,28 @@ public class ChronoGrenade : MonoBehaviour
     public GameObject ownerObject;
     public int updateID;
 
+    private float timer;
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (timer >= 3f)
+        {
+            if (gameObject.transform.localScale.x <= 5f)
+            {
+                gameObject.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
+            
+
+            // gameObject.GetComponent<SphereCollider>().radius += 0.1f;
+        }
+    }
+
     private void OnTriggerEnter(Collider col)
     {
         if(col.CompareTag("TimeSphere"))
