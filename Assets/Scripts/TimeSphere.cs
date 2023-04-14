@@ -38,6 +38,12 @@ public class TimeSphere : MonoBehaviour
         StartCoroutine(GetSmaller());
     }
 
+    public void IncreaseCircumference()
+    {
+        StopAllCoroutines();
+        StartCoroutine(GetBigger());
+    }
+
     IEnumerator GetSmaller()
     {
         while(currentScale.x > 0.01)

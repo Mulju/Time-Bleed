@@ -59,6 +59,9 @@ public class PlayerManager : NetworkBehaviour
     void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn)
     {
         player.transform.position = spawnPoints[spawn].position;
+
+        player.GetComponent<PlayerEntity>().ammoLeft = player.GetComponent<PlayerEntity>().maxAmmo;
+        player.GetComponent<PlayerEntity>().timeField.GetComponent<TimeSphere>().IncreaseCircumference();
     }
 
     public void RestoreHealth(GameObject player)
