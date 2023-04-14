@@ -332,16 +332,24 @@ PrefabInstance:
       objectReference: {fileID: 1951106221}
     - target: {fileID: 1084728511, guid: c35da028fae794729bd04e33fdcd88e0, type: 3}
       propertyPath: <ChildNetworkObjects>k__BackingField.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1084728511, guid: c35da028fae794729bd04e33fdcd88e0, type: 3}
       propertyPath: <ChildNetworkObjects>k__BackingField.Array.data[1]
       value: 
-      objectReference: {fileID: 665701051}
+      objectReference: {fileID: 1951106221}
     - target: {fileID: 1084728511, guid: c35da028fae794729bd04e33fdcd88e0, type: 3}
       propertyPath: <ChildNetworkObjects>k__BackingField.Array.data[2]
       value: 
+      objectReference: {fileID: 665701051}
+    - target: {fileID: 1084728511, guid: c35da028fae794729bd04e33fdcd88e0, type: 3}
+      propertyPath: <ChildNetworkObjects>k__BackingField.Array.data[3]
+      value: 
       objectReference: {fileID: 746923961}
+    - target: {fileID: 1084728511, guid: c35da028fae794729bd04e33fdcd88e0, type: 3}
+      propertyPath: <ChildNetworkObjects>k__BackingField.Array.data[4]
+      value: 
+      objectReference: {fileID: 1349065529}
     - target: {fileID: 503472158473728325, guid: c35da028fae794729bd04e33fdcd88e0,
         type: 3}
       propertyPath: _scenePathHash
@@ -355,7 +363,7 @@ PrefabInstance:
     - target: {fileID: 503472158473728325, guid: c35da028fae794729bd04e33fdcd88e0,
         type: 3}
       propertyPath: <ComponentIndex>k__BackingField
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 503472158473728325, guid: c35da028fae794729bd04e33fdcd88e0,
         type: 3}
@@ -419,6 +427,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 617883914958453430, guid: c35da028fae794729bd04e33fdcd88e0,
         type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 617883914958453430, guid: c35da028fae794729bd04e33fdcd88e0,
+        type: 3}
       propertyPath: _sceneNetworkObjects.Array.size
       value: 8
       objectReference: {fileID: 0}
@@ -462,6 +475,11 @@ PrefabInstance:
       propertyPath: _sceneNetworkObjects.Array.data[7]
       value: 
       objectReference: {fileID: 1951106221}
+    - target: {fileID: 617883914958453430, guid: c35da028fae794729bd04e33fdcd88e0,
+        type: 3}
+      propertyPath: <ParentNetworkObject>k__BackingField
+      value: 
+      objectReference: {fileID: 1084728511}
     - target: {fileID: 2007206432123694782, guid: c35da028fae794729bd04e33fdcd88e0,
         type: 3}
       propertyPath: _scenePathHash
@@ -755,7 +773,7 @@ PrefabInstance:
     - target: {fileID: 7229227285378383570, guid: c35da028fae794729bd04e33fdcd88e0,
         type: 3}
       propertyPath: <ComponentIndex>k__BackingField
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7229227285378383570, guid: c35da028fae794729bd04e33fdcd88e0,
         type: 3}
@@ -989,6 +1007,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8554606635093639622, guid: c35da028fae794729bd04e33fdcd88e0,
         type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554606635093639622, guid: c35da028fae794729bd04e33fdcd88e0,
+        type: 3}
       propertyPath: _sceneNetworkObjects.Array.size
       value: 8
       objectReference: {fileID: 0}
@@ -1032,6 +1055,11 @@ PrefabInstance:
       propertyPath: _sceneNetworkObjects.Array.data[7]
       value: 
       objectReference: {fileID: 1951106221}
+    - target: {fileID: 8554606635093639622, guid: c35da028fae794729bd04e33fdcd88e0,
+        type: 3}
+      propertyPath: <ParentNetworkObject>k__BackingField
+      value: 
+      objectReference: {fileID: 1084728511}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c35da028fae794729bd04e33fdcd88e0, type: 3}
 --- !u!4 &46985595 stripped
@@ -1531,6 +1559,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1684308671347898551, guid: 0b650fca685f2eb41a86538aa883e4c1,
+        type: 3}
+      propertyPath: m_TagString
+      value: SpeedSlider
       objectReference: {fileID: 0}
     - target: {fileID: 1950856741845607990, guid: 0b650fca685f2eb41a86538aa883e4c1,
         type: 3}
