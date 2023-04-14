@@ -16,8 +16,22 @@ public class TimeBind : MonoBehaviour
         timeSphereTime = 10f;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (exploded)
+            return;
+
+        StartCoroutine(SpawnTimeSphere());
+
+        this.gameObject.GetComponent<Collider>().enabled = false;
+        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        exploded = true;
+    }
+
     private void Update()
     {
+        return;
+
         if (exploded)
             return;
 
