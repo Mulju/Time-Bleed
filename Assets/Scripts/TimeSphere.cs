@@ -14,8 +14,6 @@ public class TimeSphere : MonoBehaviour
     public bool isTimeBind;
     public float timeSpeed;
 
-    [SerializeField] private Slider slider;
-
     private void Awake()
     {
         timeSpeed = 0.2f;
@@ -24,8 +22,6 @@ public class TimeSphere : MonoBehaviour
 
         originalScale = transform.localScale;
         currentScale = transform.localScale;
-
-        slider.onValueChanged.AddListener(ChangeAlpha);
     }
 
     public void ChangeAlpha(float sliderValue)
