@@ -111,6 +111,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26549d5b3c090f64eb465af6f6271f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalScale: {x: 0, y: 0, z: 0}
+  currentScale: {x: 0, y: 0, z: 0}
+  expansionMultiplier: 5
+  isTimeBind: 0
+  isTimeField: 0
+  timeSpeed: 0
 --- !u!54 &2355169673239019707
 Rigidbody:
   m_ObjectHideFlags: 0

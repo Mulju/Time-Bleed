@@ -87,6 +87,9 @@ public class PlayerEntity : NetworkBehaviour
 
             speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
 
+
+            TimeSpeedSlider(speedSlider.value);
+
             /*
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
@@ -142,9 +145,10 @@ public class PlayerEntity : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter)
     {
+        int damageAmount = 20;
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
-        PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), 50, shooter.GetInstanceID());
+        PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
     }
 
     public void AmmoHit(GameObject hitPlayer, GameObject shooter)
@@ -174,7 +178,7 @@ public class PlayerEntity : NetworkBehaviour
         timeSpeed = 1f;
         mouseScroll = 0f;
 
-        timeField.GetComponent<TimeSphere>().expansionMultiplier = 2;
+        timeField.GetComponent<TimeSphere>().isTimeField = true;
 
         characterController = GetComponent<CharacterController>();
 
@@ -192,6 +196,8 @@ public class PlayerEntity : NetworkBehaviour
 
         reloadBackground = GameObject.FindGameObjectWithTag("ReloadBackground");
         reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
+
+        gameObject.transform.position = new Vector3(10, 10, 10);
 
         reloadBackground.SetActive(false);
     }
@@ -259,7 +265,7 @@ public class PlayerEntity : NetworkBehaviour
             ammoLeft -= 1;
         }
 
-        if ((Input.GetKeyDown(KeyCode.R) || ammoLeft == 0 ) && !reloading && ammoLeft != maxAmmo)
+        if ((Input.GetKeyDown(KeyCode.R) || ammoLeft == 0) && !reloading && ammoLeft != maxAmmo)
         {
             reloading = true;
             Reload();
@@ -300,13 +306,12 @@ public class PlayerEntity : NetworkBehaviour
             menuControl.OpenCloseMenu();
         }
 
-        if(Input.mouseScrollDelta.y != 0)
+        if (Input.mouseScrollDelta.y != 0)
         {
             mouseScroll = Input.mouseScrollDelta.y;
-            Debug.Log(mouseScroll);
 
             // change slider value 
-            if(speedSlider != null)
+            if (speedSlider != null)
             {
                 speedSlider.value += mouseScroll * 0.05f;
             }
@@ -353,7 +358,7 @@ public class PlayerEntity : NetworkBehaviour
         bool isRunning = false;
 
         // Press Left Shift to run
-        isRunning = Input.GetKey(KeyCode.LeftShift);
+        // isRunning = Input.GetKey(KeyCode.LeftShift);
 
         // We are grounded, so recalculate move direction based on axis
         Vector3 forward = transform.TransformDirection(Vector3.forward);
@@ -379,7 +384,7 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Move the controller
-        characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed);
+        characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed * 0.7f);
 
         // Player and Camera rotation
         if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
@@ -424,7 +429,7 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void TimeFieldActivate(GameObject timeField)
     {
-        timeField.GetComponent<PlayerEntity>().timeField.transform.localScale = timeFieldOriginalScale;
+        //timeField.GetComponent<PlayerEntity>().timeField.transform.localScale = timeFieldOriginalScale;
     }
 
 
@@ -472,8 +477,6 @@ public class PlayerEntity : NetworkBehaviour
             }
         }
 
-
-
         //GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
         //ammoInstance.GetComponent<AmmoController>().direction = direction;
         //ammoInstance.GetComponent<AmmoController>().shooter = shooter;
@@ -490,7 +493,7 @@ public class PlayerEntity : NetworkBehaviour
     public void TimeBind()
     {
         GameObject timeBindInstance = Instantiate(timeBindSkill, ammoSpawn.transform.position, Quaternion.identity);
-        timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
+        timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 4, ForceMode.Impulse);
         Destroy(timeBindInstance, 25);
     }
 
@@ -505,7 +508,7 @@ public class PlayerEntity : NetworkBehaviour
     {
         GameObject chronadeInstance = Instantiate(chronade, ammoSpawn.transform.position, Quaternion.identity);
         chronadeInstance.GetComponent<ChronoGrenade>().ownerObject = gameObject;
-        chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(ammoSpawn.transform.forward * 3, ForceMode.Impulse);
+        chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 4, ForceMode.Impulse);
     }
 
     private void OnTriggerStay(Collider other)
