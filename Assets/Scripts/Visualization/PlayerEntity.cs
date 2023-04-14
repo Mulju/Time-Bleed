@@ -28,6 +28,9 @@ public class PlayerEntity : NetworkBehaviour
     private bool reloading;
     private bool timeFieldIsActive;
 
+    public float timeSpeed;
+    private float mouseScroll;
+
     private Vector3 timeFieldOriginalScale;
 
     [Header("Base setup")]
@@ -164,6 +167,11 @@ public class PlayerEntity : NetworkBehaviour
         timeSlow = 1;
         timeFieldIsActive = true;
 
+        timeSpeed = 1f;
+        mouseScroll = 0f;
+
+        timeField.GetComponent<TimeSphere>().expansionMultiplier = 2;
+
         characterController = GetComponent<CharacterController>();
 
         menuControl = GameObject.FindGameObjectWithTag("MenuControl").GetComponent<MenuControl>();
@@ -287,6 +295,29 @@ public class PlayerEntity : NetworkBehaviour
             playerManager.ChangeCursorLock();
             menuControl.OpenCloseMenu();
         }
+
+        if(Input.mouseScrollDelta.y != 0)
+        {
+            mouseScroll = Input.mouseScrollDelta.y;
+            Debug.Log(mouseScroll);
+
+            // change slider value 
+            TimeSpeedSlider(mouseScroll * 0.05f);
+        }
+    }
+
+    public void TimeSpeedSlider(float sliderValue)
+    {
+        timeSpeed += sliderValue;
+        if (timeSpeed < 0.1)
+        {
+            timeSpeed = 0.1f;
+        }
+        else if (timeSpeed > 1f)
+        {
+            timeSpeed = 1f;
+        }
+        timeField.GetComponent<TimeSphere>().timeSpeed = timeSpeed;
     }
 
     public bool IsMoving()
@@ -331,7 +362,7 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Move the controller
-        characterController.Move(moveDirection * Time.deltaTime * timeSlow);
+        characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed);
 
         // Player and Camera rotation
         if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
@@ -362,7 +393,9 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void TimeFieldDeactivate(GameObject timeField)
     {
-        timeField.GetComponent<PlayerEntity>().timeField.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+        //timeField.GetComponent<PlayerEntity>().timeField.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+
+        //timeField.GetComponent<TimeSphere>().ReduceCircumference();
     }
 
     [ServerRpc]

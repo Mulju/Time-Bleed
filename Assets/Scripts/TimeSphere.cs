@@ -7,13 +7,16 @@ public class TimeSphere : MonoBehaviour
 {
     [HideInInspector]
     public Vector3 originalScale, currentScale;
-    private int expansionMultiplier = 5;
+    public int expansionMultiplier = 5;
 
     [HideInInspector]
     public bool isTimeBind;
+    public float timeSpeed;
 
     private void Awake()
     {
+        timeSpeed = 0.2f;
+
         isTimeBind = false;
 
         originalScale = transform.localScale;
