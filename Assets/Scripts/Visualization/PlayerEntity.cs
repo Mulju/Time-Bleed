@@ -327,6 +327,11 @@ public class PlayerEntity : NetworkBehaviour
         {
             timeSpeed = 1f;
         }
+    }
+
+    [ObserversRpc]
+    public void UpdateTimeSpeed()
+    {
         timeField.GetComponent<TimeSphere>().timeSpeed = timeSpeed;
     }
 
