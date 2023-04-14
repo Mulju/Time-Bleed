@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimeSphere : MonoBehaviour
 {
@@ -12,12 +13,22 @@ public class TimeSphere : MonoBehaviour
     [HideInInspector]
     public bool isTimeBind;
 
+    [SerializeField] private Slider slider;
+
     private void Awake()
     {
         isTimeBind = false;
 
         originalScale = transform.localScale;
         currentScale = transform.localScale;
+
+        slider.onValueChanged.AddListener(ChangeAlpha);
+    }
+
+    public void ChangeAlpha(float sliderValue)
+    {
+        // The alpha of the sphere depends on the movement speed of the player
+        gameObject.GetComponent<Material>().color = new Color(71, 255, 188, 31 / sliderValue);
     }
 
     public void ReduceCircumference()
