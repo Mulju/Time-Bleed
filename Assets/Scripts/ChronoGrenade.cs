@@ -15,11 +15,15 @@ public class ChronoGrenade : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= 3f)
+        if (timer >= 2f)
         {
+            gameObject.GetComponent<Renderer>().material.color = new Color(gameObject.GetComponent<Renderer>().material.color.r,
+                                                                           gameObject.GetComponent<Renderer>().material.color.g,
+                                                                           gameObject.GetComponent<Renderer>().material.color.b, 0.4f);
+
             if (gameObject.transform.localScale.x <= 5f)
             {
-                gameObject.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
+                gameObject.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
             }
             else
             {
