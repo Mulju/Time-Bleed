@@ -426,7 +426,7 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void TimeFieldActivate(GameObject timeField)
     {
-        timeField.GetComponent<PlayerEntity>().timeField.transform.localScale = timeFieldOriginalScale;
+        //timeField.GetComponent<PlayerEntity>().timeField.transform.localScale = timeFieldOriginalScale;
     }
 
 
