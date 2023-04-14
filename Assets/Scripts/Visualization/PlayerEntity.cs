@@ -145,9 +145,10 @@ public class PlayerEntity : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter)
     {
+        int damageAmount = 20;
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
-        PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), 50, shooter.GetInstanceID());
+        PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
     }
 
     public void AmmoHit(GameObject hitPlayer, GameObject shooter)
@@ -195,6 +196,8 @@ public class PlayerEntity : NetworkBehaviour
 
         reloadBackground = GameObject.FindGameObjectWithTag("ReloadBackground");
         reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
+
+        gameObject.transform.position = new Vector3(10, 10, 10);
 
         reloadBackground.SetActive(false);
     }
@@ -262,7 +265,7 @@ public class PlayerEntity : NetworkBehaviour
             ammoLeft -= 1;
         }
 
-        if ((Input.GetKeyDown(KeyCode.R) || ammoLeft == 0 ) && !reloading && ammoLeft != maxAmmo)
+        if ((Input.GetKeyDown(KeyCode.R) || ammoLeft == 0) && !reloading && ammoLeft != maxAmmo)
         {
             reloading = true;
             Reload();
@@ -303,12 +306,12 @@ public class PlayerEntity : NetworkBehaviour
             menuControl.OpenCloseMenu();
         }
 
-        if(Input.mouseScrollDelta.y != 0)
+        if (Input.mouseScrollDelta.y != 0)
         {
             mouseScroll = Input.mouseScrollDelta.y;
 
             // change slider value 
-            if(speedSlider != null)
+            if (speedSlider != null)
             {
                 speedSlider.value += mouseScroll * 0.05f;
             }
@@ -473,8 +476,6 @@ public class PlayerEntity : NetworkBehaviour
                 Destroy(instantiatedHole, 10);
             }
         }
-
-
 
         //GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
         //ammoInstance.GetComponent<AmmoController>().direction = direction;
