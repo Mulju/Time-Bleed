@@ -169,7 +169,7 @@ public class PlayerEntity : NetworkBehaviour
         shootSpeed = 1;
         reloadTime = 1;
 
-        
+
         timeBindCooldown = 10f;
         timeBindTimer = timeBindCooldown;
 
@@ -205,8 +205,6 @@ public class PlayerEntity : NetworkBehaviour
 
         reloadBackground = GameObject.FindGameObjectWithTag("ReloadBackground");
         reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
-
-        gameObject.transform.position = new Vector3(0, 50, 0);
 
         reloadBackground.SetActive(false);
     }
