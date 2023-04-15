@@ -28,6 +28,12 @@ public class HealthPackController : NetworkBehaviour
     void HideHealthPack()
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        Canvas[] canvases = this.gameObject.GetComponentsInChildren<Canvas>();
+
+        foreach (Canvas canvas in canvases)
+        {
+            canvas.GetComponent<Canvas>().enabled = false;
+        }
     }
 
     IEnumerator RespawnHealthPack()
