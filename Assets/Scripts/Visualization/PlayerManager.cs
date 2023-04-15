@@ -61,6 +61,7 @@ public class PlayerManager : NetworkBehaviour
         player.transform.position = spawnPoints[spawn].position;
 
         player.GetComponent<PlayerEntity>().ammoLeft = player.GetComponent<PlayerEntity>().maxAmmo;
+        player.GetComponent<PlayerEntity>().RespawnServer();
     }
 
     public void RestoreHealth(GameObject player)
