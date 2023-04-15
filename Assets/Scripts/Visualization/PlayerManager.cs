@@ -56,13 +56,13 @@ public class PlayerManager : NetworkBehaviour
         RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, spawnPoints.Count));
         players[playerID].health = maxHealth;
         UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
+        player[playerID].GetComponent<Collider>().enabled = true;
     }
 
     [TargetRpc]
     void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn)
     {
         player.transform.position = spawnPoints[spawn].position;
-        player.GetComponent<Collider>().enabled = true;
 
         player.GetComponent<PlayerEntity>().ammoLeft = player.GetComponent<PlayerEntity>().maxAmmo;
         player.GetComponent<PlayerEntity>().RespawnServer();
