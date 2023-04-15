@@ -200,7 +200,7 @@ public class PlayerEntity : NetworkBehaviour
         reloadBackground = GameObject.FindGameObjectWithTag("ReloadBackground");
         reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
 
-        gameObject.transform.position = new Vector3(10, 10, 10);
+        gameObject.transform.position = new Vector3(0, 50, 0);
 
         reloadBackground.SetActive(false);
     }
