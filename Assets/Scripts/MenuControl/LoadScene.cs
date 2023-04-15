@@ -12,7 +12,7 @@ public class LoadScene : MonoBehaviour
 
     public void LoadTimeBleed()
     {
-        SceneManager.LoadScene("TimeBleed");
+        SceneManager.LoadScene("TimeBleedLevel1");
     }
 
     public void QuitGame()
