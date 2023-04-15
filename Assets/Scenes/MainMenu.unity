@@ -15159,7 +15159,8 @@ PrefabInstance:
         for bullets but not players. The strength of the slow depends\n\t\t\t\t\ton
         players move speed indicated by a slider on the player UI.\n\n\t\u2022 Time
         Bubble:\t\ta stationary time bubble in the field, slows also players\n\n\t\u2022
-        Time Bind -ability:\ta throwable Time Bubble which dissipates after 10 seconds."
+        Time Bind -ability:\ta throwable Time Bubble which dissipates after 10 seconds.
+        Time Bind has a 10s cooldown."
       objectReference: {fileID: 0}
     - target: {fileID: 4464449872880591599, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
@@ -15483,7 +15484,7 @@ PrefabInstance:
       propertyPath: m_text
       value: Players can counter the time manipulating effects by throwing Chronades.
         Chronades explode after two seconds disabling all time bubbles and spheres
-        in close vicinity for 10 seconds.
+        in close vicinity for 10 seconds. Chronades have a 5s cooldown.
       objectReference: {fileID: 0}
     - target: {fileID: 4464449872880591599, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
