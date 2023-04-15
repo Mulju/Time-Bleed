@@ -3,6 +3,7 @@ using UnityEngine;
 using FishNet.Object;
 using FishNet.Connection;
 using TMPro;
+using System.Collections;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -58,6 +59,15 @@ public class PlayerManager : NetworkBehaviour
         UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
         players[playerID].playerObject.GetComponent<Collider>().enabled = true;
 
+        StartCoroutine(MaxHealth(playerID));
+    }
+
+    IEnumerator MaxHealth(int playerID)
+    {
+        yield return new WaitForSeconds(3f);
+
+        players[playerID].health = maxHealth;
+        UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
     }
 
     [TargetRpc]
