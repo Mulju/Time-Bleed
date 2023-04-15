@@ -53,6 +53,8 @@ public class PlayerManager : NetworkBehaviour
         players[attackerID].kills++;
 
         RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, spawnPoints.Count));
+        players[playerID].health = maxHealth;
+        UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
     }
 
     [TargetRpc]
