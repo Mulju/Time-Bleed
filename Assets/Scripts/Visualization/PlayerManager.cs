@@ -42,7 +42,6 @@ public class PlayerManager : NetworkBehaviour
 
         if (players[playerID].health <= 0)
         {
-            players[playerID].playerObject.GetComponent<Collider>().enabled = false;
             PlayerKilled(playerID, shooterID);
         }
     }
@@ -56,8 +55,6 @@ public class PlayerManager : NetworkBehaviour
 
         RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, spawnPoints.Count));
         players[playerID].health = maxHealth;
-        UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
-        players[playerID].playerObject.GetComponent<Collider>().enabled = true;
 
         StartCoroutine(MaxHealth(playerID));
     }
