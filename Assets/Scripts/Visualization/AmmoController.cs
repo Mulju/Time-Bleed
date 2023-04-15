@@ -74,7 +74,9 @@ public class AmmoController : MonoBehaviour
 
         if(isInsdeTimeField)
         {
-            rb.MovePosition(transform.position + direction * Mathf.Pow(timeSpeed, 2) * 10 * Time.deltaTime);
+            rb.MovePosition(transform.position + direction * Mathf.Pow(timeSpeed, 2.3f) * 20 * Time.deltaTime);
+
+            
         }
         else
         {

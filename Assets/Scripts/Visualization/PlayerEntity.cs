@@ -405,7 +405,7 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Move the controller
-        characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed * 0.7f);
+        characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed * 0.8f);
 
         // Player and Camera rotation
         if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
