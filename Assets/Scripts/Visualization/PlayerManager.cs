@@ -41,6 +41,7 @@ public class PlayerManager : NetworkBehaviour
 
         if (players[playerID].health <= 0)
         {
+            players[playerID].playerObject.GetComponent<Collider>().enabled = false;
             PlayerKilled(playerID, shooterID);
         }
     }
