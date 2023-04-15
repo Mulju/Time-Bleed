@@ -64,7 +64,7 @@ public class PlayerManager : NetworkBehaviour
 
     IEnumerator MaxHealth(int playerID)
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         players[playerID].health = maxHealth;
         UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
