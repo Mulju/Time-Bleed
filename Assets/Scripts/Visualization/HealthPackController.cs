@@ -47,5 +47,12 @@ public class HealthPackController : NetworkBehaviour
     void ShowHealthPack()
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+
+        Canvas[] canvases = this.gameObject.GetComponentsInChildren<Canvas>();
+
+        foreach (Canvas canvas in canvases)
+        {
+            canvas.GetComponent<Canvas>().enabled = true;
+        }
     }
 }
