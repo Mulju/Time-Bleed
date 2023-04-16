@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18018606, g: 0.22559257, b: 0.30678663, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3842,6 +3842,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 477695111}
+    - target: {fileID: 2683121967844913841, guid: 0b650fca685f2eb41a86538aa883e4c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2834609676132001937, guid: 0b650fca685f2eb41a86538aa883e4c1,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3961,6 +3966,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181557644227793933, guid: 0b650fca685f2eb41a86538aa883e4c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3203118055764487295, guid: 0b650fca685f2eb41a86538aa883e4c1,
         type: 3}
@@ -5739,16 +5749,16 @@ MonoBehaviour:
   <SceneId>k__BackingField: 2603441584621131941
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects:
-  - {fileID: 1674640280}
-  - {fileID: 562715416}
-  - {fileID: 1088267602}
-  - {fileID: 631396738}
-  - {fileID: 1537454825}
   - {fileID: 3687454}
-  - {fileID: 1962064014}
-  - {fileID: 2062295356}
+  - {fileID: 562715416}
+  - {fileID: 631396738}
   - {fileID: 918670143}
   - {fileID: 932175377}
+  - {fileID: 1088267602}
+  - {fileID: 1537454825}
+  - {fileID: 1674640280}
+  - {fileID: 1962064014}
+  - {fileID: 2062295356}
 --- !u!114 &918670144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5837,16 +5847,16 @@ MonoBehaviour:
   <SceneId>k__BackingField: 2603441582895070161
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects:
-  - {fileID: 1674640280}
-  - {fileID: 562715416}
-  - {fileID: 1088267602}
-  - {fileID: 631396738}
-  - {fileID: 1537454825}
   - {fileID: 3687454}
-  - {fileID: 1962064014}
-  - {fileID: 2062295356}
+  - {fileID: 562715416}
+  - {fileID: 631396738}
   - {fileID: 918670143}
   - {fileID: 932175377}
+  - {fileID: 1088267602}
+  - {fileID: 1537454825}
+  - {fileID: 1674640280}
+  - {fileID: 1962064014}
+  - {fileID: 2062295356}
 --- !u!114 &932175378
 MonoBehaviour:
   m_ObjectHideFlags: 0
