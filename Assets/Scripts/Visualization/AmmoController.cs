@@ -51,9 +51,13 @@ public class AmmoController : MonoBehaviour
                 {
                     transform.position = hit.point;
                 }
-                else if (hit.collider.CompareTag("Player") && hit.collider.gameObject != shooter.gameObject)
+                else if (hit.collider.CompareTag("Player"))
                 {
-                    hit.collider.GetComponent<PlayerEntity>().AmmoHit(hit.collider.gameObject, shooter);
+                    if (hit.collider.gameObject != shooter.gameObject)
+                    {
+                        hit.collider.GetComponent<PlayerEntity>().AmmoHit(hit.collider.gameObject, shooter);
+                    }
+
                     // Instantiate "blood" effect
                     //Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(this.gameObject);
