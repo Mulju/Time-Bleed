@@ -22,6 +22,20 @@ public class PlayerManager : NetworkBehaviour
         instance = this;
     }
 
+    private void Update()
+    {
+        if (!base.IsServer)
+            return;
+
+        foreach (KeyValuePair<int, Data.Player> player in players)
+        {
+            if (player.Value.playerObject.transform.position.y < -10)
+            {
+                PlayerKilled(player.Key, player.Key);
+            }
+        }
+    }
+
     public void DamagePlayer(int playerID, int damage, int shooterID)
     {
 
@@ -48,10 +62,12 @@ public class PlayerManager : NetworkBehaviour
 
     void PlayerKilled(int playerID, int attackerID)
     {
-        print("Player " + playerID.ToString() + " was killed by " + attackerID.ToString());
+        if (attackerID != playerID)
+        {
+            players[attackerID].kills++;
+        }
         players[playerID].deaths++;
         players[playerID].health = maxHealth;
-        players[attackerID].kills++;
 
         RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, spawnPoints.Count));
         players[playerID].health = maxHealth;
