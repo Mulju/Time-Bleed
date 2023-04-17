@@ -11,7 +11,8 @@ public class PlayerManager : NetworkBehaviour
     public static PlayerManager instance;
 
     private Dictionary<int, Data.Player> players = new Dictionary<int, Data.Player>();
-    [SerializeField] List<Transform> spawnPoints = new List<Transform>();
+    [SerializeField] private List<Transform> redSpawnPoints = new List<Transform>();
+    [SerializeField] private List<Transform> greenSpawnPoints = new List<Transform>();
 
     [SerializeField] private MenuControl menuControl;
 
@@ -47,13 +48,15 @@ public class PlayerManager : NetworkBehaviour
         }
         else
         {
-            // Is in blue team
+            // Is in green team
             player.teamTag = 1;
         }
 
         redTeamTurn = !redTeamTurn;
         players.Add(id, player);
     }
+
+
 
     public void DamagePlayer(int playerID, int damage, int shooterID)
     {
@@ -88,7 +91,16 @@ public class PlayerManager : NetworkBehaviour
         players[playerID].deaths++;
         players[playerID].health = maxHealth;
 
-        RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, spawnPoints.Count));
+        if(players[playerID].teamTag == 0)
+        {
+            // Respawn at red team's base
+            RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, redSpawnPoints.Count), players[playerID].teamTag);
+        }
+        else
+        {
+            // Respawn at green team's base
+            RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, greenSpawnPoints.Count), players[playerID].teamTag);
+        }
         players[playerID].health = maxHealth;
 
         StartCoroutine(MaxHealth(playerID));
@@ -103,9 +115,18 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [TargetRpc]
-    void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn)
+    void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn, int teamTag)
     {
-        player.transform.position = spawnPoints[spawn].position;
+        if (teamTag == 0)
+        {
+            // Respawn at red team's base
+            player.transform.position = redSpawnPoints[spawn].position;
+        }
+        else
+        {
+            // Respawn at green team's base
+            player.transform.position = greenSpawnPoints[spawn].position;
+        }
 
         player.GetComponent<PlayerEntity>().ammoLeft = player.GetComponent<PlayerEntity>().maxAmmo;
         player.GetComponent<PlayerEntity>().RespawnServer();
