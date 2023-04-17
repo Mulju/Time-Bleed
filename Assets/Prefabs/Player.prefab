@@ -320,6 +320,9 @@ MonoBehaviour:
   maxAmmo: 30
   ammoLeft: 0
   timeSpeed: 0
+  headDamage: 2
+  torsoDamage: 1
+  legsDamage: 0.7
   walkingSpeed: 7.5
   runningSpeed: 11.5
   jumpSpeed: 8
@@ -3225,7 +3228,7 @@ PrefabInstance:
     - target: {fileID: 5678441716983655713, guid: 22f27e8922a761d449bfb5196780d5bb,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8922732245249476477, guid: 22f27e8922a761d449bfb5196780d5bb,
         type: 3}
