@@ -453,6 +453,7 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
         {
+            Debug.Log(hit.collider.name);
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
@@ -467,7 +468,7 @@ public class PlayerEntity : NetworkBehaviour
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 Destroy(ammoInstance, 120);
             }
-            else if (hit.collider.CompareTag("PlayerHead") && hit.collider.gameObject != this.gameObject)
+            else if (hit.collider.CompareTag("PlayerHead") && hit.collider.GetComponent<PlayerHead>().player.gameObject != this.gameObject)
             {
                 Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsServer)
@@ -475,7 +476,7 @@ public class PlayerEntity : NetworkBehaviour
                     Hit(hit.collider.gameObject, this.gameObject, headDamage);
                 }
             }
-            else if (hit.collider.CompareTag("PlayerTorso") && hit.collider.gameObject != this.gameObject)
+            else if (hit.collider.CompareTag("PlayerTorso") && hit.collider.GetComponent<PlayerTorso>().player.gameObject != this.gameObject)
             {
                 Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsServer)
@@ -483,7 +484,7 @@ public class PlayerEntity : NetworkBehaviour
                     Hit(hit.collider.gameObject, this.gameObject, torsoDamage);
                 }
             }
-            else if (hit.collider.CompareTag("PlayerLegs") && hit.collider.gameObject != this.gameObject)
+            else if (hit.collider.CompareTag("PlayerLegs") && hit.collider.GetComponent<PlayerLegs>().player.gameObject != this.gameObject)
             {
                 Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsServer)
