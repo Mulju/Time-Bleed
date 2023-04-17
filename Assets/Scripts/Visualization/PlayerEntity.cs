@@ -130,17 +130,11 @@ public class PlayerEntity : NetworkBehaviour
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
-
-        DamageIndicator(hitPlayer.GetComponent<NetworkObject>().Owner, hitPlayer, shooter);
     }
 
-    [TargetRpc]
-    public void DamageIndicator(NetworkConnection conn, GameObject hitPlayer, GameObject shooter)
+    public void ShowDamageDirection(GameObject player, Vector3 direction)
     {
-        if (base.IsOwner)
-        {
-            damageIndicatorParent.GetComponent<DmgIndicatorSystem>().AddDamageIndicator(hitPlayer, shooter);
-        }
+        damageIndicatorParent.GetComponent<DmgIndicatorSystem>().AddDamageIndicator(player, direction);
     }
 
     public void AmmoHit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
@@ -483,7 +477,7 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
         {
-            if(!ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
+            if (!ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 // Line visual for the shot, only if not in a timesphere
                 LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
