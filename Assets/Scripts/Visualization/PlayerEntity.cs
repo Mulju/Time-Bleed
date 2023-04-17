@@ -451,7 +451,7 @@ public class PlayerEntity : NetworkBehaviour
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
         soundControl.PlayShootSound();
 
-        if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
         {
             Debug.Log(hit.collider.name);
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
