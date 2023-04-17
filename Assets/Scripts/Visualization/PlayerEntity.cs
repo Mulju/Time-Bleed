@@ -462,7 +462,6 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
         {
-            Debug.Log(hit.collider.name);
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
@@ -472,7 +471,7 @@ public class PlayerEntity : NetworkBehaviour
             }
             if (ammoSpawn.GetComponent<AmmoSpawn>().isInsideTerrain)
             {
-                if (Physics.Raycast(startPos + direction, direction, out RaycastHit bulletHit, Mathf.Infinity))
+                if (Physics.Raycast(startPos, direction, out RaycastHit bulletHit, Mathf.Infinity))
                 {
                     GameObject instantiatedHole = Instantiate(bulletHole, bulletHit.point + bulletHit.normal * 0.0001f, Quaternion.LookRotation(bulletHit.normal));
                     Destroy(instantiatedHole, 10);

@@ -188,30 +188,4 @@ public class AmmoController : MonoBehaviour
             ammoSpeed = timeNotSlowed;
         }
     }
-
-
-
-
-    public void Shoot(GameObject shooter, Vector3 direction, Vector3 startPos)
-    {
-        if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
-        {
-            if (hit.collider.CompareTag("TimeSphere"))
-            {
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
-                ammoInstance.GetComponent<AmmoController>().direction = direction;
-                ammoInstance.GetComponent<AmmoController>().shooter = shooter;
-                Destroy(ammoInstance, 120);
-            }
-            else
-            {
-                // bullet holet, hit() jne...
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
-                ammoInstance.GetComponent<AmmoController>().direction = direction;
-                ammoInstance.GetComponent<AmmoController>().shooter = shooter;
-                Destroy(ammoInstance, 2);
-            }
-
-        }
-    }
 }

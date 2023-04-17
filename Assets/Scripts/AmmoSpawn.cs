@@ -20,7 +20,7 @@ public class AmmoSpawn : MonoBehaviour
         {
             isSlowed = true;
         }
-        else if (other.CompareTag("Terrain"))
+        else if (other.gameObject.layer == 6)
         {
             isInsideTerrain = true;
         }
