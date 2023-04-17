@@ -4,12 +4,13 @@ using FishNet.Object;
 using FishNet.Connection;
 using TMPro;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class PlayerManager : NetworkBehaviour
 {
     public static PlayerManager instance;
 
-    public Dictionary<int, Data.Player> players = new Dictionary<int, Data.Player>();
+    private Dictionary<int, Data.Player> players = new Dictionary<int, Data.Player>();
     [SerializeField] List<Transform> spawnPoints = new List<Transform>();
 
     [SerializeField] private MenuControl menuControl;
@@ -34,6 +35,13 @@ public class PlayerManager : NetworkBehaviour
                 PlayerKilled(player.Key, player.Key);
             }
         }
+    }
+
+    public void AddPlayer(int id, Data.Player player)
+    {
+        players.Add(id, player);
+
+        // Tähän koodia, joka ottaa kiinni sen kun uusi pelaaja luodaan
     }
 
     public void DamagePlayer(int playerID, int damage, int shooterID)

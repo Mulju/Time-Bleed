@@ -109,7 +109,7 @@ public class PlayerEntity : NetworkBehaviour
             Debug.Log("Player ID: " + id);
             debugConsole.text = "Player ID: " + id;
 
-            playerManager.players.Add(id, player);
+            playerManager.AddPlayer(id, player);
             /*
             playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
             if (playerName != null)
