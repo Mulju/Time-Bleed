@@ -18,6 +18,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject chronade;
 
     private GameObject reloadBar, reloadBackground, reloadParent;
+    private GameObject damageIndicatorParent;
 
     public float timeSlow;
     public float shootSpeed;
@@ -119,16 +120,27 @@ public class PlayerEntity : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
     {
-        if(hitPlayer.GetComponent<PlayerEntity>().ownTeamTag == shooter.GetComponent<PlayerEntity>().ownTeamTag)
+        if (hitPlayer.GetComponent<PlayerEntity>().ownTeamTag == shooter.GetComponent<PlayerEntity>().ownTeamTag)
         {
             // If the shooter is in the same team as you, don't take damage
             return;
         }
 
         int damageAmount = Mathf.FloorToInt(20 * damageMultiplier);
+        PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
-        PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
+
+        DamageIndicator(hitPlayer.GetComponent<NetworkObject>().Owner, hitPlayer, shooter);
+    }
+
+    [TargetRpc]
+    public void DamageIndicator(NetworkConnection conn, GameObject hitPlayer, GameObject shooter)
+    {
+        if (base.IsOwner)
+        {
+            damageIndicatorParent.GetComponent<DmgIndicatorSystem>().AddDamageIndicator(hitPlayer, shooter);
+        }
     }
 
     public void AmmoHit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
@@ -183,11 +195,12 @@ public class PlayerEntity : NetworkBehaviour
 
         foreach (Transform child in reloadParent.transform)
         {
-            child.gameObject.SetActive(true);
+            child?.gameObject.SetActive(true);
         }
 
         reloadBackground = GameObject.FindGameObjectWithTag("ReloadBackground");
         reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
+        damageIndicatorParent = GameObject.Find("DmgIndicatorHolder");
 
         reloadBackground.SetActive(false);
     }
@@ -319,8 +332,8 @@ public class PlayerEntity : NetworkBehaviour
     public void ChangeTeam(int teamTag)
     {
         ownTeamTag = teamTag;
-        
-        if(teamTag == 0)
+
+        if (teamTag == 0)
         {
             body.GetComponent<Renderer>().material = redTeamMaterial;
         }
@@ -338,7 +351,7 @@ public class PlayerEntity : NetworkBehaviour
 
     [ObserversRpc]
     public void Respawn()
-    { 
+    {
         timeField.GetComponent<TimeSphere>().IncreaseCircumference();
     }
 
