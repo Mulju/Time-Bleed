@@ -32,6 +32,11 @@ public class PlayerManager : NetworkBehaviour
 
         foreach (KeyValuePair<int, Data.Player> player in players)
         {
+            if(player.Value == null)
+            {
+                continue;
+            }
+
             if (player.Value.playerObject.transform.position.y < -10)
             {
                 PlayerKilled(player.Key, player.Key);
