@@ -80,11 +80,7 @@ public class AmmoController : MonoBehaviour
 
                     Destroy(this.gameObject);
                 }
-                else if (hit.collider.CompareTag("Player"))
-                {
-                    // ei mit‰‰n?
-                }
-                else
+                else if(!hit.collider.CompareTag("Player"))
                 {
                     GameObject instantiatedHole = Instantiate(bulletHole, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
                     Destroy(instantiatedHole, 10);
@@ -190,32 +186,6 @@ public class AmmoController : MonoBehaviour
         {
             CheckForCollisions();
             ammoSpeed = timeNotSlowed;
-        }
-    }
-
-
-
-
-    public void Shoot(GameObject shooter, Vector3 direction, Vector3 startPos)
-    {
-        if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
-        {
-            if (hit.collider.CompareTag("TimeSphere"))
-            {
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
-                ammoInstance.GetComponent<AmmoController>().direction = direction;
-                ammoInstance.GetComponent<AmmoController>().shooter = shooter;
-                Destroy(ammoInstance, 120);
-            }
-            else
-            {
-                // bullet holet, hit() jne...
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
-                ammoInstance.GetComponent<AmmoController>().direction = direction;
-                ammoInstance.GetComponent<AmmoController>().shooter = shooter;
-                Destroy(ammoInstance, 2);
-            }
-
         }
     }
 }

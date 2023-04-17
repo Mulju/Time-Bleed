@@ -5,10 +5,12 @@ using UnityEngine;
 public class AmmoSpawn : MonoBehaviour
 {
     public bool isSlowed;
+    public bool isInsideTerrain;
 
     private void FixedUpdate()
     {
         isSlowed = false;
+        isInsideTerrain = false;
     }
 
 
@@ -17,6 +19,10 @@ public class AmmoSpawn : MonoBehaviour
         if (other.CompareTag("TimeSphere") && (other.transform.parent == null || other.gameObject.transform.parent.gameObject != gameObject.transform.parent.parent.parent.gameObject))
         {
             isSlowed = true;
+        }
+        else if (other.gameObject.layer == 6)
+        {
+            isInsideTerrain = true;
         }
     }
 }
