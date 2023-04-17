@@ -55,7 +55,7 @@ public class AmmoController : MonoBehaviour
                 {
                     if (hit.collider.GetComponent<PlayerHead>().player.gameObject != shooter.gameObject)
                     {
-                        hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerLegs>().player, shooter, shooter.GetComponent<PlayerEntity>().headDamage);
+                        hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerHead>().player, shooter, shooter.GetComponent<PlayerEntity>().headDamage);
                     }
 
                     // Instantiate "blood" effect
@@ -66,7 +66,7 @@ public class AmmoController : MonoBehaviour
                 {
                     if (hit.collider.GetComponent<PlayerTorso>().player.gameObject != shooter.gameObject)
                     {
-                        hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerLegs>().player, shooter, shooter.GetComponent<PlayerEntity>().torsoDamage);
+                        hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerTorso>().player, shooter, shooter.GetComponent<PlayerEntity>().torsoDamage);
                     }
 
                     Destroy(this.gameObject);
