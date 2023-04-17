@@ -32,6 +32,11 @@ public class PlayerManager : NetworkBehaviour
 
         foreach (KeyValuePair<int, Data.Player> player in players)
         {
+            if(player.Value.playerObject == null)
+            {
+                continue;
+            }
+
             if (player.Value.playerObject.transform.position.y < -10)
             {
                 PlayerKilled(player.Key, player.Key);
@@ -58,6 +63,17 @@ public class PlayerManager : NetworkBehaviour
         foreach(KeyValuePair<int, Data.Player> pair in players)
         {
             ChangePlayerTeam(pair.Value);        
+        }
+    }
+
+    public void RemovePlayer(NetworkConnection connection)
+    {
+        foreach(KeyValuePair<int, Data.Player> pair in players)
+        {
+            if(pair.Value.connection == connection)
+            {
+                players.Remove(pair.Key);
+            }
         }
     }
 

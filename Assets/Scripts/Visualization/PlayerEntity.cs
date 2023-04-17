@@ -18,6 +18,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject chronade;
 
     private GameObject reloadBar, reloadBackground, reloadParent;
+    private GameObject damageIndicatorParent;
 
     public float timeSlow;
     public float shootSpeed;
@@ -78,6 +79,9 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject body;
     [HideInInspector] public int ownTeamTag;
 
+    [SerializeField] private GameObject rayCastVisual;
+    [SerializeField] private GameObject spawnForRayVisual;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -116,16 +120,27 @@ public class PlayerEntity : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
     {
-        if(hitPlayer.GetComponent<PlayerEntity>().ownTeamTag == shooter.GetComponent<PlayerEntity>().ownTeamTag)
+        if (hitPlayer.GetComponent<PlayerEntity>().ownTeamTag == shooter.GetComponent<PlayerEntity>().ownTeamTag)
         {
             // If the shooter is in the same team as you, don't take damage
             return;
         }
 
         int damageAmount = Mathf.FloorToInt(20 * damageMultiplier);
+        PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
-        PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
+
+        DamageIndicator(hitPlayer.GetComponent<NetworkObject>().Owner, hitPlayer, shooter);
+    }
+
+    [TargetRpc]
+    public void DamageIndicator(NetworkConnection conn, GameObject hitPlayer, GameObject shooter)
+    {
+        if (base.IsOwner)
+        {
+            damageIndicatorParent.GetComponent<DmgIndicatorSystem>().AddDamageIndicator(hitPlayer, shooter);
+        }
     }
 
     public void AmmoHit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
@@ -136,6 +151,11 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        //gameObject.GetComponent<NetworkObject>().Owner.Disconnect(false);
+        playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
+    }
 
     void Start()
     {
@@ -175,11 +195,12 @@ public class PlayerEntity : NetworkBehaviour
 
         foreach (Transform child in reloadParent.transform)
         {
-            child.gameObject.SetActive(true);
+            child?.gameObject.SetActive(true);
         }
 
         reloadBackground = GameObject.FindGameObjectWithTag("ReloadBackground");
         reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
+        damageIndicatorParent = GameObject.Find("DmgIndicatorHolder");
 
         reloadBackground.SetActive(false);
     }
@@ -311,8 +332,8 @@ public class PlayerEntity : NetworkBehaviour
     public void ChangeTeam(int teamTag)
     {
         ownTeamTag = teamTag;
-        
-        if(teamTag == 0)
+
+        if (teamTag == 0)
         {
             body.GetComponent<Renderer>().material = redTeamMaterial;
         }
@@ -330,7 +351,7 @@ public class PlayerEntity : NetworkBehaviour
 
     [ObserversRpc]
     public void Respawn()
-    { 
+    {
         timeField.GetComponent<TimeSphere>().IncreaseCircumference();
     }
 
@@ -462,7 +483,15 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
         {
-            if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
+            if(!ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
+            {
+                // Line visual for the shot, only if not in a timesphere
+                LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
+                instantiatedVisual.SetPosition(0, spawnForRayVisual.transform.position);
+                instantiatedVisual.SetPosition(1, hit.point);
+                Destroy(instantiatedVisual, 2);
+            }
+            else if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
