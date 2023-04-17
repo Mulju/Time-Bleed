@@ -130,17 +130,11 @@ public class PlayerEntity : NetworkBehaviour
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
-
-        DamageIndicator(hitPlayer.GetComponent<NetworkObject>().Owner, hitPlayer, shooter);
     }
 
-    [TargetRpc]
-    public void DamageIndicator(NetworkConnection conn, GameObject hitPlayer, GameObject shooter)
+    public void ShowDamageDirection(GameObject player, Vector3 direction)
     {
-        if (base.IsOwner)
-        {
-            damageIndicatorParent.GetComponent<DmgIndicatorSystem>().AddDamageIndicator(hitPlayer, shooter);
-        }
+        damageIndicatorParent.GetComponent<DmgIndicatorSystem>().AddDamageIndicator(player, direction);
     }
 
     public void AmmoHit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
@@ -488,7 +482,7 @@ public class PlayerEntity : NetworkBehaviour
             instantiatedVisual.SetPosition(0, spawnForRayVisual.transform.position);
             instantiatedVisual.SetPosition(1, hit.point);
             Destroy(instantiatedVisual, 1);
-            
+
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);

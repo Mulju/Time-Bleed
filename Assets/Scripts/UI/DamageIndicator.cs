@@ -1,19 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using FishNet.Object;
 
 public class DamageIndicator : NetworkBehaviour
 {
     private GameObject _player;
-    private GameObject _shooter;
+    Vector3 _bulletDirection;
 
 
-    public void SetDamageIndicator(GameObject player, GameObject shooter)
+    public void SetDamageIndicator(GameObject player, Vector3 bulletDirection)
     {
         _player = player;
-        _shooter = shooter;
+        _bulletDirection = bulletDirection;
         StartCoroutine(DestroyDamageIndicator());
     }
 
@@ -25,15 +23,16 @@ public class DamageIndicator : NetworkBehaviour
             return;
         }
 
-        Vector3 direction = _shooter.transform.position - _player.transform.position;
         Vector3 playerForward = _player.transform.forward;
 
-        float angle = Vector3.Angle(direction, playerForward);
+        float angle = Vector3.Angle(_bulletDirection, playerForward);
 
-        if (Vector3.Cross(direction, playerForward).y < 0)
+        if (Vector3.Cross(_bulletDirection, playerForward).y < 0)
         {
             angle = -angle;
         }
+
+        transform.localRotation = Quaternion.Euler(0, 0, angle);
     }
 
     IEnumerator DestroyDamageIndicator()
