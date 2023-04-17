@@ -80,11 +80,7 @@ public class AmmoController : MonoBehaviour
 
                     Destroy(this.gameObject);
                 }
-                else if (hit.collider.CompareTag("Player"))
-                {
-                    // ei mit‰‰n?
-                }
-                else
+                else if(!hit.collider.CompareTag("Player"))
                 {
                     GameObject instantiatedHole = Instantiate(bulletHole, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
                     Destroy(instantiatedHole, 10);

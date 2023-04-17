@@ -460,7 +460,7 @@ public class PlayerEntity : NetworkBehaviour
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
         soundControl.PlayShootSound();
 
-        if (Physics.Raycast(startPos + direction/2, direction, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
         {
             Debug.Log(hit.collider.name);
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
@@ -469,6 +469,14 @@ public class PlayerEntity : NetworkBehaviour
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 Destroy(ammoInstance, 120);
+            }
+            if (ammoSpawn.GetComponent<AmmoSpawn>().isInsideTerrain)
+            {
+                if (Physics.Raycast(startPos + direction, direction, out RaycastHit bulletHit, Mathf.Infinity))
+                {
+                    GameObject instantiatedHole = Instantiate(bulletHole, bulletHit.point + bulletHit.normal * 0.0001f, Quaternion.LookRotation(bulletHit.normal));
+                    Destroy(instantiatedHole, 10);
+                }
             }
             else if (hit.collider.CompareTag("TimeSphere"))
             {
@@ -501,7 +509,7 @@ public class PlayerEntity : NetworkBehaviour
                     Hit(hit.collider.gameObject, this.gameObject, legsDamage);
                 }
             }
-            else
+            else if (!hit.collider.gameObject.CompareTag("Player"))
             {
                 GameObject instantiatedHole = Instantiate(bulletHole, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
                 Destroy(instantiatedHole, 10);
