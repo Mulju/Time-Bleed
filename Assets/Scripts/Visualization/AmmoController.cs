@@ -64,6 +64,7 @@ public class AmmoController : MonoBehaviour
                     if (hit.collider.GetComponent<PlayerHead>().player.gameObject != shooter.gameObject)
                     {
                         hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerHead>().player, shooter, shooter.GetComponent<PlayerEntity>().headDamage);
+                        hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
                     }
 
                     // Instantiate "blood" effect
@@ -75,6 +76,7 @@ public class AmmoController : MonoBehaviour
                     if (hit.collider.GetComponent<PlayerTorso>().player.gameObject != shooter.gameObject)
                     {
                         hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerTorso>().player, shooter, shooter.GetComponent<PlayerEntity>().torsoDamage);
+                        hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
                     }
 
                     Destroy(this.gameObject);
@@ -84,11 +86,12 @@ public class AmmoController : MonoBehaviour
                     if (hit.collider.GetComponent<PlayerLegs>().player.gameObject != shooter.gameObject)
                     {
                         hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerLegs>().player, shooter, shooter.GetComponent<PlayerEntity>().legsDamage);
+                        hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
                     }
 
                     Destroy(this.gameObject);
                 }
-                else if(!hit.collider.CompareTag("Player"))
+                else if (!hit.collider.CompareTag("Player"))
                 {
                     GameObject instantiatedHole = Instantiate(bulletHole, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
                     Destroy(instantiatedHole, 10);
@@ -102,11 +105,11 @@ public class AmmoController : MonoBehaviour
         }
 
 
-        if(isInsdeTimeField)
+        if (isInsdeTimeField)
         {
             rb.MovePosition(transform.position + direction * Mathf.Pow(timeSpeed, 2.3f) * 20 * Time.deltaTime);
 
-            
+
         }
         else
         {
@@ -184,7 +187,7 @@ public class AmmoController : MonoBehaviour
             }
         }
 
-        
+
         collide = false;
     }
 
