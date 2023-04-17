@@ -407,7 +407,11 @@ public class PlayerEntity : NetworkBehaviour
             moveDirection.y = movementDirectionY;
         }
 
-        if (!characterController.isGrounded)
+        if (!characterController.isGrounded && (timeSlow < 1f || timeSpeed < 1f))
+        {
+            moveDirection.y -= gravity * Time.deltaTime * timeSlow * timeSpeed;
+        }
+        else if(!characterController.isGrounded)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
