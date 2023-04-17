@@ -78,6 +78,9 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject body;
     [HideInInspector] public int ownTeamTag;
 
+    [SerializeField] private GameObject rayCastVisual;
+    [SerializeField] private GameObject spawnForRayVisual;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -467,6 +470,12 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
         {
+            // Line visual for the shot
+            LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
+            instantiatedVisual.SetPosition(0, spawnForRayVisual.transform.position);
+            instantiatedVisual.SetPosition(1, hit.point);
+            Destroy(instantiatedVisual, 1);
+            
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);

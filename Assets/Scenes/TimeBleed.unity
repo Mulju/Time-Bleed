@@ -4723,6 +4723,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CombatUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5935617055376825187, guid: bf797651a486cf44eae72059a211468b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5935617055376825215, guid: bf797651a486cf44eae72059a211468b,
         type: 3}
       propertyPath: m_Pivot.x

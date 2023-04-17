@@ -344,6 +344,10 @@ MonoBehaviour:
   redTeamMaterial: {fileID: 2100000, guid: cb13d877f5528a646b0f2e1131e9f6ab, type: 2}
   greenTeamMaterial: {fileID: 2100000, guid: 7b5c3b2915addd545805a940d71c2f77, type: 2}
   body: {fileID: 3542491589387581788}
+  ownTeamTag: 0
+  rayCastVisual: {fileID: 2156424342420177019, guid: c5f83424ec9924f42847ce35b5afd510,
+    type: 3}
+  spawnForRayVisual: {fileID: 2472639725123539552}
 --- !u!1 &1089226758376165242
 GameObject:
   m_ObjectHideFlags: 0
