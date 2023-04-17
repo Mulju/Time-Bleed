@@ -136,6 +136,11 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        //gameObject.GetComponent<NetworkObject>().Owner.Disconnect(false);
+        playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
+    }
 
     void Start()
     {

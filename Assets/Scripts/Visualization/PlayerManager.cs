@@ -61,6 +61,17 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    public void RemovePlayer(NetworkConnection connection)
+    {
+        foreach(KeyValuePair<int, Data.Player> pair in players)
+        {
+            if(pair.Value.connection == connection)
+            {
+                players.Remove(pair.Key);
+            }
+        }
+    }
+
     [ObserversRpc]
     private void ChangePlayerTeam(Data.Player player)
     {
