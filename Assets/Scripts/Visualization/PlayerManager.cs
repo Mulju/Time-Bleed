@@ -32,7 +32,7 @@ public class PlayerManager : NetworkBehaviour
 
         foreach (KeyValuePair<int, Data.Player> player in players)
         {
-            if(player.Value == null)
+            if(player.Value.playerObject == null)
             {
                 continue;
             }
