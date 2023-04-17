@@ -483,13 +483,15 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Physics.Raycast(startPos, direction, out RaycastHit hit, Mathf.Infinity))
         {
-            // Line visual for the shot
-            LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
-            instantiatedVisual.SetPosition(0, spawnForRayVisual.transform.position);
-            instantiatedVisual.SetPosition(1, hit.point);
-            Destroy(instantiatedVisual, 1);
-            
-            if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
+            if(!ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
+            {
+                // Line visual for the shot, only if not in a timesphere
+                LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
+                instantiatedVisual.SetPosition(0, spawnForRayVisual.transform.position);
+                instantiatedVisual.SetPosition(1, hit.point);
+                Destroy(instantiatedVisual, 2);
+            }
+            else if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
