@@ -91,14 +91,6 @@ public class PlayerEntity : NetworkBehaviour
 
 
             TimeSpeedSlider(speedSlider.value);
-
-            /*
-            playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
-            if (playerName != null)
-            {
-                //PlayerNameTracker.SetName(playerName);
-                //UpdateNameServer(playerName);
-            }*/
         }
 
         // This part is run for all the entities in the scene if you are the server.
@@ -110,39 +102,8 @@ public class PlayerEntity : NetworkBehaviour
             debugConsole.text = "Player ID: " + id;
 
             playerManager.AddPlayer(id, player);
-            /*
-            playerName = GameObject.FindGameObjectWithTag("ClientGameManager")?.GetComponent<ClientGameManager>().playerName;
-            if (playerName != null)
-            {
-                UpdateNameServer(playerName);
-            }
-            */
         }
     }
-
-    /*
-    [ServerRpc(RequireOwnership = false)]
-    public void UpdateNameServer(string name)
-    {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject p in players)
-        {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
-            UpdateName(name);
-        }
-    }
-
-    [ObserversRpc]
-    public void UpdateName(string name)
-    {
-        //tmpPlayerName.text = name;
-        
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach(GameObject p in players)
-        {
-            p.GetComponent<PlayerEntity>().tmpPlayerName.text = p.GetComponent<PlayerEntity>().playerName;
-        }
-    }*/
 
     [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter)

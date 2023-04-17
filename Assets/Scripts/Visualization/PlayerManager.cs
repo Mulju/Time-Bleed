@@ -17,6 +17,7 @@ public class PlayerManager : NetworkBehaviour
 
     public TextMeshProUGUI healthTMP, ammoTMP;
     private int maxHealth = 100;
+    private bool redTeamTurn = true;
 
     private void Awake()
     {
@@ -39,9 +40,19 @@ public class PlayerManager : NetworkBehaviour
 
     public void AddPlayer(int id, Data.Player player)
     {
-        players.Add(id, player);
+        if(redTeamTurn)
+        {
+            // Is in the red team
+            player.teamTag = 0;
+        }
+        else
+        {
+            // Is in blue team
+            player.teamTag = 1;
+        }
 
-        // Tähän koodia, joka ottaa kiinni sen kun uusi pelaaja luodaan
+        redTeamTurn = !redTeamTurn;
+        players.Add(id, player);
     }
 
     public void DamagePlayer(int playerID, int damage, int shooterID)
