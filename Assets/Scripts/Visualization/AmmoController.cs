@@ -82,7 +82,7 @@ public class AmmoController : MonoBehaviour
                 }
                 else if (hit.collider.CompareTag("Player"))
                 {
-
+                    // ei mit‰‰n?
                 }
                 else
                 {
