@@ -491,7 +491,8 @@ public class PlayerEntity : NetworkBehaviour
                 instantiatedVisual.SetPosition(1, hit.point);
                 Destroy(instantiatedVisual, 2);
             }
-            else if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
+
+            if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
