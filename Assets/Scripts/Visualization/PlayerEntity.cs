@@ -33,6 +33,9 @@ public class PlayerEntity : NetworkBehaviour
     [SyncVar] public float timeSpeed;
     private float mouseScroll;
 
+    [HideInInspector]
+    public float headDamage = 2f, torsoDamage = 1f, legsDamage = 0.7f;
+
     private Vector3 timeFieldOriginalScale;
 
     [Header("Base setup")]
@@ -145,19 +148,19 @@ public class PlayerEntity : NetworkBehaviour
     }*/
 
     [ServerRpc(RequireOwnership = false)]
-    public void Hit(GameObject hitPlayer, GameObject shooter)
+    public void Hit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
     {
-        int damageAmount = 20;
+        int damageAmount = Mathf.FloorToInt(20 * damageMultiplier);
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
     }
 
-    public void AmmoHit(GameObject hitPlayer, GameObject shooter)
+    public void AmmoHit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
     {
-        if (base.IsOwner)
+        if (base.IsServer)
         {
-            Hit(hitPlayer, shooter);
+            Hit(hitPlayer, shooter, damageMultiplier);
         }
     }
 
@@ -341,7 +344,7 @@ public class PlayerEntity : NetworkBehaviour
 
     [ObserversRpc]
     public void Respawn()
-    {
+    { 
         timeField.GetComponent<TimeSphere>().IncreaseCircumference();
     }
 
@@ -487,12 +490,28 @@ public class PlayerEntity : NetworkBehaviour
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 Destroy(ammoInstance, 120);
             }
-            else if (hit.collider.CompareTag("Player") && hit.collider.gameObject != this.gameObject)
+            else if (hit.collider.CompareTag("PlayerHead") && hit.collider.gameObject != this.gameObject)
             {
                 Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
-                if (base.IsOwner)
+                if (base.IsServer)
                 {
-                    Hit(hit.collider.gameObject, this.gameObject);
+                    Hit(hit.collider.gameObject, this.gameObject, headDamage);
+                }
+            }
+            else if (hit.collider.CompareTag("PlayerTorso") && hit.collider.gameObject != this.gameObject)
+            {
+                Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                if (base.IsServer)
+                {
+                    Hit(hit.collider.gameObject, this.gameObject, torsoDamage);
+                }
+            }
+            else if (hit.collider.CompareTag("PlayerLegs") && hit.collider.gameObject != this.gameObject)
+            {
+                Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                if (base.IsServer)
+                {
+                    Hit(hit.collider.gameObject, this.gameObject, legsDamage);
                 }
             }
             else
@@ -551,16 +570,16 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ammo") && other.TryGetComponent<AmmoController>(out AmmoController ammo) && other.GetComponent<AmmoController>().shooter != this.gameObject)
-        {
-            PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
+        //if (other.CompareTag("Ammo") && other.TryGetComponent<AmmoController>(out AmmoController ammo) && other.GetComponent<AmmoController>().shooter != this.gameObject)
+        //{
+        //    PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
 
-            if (base.IsOwner)
-            {
-                player.Hit(gameObject, ammo.shooter);
-            }
+        //    if (base.IsOwner)
+        //    {
+        //        player.Hit(gameObject, ammo.shooter);
+        //    }
 
-            Destroy(other.gameObject);
-        }
+        //    Destroy(other.gameObject);
+        //}
     }
 }

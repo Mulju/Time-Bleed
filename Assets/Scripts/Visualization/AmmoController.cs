@@ -51,16 +51,38 @@ public class AmmoController : MonoBehaviour
                 {
                     transform.position = hit.point;
                 }
-                else if (hit.collider.CompareTag("Player"))
+                else if (hit.collider.CompareTag("PlayerHead"))
                 {
-                    if (hit.collider.gameObject != shooter.gameObject)
+                    if (hit.collider.GetComponent<PlayerHead>().player.gameObject != shooter.gameObject)
                     {
-                        hit.collider.GetComponent<PlayerEntity>().AmmoHit(hit.collider.gameObject, shooter);
+                        hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.gameObject, shooter, shooter.GetComponent<PlayerEntity>().headDamage);
                     }
 
                     // Instantiate "blood" effect
                     //Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(this.gameObject);
+                }
+                else if (hit.collider.CompareTag("PlayerTorso"))
+                {
+                    if (hit.collider.GetComponent<PlayerTorso>().player.gameObject != shooter.gameObject)
+                    {
+                        hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.gameObject, shooter, shooter.GetComponent<PlayerEntity>().torsoDamage);
+                    }
+
+                    Destroy(this.gameObject);
+                }
+                else if (hit.collider.CompareTag("PlayerLegs"))
+                {
+                    if (hit.collider.GetComponent<PlayerLegs>().player.gameObject != shooter.gameObject)
+                    {
+                        hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.gameObject, shooter, shooter.GetComponent<PlayerEntity>().legsDamage);
+                    }
+
+                    Destroy(this.gameObject);
+                }
+                else if (hit.collider.CompareTag("Player"))
+                {
+
                 }
                 else
                 {
