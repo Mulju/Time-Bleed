@@ -515,7 +515,7 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     Hit(hit.collider.GetComponent<PlayerHead>().player.gameObject, this.gameObject, headDamage);
                 }
-                ShowDamageDirection(this.gameObject, direction);
+                hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().ShowDamageDirection(this.gameObject, direction);
             }
             else if (hit.collider.CompareTag("PlayerTorso") && hit.collider.GetComponent<PlayerTorso>().player.gameObject != this.gameObject)
             {
@@ -524,7 +524,7 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     Hit(hit.collider.GetComponent<PlayerTorso>().player.gameObject, this.gameObject, torsoDamage);
                 }
-                ShowDamageDirection(this.gameObject, direction);
+                hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ShowDamageDirection(this.gameObject, direction);
             }
             else if (hit.collider.CompareTag("PlayerLegs") && hit.collider.GetComponent<PlayerLegs>().player.gameObject != this.gameObject)
             {
@@ -533,7 +533,7 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     Hit(hit.collider.GetComponent<PlayerLegs>().player.gameObject, this.gameObject, legsDamage);
                 }
-                ShowDamageDirection(this.gameObject, direction);
+                hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ShowDamageDirection(this.gameObject, direction);
             }
             else if (!hit.collider.gameObject.CompareTag("Player"))
             {

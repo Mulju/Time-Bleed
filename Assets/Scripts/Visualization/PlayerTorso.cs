@@ -21,6 +21,10 @@ public class PlayerTorso : NetworkBehaviour
             if (base.IsServer)
             {
                 player.GetComponent<PlayerEntity>().Hit(player.gameObject, ammo.shooter, damageMultiplier);
+            }
+
+            if (base.IsOwner)
+            {
                 player.GetComponent<PlayerEntity>().ShowDamageDirection(player.gameObject, other.GetComponent<AmmoController>().direction);
             }
 

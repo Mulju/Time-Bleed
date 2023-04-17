@@ -76,7 +76,7 @@ public class AmmoController : MonoBehaviour
                     if (hit.collider.GetComponent<PlayerTorso>().player.gameObject != shooter.gameObject)
                     {
                         hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerTorso>().player, shooter, shooter.GetComponent<PlayerEntity>().torsoDamage);
-                        hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
+                        hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerTorso>().player.gameObject, direction);
                     }
 
                     Destroy(this.gameObject);
@@ -86,7 +86,7 @@ public class AmmoController : MonoBehaviour
                     if (hit.collider.GetComponent<PlayerLegs>().player.gameObject != shooter.gameObject)
                     {
                         hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerLegs>().player, shooter, shooter.GetComponent<PlayerEntity>().legsDamage);
-                        hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
+                        hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerLegs>().player.gameObject, direction);
                     }
 
                     Destroy(this.gameObject);
