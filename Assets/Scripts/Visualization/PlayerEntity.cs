@@ -513,7 +513,7 @@ public class PlayerEntity : NetworkBehaviour
                 Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsServer)
                 {
-                    Hit(hit.collider.gameObject, this.gameObject, headDamage);
+                    Hit(hit.collider.GetComponent<PlayerHead>().player.gameObject, this.gameObject, headDamage);
                 }
             }
             else if (hit.collider.CompareTag("PlayerTorso") && hit.collider.GetComponent<PlayerTorso>().player.gameObject != this.gameObject)
@@ -521,7 +521,7 @@ public class PlayerEntity : NetworkBehaviour
                 Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsServer)
                 {
-                    Hit(hit.collider.gameObject, this.gameObject, torsoDamage);
+                    Hit(hit.collider.GetComponent<PlayerTorso>().player.gameObject, this.gameObject, torsoDamage);
                 }
             }
             else if (hit.collider.CompareTag("PlayerLegs") && hit.collider.GetComponent<PlayerLegs>().player.gameObject != this.gameObject)
@@ -529,7 +529,7 @@ public class PlayerEntity : NetworkBehaviour
                 Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsServer)
                 {
-                    Hit(hit.collider.gameObject, this.gameObject, legsDamage);
+                    Hit(hit.collider.GetComponent<PlayerLegs>().player.gameObject, this.gameObject, legsDamage);
                 }
             }
             else if (!hit.collider.gameObject.CompareTag("Player"))
