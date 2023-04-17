@@ -54,9 +54,14 @@ public class PlayerManager : NetworkBehaviour
 
         redTeamTurn = !redTeamTurn;
         players.Add(id, player);
+        ChangePlayerTeam(player);
     }
 
-
+    [ObserversRpc]
+    private void ChangePlayerTeam(Data.Player player)
+    {
+        player.playerObject.GetComponent<PlayerEntity>().ChangeTeam(player.teamTag);
+    }
 
     public void DamagePlayer(int playerID, int damage, int shooterID)
     {

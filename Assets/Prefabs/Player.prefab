@@ -341,6 +341,9 @@ MonoBehaviour:
   soundControl: {fileID: 1830912536117039440}
   playerHitEffect: {fileID: 8072162771976409813, guid: afda4783977dadd4e81266a2940b317c,
     type: 3}
+  redTeamMaterial: {fileID: 2100000, guid: cb13d877f5528a646b0f2e1131e9f6ab, type: 2}
+  greenTeamMaterial: {fileID: 2100000, guid: 7b5c3b2915addd545805a940d71c2f77, type: 2}
+  body: {fileID: 3542491589387581788}
 --- !u!1 &1089226758376165242
 GameObject:
   m_ObjectHideFlags: 0

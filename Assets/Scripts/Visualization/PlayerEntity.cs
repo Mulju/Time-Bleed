@@ -73,6 +73,10 @@ public class PlayerEntity : NetworkBehaviour
 
     private Slider speedSlider = null;
 
+    [SerializeField] private Material redTeamMaterial;
+    [SerializeField] private Material greenTeamMaterial;
+    [SerializeField] private GameObject body;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -294,6 +298,18 @@ public class PlayerEntity : NetworkBehaviour
             }
 
             TimeSpeedSlider(mouseScroll * 0.05f);
+        }
+    }
+
+    public void ChangeTeam(int teamTag)
+    {
+        if(teamTag == 0)
+        {
+            body.GetComponent<Renderer>().material = redTeamMaterial;
+        }
+        else
+        {
+            body.GetComponent<Renderer>().material = greenTeamMaterial;
         }
     }
 
