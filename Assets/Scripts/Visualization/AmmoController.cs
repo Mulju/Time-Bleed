@@ -25,6 +25,8 @@ public class AmmoController : MonoBehaviour
 
     [SerializeField] private GameObject playerHitEffect;
 
+    [SerializeField] private GameObject rayCastVisual;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +49,12 @@ public class AmmoController : MonoBehaviour
         {
             if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
             {
+                // Line visual for the shot
+                LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
+                instantiatedVisual.SetPosition(0, transform.position);
+                instantiatedVisual.SetPosition(1, hit.point);
+                Destroy(instantiatedVisual, 2);
+
                 if (hit.collider.CompareTag("TimeSphere"))
                 {
                     transform.position = hit.point;
