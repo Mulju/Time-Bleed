@@ -13,5 +13,6 @@ namespace Data
         public int deaths = 0;
         public GameObject playerObject;
         public NetworkConnection connection;
+        public int teamTag;
     }
 }

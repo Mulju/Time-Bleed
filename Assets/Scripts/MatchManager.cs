@@ -61,13 +61,19 @@ public class MatchManager : NetworkBehaviour
 
         if (!base.IsServer)
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 
     private void Update()
     {
-        if(currentMatchState == MatchState.MATCH_ENDED)
+        if (!base.IsServer)
+        {
+            // Don't run Update if not the server
+            return;
+        }
+
+        if (currentMatchState == MatchState.MATCH_ENDED)
         {
             // If match has ended, stop going to update
             return;
@@ -101,6 +107,6 @@ public class MatchManager : NetworkBehaviour
 
     private void DisplayScoreboard()
     {
-
+        // Use currentVicoryState to display correct winning team
     }
 }
