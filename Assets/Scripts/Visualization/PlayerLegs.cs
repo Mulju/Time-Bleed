@@ -20,7 +20,7 @@ public class PlayerLegs : NetworkBehaviour
         {
             if (base.IsServer)
             {
-                player.GetComponent<PlayerEntity>().Hit(gameObject, ammo.shooter, damageMultiplier);
+                player.GetComponent<PlayerEntity>().Hit(player.gameObject, ammo.shooter, damageMultiplier);
             }
 
             Destroy(other.gameObject);
