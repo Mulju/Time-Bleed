@@ -54,7 +54,11 @@ public class PlayerManager : NetworkBehaviour
 
         redTeamTurn = !redTeamTurn;
         players.Add(id, player);
-        ChangePlayerTeam(player);
+
+        foreach(KeyValuePair<int, Data.Player> pair in players)
+        {
+            ChangePlayerTeam(pair.Value);        
+        }
     }
 
     [ObserversRpc]
