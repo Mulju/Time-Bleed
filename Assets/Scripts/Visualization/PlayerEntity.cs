@@ -76,6 +76,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private Material redTeamMaterial;
     [SerializeField] private Material greenTeamMaterial;
     [SerializeField] private GameObject body;
+    [HideInInspector] public int ownTeamTag;
 
     public override void OnStartClient()
     {
@@ -115,6 +116,12 @@ public class PlayerEntity : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void Hit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
     {
+        if(hitPlayer.GetComponent<PlayerEntity>().ownTeamTag == shooter.GetComponent<PlayerEntity>().ownTeamTag)
+        {
+            // If the shooter is in the same team as you, don't take damage
+            return;
+        }
+
         int damageAmount = Mathf.FloorToInt(20 * damageMultiplier);
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
@@ -303,6 +310,8 @@ public class PlayerEntity : NetworkBehaviour
 
     public void ChangeTeam(int teamTag)
     {
+        ownTeamTag = teamTag;
+        
         if(teamTag == 0)
         {
             body.GetComponent<Renderer>().material = redTeamMaterial;
