@@ -76,6 +76,7 @@ public class PlayerManager : NetworkBehaviour
             if(pair.Value.connection == connection)
             {
                 players.Remove(pair.Key);
+                serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
             }
         }
     }
