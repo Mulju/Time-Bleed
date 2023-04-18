@@ -32,6 +32,7 @@ public class PlayerEntity : NetworkBehaviour
     public float chronadeTimer, chronadeCooldown;
     public float recoil;
 
+    private float deployTimer;
     private bool isScoped;
 
     //public int maxAmmo, ammoLeft;
@@ -166,6 +167,8 @@ public class PlayerEntity : NetworkBehaviour
 
         isScoped = false;
 
+        deployTimer = 4f;
+
         timeBindCooldown = 10f;
         timeBindTimer = timeBindCooldown;
 
@@ -226,6 +229,11 @@ public class PlayerEntity : NetworkBehaviour
             return;
         }
 
+        if (deployTimer < 4f)
+        {
+            deployTimer += Time.deltaTime;
+        }
+
         if (timeBindTimer < timeBindCooldown)
         {
             timeBindTimer += Time.deltaTime;
@@ -241,17 +249,23 @@ public class PlayerEntity : NetworkBehaviour
             shootTimer += Time.deltaTime;
         }
 
-        if (reloadTimer < currentWeapon.reloadTime)
+        if (reloadTimer < currentWeapon.reloadTime && reloading)
         {
             reloadTimer += Time.deltaTime;
 
             // reload bar animation
             reloadBar.GetComponent<RectTransform>().localScale = new Vector3(reloadTimer / currentWeapon.reloadTime, reloadBar.GetComponent<RectTransform>().localScale.y, reloadBar.GetComponent<RectTransform>().localScale.z);
         }
+        else
+        {
+            reloadTimer += Time.deltaTime;
+        }
 
         if (reloadTimer >= currentWeapon.reloadTime && reloading)
         {
             reloading = false;
+
+            currentWeapon.ammoLeft = currentWeapon.magSize;
 
             animator.SetBool("Reloading", false);
             reloadBackground.gameObject.SetActive(false);
@@ -263,14 +277,34 @@ public class PlayerEntity : NetworkBehaviour
         if (Input.GetKey(KeyCode.Alpha1))
         {
             currentWeapon = weaponDictionary.weapons["rifle"];
+            deployTimer = 0;
+            animator.SetBool("Reloading", true);
+
+            reloading = false;
+            reloadBackground.gameObject.SetActive(false);
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
             currentWeapon = weaponDictionary.weapons["sniper"];
+            deployTimer = 0;
+            animator.SetBool("Reloading", true);
+
+            reloading = false;
+            reloadBackground.gameObject.SetActive(false);
         }
         else if (Input.GetKey(KeyCode.Alpha3))
         {
             currentWeapon = weaponDictionary.weapons["shotgun"];
+            deployTimer = 0;
+            animator.SetBool("Reloading", true);
+
+            reloading = false;
+            reloadBackground.gameObject.SetActive(false);
+        }
+
+        if (deployTimer >= currentWeapon.deployTime && !reloading)
+        {
+            animator.SetBool("Reloading", false);
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -278,7 +312,7 @@ public class PlayerEntity : NetworkBehaviour
             Aim();
         }
 
-        if (currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime)
+        if (currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime && deployTimer >= currentWeapon.deployTime)
         {
             // automatic fire
 
@@ -297,11 +331,11 @@ public class PlayerEntity : NetworkBehaviour
             shootTimer = 0;
             currentWeapon.ammoLeft -= 1;
         }
-        else if (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime)
+        else if (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime && deployTimer >= currentWeapon.deployTime)
         {
             // non automatic fire
 
-            if(currentWeapon.bulletsPerShot == 1)
+            if (currentWeapon.bulletsPerShot == 1)
             {
                 ShootServer(gameObject, currentWeapon.damage, false);
             }
@@ -497,7 +531,6 @@ public class PlayerEntity : NetworkBehaviour
 
     public void Reload()
     {
-        currentWeapon.ammoLeft = currentWeapon.magSize;
         reloadTimer = 0;
 
         animator.SetBool("Reloading", true);
