@@ -82,6 +82,7 @@ public class PlayerEntity : NetworkBehaviour
 
     [SerializeField] private GameObject rayCastVisual;
     [SerializeField] private GameObject spawnForRayVisual;
+    private MatchManager mManager;
 
     public override void OnStartClient()
     {
@@ -89,6 +90,7 @@ public class PlayerEntity : NetworkBehaviour
         // different behaviours are done.
         base.OnStartClient();
         playerManager = PlayerManager.instance;
+        mManager = MatchManager.matchManager;
 
         // Only run if you are the owner of this object. Skip for all other player entities in the scene.
         if (base.IsOwner)
@@ -212,6 +214,12 @@ public class PlayerEntity : NetworkBehaviour
 
     void Update()
     {
+        if(mManager.currentMatchState == MatchManager.MatchState.MATCH_ENDED)
+        {
+            // Match ended
+            return;
+        }
+
         if (!base.IsOwner)
         {
             return;
