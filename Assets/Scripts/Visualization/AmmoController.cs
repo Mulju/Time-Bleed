@@ -167,9 +167,8 @@ public class AmmoController : MonoBehaviour
             Destroy(instantiatedHole, 10);
             Destroy(this.gameObject);
         }
-        else
+        else if (!other.CompareTag("PlayerHead") && !other.CompareTag("PlayerTorso") && !other.CompareTag("PlayerLegs"))
         {
-            Debug.Log(other.name);
             Destroy(gameObject);
         }
     }
