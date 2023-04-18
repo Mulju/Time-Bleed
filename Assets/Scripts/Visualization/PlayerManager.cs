@@ -20,6 +20,8 @@ public class PlayerManager : NetworkBehaviour
     private int maxHealth = 100;
     private bool redTeamTurn = true;
 
+    [SerializeField] private TextMeshProUGUI serverNumberOfPlayers;
+
     private void Awake()
     {
         instance = this;
@@ -59,6 +61,7 @@ public class PlayerManager : NetworkBehaviour
 
         redTeamTurn = !redTeamTurn;
         players.Add(id, player);
+        serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
 
         foreach(KeyValuePair<int, Data.Player> pair in players)
         {

@@ -90,7 +90,6 @@ public class PlayerEntity : NetworkBehaviour
         // different behaviours are done.
         base.OnStartClient();
         playerManager = PlayerManager.instance;
-        mManager = MatchManager.matchManager;
 
         // Only run if you are the owner of this object. Skip for all other player entities in the scene.
         if (base.IsOwner)
@@ -159,6 +158,8 @@ public class PlayerEntity : NetworkBehaviour
 
     void Start()
     {
+        mManager = MatchManager.matchManager;
+
         maxAmmo = 30;
         ammoLeft = maxAmmo;
         shootSpeed = 1;

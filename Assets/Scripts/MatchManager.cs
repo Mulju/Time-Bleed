@@ -1,4 +1,5 @@
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,8 +27,8 @@ public class MatchManager : NetworkBehaviour
 
     // Syncvar for the time..?
     private Clock redClock, greenClock;
-    [HideInInspector] public MatchState currentMatchState = MatchState.NONE;
-    private VictoryState currentVictoryState = VictoryState.NONE;
+    [HideInInspector] [SyncVar] public MatchState currentMatchState = MatchState.NONE;
+    [SyncVar] private VictoryState currentVictoryState = VictoryState.NONE;
 
 
     private void Awake()
