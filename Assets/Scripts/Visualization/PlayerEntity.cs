@@ -1,4 +1,5 @@
 using FishNet.Connection;
+using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using System.Collections;
@@ -341,7 +342,8 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnApplicationQuit()
     {
-        playerManager.RemovePlayer(LocalConnection);
+        // LocalConnection
+        playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
     }
 
     public void ChangeTeam(int teamTag)
