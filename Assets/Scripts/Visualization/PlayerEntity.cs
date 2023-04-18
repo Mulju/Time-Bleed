@@ -568,13 +568,11 @@ public class PlayerEntity : NetworkBehaviour
 
         if (isShotgun)
         {
-            Vector3 random = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
-
-            float x = Random.Range(-0.5f, 0.5f);
-            float y = Random.Range(-0.5f,0.5f);
+            float x = Random.Range(-0.1f, 0.1f);
+            float y = Random.Range(-0.1f,0.1f);
             
 
-            Vector3 joku = new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z);
+            direction = (new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z)).normalized;
         }
 
         if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
