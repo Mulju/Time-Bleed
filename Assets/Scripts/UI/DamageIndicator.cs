@@ -32,7 +32,7 @@ public class DamageIndicator : MonoBehaviour
         transform.localRotation = rotation;
     }
 
-    IEnumerator DestroyDamageIndicator(int fadeTime = 3)
+    IEnumerator DestroyDamageIndicator(int fadeTime = 2)
     {
         Color originalColor = _image.color;
 
