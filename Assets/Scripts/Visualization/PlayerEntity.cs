@@ -158,18 +158,6 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        /*
-        if(base.IsServer)
-        {
-            //gameObject.GetComponent<NetworkObject>().Owner.Disconnect(false);
-            Debug.Log("OnDisable");
-            playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
-        }
-        */
-    }
-
     void Start()
     {
         mManager = MatchManager.matchManager;
@@ -361,15 +349,6 @@ public class PlayerEntity : NetworkBehaviour
 
             TimeSpeedSlider(mouseScroll * 0.05f);
         }
-    }
-
-    private void OnApplicationQuit()
-    {
-        /*
-        // LocalConnection
-        Debug.Log("ApplicationQuit");
-        playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
-        */
     }
 
     public void ChangeTeam(int teamTag)

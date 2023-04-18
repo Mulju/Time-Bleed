@@ -103,17 +103,13 @@ public class PlayerManager : NetworkBehaviour
     }
 
     public void RemovePlayer(NetworkConnection connection)
-    {
-        Debug.Log("RemovePlayer called");
-
-        Dictionary<int, Data.Player> playersCopy = new Dictionary<int, Data.Player>(players);
+    {Dictionary<int, Data.Player> playersCopy = new Dictionary<int, Data.Player>(players);
 
         foreach (KeyValuePair<int, Data.Player> pair in players)
         {
             if (pair.Value.connection == connection)
             {
                 playersCopy.Remove(pair.Key);
-                Debug.Log("Player removed");
             }
         }
 
