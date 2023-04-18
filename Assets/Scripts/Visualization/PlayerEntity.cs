@@ -159,12 +159,14 @@ public class PlayerEntity : NetworkBehaviour
         shootSpeed = 1;
         reloadTime = 1;
 
+        WeaponDictionary dic = new WeaponDictionary();
+
+        Debug.Log(dic.weapons["rifle"].damage);
+
         recoil = 0.3f;
 
         timeBindCooldown = 10f;
         timeBindTimer = timeBindCooldown;
-
-
 
         chronadeCooldown = 5f;
         chronadeTimer = chronadeCooldown;
