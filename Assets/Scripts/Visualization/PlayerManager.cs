@@ -29,14 +29,22 @@ public class PlayerManager : NetworkBehaviour
         instance = this;
     }
 
-    private void OnEnable()
+    public override void OnStartClient()
     {
-        ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
+        base.OnStartClient();
+        if(base.IsServer)
+        {
+            ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
+        }
     }
 
-    private void OnDisable()
+    public override void OnStopClient()
     {
-        ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
+        base.OnStopClient();
+        if(base.IsServer)
+        {
+            ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
+        }
     }
 
     private void Update()
