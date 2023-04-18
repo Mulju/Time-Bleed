@@ -264,6 +264,7 @@ public class PlayerEntity : NetworkBehaviour
         if (reloadTimer >= currentWeapon.reloadTime && reloading)
         {
             reloading = false;
+
             animator.SetBool("Reloading", false);
             reloadBackground.gameObject.SetActive(false);
         }
