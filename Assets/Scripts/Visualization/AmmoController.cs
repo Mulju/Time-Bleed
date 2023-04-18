@@ -16,6 +16,7 @@ public class AmmoController : MonoBehaviour
     private Vector3 objHitByRaycast;
     public Vector3 direction;
     public GameObject shooter;
+    public int damage;
 
     private bool collide;
     private bool isInsdeTimeField;
@@ -63,7 +64,7 @@ public class AmmoController : MonoBehaviour
                 {
                     if (hit.collider.GetComponent<PlayerHead>().player.gameObject != shooter.gameObject)
                     {
-                        hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerHead>().player, shooter, shooter.GetComponent<PlayerEntity>().headDamage);
+                        hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerHead>().player, shooter, shooter.GetComponent<PlayerEntity>().headDamage, damage);
                         hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
                     }
 
@@ -75,7 +76,7 @@ public class AmmoController : MonoBehaviour
                 {
                     if (hit.collider.GetComponent<PlayerTorso>().player.gameObject != shooter.gameObject)
                     {
-                        hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerTorso>().player, shooter, shooter.GetComponent<PlayerEntity>().torsoDamage);
+                        hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerTorso>().player, shooter, shooter.GetComponent<PlayerEntity>().torsoDamage, damage);
                         hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerTorso>().player.gameObject, direction);
                     }
 
@@ -85,7 +86,7 @@ public class AmmoController : MonoBehaviour
                 {
                     if (hit.collider.GetComponent<PlayerLegs>().player.gameObject != shooter.gameObject)
                     {
-                        hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerLegs>().player, shooter, shooter.GetComponent<PlayerEntity>().legsDamage);
+                        hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerLegs>().player, shooter, shooter.GetComponent<PlayerEntity>().legsDamage, damage);
                         hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerLegs>().player.gameObject, direction);
                     }
 

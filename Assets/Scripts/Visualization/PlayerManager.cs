@@ -153,7 +153,6 @@ public class PlayerManager : NetworkBehaviour
             player.transform.position = greenSpawnPoints[spawn].position;
         }
 
-        player.GetComponent<PlayerEntity>().ammoLeft = player.GetComponent<PlayerEntity>().maxAmmo;
         player.GetComponent<PlayerEntity>().RespawnServer();
     }
 
