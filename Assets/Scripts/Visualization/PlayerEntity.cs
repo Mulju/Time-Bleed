@@ -151,6 +151,7 @@ public class PlayerEntity : NetworkBehaviour
     private void OnDisable()
     {
         //gameObject.GetComponent<NetworkObject>().Owner.Disconnect(false);
+        Debug.Log("OnDisable");
         playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
     }
 
@@ -340,6 +341,7 @@ public class PlayerEntity : NetworkBehaviour
     private void OnApplicationQuit()
     {
         // LocalConnection
+        Debug.Log("ApplicationQuit");
         playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
     }
 
