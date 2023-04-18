@@ -312,15 +312,13 @@ MonoBehaviour:
     type: 3}
   animator: {fileID: 9022828222518234362}
   timeSlow: 0
-  shootSpeed: 0
-  reloadTime: 0
+  shootTimer: 0
+  reloadTimer: 0
   timeBindTimer: 0
   timeBindCooldown: 0
   chronadeTimer: 0
   chronadeCooldown: 0
   recoil: 0
-  maxAmmo: 30
-  ammoLeft: 0
   timeSpeed: 0
   headDamage: 2
   torsoDamage: 1

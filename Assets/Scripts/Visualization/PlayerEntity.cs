@@ -293,15 +293,37 @@ public class PlayerEntity : NetworkBehaviour
         {
             // automatic fire
 
-            ShootServer(gameObject, currentWeapon.damage);
+            if (currentWeapon.bulletsPerShot == 1)
+            {
+                ShootServer(gameObject, currentWeapon.damage, false);
+            }
+            else
+            {
+                for (int i = 0; i < currentWeapon.bulletsPerShot; i++)
+                {
+                    ShootServer(gameObject, currentWeapon.damage, true);
+                }
+            }
+
             shootTimer = 0;
             currentWeapon.ammoLeft -= 1;
         }
         else if (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime)
         {
-            // single shot 
+            // non automatic fire
 
-            ShootServer(gameObject, currentWeapon.damage);
+            if(currentWeapon.bulletsPerShot == 1)
+            {
+                ShootServer(gameObject, currentWeapon.damage, false);
+            }
+            else
+            {
+                for (int i = 0; i < currentWeapon.bulletsPerShot; i++)
+                {
+                    ShootServer(gameObject, currentWeapon.damage, true);
+                }
+            }
+            
             shootTimer = 0;
             currentWeapon.ammoLeft -= 1;
         }
@@ -531,17 +553,24 @@ public class PlayerEntity : NetworkBehaviour
 
 
     [ServerRpc]
-    public void ShootServer(GameObject shooter, int damage)
+    public void ShootServer(GameObject shooter, int damage, bool isShotgun)
     {
-        Shoot(shooter, damage);
+        Shoot(shooter, damage, isShotgun);
     }
 
     [ObserversRpc]
-    public void Shoot(GameObject shooter, int damage)
+    public void Shoot(GameObject shooter, int damage, bool isShotgun)
     {
         Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
         soundControl.PlayShootSound();
+
+        if (isShotgun)
+        {
+            Vector3 random = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
+
+            Vector3 joku = new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z);
+        }
 
         if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
         {
