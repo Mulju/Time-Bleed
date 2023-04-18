@@ -29,14 +29,22 @@ public class PlayerManager : NetworkBehaviour
         instance = this;
     }
 
-    private void OnEnable()
+    public override void OnStartClient()
     {
-        ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
+        base.OnStartClient();
+        if(base.IsServer)
+        {
+            ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
+        }
     }
 
-    private void OnDisable()
+    public override void OnStopClient()
     {
-        ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
+        base.OnStopClient();
+        if(base.IsServer)
+        {
+            ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
+        }
     }
 
     private void Update()
@@ -97,15 +105,20 @@ public class PlayerManager : NetworkBehaviour
     public void RemovePlayer(NetworkConnection connection)
     {
         Debug.Log("RemovePlayer called");
-        foreach(KeyValuePair<int, Data.Player> pair in players)
+
+        Dictionary<int, Data.Player> playersCopy = new Dictionary<int, Data.Player>(players);
+
+        foreach (KeyValuePair<int, Data.Player> pair in players)
         {
-            if(pair.Value.connection == connection)
+            if (pair.Value.connection == connection)
             {
-                players.Remove(pair.Key);
+                playersCopy.Remove(pair.Key);
                 serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
                 Debug.Log("Player removed");
             }
         }
+
+        players = new Dictionary<int, Data.Player>(playersCopy);
     }
 
     [ObserversRpc]

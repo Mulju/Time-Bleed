@@ -310,7 +310,7 @@ MonoBehaviour:
     type: 3}
   chronade: {fileID: 3294885659995966261, guid: d07241dce1a79424d8aaf4ec1c4a0ec3,
     type: 3}
-  animator: {fileID: 9022828222518234362}
+  animator: {fileID: 5009439680278141062}
   timeSlow: 0
   shootTimer: 0
   reloadTimer: 0
@@ -1255,6 +1255,7 @@ GameObject:
   - component: {fileID: 6930692056177264275}
   - component: {fileID: 4761184920785027046}
   - component: {fileID: 4572061935921845944}
+  - component: {fileID: 5009439680278141062}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -1269,7 +1270,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2698213798680177080}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.278}
   m_LocalScale: {x: 0.1, y: 0.15, z: 0.10000004}
   m_ConstrainProportionsScale: 0
@@ -1329,6 +1330,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &5009439680278141062
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2698213798680177080}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 63d7a0949317341708bd56b4b17e119b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2798615532911800408
 GameObject:
   m_ObjectHideFlags: 0
@@ -2713,7 +2735,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9213242078734424157}
   - component: {fileID: 1986948161563127830}
-  - component: {fileID: 9022828222518234362}
   m_Layer: 0
   m_Name: GunRotator
   m_TagString: Untagged
@@ -2779,27 +2800,6 @@ MonoBehaviour:
     X: 0
     Y: 0
     Z: 0
---- !u!95 &9022828222518234362
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7420047900754856243}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a4b8abff11598498fa5f405fd179af88, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7439520498878454692
 GameObject:
   m_ObjectHideFlags: 0
