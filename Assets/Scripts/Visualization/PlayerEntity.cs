@@ -274,7 +274,7 @@ public class PlayerEntity : NetworkBehaviour
         Physics.SyncTransforms();
         Move();
 
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
             currentWeapon = weaponDictionary.weapons["rifle"];
             deployTimer = 0;
@@ -283,7 +283,7 @@ public class PlayerEntity : NetworkBehaviour
             reloading = false;
             reloadBackground.gameObject.SetActive(false);
         }
-        else if (Input.GetKey(KeyCode.Alpha2))
+        else if (Input.GetKey(KeyCode.Alpha2) && currentWeapon != weaponDictionary.weapons["sniper"])
         {
             currentWeapon = weaponDictionary.weapons["sniper"];
             deployTimer = 0;
@@ -292,7 +292,7 @@ public class PlayerEntity : NetworkBehaviour
             reloading = false;
             reloadBackground.gameObject.SetActive(false);
         }
-        else if (Input.GetKey(KeyCode.Alpha3))
+        else if (Input.GetKey(KeyCode.Alpha3) && currentWeapon != weaponDictionary.weapons["shotgun"])
         {
             currentWeapon = weaponDictionary.weapons["shotgun"];
             deployTimer = 0;
@@ -580,10 +580,10 @@ public class PlayerEntity : NetworkBehaviour
 
         if (isShotgun)
         {
-            float x = Random.Range(-0.1f, 0.1f);
-            float y = Random.Range(-0.1f,0.1f);
+            Vector2 random = Random.insideUnitCircle * 0.1f;
+            float x = random.x;
+            float y = random.y;
             
-
             direction = (new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z)).normalized;
         }
 
