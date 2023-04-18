@@ -318,14 +318,15 @@ public class PlayerEntity : NetworkBehaviour
 
             if (currentWeapon.bulletsPerShot == 1)
             {
-                ShootServer(gameObject, currentWeapon.damage, false);
+                ShootServer(gameObject, currentWeapon.damage, false, true);
             }
             else
             {
-                for (int i = 0; i < currentWeapon.bulletsPerShot; i++)
+                for (int i = 0; i < currentWeapon.bulletsPerShot - 1; i++)
                 {
-                    ShootServer(gameObject, currentWeapon.damage, true);
+                    ShootServer(gameObject, currentWeapon.damage, true, false);
                 }
+                ShootServer(gameObject, currentWeapon.damage, true, true);
             }
 
             shootTimer = 0;
@@ -337,14 +338,15 @@ public class PlayerEntity : NetworkBehaviour
 
             if (currentWeapon.bulletsPerShot == 1)
             {
-                ShootServer(gameObject, currentWeapon.damage, false);
+                ShootServer(gameObject, currentWeapon.damage, false, true);
             }
             else
             {
-                for (int i = 0; i < currentWeapon.bulletsPerShot; i++)
+                for (int i = 0; i < currentWeapon.bulletsPerShot - 1; i++)
                 {
-                    ShootServer(gameObject, currentWeapon.damage, true);
+                    ShootServer(gameObject, currentWeapon.damage, true, false);
                 }
+                ShootServer(gameObject, currentWeapon.damage, true, true);
             }
             
             shootTimer = 0;
@@ -566,13 +568,13 @@ public class PlayerEntity : NetworkBehaviour
 
 
     [ServerRpc]
-    public void ShootServer(GameObject shooter, int damage, bool isShotgun)
+    public void ShootServer(GameObject shooter, int damage, bool isShotgun, bool isLastShot)
     {
-        Shoot(shooter, damage, isShotgun);
+        Shoot(shooter, damage, isShotgun, isLastShot);
     }
 
     [ObserversRpc]
-    public void Shoot(GameObject shooter, int damage, bool isShotgun)
+    public void Shoot(GameObject shooter, int damage, bool isShotgun, bool isLastShot)
     {
         Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
@@ -657,7 +659,7 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // recoil
-        if (base.IsOwner)
+        if (base.IsOwner && isLastShot)
         {
             if (!isScoped)
             {
