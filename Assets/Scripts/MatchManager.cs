@@ -1,18 +1,16 @@
 using FishNet.Object;
-using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MatchManager : NetworkBehaviour
 {
-    public static MatchManager matchManager;
+    public static MatchManager manager;
 
-    public enum MatchState
+    private enum MatchState
     {
         NONE,
         WAITING_FOR_PLAYERS,
-        STARTING,
         IN_PROGRESS,
         MATCH_ENDED
     }
@@ -27,16 +25,16 @@ public class MatchManager : NetworkBehaviour
 
     // Syncvar for the time..?
     private Clock redClock, greenClock;
-    [HideInInspector] [SyncVar] public MatchState currentMatchState = MatchState.NONE;
-    [SyncVar] private VictoryState currentVictoryState = VictoryState.NONE;
+    private MatchState currentMatchState = MatchState.NONE;
+    private VictoryState currentVictoryState = VictoryState.NONE;
 
 
     private void Awake()
     {
         // Singleton
-        if (matchManager == null)
+        if (manager == null)
         {
-            matchManager = this;
+            manager = this;
         }
         else
         {
@@ -105,11 +103,6 @@ public class MatchManager : NetworkBehaviour
             // Show scoreboard at the end of match
             DisplayScoreboard();
         }
-    }
-
-    public void ForceStart()
-    {
-        currentMatchState = MatchState.STARTING;
     }
 
     private void DisplayScoreboard()
