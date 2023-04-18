@@ -16,14 +16,15 @@ namespace Data
 
         public float reloadTime { get; private set; }
         public float recoilMultiplier { get; private set; }
+        public float recoilMultiplierScoped { get; private set; }
         public float movementSpeedMultiplier { get; private set; }
-        public float movementSpeedScopedMultiplier { get; private set; }
+        public float movementSpeedMultiplierScoped { get; private set; }
         public float deployTime { get; private set; }
 
         public bool holdToShoot { get; private set; }
 
         public Weapon(int magSize, int damage, int fireRate, int bulletsPerShot, int maxAmmoInReserve, int ammoLeft, 
-            float reloadTime, float recoilMultiplier, float movementSpeedMultiplier, float movementSpeedScopedMultiplier, float deployTime, 
+            float reloadTime, float recoilMultiplier, float recoilMultiplierScoped, float movementSpeedMultiplier, float movementSpeedMultiplierScoped, float deployTime, 
             bool holdToShoot)
         {
             this.magSize = magSize;
@@ -34,8 +35,9 @@ namespace Data
             this.ammoLeft = ammoLeft;
             this.reloadTime = reloadTime;
             this.recoilMultiplier = recoilMultiplier;
+            this.recoilMultiplierScoped = recoilMultiplierScoped;
             this.movementSpeedMultiplier = movementSpeedMultiplier;
-            this.movementSpeedScopedMultiplier = movementSpeedScopedMultiplier;
+            this.movementSpeedMultiplierScoped = movementSpeedMultiplierScoped;
             this.deployTime = deployTime;
             this.holdToShoot = holdToShoot;
         }
