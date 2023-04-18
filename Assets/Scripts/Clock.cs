@@ -20,22 +20,7 @@ public class Clock : NetworkBehaviour
     {
         if(base.IsServer)
         {
-            // Clock shouldn't got minus time now.
-            if(remainingSeconds == 0 && remainingMinutes == 0)
-            {
-                return;
-            }
-            else if(remainingSeconds <= 0 && remainingMinutes <= 0)
-            {
-                remainingSeconds = 0;
-                remainingMinutes = 0;
-                rotation = 0;
-                UpdateClock();
-            }
-            else
-            {
-                UpdateClockServer();
-            }
+            UpdateClockServer();
         }
     }
 
@@ -53,6 +38,12 @@ public class Clock : NetworkBehaviour
             remainingSeconds = 60;
         }
 
+        if(remainingMinutes < 0)
+        {
+            remainingSeconds = 0;
+            remainingMinutes = 0;
+        }
+
         remainingTime = remainingSeconds + remainingMinutes * 60;
         UpdateClock();
     }
@@ -60,7 +51,7 @@ public class Clock : NetworkBehaviour
     [ObserversRpc]
     public void UpdateClock()
     {
-        secondText.text = "Remaining seconds: " + Mathf.Floor(remainingSeconds);
+        secondText.text = "Remaining seconds: " + (remainingSeconds == 0 ? 0 : Mathf.Floor(remainingSeconds));
         minuteText.text = "Remaining minutes: " + remainingMinutes;
 
         clockHand.transform.localRotation = Quaternion.Euler(0, rotation, 0);
