@@ -150,13 +150,12 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnDisable()
     {
-        if(!base.IsServer)
+        if(base.IsServer)
         {
-            return;
+            //gameObject.GetComponent<NetworkObject>().Owner.Disconnect(false);
+            Debug.Log("OnDisable");
+            playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
         }
-        //gameObject.GetComponent<NetworkObject>().Owner.Disconnect(false);
-        Debug.Log("OnDisable");
-        playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
     }
 
     void Start()
