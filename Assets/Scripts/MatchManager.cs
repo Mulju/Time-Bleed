@@ -24,7 +24,7 @@ public class MatchManager : NetworkBehaviour
     }
 
     // Syncvar for the time..?
-    private Clock redClock, blueClock;
+    private Clock redClock, greenClock;
     private MatchState currentMatchState = MatchState.NONE;
     private VictoryState currentVictoryState = VictoryState.NONE;
 
@@ -50,7 +50,7 @@ public class MatchManager : NetworkBehaviour
             }
             else if (clock.GetComponent<Clock>().teamIdentifier == 1)
             {
-                blueClock = clock.GetComponent<Clock>();
+                greenClock = clock.GetComponent<Clock>();
             }
         }
     }
@@ -79,12 +79,12 @@ public class MatchManager : NetworkBehaviour
             return;
         }
 
-        if(redClock.remainingTime < 0 || blueClock.remainingTime < 0)
+        if(redClock.remainingTime < 0 || greenClock.remainingTime < 0)
         {
             // Match ended
             currentMatchState = MatchState.MATCH_ENDED;
 
-            if(redClock.remainingTime < 0 && blueClock.remainingTime < 0)
+            if(redClock.remainingTime < 0 && greenClock.remainingTime < 0)
             {
                 // Draw
                 currentVictoryState = VictoryState.DRAW;
@@ -94,7 +94,7 @@ public class MatchManager : NetworkBehaviour
                 // Blue team won
                 currentVictoryState = VictoryState.BLUE_TEAM_WIN;
             }
-            else if (blueClock.remainingTime < 0)
+            else if (greenClock.remainingTime < 0)
             {
                 // Red team won
                 currentVictoryState = VictoryState.RED_TEAM_WIN;
