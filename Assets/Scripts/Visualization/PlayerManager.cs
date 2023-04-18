@@ -20,8 +20,6 @@ public class PlayerManager : NetworkBehaviour
     private int maxHealth = 100;
     private bool redTeamTurn = true;
 
-    [SerializeField] private TextMeshProUGUI serverNumberOfPlayers;
-
     private void Awake()
     {
         instance = this;
@@ -61,7 +59,6 @@ public class PlayerManager : NetworkBehaviour
 
         redTeamTurn = !redTeamTurn;
         players.Add(id, player);
-        serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
 
         foreach(KeyValuePair<int, Data.Player> pair in players)
         {
@@ -71,14 +68,11 @@ public class PlayerManager : NetworkBehaviour
 
     public void RemovePlayer(NetworkConnection connection)
     {
-        Debug.Log("RemovePlayer called");
         foreach(KeyValuePair<int, Data.Player> pair in players)
         {
             if(pair.Value.connection == connection)
             {
                 players.Remove(pair.Key);
-                serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
-                Debug.Log("Player removed");
             }
         }
     }
