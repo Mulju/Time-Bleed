@@ -117,6 +117,9 @@ public class PlayerEntity : NetworkBehaviour
             debugConsole.text = "Player ID: " + id;
 
             playerManager.AddPlayer(id, player);
+
+            // Change the match state to waiting for players
+            mManager.currentMatchState = MatchManager.MatchState.WAITING_FOR_PLAYERS;
         }
     }
 

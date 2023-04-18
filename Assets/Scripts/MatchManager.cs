@@ -11,6 +11,7 @@ public class MatchManager : NetworkBehaviour
     {
         NONE,
         WAITING_FOR_PLAYERS,
+        STARTING,
         IN_PROGRESS,
         MATCH_ENDED
     }
@@ -103,6 +104,11 @@ public class MatchManager : NetworkBehaviour
             // Show scoreboard at the end of match
             DisplayScoreboard();
         }
+    }
+
+    public void ForceStart()
+    {
+        currentMatchState = MatchState.STARTING;
     }
 
     private void DisplayScoreboard()
