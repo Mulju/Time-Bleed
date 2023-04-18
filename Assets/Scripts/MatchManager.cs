@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class MatchManager : NetworkBehaviour
 {
-    public static MatchManager matchManager;
+    public static MatchManager manager;
 
-    public enum MatchState
+    private enum MatchState
     {
         NONE,
         WAITING_FOR_PLAYERS,
@@ -25,16 +25,16 @@ public class MatchManager : NetworkBehaviour
 
     // Syncvar for the time..?
     private Clock redClock, greenClock;
-    [HideInInspector] public MatchState currentMatchState = MatchState.NONE;
+    private MatchState currentMatchState = MatchState.NONE;
     private VictoryState currentVictoryState = VictoryState.NONE;
 
 
     private void Awake()
     {
         // Singleton
-        if (matchManager == null)
+        if (manager == null)
         {
-            matchManager = this;
+            manager = this;
         }
         else
         {

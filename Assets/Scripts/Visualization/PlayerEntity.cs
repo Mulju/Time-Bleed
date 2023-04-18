@@ -166,14 +166,6 @@ public class PlayerEntity : NetworkBehaviour
 
     void Start()
     {
-<<<<<<< HEAD
-        maxAmmo = 30;
-        ammoLeft = maxAmmo;
-        shootSpeed = 1;
-        reloadTime = 1;
-
-=======
->>>>>>> f810ea1 (guns)
         recoil = 0.3f;
 
         isScoped = false;
