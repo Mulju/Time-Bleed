@@ -339,6 +339,11 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        playerManager.RemovePlayer(LocalConnection);
+    }
+
     public void ChangeTeam(int teamTag)
     {
         ownTeamTag = teamTag;
