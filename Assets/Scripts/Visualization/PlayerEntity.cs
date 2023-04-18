@@ -1,4 +1,5 @@
 using FishNet.Connection;
+using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using System.Collections;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 public class PlayerEntity : NetworkBehaviour
 {
@@ -18,22 +18,18 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject timeBindSkill;
     [SerializeField] private GameObject chronade;
 
-    private WeaponDictionary weaponDictionary;
-    public Data.Weapon currentWeapon;
-
     private GameObject reloadBar, reloadBackground, reloadParent;
     private GameObject damageIndicatorParent;
+    public Animator animator;
 
     public float timeSlow;
-    public float shootTimer;
-    public float reloadTimer;
+    public float shootSpeed;
+    public float reloadTime;
     public float timeBindTimer, timeBindCooldown;
     public float chronadeTimer, chronadeCooldown;
     public float recoil;
 
-    private bool isScoped;
-
-    //public int maxAmmo, ammoLeft;
+    public int maxAmmo, ammoLeft;
 
     private bool reloading;
     private bool timeFieldIsActive;
@@ -47,7 +43,7 @@ public class PlayerEntity : NetworkBehaviour
     private Vector3 timeFieldOriginalScale;
 
     [Header("Base setup")]
-    public float walkingSpeed = 8.5f;
+    public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
@@ -68,7 +64,6 @@ public class PlayerEntity : NetworkBehaviour
 
     [SyncVar] public string playerName;
     public TextMeshPro tmpPlayerName;
-    [SerializeField] private TextMeshPro debugConsole;
     public string newPlayersName;
 
     [HideInInspector] public MenuControl menuControl;
@@ -88,6 +83,7 @@ public class PlayerEntity : NetworkBehaviour
 
     [SerializeField] private GameObject rayCastVisual;
     [SerializeField] private GameObject spawnForRayVisual;
+    private MatchManager mManager;
 
     public override void OnStartClient()
     {
@@ -107,13 +103,9 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera.transform.SetParent(transform);
 
             speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
+
+
             TimeSpeedSlider(speedSlider.value);
-
-            weaponDictionary = new WeaponDictionary();
-            currentWeapon = weaponDictionary.weapons["rifle"];
-
-            shootTimer = 3;
-            reloadTimer = 3;
         }
 
         // This part is run for all the entities in the scene if you are the server.
@@ -121,15 +113,16 @@ public class PlayerEntity : NetworkBehaviour
         {
             Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
             int id = gameObject.GetInstanceID();
-            Debug.Log("Player ID: " + id);
-            debugConsole.text = "Player ID: " + id;
 
             playerManager.AddPlayer(id, player);
+
+            // Change the match state to waiting for players
+            mManager.currentMatchState = MatchManager.MatchState.WAITING_FOR_PLAYERS;
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void Hit(GameObject hitPlayer, GameObject shooter, float damageMultiplier, int damage)
+    public void Hit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
     {
         if (hitPlayer.GetComponent<PlayerEntity>().ownTeamTag == shooter.GetComponent<PlayerEntity>().ownTeamTag)
         {
@@ -137,7 +130,7 @@ public class PlayerEntity : NetworkBehaviour
             return;
         }
 
-        int damageAmount = Mathf.FloorToInt(damage * damageMultiplier);
+        int damageAmount = Mathf.FloorToInt(20 * damageMultiplier);
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
         Debug.Log("Player ID: " + hitPlayer.GetInstanceID());
         Debug.Log("Shooter ID: " + shooter.GetInstanceID());
@@ -148,28 +141,39 @@ public class PlayerEntity : NetworkBehaviour
         damageIndicatorParent.GetComponent<DmgIndicatorSystem>().AddDamageIndicator(player, direction);
     }
 
-    public void AmmoHit(GameObject hitPlayer, GameObject shooter, float damageMultiplier, int damage)
+    public void AmmoHit(GameObject hitPlayer, GameObject shooter, float damageMultiplier)
     {
         if (base.IsServer)
         {
-            Hit(hitPlayer, shooter, damageMultiplier, damage);
+            Hit(hitPlayer, shooter, damageMultiplier);
         }
     }
 
     private void OnDisable()
     {
-        //gameObject.GetComponent<NetworkObject>().Owner.Disconnect(false);
-        playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
+        if (base.IsServer)
+        {
+            //gameObject.GetComponent<NetworkObject>().Owner.Disconnect(false);
+            Debug.Log("OnDisable");
+            playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
+        }
     }
 
     void Start()
     {
-        recoil = 0.3f;
+        mManager = MatchManager.matchManager;
 
-        isScoped = false;
+        maxAmmo = 30;
+        ammoLeft = maxAmmo;
+        shootSpeed = 1;
+        reloadTime = 1;
+
+        recoil = 0.3f;
 
         timeBindCooldown = 10f;
         timeBindTimer = timeBindCooldown;
+
+
 
         chronadeCooldown = 5f;
         chronadeTimer = chronadeCooldown;
@@ -217,6 +221,12 @@ public class PlayerEntity : NetworkBehaviour
 
     void Update()
     {
+        if (mManager.currentMatchState == MatchManager.MatchState.MATCH_ENDED)
+        {
+            // Match ended
+            return;
+        }
+
         if (!base.IsOwner)
         {
             return;
@@ -232,65 +242,52 @@ public class PlayerEntity : NetworkBehaviour
             chronadeTimer += Time.deltaTime;
         }
 
-        if (shootTimer < 2)
+        if (shootSpeed < 1)
         {
-            shootTimer += Time.deltaTime;
+            shootSpeed += Time.deltaTime;
         }
 
-        if (reloadTimer < currentWeapon.reloadTime)
+        if (reloadTime < 1)
         {
-            reloadTimer += Time.deltaTime;
+            reloadTime += Time.deltaTime;
 
             // reload bar animation
-            reloadBar.GetComponent<RectTransform>().localScale = new Vector3(reloadTimer/currentWeapon.reloadTime, reloadBar.GetComponent<RectTransform>().localScale.y, reloadBar.GetComponent<RectTransform>().localScale.z);
+            reloadBar.GetComponent<RectTransform>().localScale = new Vector3(reloadTime, reloadBar.GetComponent<RectTransform>().localScale.y, reloadBar.GetComponent<RectTransform>().localScale.z);
         }
 
-        if (reloadTimer >= currentWeapon.reloadTime && reloading)
+        if (reloadTime >= 1 && reloading)
         {
             reloading = false;
+            animator.SetBool("Reloading", false);
             reloadBackground.gameObject.SetActive(false);
         }
 
         Physics.SyncTransforms();
         Move();
 
-        if(Input.GetKey(KeyCode.Alpha1))
+        if (Input.GetKey(KeyCode.Mouse0) && ammoLeft > 0 && shootSpeed >= 0.1f && reloadTime >= 1)
         {
-            currentWeapon = weaponDictionary.weapons["rifle"];
-        }
-        else if (Input.GetKey(KeyCode.Alpha2))
-        {
-            currentWeapon = weaponDictionary.weapons["sniper"];
-        }
-        else if (Input.GetKey(KeyCode.Alpha3))
-        {
-            currentWeapon = weaponDictionary.weapons["shotgun"];
-        }
+            //Vector3 direction;
+            //if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, Mathf.Infinity) && Mathf.Abs((ammoSpawn.transform.position - hit.point).magnitude) >= 0.6f)
+            //{
+            //    direction = hit.point - ammoSpawn.transform.position;
+            //}
+            //else
+            //{
+            //    direction = ammoSpawn.transform.forward;
+            //}
+            //direction = direction.normalized;
 
+            //direction = (playerCamera.transform.forward);
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            Aim();
-        }
+            ShootServer(gameObject);
+            shootSpeed = 0;
+            ammoLeft -= 1;
 
-        if (currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f/currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime)
-        {
-            // automatic fire
-
-            ShootServer(gameObject, currentWeapon.damage);
-            shootTimer = 0;
-            currentWeapon.ammoLeft -= 1;
-        }
-        else if(!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime)
-        {
-            // single shot 
-
-            ShootServer(gameObject, currentWeapon.damage);
-            shootTimer = 0;
-            currentWeapon.ammoLeft -= 1;
+            rotationX -= recoil;
         }
 
-        if ((Input.GetKeyDown(KeyCode.R) || currentWeapon.ammoLeft == 0) && !reloading && currentWeapon.ammoLeft != currentWeapon.magSize)
+        if ((Input.GetKeyDown(KeyCode.R) || ammoLeft == 0) && !reloading && ammoLeft != maxAmmo)
         {
             reloading = true;
             Reload();
@@ -299,7 +296,7 @@ public class PlayerEntity : NetworkBehaviour
         if (base.IsOwner)
         {
             // If you own this player entity, change the ammo in the UI
-            ammoTMP.text = "Ammo - " + currentWeapon.ammoLeft;
+            ammoTMP.text = "Ammo - " + ammoLeft;
         }
 
         if (!Input.GetKey(KeyCode.Mouse0) && !IsMoving() && !timeFieldIsActive)
@@ -346,6 +343,13 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        // LocalConnection
+        Debug.Log("ApplicationQuit");
+        playerManager.RemovePlayer(gameObject.GetComponent<NetworkObject>().Owner);
+    }
+
     public void ChangeTeam(int teamTag)
     {
         ownTeamTag = teamTag;
@@ -370,11 +374,6 @@ public class PlayerEntity : NetworkBehaviour
     public void Respawn()
     {
         timeField.GetComponent<TimeSphere>().IncreaseCircumference();
-
-        if(base.IsOwner)
-        {
-            weaponDictionary.Respawn();
-        }
     }
 
     [ServerRpc]
@@ -421,15 +420,6 @@ public class PlayerEntity : NetworkBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
-        if (!isScoped)
-        {
-            walkingSpeed = 8.5f * currentWeapon.movementSpeedMultiplier;
-        }
-        else if(isScoped)
-        {
-            walkingSpeed = 8.5f * currentWeapon.movementSpeedMultiplierScoped;
-        }
-
         float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
@@ -448,7 +438,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             moveDirection.y -= gravity * Time.deltaTime * timeSlow * timeSpeed;
         }
-        else if(!characterController.isGrounded)
+        else if (!characterController.isGrounded)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
@@ -470,8 +460,10 @@ public class PlayerEntity : NetworkBehaviour
 
     public void Reload()
     {
-        currentWeapon.ammoLeft = currentWeapon.magSize;
-        reloadTimer = 0;
+        ammoLeft = maxAmmo;
+        reloadTime = 0;
+
+        animator.SetBool("Reloading", true);
 
         reloadBackground.gameObject.SetActive(true);
     }
@@ -504,13 +496,13 @@ public class PlayerEntity : NetworkBehaviour
 
 
     [ServerRpc]
-    public void ShootServer(GameObject shooter, int damage)
+    public void ShootServer(GameObject shooter)
     {
-        Shoot(shooter, damage);
+        Shoot(shooter);
     }
 
     [ObserversRpc]
-    public void Shoot(GameObject shooter, int damage)
+    public void Shoot(GameObject shooter)
     {
         Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
@@ -532,7 +524,6 @@ public class PlayerEntity : NetworkBehaviour
                 GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
-                ammoInstance.GetComponent<AmmoController>().damage = damage;
                 Destroy(ammoInstance, 120);
             }
             if (ammoSpawn.GetComponent<AmmoSpawn>().isInsideTerrain)
@@ -548,7 +539,6 @@ public class PlayerEntity : NetworkBehaviour
                 GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
-                ammoInstance.GetComponent<AmmoController>().damage = damage;
                 Destroy(ammoInstance, 120);
             }
             else if (hit.collider.CompareTag("PlayerHead") && hit.collider.GetComponent<PlayerHead>().player.gameObject != this.gameObject)
@@ -556,7 +546,7 @@ public class PlayerEntity : NetworkBehaviour
                 Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsServer)
                 {
-                    Hit(hit.collider.GetComponent<PlayerHead>().player.gameObject, this.gameObject, headDamage, damage);
+                    Hit(hit.collider.GetComponent<PlayerHead>().player.gameObject, this.gameObject, headDamage);
                 }
                 hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
             }
@@ -565,7 +555,7 @@ public class PlayerEntity : NetworkBehaviour
                 Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsServer)
                 {
-                    Hit(hit.collider.GetComponent<PlayerTorso>().player.gameObject, this.gameObject, torsoDamage, damage);
+                    Hit(hit.collider.GetComponent<PlayerTorso>().player.gameObject, this.gameObject, torsoDamage);
                 }
                 hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerTorso>().player.gameObject, direction);
             }
@@ -574,7 +564,7 @@ public class PlayerEntity : NetworkBehaviour
                 Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 if (base.IsServer)
                 {
-                    Hit(hit.collider.GetComponent<PlayerLegs>().player.gameObject, this.gameObject, legsDamage, damage);
+                    Hit(hit.collider.GetComponent<PlayerLegs>().player.gameObject, this.gameObject, legsDamage);
                 }
                 hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerLegs>().player.gameObject, direction);
             }
@@ -585,18 +575,10 @@ public class PlayerEntity : NetworkBehaviour
             }
         }
 
-        // recoil
-        if(base.IsOwner)
-        {
-            if (!isScoped)
-            {
-                rotationX -= recoil * currentWeapon.recoilMultiplier;
-            }
-            else if (isScoped)
-            {
-                rotationX -= recoil * currentWeapon.recoilMultiplierScoped;
-            }
-        }
+        //GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
+        //ammoInstance.GetComponent<AmmoController>().direction = direction;
+        //ammoInstance.GetComponent<AmmoController>().shooter = shooter;
+        //Destroy(ammoInstance, 120);
     }
 
     [ServerRpc]
@@ -637,7 +619,7 @@ public class PlayerEntity : NetworkBehaviour
 
     public void Aim()
     {
-        isScoped = !isScoped;
+
     }
 
     private void OnTriggerEnter(Collider other)
