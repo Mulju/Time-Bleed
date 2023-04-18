@@ -578,7 +578,6 @@ public class PlayerEntity : NetworkBehaviour
     {
         Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
-        soundControl.PlayShootSound();
 
         if (isShotgun)
         {
@@ -658,16 +657,20 @@ public class PlayerEntity : NetworkBehaviour
             }
         }
 
-        // recoil
-        if (base.IsOwner && isLastShot)
+        if (isLastShot)
         {
-            if (!isScoped)
+            soundControl.PlayShootSound();
+            // recoil
+            if (base.IsOwner)
             {
-                rotationX -= recoil * currentWeapon.recoilMultiplier;
-            }
-            else if (isScoped)
-            {
-                rotationX -= recoil * currentWeapon.recoilMultiplierScoped;
+                if (!isScoped)
+                {
+                    rotationX -= recoil * currentWeapon.recoilMultiplier;
+                }
+                else if (isScoped)
+                {
+                    rotationX -= recoil * currentWeapon.recoilMultiplierScoped;
+                }
             }
         }
     }
