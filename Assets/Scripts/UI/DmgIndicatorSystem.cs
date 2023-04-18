@@ -13,13 +13,4 @@ public class DmgIndicatorSystem : MonoBehaviour
         damageIndicatorScript.SetDamageIndicator(player, bulletDirection);
         _damageIndicators.Add(damageIndicator);
     }
-
-    public void RemoveDamageIndicators()
-    {
-        foreach (GameObject damageIndicator in _damageIndicators)
-        {
-            Destroy(damageIndicator);
-        }
-        _damageIndicators.Clear();
-    }
 }
