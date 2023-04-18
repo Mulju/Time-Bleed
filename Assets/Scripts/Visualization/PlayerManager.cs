@@ -5,6 +5,8 @@ using FishNet.Connection;
 using TMPro;
 using System.Collections;
 using Unity.VisualScripting;
+using FishNet;
+using FishNet.Transporting;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -27,6 +29,16 @@ public class PlayerManager : NetworkBehaviour
         instance = this;
     }
 
+    private void OnEnable()
+    {
+        ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
+    }
+
+    private void OnDisable()
+    {
+        ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
+    }
+
     private void Update()
     {
         if (!base.IsServer)
@@ -43,6 +55,19 @@ public class PlayerManager : NetworkBehaviour
             {
                 PlayerKilled(player.Key, player.Key);
             }
+        }
+    }
+
+    public void NmrPlayersChanged(NetworkConnection connection, RemoteConnectionStateArgs args)
+    {
+        if (args.ConnectionState == RemoteConnectionState.Started)
+        {
+            // Someone joined, do something?
+        }
+        else if(args.ConnectionState == RemoteConnectionState.Stopped)
+        {
+            // Someone left
+            RemovePlayer(connection);
         }
     }
 
