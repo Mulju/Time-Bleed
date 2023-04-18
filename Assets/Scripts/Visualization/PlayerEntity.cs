@@ -88,6 +88,7 @@ public class PlayerEntity : NetworkBehaviour
 
     [SerializeField] private GameObject rayCastVisual;
     [SerializeField] private GameObject spawnForRayVisual;
+     private MatchManager mManager;
 
     public override void OnStartClient()
     {
