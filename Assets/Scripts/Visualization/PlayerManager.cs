@@ -113,12 +113,12 @@ public class PlayerManager : NetworkBehaviour
             if (pair.Value.connection == connection)
             {
                 playersCopy.Remove(pair.Key);
-                serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
                 Debug.Log("Player removed");
             }
         }
 
         players = new Dictionary<int, Data.Player>(playersCopy);
+        serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
     }
 
     [ObserversRpc]
