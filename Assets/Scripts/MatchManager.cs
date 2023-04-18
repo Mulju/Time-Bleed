@@ -7,6 +7,7 @@ using UnityEngine;
 public class MatchManager : NetworkBehaviour
 {
     public static MatchManager matchManager;
+    private PlayerManager playerManager;
 
     public enum MatchState
     {
@@ -43,6 +44,9 @@ public class MatchManager : NetworkBehaviour
             Destroy(gameObject);
         }
 
+        playerManager = PlayerManager.instance;
+        currentMatchState = MatchState.WAITING_FOR_PLAYERS;
+
         GameObject[] clocks = GameObject.FindGameObjectsWithTag("Clock");
         foreach(GameObject clock in clocks)
         {
@@ -75,12 +79,41 @@ public class MatchManager : NetworkBehaviour
             return;
         }
 
+        // Still waiting for players
+        if(currentMatchState == MatchState.WAITING_FOR_PLAYERS && playerManager.numberOfPlayers == 6)
+        {
+            // Waiting for players but we have 6 players. Change state to starting the match
+            currentMatchState = MatchState.STARTING;
+        }
+
+        // Match is starting
+        if(currentMatchState == MatchState.STARTING)
+        {
+            // Run only when the match starts and swap to IN_PROGRESS
+            playerManager.StartingMatch();
+            currentMatchState = MatchState.IN_PROGRESS;
+        }
+
+        // Match is in progress
+        if(currentMatchState == MatchState.IN_PROGRESS)
+        {
+            // Check the amount of kills each team has and change the chronade spawn accordingly
+            // Change only the spawn location, not the objects location itself
+
+            // Different music for different states of the game.
+        }
+
+        // Match has ended
         if (currentMatchState == MatchState.MATCH_ENDED)
         {
-            // If match has ended, stop going to update
             return;
         }
 
+
+
+
+
+        // Change match state to ended if time runs out on a clock
         if(redClock.remainingTime < 0 || greenClock.remainingTime < 0)
         {
             // Match ended
@@ -115,5 +148,7 @@ public class MatchManager : NetworkBehaviour
     private void DisplayScoreboard()
     {
         // Use currentVicoryState to display correct winning team
+
+        // Somekind of end of match music here, possibly different for winning and losing team..?
     }
 }

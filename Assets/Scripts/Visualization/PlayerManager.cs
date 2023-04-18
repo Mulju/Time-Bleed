@@ -23,10 +23,15 @@ public class PlayerManager : NetworkBehaviour
     private bool redTeamTurn = true;
 
     [SerializeField] private TextMeshProUGUI serverNumberOfPlayers;
+    [SerializeField] private GameObject startMatchTimer;
+
+    [HideInInspector] public int numberOfPlayers;
+    
 
     private void Awake()
     {
         instance = this;
+        numberOfPlayers = 0;
     }
 
     public override void OnStartClient()
@@ -70,7 +75,8 @@ public class PlayerManager : NetworkBehaviour
     {
         if (args.ConnectionState == RemoteConnectionState.Started)
         {
-            // Someone joined, do something?
+            // Someone joined, do something? Perhaps kick the connecting player if 6 already on server?
+            // Propably call AddPlayer here and remove the call from PlayerEntity
         }
         else if(args.ConnectionState == RemoteConnectionState.Stopped)
         {
@@ -94,7 +100,8 @@ public class PlayerManager : NetworkBehaviour
 
         redTeamTurn = !redTeamTurn;
         players.Add(id, player);
-        serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
+        numberOfPlayers++;
+        serverNumberOfPlayers.text = numberOfPlayers + " / 6\nPlayers";
 
         foreach(KeyValuePair<int, Data.Player> pair in players)
         {
@@ -110,17 +117,72 @@ public class PlayerManager : NetworkBehaviour
             if (pair.Value.connection == connection)
             {
                 playersCopy.Remove(pair.Key);
+                numberOfPlayers--;
             }
         }
 
         players = new Dictionary<int, Data.Player>(playersCopy);
-        serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
+        serverNumberOfPlayers.text = numberOfPlayers + " / 6\nPlayers";
     }
 
     [ObserversRpc]
     private void ChangePlayerTeam(Data.Player player)
     {
         player.playerObject.GetComponent<PlayerEntity>().ChangeTeam(player.teamTag);
+    }
+
+    [ObserversRpc]
+    public void StartingMatch()
+    {
+        int redIndex = 0, greenIndex = 0;
+        // Move all players to their own spawns and reset all the kills and deaths
+        foreach (KeyValuePair<int, Data.Player> pair in players)
+        {
+            if(pair.Value.teamTag == 0)
+            {
+                pair.Value.playerObject.transform.position = redSpawnPoints[redIndex].position;
+                redIndex++;
+            }
+            else
+            {
+                pair.Value.playerObject.transform.position = greenSpawnPoints[greenIndex].position;
+                greenIndex++;
+            }
+
+            pair.Value.kills = 0;
+            pair.Value.deaths = 0;
+        }
+
+        // Display a timer for match start, propably a coroutine
+        startMatchTimer.SetActive(true);
+        StartCoroutine(StartTimer());
+
+        // Close spawn doors
+        OpenCloseSpawnDoors(true);
+
+
+
+        // After start timer is finished, change match state to in progress. Might not need this. MatchManager's update does this for now.
+        // MatchManager.matchManager.currentMatchState = MatchManager.MatchState.IN_PROGRESS;
+    }
+
+    IEnumerator StartTimer()
+    {
+        int timer = 15;
+        while (timer != 0)
+        {
+            // Display timer on screen here
+            startMatchTimer.GetComponent<TextMeshProUGUI>().text = "Match starts in\n" + timer;
+
+            yield return new WaitForSeconds(1);
+            timer--;
+        }
+        OpenCloseSpawnDoors(false);
+    }
+
+    public void OpenCloseSpawnDoors(bool closeDoors)
+    {
+
     }
 
     public void DamagePlayer(int playerID, int damage, int shooterID)

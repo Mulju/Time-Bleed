@@ -20,7 +20,22 @@ public class Clock : NetworkBehaviour
     {
         if(base.IsServer)
         {
-            UpdateClockServer();
+            // Clock shouldn't got minus time now.
+            if(remainingSeconds == 0 && remainingMinutes == 0)
+            {
+                return;
+            }
+            else if(remainingSeconds <= 0 && remainingMinutes <= 0)
+            {
+                remainingSeconds = 0;
+                remainingMinutes = 0;
+                rotation = 0;
+                UpdateClock();
+            }
+            else
+            {
+                UpdateClockServer();
+            }
         }
     }
 
