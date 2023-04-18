@@ -63,7 +63,6 @@ public class PlayerEntity : NetworkBehaviour
 
     [SyncVar] public string playerName;
     public TextMeshPro tmpPlayerName;
-    [SerializeField] private TextMeshPro debugConsole;
     public string newPlayersName;
 
     [HideInInspector] public MenuControl menuControl;
@@ -113,8 +112,6 @@ public class PlayerEntity : NetworkBehaviour
         {
             Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
             int id = gameObject.GetInstanceID();
-            Debug.Log("Player ID: " + id);
-            debugConsole.text = "Player ID: " + id;
 
             playerManager.AddPlayer(id, player);
 
