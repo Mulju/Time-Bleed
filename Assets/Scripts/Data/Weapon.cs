@@ -12,7 +12,7 @@ namespace Data
 
         // Rounds Per Minute.
         public int fireRate { get; private set; }
-        public int bulletsPerShot { get; private set; } // tämä
+        public int bulletsPerShot { get; private set; }
         public int maxAmmoInReserve { get; private set; } // ei käytetä
         public int ammoLeft { get; set; }
 
@@ -21,7 +21,7 @@ namespace Data
         public float recoilMultiplierScoped { get; private set; }
         public float movementSpeedMultiplier { get; private set; }
         public float movementSpeedMultiplierScoped { get; private set; }
-        public float deployTime { get; private set; } // tämä
+        public float deployTime { get; private set; }
 
         public bool holdToShoot { get; private set; }
 
