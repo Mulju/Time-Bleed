@@ -29,14 +29,11 @@ public class DamageIndicator : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(0, 180, angle);
 
-        Debug.Log(angle);
         transform.localRotation = rotation;
     }
 
-    IEnumerator DestroyDamageIndicator(int fadeTime = 3)
+    IEnumerator DestroyDamageIndicator(int fadeTime = 2)
     {
-        yield return new WaitForSeconds(1);
-
         Color originalColor = _image.color;
 
         for (float t = 0.01f; t < fadeTime; t += Time.deltaTime)
