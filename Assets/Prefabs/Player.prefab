@@ -310,6 +310,7 @@ MonoBehaviour:
     type: 3}
   chronade: {fileID: 3294885659995966261, guid: d07241dce1a79424d8aaf4ec1c4a0ec3,
     type: 3}
+  animator: {fileID: 9022828222518234362}
   timeSlow: 0
   shootSpeed: 0
   reloadTime: 0
@@ -317,6 +318,7 @@ MonoBehaviour:
   timeBindCooldown: 0
   chronadeTimer: 0
   chronadeCooldown: 0
+  recoil: 0
   maxAmmo: 30
   ammoLeft: 0
   timeSpeed: 0
@@ -333,7 +335,6 @@ MonoBehaviour:
   cameraYOffset: 0.4
   playerName: asd
   tmpPlayerName: {fileID: 2372661360542935777}
-  debugConsole: {fileID: 9168593485926318496}
   newPlayersName: 
   menuControl: {fileID: 0}
   healthTMP: {fileID: 0}
@@ -2714,6 +2715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9213242078734424157}
   - component: {fileID: 1986948161563127830}
+  - component: {fileID: 9022828222518234362}
   m_Layer: 0
   m_Name: GunRotator
   m_TagString: Untagged
@@ -2779,6 +2781,27 @@ MonoBehaviour:
     X: 0
     Y: 0
     Z: 0
+--- !u!95 &9022828222518234362
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7420047900754856243}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a4b8abff11598498fa5f405fd179af88, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7439520498878454692
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,6 +3052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSlowed: 0
+  isInsideTerrain: 0
 --- !u!1 &7649743490415317026
 GameObject:
   m_ObjectHideFlags: 0
