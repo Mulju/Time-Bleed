@@ -18,10 +18,12 @@ public class Clock : NetworkBehaviour
 
     void Update()
     {
-        UpdateClockServer();
+        if(base.IsServer)
+        {
+            UpdateClockServer();
+        }
     }
 
-    [ServerRpc(RequireOwnership = false)]
     public void UpdateClockServer()
     {
         // Turn clock handle
@@ -37,6 +39,7 @@ public class Clock : NetworkBehaviour
         }
 
         remainingTime = remainingSeconds + remainingMinutes * 60;
+        UpdateClock();
     }
 
     [ObserversRpc]
