@@ -105,15 +105,20 @@ public class PlayerManager : NetworkBehaviour
     public void RemovePlayer(NetworkConnection connection)
     {
         Debug.Log("RemovePlayer called");
-        foreach(KeyValuePair<int, Data.Player> pair in players)
+
+        Dictionary<int, Data.Player> playersCopy = new Dictionary<int, Data.Player>(players);
+
+        foreach (KeyValuePair<int, Data.Player> pair in players)
         {
-            if(pair.Value.connection == connection)
+            if (pair.Value.connection == connection)
             {
-                players.Remove(pair.Key);
+                playersCopy.Remove(pair.Key);
                 serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
                 Debug.Log("Player removed");
             }
         }
+
+        players = new Dictionary<int, Data.Player>(playersCopy);
     }
 
     [ObserversRpc]
