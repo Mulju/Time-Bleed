@@ -1,20 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using FishNet.Object;
-using FishNet.Connection;
 
-public class DmgIndicatorSystem : NetworkBehaviour
+public class DmgIndicatorSystem : MonoBehaviour
 {
     [SerializeField] private GameObject _damageIndicatorPrefab;
-    private List<DamageIndicator> _damageIndicators = new List<DamageIndicator>();
+    private List<GameObject> _damageIndicators = new List<GameObject>();
 
     public void AddDamageIndicator(GameObject player, Vector3 bulletDirection)
     {
         GameObject damageIndicator = Instantiate(_damageIndicatorPrefab, transform);
         DamageIndicator damageIndicatorScript = damageIndicator.GetComponent<DamageIndicator>();
         damageIndicatorScript.SetDamageIndicator(player, bulletDirection);
-        _damageIndicators.Add(damageIndicatorScript);
+        _damageIndicators.Add(damageIndicator);
     }
 }
