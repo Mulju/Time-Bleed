@@ -25,6 +25,7 @@ public class PlayerEntity : NetworkBehaviour
     public float reloadTime;
     public float timeBindTimer, timeBindCooldown;
     public float chronadeTimer, chronadeCooldown;
+    public float recoil;
 
     public int maxAmmo, ammoLeft;
 
@@ -158,6 +159,7 @@ public class PlayerEntity : NetworkBehaviour
         shootSpeed = 1;
         reloadTime = 1;
 
+        recoil = 0.3f;
 
         timeBindCooldown = 10f;
         timeBindTimer = timeBindCooldown;
@@ -265,6 +267,8 @@ public class PlayerEntity : NetworkBehaviour
             ShootServer(gameObject);
             shootSpeed = 0;
             ammoLeft -= 1;
+
+            rotationX -= recoil;
         }
 
         if ((Input.GetKeyDown(KeyCode.R) || ammoLeft == 0) && !reloading && ammoLeft != maxAmmo)
