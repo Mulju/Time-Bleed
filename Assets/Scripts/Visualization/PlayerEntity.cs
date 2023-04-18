@@ -20,6 +20,7 @@ public class PlayerEntity : NetworkBehaviour
 
     private GameObject reloadBar, reloadBackground, reloadParent;
     private GameObject damageIndicatorParent;
+    public Animator animator;
 
     public float timeSlow;
     public float shootSpeed;
@@ -150,7 +151,7 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnDisable()
     {
-        if(base.IsServer)
+        if (base.IsServer)
         {
             //gameObject.GetComponent<NetworkObject>().Owner.Disconnect(false);
             Debug.Log("OnDisable");
@@ -220,7 +221,7 @@ public class PlayerEntity : NetworkBehaviour
 
     void Update()
     {
-        if(mManager.currentMatchState == MatchManager.MatchState.MATCH_ENDED)
+        if (mManager.currentMatchState == MatchManager.MatchState.MATCH_ENDED)
         {
             // Match ended
             return;
@@ -257,6 +258,7 @@ public class PlayerEntity : NetworkBehaviour
         if (reloadTime >= 1 && reloading)
         {
             reloading = false;
+            animator.SetBool("Reloading", false);
             reloadBackground.gameObject.SetActive(false);
         }
 
@@ -436,7 +438,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             moveDirection.y -= gravity * Time.deltaTime * timeSlow * timeSpeed;
         }
-        else if(!characterController.isGrounded)
+        else if (!characterController.isGrounded)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
@@ -460,6 +462,8 @@ public class PlayerEntity : NetworkBehaviour
     {
         ammoLeft = maxAmmo;
         reloadTime = 0;
+
+        animator.SetBool("Reloading", true);
 
         reloadBackground.gameObject.SetActive(true);
     }
