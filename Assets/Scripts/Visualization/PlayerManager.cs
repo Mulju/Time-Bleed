@@ -31,12 +31,12 @@ public class PlayerManager : NetworkBehaviour
 
     private void OnEnable()
     {
-        ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
+        //ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
     }
 
     private void OnDisable()
     {
-        ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
+        //ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
     }
 
     private void Update()
