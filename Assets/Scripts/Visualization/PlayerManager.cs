@@ -179,8 +179,11 @@ public class PlayerManager : NetworkBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        players[playerID].health = maxHealth;
-        UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
+        if (players[playerID] != null)
+        {
+            players[playerID].health = maxHealth;
+            UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
+        }
     }
 
     [TargetRpc]
