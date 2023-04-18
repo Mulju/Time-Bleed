@@ -570,6 +570,10 @@ public class PlayerEntity : NetworkBehaviour
         {
             Vector3 random = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
 
+            float x = Random.Range(-0.5f, 0.5f);
+            float y = Random.Range(-0.5f,0.5f);
+            
+
             Vector3 joku = new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z);
         }
 
