@@ -2050,6 +2050,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 713437866}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &713437869 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4464449872880591599, guid: e44379750f6f2d8468d7df5eb8d1afc0,
+    type: 3}
+  m_PrefabInstance: {fileID: 713437866}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713437868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &750260446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2610,6 +2622,7 @@ MonoBehaviour:
   menuControl: {fileID: 477695109}
   healthTMP: {fileID: 542904168}
   ammoTMP: {fileID: 542904167}
+  serverNumberOfPlayers: {fileID: 713437869}
 --- !u!4 &918670145
 Transform:
   m_ObjectHideFlags: 0
