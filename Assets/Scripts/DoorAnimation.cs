@@ -8,8 +8,9 @@ public class DoorAnimation : NetworkBehaviour
     [SerializeField] private Animator doorAnimator;
     private PlayerManager playerManager;
 
-    private void Awake()
+    public override void OnStartClient()
     {
+        base.OnStartClient();
         playerManager = PlayerManager.instance;
     }
 
