@@ -309,15 +309,15 @@ public class PlayerEntity : NetworkBehaviour
         {
             if (currentWeapon.bulletsPerShot == 1)
             {
-                ShootServer(gameObject, currentWeapon.damage, false, true, isScoped);
+                ShootServer(gameObject, currentWeapon.damage, false, true, isScoped, currentWeapon.hipFireAccuracy);
             }
             else
             {
                 for (int i = 0; i < currentWeapon.bulletsPerShot - 1; i++)
                 {
-                    ShootServer(gameObject, currentWeapon.damage, true, false, isScoped);
+                    ShootServer(gameObject, currentWeapon.damage, true, false, isScoped, currentWeapon.hipFireAccuracy);
                 }
-                ShootServer(gameObject, currentWeapon.damage, true, true, isScoped);
+                ShootServer(gameObject, currentWeapon.damage, true, true, isScoped, currentWeapon.hipFireAccuracy);
             }
 
             shootTimer = 0;
@@ -501,13 +501,13 @@ public class PlayerEntity : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void ShootServer(GameObject shooter, int damage, bool isShotgun, bool isLastShot, bool scoped)
+    public void ShootServer(GameObject shooter, int damage, bool isShotgun, bool isLastShot, bool scoped, float accuracy)
     {
-        Shoot(shooter, damage, isShotgun, isLastShot, scoped);
+        Shoot(shooter, damage, isShotgun, isLastShot, scoped, accuracy);
     }
 
     [ObserversRpc]
-    public void Shoot(GameObject shooter, int damage, bool isShotgun, bool isLastShot, bool scoped)
+    public void Shoot(GameObject shooter, int damage, bool isShotgun, bool isLastShot, bool scoped, float accuracy)
     {
         Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
@@ -523,7 +523,7 @@ public class PlayerEntity : NetworkBehaviour
         
         if(!scoped)
         {
-            Vector2 random = Random.insideUnitCircle * 0.02f;
+            Vector2 random = Random.insideUnitCircle * 0.01f * accuracy;
             float x = random.x;
             float y = random.y;
 
