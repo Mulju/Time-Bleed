@@ -35,18 +35,13 @@ public class PlayerEntity : NetworkBehaviour
     private float deployTimer;
     private bool isScoped;
 
-    //public int maxAmmo, ammoLeft;
-
     private bool reloading;
-    private bool timeFieldIsActive;
 
     [SyncVar] public float timeSpeed;
     private float mouseScroll;
 
     [HideInInspector]
     public float headDamage = 2f, torsoDamage = 1f, legsDamage = 0.7f;
-
-    private Vector3 timeFieldOriginalScale;
 
     [Header("Base setup")]
     public float walkingSpeed = 8.5f;
@@ -177,9 +172,7 @@ public class PlayerEntity : NetworkBehaviour
 
         reloading = false;
 
-        timeFieldOriginalScale = timeField.transform.localScale;
         timeSlow = 1;
-        timeFieldIsActive = true;
 
         timeSpeed = 1f;
         mouseScroll = 0f;
@@ -365,17 +358,6 @@ public class PlayerEntity : NetworkBehaviour
             ammoTMP.text = "Ammo - " + currentWeapon.ammoLeft;
         }
 
-        if (!Input.GetKey(KeyCode.Mouse0) && !IsMoving() && !timeFieldIsActive)
-        {
-            TimeFieldServerActivate(gameObject);
-            timeFieldIsActive = true;
-        }
-        else if (timeFieldIsActive && (IsMoving() || Input.GetKey(KeyCode.Mouse0)))
-        {
-            TimeFieldServerDeactivate(gameObject);
-            timeFieldIsActive = false;
-        }
-
         if (Input.GetKeyDown(KeyCode.G) && chronadeTimer >= chronadeCooldown)
         {
             ThrowGrenadeServer();
@@ -541,33 +523,6 @@ public class PlayerEntity : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void TimeFieldServerDeactivate(GameObject timeField)
-    {
-        TimeFieldDeactivate(timeField);
-    }
-
-    [ObserversRpc]
-    public void TimeFieldDeactivate(GameObject timeField)
-    {
-        //timeField.GetComponent<PlayerEntity>().timeField.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-
-        //timeField.GetComponent<TimeSphere>().ReduceCircumference();
-    }
-
-    [ServerRpc]
-    public void TimeFieldServerActivate(GameObject timeField)
-    {
-        TimeFieldActivate(timeField);
-    }
-
-    [ObserversRpc]
-    public void TimeFieldActivate(GameObject timeField)
-    {
-        //timeField.GetComponent<PlayerEntity>().timeField.transform.localScale = timeFieldOriginalScale;
-    }
-
-
-    [ServerRpc]
     public void ShootServer(GameObject shooter, int damage, bool isShotgun, bool isLastShot)
     {
         Shoot(shooter, damage, isShotgun, isLastShot);
@@ -714,20 +669,5 @@ public class PlayerEntity : NetworkBehaviour
     public void Aim()
     {
         isScoped = !isScoped;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //if (other.CompareTag("Ammo") && other.TryGetComponent<AmmoController>(out AmmoController ammo) && other.GetComponent<AmmoController>().shooter != this.gameObject)
-        //{
-        //    PlayerEntity player = gameObject.GetComponent<PlayerEntity>();
-
-        //    if (base.IsOwner)
-        //    {
-        //        player.Hit(gameObject, ammo.shooter);
-        //    }
-
-        //    Destroy(other.gameObject);
-        //}
     }
 }
