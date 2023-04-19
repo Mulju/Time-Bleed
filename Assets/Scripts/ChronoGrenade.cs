@@ -40,9 +40,10 @@ public class ChronoGrenade : MonoBehaviour
         if(col.CompareTag("TimeSphere"))
         {
             //Debug.Log("OwnerID: " + ownerID + "\nColliderID: " + col.transform.parent.GetInstanceID() + "\nUpdateID: " + updateID);
-            if(ownerObject == col.transform.parent?.gameObject)
+            if(ownerObject == col.transform.parent?.gameObject || 
+                ownerObject.GetComponent<PlayerEntity>().ownTeamTag == col.transform.parent?.GetComponent<PlayerEntity>()?.ownTeamTag)
             {
-                // Did we hit the players own timesphere?
+                // Did we hit the players own or a teammates timesphere?
                 return;
             }
 
@@ -54,11 +55,6 @@ public class ChronoGrenade : MonoBehaviour
             instantiatedEffect.Play();
             Destroy(instantiatedEffect, animationLength);
             Destroy(gameObject);
-        }
-
-        if(col.CompareTag("Clock"))
-        {
-            // V‰hennet‰‰n aikaa jos on vihollisen kello
         }
     }
 }

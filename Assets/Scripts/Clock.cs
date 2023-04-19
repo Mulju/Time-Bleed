@@ -64,7 +64,8 @@ public class Clock : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("ChronoGrenade"))
+        if (collision.gameObject.CompareTag("ChronoGrenade") &&
+            collision.gameObject.GetComponent<ChronoGrenade>().ownerObject.GetComponent<PlayerEntity>().ownTeamTag != teamIdentifier)
         {
             hitChronades++;
             StartCoroutine(GrenadeTimer());
