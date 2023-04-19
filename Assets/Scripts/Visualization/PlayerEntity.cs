@@ -277,6 +277,9 @@ public class PlayerEntity : NetworkBehaviour
 
             reloading = false;
             reloadBackground.gameObject.SetActive(false);
+
+            playerCamera.fieldOfView = 60f;
+            sensitivity = 1f;
         }
         else if (Input.GetKey(KeyCode.Alpha2) && currentWeapon != weaponDictionary.weapons["sniper"])
         {
@@ -286,6 +289,9 @@ public class PlayerEntity : NetworkBehaviour
 
             reloading = false;
             reloadBackground.gameObject.SetActive(false);
+
+            playerCamera.fieldOfView = 60f;
+            sensitivity = 1f;
         }
         else if (Input.GetKey(KeyCode.Alpha3) && currentWeapon != weaponDictionary.weapons["shotgun"])
         {
@@ -295,6 +301,9 @@ public class PlayerEntity : NetworkBehaviour
 
             reloading = false;
             reloadBackground.gameObject.SetActive(false);
+
+            playerCamera.fieldOfView = 60f;
+            sensitivity = 1f;
         }
 
         if (deployTimer >= currentWeapon.deployTime && !reloading)
@@ -304,7 +313,14 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            Aim();
+            if (currentWeapon == weaponDictionary.weapons["sniper"])
+            {
+                Aim(true);
+            }
+            else
+            {
+                Aim(false);
+            }
         }
 
         if (((currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0)) || (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0))) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime && deployTimer >= currentWeapon.deployTime)
@@ -659,11 +675,22 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    public void Aim()
+    public void Aim(bool isSniper)
     {
-        playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 30f : 60f;
+        if (isSniper)
+        {
+            playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 10f : 60f;
+            //sensitivity = sensitivity == 1f ? 10f / 60f : 1f;
+            sensitivity = playerCamera.fieldOfView / 60f;
+        }
+        else
+        {
+            playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 40f : 60f;
+            //sensitivity = sensitivity == 1f ? 40f/60f : 1f;
+            sensitivity = playerCamera.fieldOfView / 60f;
+        }
 
-        sensitivity = sensitivity == 1f ? 0.5f : 1f;
+        
 
         isScoped = !isScoped;
     }
