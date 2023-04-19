@@ -2,6 +2,7 @@ using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 public class DoorAnimation : NetworkBehaviour
 {
@@ -11,22 +12,20 @@ public class DoorAnimation : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-        playerManager = PlayerManager.instance;
+        if(base.IsServer)
+        {
+            playerManager = PlayerManager.instance;
+            playerManager.OnStartingMatch += OpenCloseDoor;
+        }
     }
 
-    private void Awake()
+    public override void OnStopClient()
     {
-        playerManager = PlayerManager.instance;
-    }
-
-    private void OnEnable()
-    {
-        playerManager.OnStartingMatch += OpenCloseDoor;
-    }
-
-    private void OnDisable()
-    {
-        playerManager.OnStartingMatch -= OpenCloseDoor;
+        base.OnStopClient();
+        if(base.IsServer)
+        {
+            playerManager.OnStartingMatch -= OpenCloseDoor;
+        }
     }
 
     public void OpenCloseDoor(bool openDoor)
