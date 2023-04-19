@@ -15,7 +15,7 @@ public class DoorAnimation : NetworkBehaviour
         if(base.IsServer)
         {
             playerManager = PlayerManager.instance;
-            playerManager.OnStartingMatch += OpenCloseDoor;
+            playerManager.OnStartingMatch += OpenCloseDoorServer;
         }
     }
 
@@ -24,10 +24,17 @@ public class DoorAnimation : NetworkBehaviour
         base.OnStopClient();
         if(base.IsServer)
         {
-            playerManager.OnStartingMatch -= OpenCloseDoor;
+            playerManager.OnStartingMatch -= OpenCloseDoorServer;
         }
     }
 
+    [ServerRpc]
+    public void OpenCloseDoorServer(bool openDoor)
+    {
+        OpenCloseDoor(openDoor);
+    }
+
+    [ObserversRpc]
     public void OpenCloseDoor(bool openDoor)
     {
         if(openDoor)
