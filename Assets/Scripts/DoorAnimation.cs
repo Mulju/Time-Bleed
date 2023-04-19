@@ -14,6 +14,11 @@ public class DoorAnimation : NetworkBehaviour
         playerManager = PlayerManager.instance;
     }
 
+    private void Awake()
+    {
+        playerManager = PlayerManager.instance;
+    }
+
     private void OnEnable()
     {
         playerManager.OnStartingMatch += OpenCloseDoor;
