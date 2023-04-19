@@ -138,6 +138,8 @@ public class PlayerManager : NetworkBehaviour
 
     public void StartingMatchServer()
     {
+        // Only called on the server
+
         int redIndex = 0, greenIndex = 0;
         // Move all players to their own spawns and reset all the kills and deaths
         foreach (KeyValuePair<int, Data.Player> pair in players)
@@ -161,10 +163,10 @@ public class PlayerManager : NetworkBehaviour
         OnStartingMatch.Invoke(false);
         StartCoroutine(ServerDoorTimer());
 
-        // Display a timer for match start, propably a coroutine
+        // Display a timer for match start
         StartMatch();
 
-
+        // Reset / start the teams clocks after spawn doors open
 
         // After start timer is finished, change match state to in progress. Might not need this. MatchManager's update does this for now.
         // MatchManager.matchManager.currentMatchState = MatchManager.MatchState.IN_PROGRESS;
@@ -181,7 +183,7 @@ public class PlayerManager : NetworkBehaviour
     IEnumerator StartTimer()
     {
         int timer = 15;
-        while (timer > 0)
+        while (timer >= 0)
         {
             // Display timer on screen here
             startMatchTimer.GetComponent<TextMeshProUGUI>().text = "Match starts in\n" + timer;
@@ -189,9 +191,6 @@ public class PlayerManager : NetworkBehaviour
             yield return new WaitForSeconds(1);
             timer--;
         }
-
-        // Show the timer at 0 for 2 seconds
-        yield return new WaitForSeconds(2);
 
         startMatchTimer.SetActive(false);
     }
@@ -205,6 +204,17 @@ public class PlayerManager : NetworkBehaviour
             timer--;
         }
         OnStartingMatch.Invoke(true);
+
+        // Reset the clock timers
+        MatchManager.matchManager.redClock.rotation = 0;
+        MatchManager.matchManager.redClock.remainingSeconds = 60;
+        MatchManager.matchManager.redClock.remainingMinutes = 14;
+        MatchManager.matchManager.redClock.remainingTime = 900;
+
+        MatchManager.matchManager.greenClock.rotation = 0;
+        MatchManager.matchManager.greenClock.remainingSeconds = 60;
+        MatchManager.matchManager.greenClock.remainingMinutes = 14;
+        MatchManager.matchManager.greenClock.remainingTime = 900;
     }
 
     public void DamagePlayer(int playerID, int damage, int shooterID)

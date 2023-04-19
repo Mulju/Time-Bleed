@@ -28,12 +28,6 @@ public class DoorAnimation : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
-    public void OpenCloseDoorServer(bool openDoor)
-    {
-        OpenCloseDoor(openDoor);
-    }
-
     [ObserversRpc]
     public void OpenCloseDoor(bool openDoor)
     {

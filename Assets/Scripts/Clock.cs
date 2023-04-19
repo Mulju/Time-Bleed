@@ -11,7 +11,7 @@ public class Clock : NetworkBehaviour
     [SerializeField] private TextMeshPro secondText, minuteText;
     private int hitChronades = 0;
 
-    [SyncVar] private float rotation;
+    [SyncVar] public float rotation;
     [SyncVar] public float remainingSeconds = 60, remainingMinutes = 14, remainingTime = 900;
     
     public int teamIdentifier;

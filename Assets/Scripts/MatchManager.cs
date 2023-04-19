@@ -27,7 +27,7 @@ public class MatchManager : NetworkBehaviour
     }
 
     // Syncvar for the time..?
-    private Clock redClock, greenClock;
+    [HideInInspector] public Clock redClock, greenClock;
     [HideInInspector] [SyncVar] public MatchState currentMatchState = MatchState.NONE;
     [SyncVar] private VictoryState currentVictoryState = VictoryState.NONE;
 
