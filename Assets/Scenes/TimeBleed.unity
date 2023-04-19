@@ -11638,8 +11638,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
+      propertyPath: _scenePathHash
+      value: 606160979
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: <SceneId>k__BackingField
-      value: 2603441581906251320
+      value: 2603441584748178333
       objectReference: {fileID: 0}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.size
@@ -11697,6 +11701,11 @@ PrefabInstance:
       propertyPath: _sceneNetworkObjects.Array.data[13]
       value: 
       objectReference: {fileID: 2062295356}
+    - target: {fileID: 252289990661069757, guid: bf797651a486cf44eae72059a211468b,
+        type: 3}
+      propertyPath: m_TagString
+      value: SniperScope
+      objectReference: {fileID: 0}
     - target: {fileID: 5935617055376825187, guid: bf797651a486cf44eae72059a211468b,
         type: 3}
       propertyPath: m_Name
