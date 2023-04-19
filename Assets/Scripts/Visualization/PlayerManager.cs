@@ -131,7 +131,6 @@ public class PlayerManager : NetworkBehaviour
         player.playerObject.GetComponent<PlayerEntity>().ChangeTeam(player.teamTag);
     }
 
-    [ObserversRpc]
     public void StartingMatch()
     {
         int redIndex = 0, greenIndex = 0;
