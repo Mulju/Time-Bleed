@@ -139,12 +139,12 @@ public class PlayerManager : NetworkBehaviour
         {
             if(pair.Value.teamTag == 0)
             {
-                pair.Value.playerObject.transform.position = redSpawnPoints[redIndex].position;
+                RespawnPlayer(pair.Value.connection, pair.Value.playerObject, redIndex, 0);
                 redIndex++;
             }
             else
             {
-                pair.Value.playerObject.transform.position = greenSpawnPoints[greenIndex].position;
+                RespawnPlayer(pair.Value.connection, pair.Value.playerObject, greenIndex, 1);
                 greenIndex++;
             }
 
@@ -177,6 +177,7 @@ public class PlayerManager : NetworkBehaviour
             timer--;
         }
         OpenCloseSpawnDoors(false);
+        startMatchTimer.SetActive(false);
     }
 
     public void OpenCloseSpawnDoors(bool closeDoors)
