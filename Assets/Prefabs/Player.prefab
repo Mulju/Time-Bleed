@@ -329,6 +329,7 @@ MonoBehaviour:
   gravity: 20
   lookSpeed: 2
   lookXLimit: 90
+  sensitivity: 1
   canMove: 1
   cameraYOffset: 0.4
   playerName: asd
@@ -3017,8 +3018,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7621595085599284721}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -2.89, y: 3.0733337, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.89, y: 1.91, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6930692056177264275}
