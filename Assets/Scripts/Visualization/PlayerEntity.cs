@@ -305,7 +305,7 @@ public class PlayerEntity : NetworkBehaviour
             Aim();
         }
 
-        if ((currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0)) || (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0)) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime && deployTimer >= currentWeapon.deployTime)
+        if (((currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0)) || (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0))) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime && deployTimer >= currentWeapon.deployTime)
         {
             if (currentWeapon.bulletsPerShot == 1)
             {
