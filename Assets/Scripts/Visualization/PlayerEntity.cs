@@ -609,6 +609,12 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
+    [ObserversRpc]
+    public void PlayerHitEffect(Vector3 position, Vector3 direction)
+    {
+        Instantiate(playerHitEffect, position, Quaternion.LookRotation(direction));
+    }
+
     [ServerRpc]
     public void TimeBindServer()
     {

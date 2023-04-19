@@ -21,6 +21,7 @@ public class PlayerLegs : NetworkBehaviour
             if (base.IsServer)
             {
                 player.GetComponent<PlayerEntity>().Hit(player.gameObject, ammo.shooter, damageMultiplier, ammo.GetComponent<AmmoController>().damage);
+                player.GetComponent<PlayerEntity>().PlayerHitEffect(ammo.transform.position, ammo.direction * -1);
             }
 
             if(base.IsOwner)

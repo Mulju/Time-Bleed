@@ -66,6 +66,8 @@ public class AmmoController : MonoBehaviour
                     {
                         hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerHead>().player, shooter, shooter.GetComponent<PlayerEntity>().headDamage, damage);
                         hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
+
+                        Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     }
 
                     // Instantiate "blood" effect
@@ -78,6 +80,8 @@ public class AmmoController : MonoBehaviour
                     {
                         hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerTorso>().player, shooter, shooter.GetComponent<PlayerEntity>().torsoDamage, damage);
                         hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerTorso>().player.gameObject, direction);
+
+                        Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     }
 
                     Destroy(this.gameObject);
@@ -88,6 +92,8 @@ public class AmmoController : MonoBehaviour
                     {
                         hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().AmmoHit(hit.collider.GetComponent<PlayerLegs>().player, shooter, shooter.GetComponent<PlayerEntity>().legsDamage, damage);
                         hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerLegs>().player.gameObject, direction);
+
+                        Instantiate(playerHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     }
 
                     Destroy(this.gameObject);
