@@ -51,6 +51,8 @@ public class PlayerEntity : NetworkBehaviour
     public float lookSpeed = 2.0f;
     public float lookXLimit = 90f;
 
+    public float sensitivity = 1f;
+
     CharacterController characterController;
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
@@ -275,6 +277,9 @@ public class PlayerEntity : NetworkBehaviour
 
             reloading = false;
             reloadBackground.gameObject.SetActive(false);
+
+            playerCamera.fieldOfView = 60f;
+            sensitivity = 1f;
         }
         else if (Input.GetKey(KeyCode.Alpha2) && currentWeapon != weaponDictionary.weapons["sniper"])
         {
@@ -284,6 +289,9 @@ public class PlayerEntity : NetworkBehaviour
 
             reloading = false;
             reloadBackground.gameObject.SetActive(false);
+
+            playerCamera.fieldOfView = 60f;
+            sensitivity = 1f;
         }
         else if (Input.GetKey(KeyCode.Alpha3) && currentWeapon != weaponDictionary.weapons["shotgun"])
         {
@@ -293,6 +301,9 @@ public class PlayerEntity : NetworkBehaviour
 
             reloading = false;
             reloadBackground.gameObject.SetActive(false);
+
+            playerCamera.fieldOfView = 60f;
+            sensitivity = 1f;
         }
 
         if (deployTimer >= currentWeapon.deployTime && !reloading)
@@ -302,7 +313,14 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            Aim();
+            if (currentWeapon == weaponDictionary.weapons["sniper"])
+            {
+                Aim(true);
+            }
+            else
+            {
+                Aim(false);
+            }
         }
 
         if (((currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0)) || (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0))) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime && deployTimer >= currentWeapon.deployTime)
@@ -482,10 +500,10 @@ public class PlayerEntity : NetworkBehaviour
         // Player and Camera rotation
         if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
         {
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed * sensitivity;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed * sensitivity, 0);
 
             gunRotator.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         }
@@ -512,6 +530,7 @@ public class PlayerEntity : NetworkBehaviour
         Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
 
+        /// bullet spread if not scoped
         if (!scoped)
         {
             Vector3 random = Random.insideUnitSphere * 0.02f * accuracy;
@@ -522,6 +541,7 @@ public class PlayerEntity : NetworkBehaviour
             direction =new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z + z).normalized;
         }
 
+        // shotgun bulletspread
         if (isShotgun)
         {
             Vector3 random = Random.insideUnitSphere * 0.1f;
@@ -655,8 +675,28 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    public void Aim()
+    public void Aim(bool isSniper)
     {
+        if (isSniper)
+        {
+            playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 10f : 60f;
+            //sensitivity = sensitivity == 1f ? 10f / 60f : 1f;
+            sensitivity = playerCamera.fieldOfView / 60f;
+        }
+        else
+        {
+            playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 40f : 60f;
+            //sensitivity = sensitivity == 1f ? 40f/60f : 1f;
+            sensitivity = playerCamera.fieldOfView / 60f;
+        }
+
+        
+
         isScoped = !isScoped;
+
+        if (isScoped)
+        {
+            sensitivity *= 0.5f;
+        }
     }
 }
