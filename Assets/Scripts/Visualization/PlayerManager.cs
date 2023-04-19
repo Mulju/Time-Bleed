@@ -5,6 +5,8 @@ using FishNet.Connection;
 using TMPro;
 using System.Collections;
 using Unity.VisualScripting;
+using FishNet;
+using FishNet.Transporting;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -21,10 +23,33 @@ public class PlayerManager : NetworkBehaviour
     private bool redTeamTurn = true;
 
     [SerializeField] private TextMeshProUGUI serverNumberOfPlayers;
+    [SerializeField] private GameObject startMatchTimer;
+
+    [HideInInspector] public int numberOfPlayers;
+    
 
     private void Awake()
     {
         instance = this;
+        numberOfPlayers = 0;
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if(base.IsServer)
+        {
+            ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
+        }
+    }
+
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        if(base.IsServer)
+        {
+            ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
+        }
     }
 
     private void Update()
@@ -46,6 +71,20 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    public void NmrPlayersChanged(NetworkConnection connection, RemoteConnectionStateArgs args)
+    {
+        if (args.ConnectionState == RemoteConnectionState.Started)
+        {
+            // Someone joined, do something? Perhaps kick the connecting player if 6 already on server?
+            // Propably call AddPlayer here and remove the call from PlayerEntity
+        }
+        else if(args.ConnectionState == RemoteConnectionState.Stopped)
+        {
+            // Someone left
+            RemovePlayer(connection);
+        }
+    }
+
     public void AddPlayer(int id, Data.Player player)
     {
         if(redTeamTurn)
@@ -61,7 +100,8 @@ public class PlayerManager : NetworkBehaviour
 
         redTeamTurn = !redTeamTurn;
         players.Add(id, player);
-        serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
+        numberOfPlayers++;
+        serverNumberOfPlayers.text = numberOfPlayers + " / 6\nPlayers";
 
         foreach(KeyValuePair<int, Data.Player> pair in players)
         {
@@ -70,23 +110,79 @@ public class PlayerManager : NetworkBehaviour
     }
 
     public void RemovePlayer(NetworkConnection connection)
-    {
-        Debug.Log("RemovePlayer called");
-        foreach(KeyValuePair<int, Data.Player> pair in players)
+    {Dictionary<int, Data.Player> playersCopy = new Dictionary<int, Data.Player>(players);
+
+        foreach (KeyValuePair<int, Data.Player> pair in players)
         {
-            if(pair.Value.connection == connection)
+            if (pair.Value.connection == connection)
             {
-                players.Remove(pair.Key);
-                serverNumberOfPlayers.text = players.Count + " / 6\nPlayers";
-                Debug.Log("Player removed");
+                playersCopy.Remove(pair.Key);
+                numberOfPlayers--;
             }
         }
+
+        players = new Dictionary<int, Data.Player>(playersCopy);
+        serverNumberOfPlayers.text = numberOfPlayers + " / 6\nPlayers";
     }
 
     [ObserversRpc]
     private void ChangePlayerTeam(Data.Player player)
     {
         player.playerObject.GetComponent<PlayerEntity>().ChangeTeam(player.teamTag);
+    }
+
+    [ObserversRpc]
+    public void StartingMatch()
+    {
+        int redIndex = 0, greenIndex = 0;
+        // Move all players to their own spawns and reset all the kills and deaths
+        foreach (KeyValuePair<int, Data.Player> pair in players)
+        {
+            if(pair.Value.teamTag == 0)
+            {
+                pair.Value.playerObject.transform.position = redSpawnPoints[redIndex].position;
+                redIndex++;
+            }
+            else
+            {
+                pair.Value.playerObject.transform.position = greenSpawnPoints[greenIndex].position;
+                greenIndex++;
+            }
+
+            pair.Value.kills = 0;
+            pair.Value.deaths = 0;
+        }
+
+        // Display a timer for match start, propably a coroutine
+        startMatchTimer.SetActive(true);
+        StartCoroutine(StartTimer());
+
+        // Close spawn doors
+        OpenCloseSpawnDoors(true);
+
+
+
+        // After start timer is finished, change match state to in progress. Might not need this. MatchManager's update does this for now.
+        // MatchManager.matchManager.currentMatchState = MatchManager.MatchState.IN_PROGRESS;
+    }
+
+    IEnumerator StartTimer()
+    {
+        int timer = 15;
+        while (timer != 0)
+        {
+            // Display timer on screen here
+            startMatchTimer.GetComponent<TextMeshProUGUI>().text = "Match starts in\n" + timer;
+
+            yield return new WaitForSeconds(1);
+            timer--;
+        }
+        OpenCloseSpawnDoors(false);
+    }
+
+    public void OpenCloseSpawnDoors(bool closeDoors)
+    {
+
     }
 
     public void DamagePlayer(int playerID, int damage, int shooterID)
@@ -141,8 +237,11 @@ public class PlayerManager : NetworkBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        players[playerID].health = maxHealth;
-        UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
+        if (players[playerID] != null)
+        {
+            players[playerID].health = maxHealth;
+            UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
+        }
     }
 
     [TargetRpc]
@@ -159,7 +258,6 @@ public class PlayerManager : NetworkBehaviour
             player.transform.position = greenSpawnPoints[spawn].position;
         }
 
-        player.GetComponent<PlayerEntity>().ammoLeft = player.GetComponent<PlayerEntity>().maxAmmo;
         player.GetComponent<PlayerEntity>().RespawnServer();
     }
 
