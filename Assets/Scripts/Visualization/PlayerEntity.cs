@@ -51,6 +51,8 @@ public class PlayerEntity : NetworkBehaviour
     public float lookSpeed = 2.0f;
     public float lookXLimit = 90f;
 
+    public float sensitivity = 1f;
+
     CharacterController characterController;
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
@@ -482,10 +484,10 @@ public class PlayerEntity : NetworkBehaviour
         // Player and Camera rotation
         if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
         {
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed * sensitivity;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed * sensitivity, 0);
 
             gunRotator.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         }
@@ -659,6 +661,10 @@ public class PlayerEntity : NetworkBehaviour
 
     public void Aim()
     {
+        playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 30f : 60f;
+
+        sensitivity = sensitivity == 1f ? 0.5f : 1f;
+
         isScoped = !isScoped;
     }
 }
