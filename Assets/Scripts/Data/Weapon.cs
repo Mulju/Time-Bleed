@@ -22,10 +22,12 @@ namespace Data
         public float movementSpeedMultiplierScoped { get; private set; }
         public float deployTime { get; private set; }
 
+        public float hipFireAccuracy { get; private set; }
+
         public bool holdToShoot { get; private set; }
 
         public Weapon(int magSize, int damage, int fireRate, int bulletsPerShot, int maxAmmoInReserve, int ammoLeft, 
-            float reloadTime, float recoilMultiplier, float recoilMultiplierScoped, float movementSpeedMultiplier, float movementSpeedMultiplierScoped, float deployTime, 
+            float reloadTime, float recoilMultiplier, float recoilMultiplierScoped, float movementSpeedMultiplier, float movementSpeedMultiplierScoped, float deployTime, float hipFireAccuracy,
             bool holdToShoot)
         {
             this.magSize = magSize;
@@ -40,6 +42,7 @@ namespace Data
             this.movementSpeedMultiplier = movementSpeedMultiplier;
             this.movementSpeedMultiplierScoped = movementSpeedMultiplierScoped;
             this.deployTime = deployTime;
+            this.hipFireAccuracy = hipFireAccuracy;
             this.holdToShoot = holdToShoot;
         }
 
