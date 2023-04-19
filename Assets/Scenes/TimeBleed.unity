@@ -2790,7 +2790,7 @@ MonoBehaviour:
   healthTMP: {fileID: 542904168}
   ammoTMP: {fileID: 542904167}
   serverNumberOfPlayers: {fileID: 713437869}
-  startMatchTimer: {fileID: 0}
+  startMatchTimer: {fileID: 1991955015}
   numberOfPlayers: 0
 --- !u!4 &918670145
 Transform:
@@ -4340,6 +4340,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1991955015 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
+    type: 3}
+  m_PrefabInstance: {fileID: 468206675}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2062295356 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2189134195500999944, guid: 187ef6a498595404e876aa5cbe59168a,
