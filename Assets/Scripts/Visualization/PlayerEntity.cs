@@ -696,7 +696,7 @@ public class PlayerEntity : NetworkBehaviour
 
         if (isScoped)
         {
-            sensitivity *= 0.5f;
+            sensitivity *= 0.6f;
         }
     }
 }
