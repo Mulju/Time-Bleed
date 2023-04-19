@@ -148,11 +148,19 @@ public class PlayerManager : NetworkBehaviour
             {
                 RespawnPlayer(pair.Value.connection, pair.Value.playerObject, redIndex, 0);
                 redIndex++;
+                if(redIndex == 4)
+                {
+                    redIndex = 0;
+                }
             }
             else
             {
                 RespawnPlayer(pair.Value.connection, pair.Value.playerObject, greenIndex, 1);
                 greenIndex++;
+                if (greenIndex == 4)
+                {
+                    greenIndex = 0;
+                }
             }
 
             pair.Value.kills = 0;
