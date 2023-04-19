@@ -37,6 +37,7 @@ public class DoorAnimation : NetworkBehaviour
     [ObserversRpc]
     public void OpenCloseDoor(bool openDoor)
     {
+        Debug.Log("OpenDoor called: " + openDoor);
         if(openDoor)
         {
             doorAnimator.SetBool("DoorIsOpen", true);
