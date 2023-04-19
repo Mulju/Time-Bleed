@@ -7,6 +7,9 @@ using System.Collections;
 using Unity.VisualScripting;
 using FishNet;
 using FishNet.Transporting;
+using FishNet.Managing.Server;
+using System;
+using Random = UnityEngine.Random;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -26,7 +29,9 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private GameObject startMatchTimer;
 
     [HideInInspector] public int numberOfPlayers;
-    
+
+    [SerializeField] private Animator doorAnimator;
+    public event Action<bool> OnStartingMatch;
 
     private void Awake()
     {
@@ -131,7 +136,7 @@ public class PlayerManager : NetworkBehaviour
         player.playerObject.GetComponent<PlayerEntity>().ChangeTeam(player.teamTag);
     }
 
-    public void StartingMatch()
+    public void StartingMatchServer()
     {
         int redIndex = 0, greenIndex = 0;
         // Move all players to their own spawns and reset all the kills and deaths
@@ -152,12 +157,12 @@ public class PlayerManager : NetworkBehaviour
             pair.Value.deaths = 0;
         }
 
-        // Display a timer for match start, propably a coroutine
-        startMatchTimer.SetActive(true);
-        StartCoroutine(StartTimer());
+        // Close spawn doors and start a timer to open them
+        OnStartingMatch.Invoke(false);
+        StartCoroutine(ServerDoorTimer());
 
-        // Close spawn doors
-        OpenCloseSpawnDoors(true);
+        // Display a timer for match start, propably a coroutine
+        StartMatch();
 
 
 
@@ -165,10 +170,18 @@ public class PlayerManager : NetworkBehaviour
         // MatchManager.matchManager.currentMatchState = MatchManager.MatchState.IN_PROGRESS;
     }
 
+
+    [ObserversRpc]
+    public void StartMatch()
+    {
+        startMatchTimer.SetActive(true);
+        StartCoroutine(StartTimer());
+    }
+
     IEnumerator StartTimer()
     {
         int timer = 15;
-        while (timer != 0)
+        while (timer > 0)
         {
             // Display timer on screen here
             startMatchTimer.GetComponent<TextMeshProUGUI>().text = "Match starts in\n" + timer;
@@ -176,13 +189,21 @@ public class PlayerManager : NetworkBehaviour
             yield return new WaitForSeconds(1);
             timer--;
         }
-        OpenCloseSpawnDoors(false);
+
+        // Show the timer at 0 for 2 seconds
+        yield return new WaitForSeconds(2);
+
         startMatchTimer.SetActive(false);
     }
 
-    public void OpenCloseSpawnDoors(bool closeDoors)
+    IEnumerator ServerDoorTimer()
     {
-
+        int timer = 15;
+        while (timer > 0)
+        {
+            yield return new WaitForSeconds(1);
+        }
+        OnStartingMatch.Invoke(true);
     }
 
     public void DamagePlayer(int playerID, int damage, int shooterID)

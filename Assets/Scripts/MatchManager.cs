@@ -90,7 +90,7 @@ public class MatchManager : NetworkBehaviour
         if(currentMatchState == MatchState.STARTING)
         {
             // Run only when the match starts and swap to IN_PROGRESS
-            playerManager.StartingMatch();
+            playerManager.StartingMatchServer();
             currentMatchState = MatchState.IN_PROGRESS;
         }
 
