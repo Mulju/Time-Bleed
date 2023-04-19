@@ -202,6 +202,7 @@ public class PlayerManager : NetworkBehaviour
         while (timer > 0)
         {
             yield return new WaitForSeconds(1);
+            timer--;
         }
         OnStartingMatch.Invoke(true);
     }
