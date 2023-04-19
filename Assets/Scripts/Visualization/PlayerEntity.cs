@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+
 
 public class PlayerEntity : NetworkBehaviour
 {
@@ -17,6 +19,8 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject bulletHole;
     public GameObject timeBindSkill;
     [SerializeField] private GameObject chronade;
+    [SerializeField] private GameObject sniperScope;
+
 
     private GameObject reloadBar, reloadBackground, reloadParent;
     private GameObject damageIndicatorParent;
@@ -271,39 +275,15 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
-            currentWeapon = weaponDictionary.weapons["rifle"];
-            deployTimer = 0;
-            animator.SetBool("Reloading", true);
-
-            reloading = false;
-            reloadBackground.gameObject.SetActive(false);
-
-            playerCamera.fieldOfView = 60f;
-            sensitivity = 1f;
+            ChangeWeapon(0);
         }
         else if (Input.GetKey(KeyCode.Alpha2) && currentWeapon != weaponDictionary.weapons["sniper"])
         {
-            currentWeapon = weaponDictionary.weapons["sniper"];
-            deployTimer = 0;
-            animator.SetBool("Reloading", true);
-
-            reloading = false;
-            reloadBackground.gameObject.SetActive(false);
-
-            playerCamera.fieldOfView = 60f;
-            sensitivity = 1f;
+            ChangeWeapon(1);
         }
         else if (Input.GetKey(KeyCode.Alpha3) && currentWeapon != weaponDictionary.weapons["shotgun"])
         {
-            currentWeapon = weaponDictionary.weapons["shotgun"];
-            deployTimer = 0;
-            animator.SetBool("Reloading", true);
-
-            reloading = false;
-            reloadBackground.gameObject.SetActive(false);
-
-            playerCamera.fieldOfView = 60f;
-            sensitivity = 1f;
+            ChangeWeapon(2);
         }
 
         if (deployTimer >= currentWeapon.deployTime && !reloading)
@@ -385,6 +365,22 @@ public class PlayerEntity : NetworkBehaviour
 
             TimeSpeedSlider(mouseScroll * 0.05f);
         }
+    }
+
+    public void ChangeWeapon(int weaponIndex)
+    {
+        currentWeapon = weaponDictionary.weapons.ElementAt(weaponIndex).Value;
+
+        deployTimer = 0;
+        animator.SetBool("Reloading", true);
+
+        reloading = false;
+        reloadBackground.gameObject.SetActive(false);
+
+        playerCamera.fieldOfView = 60f;
+        sensitivity = 1f;
+        isScoped = false;
+        sniperScope.SetActive(false);
     }
 
     public void ChangeTeam(int teamTag)
@@ -679,14 +675,14 @@ public class PlayerEntity : NetworkBehaviour
     {
         if (isSniper)
         {
-            playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 10f : 60f;
-            //sensitivity = sensitivity == 1f ? 10f / 60f : 1f;
+            playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 20f : 60f;
             sensitivity = playerCamera.fieldOfView / 60f;
+
+            sniperScope.SetActive(!sniperScope.activeSelf);
         }
         else
         {
             playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 40f : 60f;
-            //sensitivity = sensitivity == 1f ? 40f/60f : 1f;
             sensitivity = playerCamera.fieldOfView / 60f;
         }
 

@@ -563,7 +563,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 552718698}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 100, z: 0}
 --- !u!1 &347802340
 GameObject:
@@ -4290,7 +4290,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 552718698}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1537454825 stripped
 MonoBehaviour:
@@ -4472,11 +4472,7 @@ MonoBehaviour:
   - {fileID: 3687454}
   - {fileID: 1537454825}
   - {fileID: 357906720}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 357906719}
-  - {fileID: 0}
-  - {fileID: 0}
   _isNetworked: 1
   _isGlobal: 0
   _initializeOrder: 0
@@ -10870,8 +10866,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
+      propertyPath: _scenePathHash
+      value: 606160979
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: <SceneId>k__BackingField
-      value: 2603441581906251320
+      value: 2603441584748178333
       objectReference: {fileID: 0}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.size
@@ -10929,6 +10929,11 @@ PrefabInstance:
       propertyPath: _sceneNetworkObjects.Array.data[13]
       value: 
       objectReference: {fileID: 2062295356}
+    - target: {fileID: 252289990661069757, guid: bf797651a486cf44eae72059a211468b,
+        type: 3}
+      propertyPath: m_TagString
+      value: SniperScope
+      objectReference: {fileID: 0}
     - target: {fileID: 5935617055376825187, guid: bf797651a486cf44eae72059a211468b,
         type: 3}
       propertyPath: m_Name
