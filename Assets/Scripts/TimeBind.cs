@@ -8,7 +8,6 @@ public class TimeBind : MonoBehaviour
     public bool exploded;
 
     private float timeSphereTime;
-    private float timer;
 
     private void Start()
     {
@@ -26,26 +25,6 @@ public class TimeBind : MonoBehaviour
         this.gameObject.GetComponent<Collider>().enabled = false;
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         exploded = true;
-    }
-
-    private void Update()
-    {
-        return;
-
-        if (exploded)
-            return;
-
-
-        if (timer >= 2f)
-        {
-            StartCoroutine(SpawnTimeSphere());
-
-            this.gameObject.GetComponent<Collider>().enabled = false;
-            this.gameObject.GetComponent<MeshRenderer>().enabled = false;
-            exploded = true;
-        }
-
-        timer += Time.deltaTime;
     }
 
     IEnumerator SpawnTimeSphere()

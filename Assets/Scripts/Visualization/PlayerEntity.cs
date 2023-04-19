@@ -305,43 +305,21 @@ public class PlayerEntity : NetworkBehaviour
             Aim();
         }
 
-        if (currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime && deployTimer >= currentWeapon.deployTime)
+        if ((currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0)) || (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0)) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime && deployTimer >= currentWeapon.deployTime)
         {
-            // automatic fire
-
             if (currentWeapon.bulletsPerShot == 1)
             {
-                ShootServer(gameObject, currentWeapon.damage, false, true);
+                ShootServer(gameObject, currentWeapon.damage, false, true, isScoped);
             }
             else
             {
                 for (int i = 0; i < currentWeapon.bulletsPerShot - 1; i++)
                 {
-                    ShootServer(gameObject, currentWeapon.damage, true, false);
+                    ShootServer(gameObject, currentWeapon.damage, true, false, isScoped);
                 }
-                ShootServer(gameObject, currentWeapon.damage, true, true);
+                ShootServer(gameObject, currentWeapon.damage, true, true, isScoped);
             }
 
-            shootTimer = 0;
-            currentWeapon.ammoLeft -= 1;
-        }
-        else if (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloadTimer >= currentWeapon.reloadTime && deployTimer >= currentWeapon.deployTime)
-        {
-            // non automatic fire
-
-            if (currentWeapon.bulletsPerShot == 1)
-            {
-                ShootServer(gameObject, currentWeapon.damage, false, true);
-            }
-            else
-            {
-                for (int i = 0; i < currentWeapon.bulletsPerShot - 1; i++)
-                {
-                    ShootServer(gameObject, currentWeapon.damage, true, false);
-                }
-                ShootServer(gameObject, currentWeapon.damage, true, true);
-            }
-            
             shootTimer = 0;
             currentWeapon.ammoLeft -= 1;
         }
@@ -523,13 +501,13 @@ public class PlayerEntity : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void ShootServer(GameObject shooter, int damage, bool isShotgun, bool isLastShot)
+    public void ShootServer(GameObject shooter, int damage, bool isShotgun, bool isLastShot, bool scoped)
     {
-        Shoot(shooter, damage, isShotgun, isLastShot);
+        Shoot(shooter, damage, isShotgun, isLastShot, scoped);
     }
 
     [ObserversRpc]
-    public void Shoot(GameObject shooter, int damage, bool isShotgun, bool isLastShot)
+    public void Shoot(GameObject shooter, int damage, bool isShotgun, bool isLastShot, bool scoped)
     {
         Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
@@ -540,6 +518,15 @@ public class PlayerEntity : NetworkBehaviour
             float x = random.x;
             float y = random.y;
             
+            direction = (new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z)).normalized;
+        }
+        
+        if(!scoped)
+        {
+            Vector2 random = Random.insideUnitCircle * 0.02f;
+            float x = random.x;
+            float y = random.y;
+
             direction = (new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z)).normalized;
         }
 
