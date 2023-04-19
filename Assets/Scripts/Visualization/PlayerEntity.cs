@@ -129,6 +129,8 @@ public class PlayerEntity : NetworkBehaviour
 
             // Change the match state to waiting for players
             mManager.currentMatchState = MatchManager.MatchState.WAITING_FOR_PLAYERS;
+
+            timeSpeed = 1f;
         }
     }
 
@@ -180,7 +182,7 @@ public class PlayerEntity : NetworkBehaviour
 
         timeSlow = 1;
 
-        timeSpeed = 1f;
+        
         mouseScroll = 0f;
 
         timeField.GetComponent<TimeSphere>().isTimeField = true;
