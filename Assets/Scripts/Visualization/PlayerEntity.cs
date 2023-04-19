@@ -338,6 +338,8 @@ public class PlayerEntity : NetworkBehaviour
         deployTimer = 0;
         animator.SetBool("Reloading", true);
 
+        if (reloadCoroutine != null)
+            StopCoroutine(reloadCoroutine);
         reloading = false;
 
         playerCamera.fieldOfView = 60f;
