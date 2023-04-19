@@ -512,21 +512,21 @@ public class PlayerEntity : NetworkBehaviour
         Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
 
+        if (!scoped)
+        {
+            Vector2 random = Random.insideUnitCircle * 0.02f * accuracy;
+            float x = random.x;
+            float y = random.y;
+
+            direction = (new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z)).normalized;
+        }
+
         if (isShotgun)
         {
             Vector2 random = Random.insideUnitCircle * 0.1f;
             float x = random.x;
             float y = random.y;
             
-            direction = (new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z)).normalized;
-        }
-        
-        if(!scoped)
-        {
-            Vector2 random = Random.insideUnitCircle * 0.01f * accuracy;
-            float x = random.x;
-            float y = random.y;
-
             direction = (new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z)).normalized;
         }
 
