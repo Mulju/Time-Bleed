@@ -49,9 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548343adac0f64e9ebccd6b5f04e6118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 2133219388}
-  _networkObjectCache: {fileID: 2133219388}
   _damageIndicatorPrefab: {fileID: 7481255705112232683, guid: 3350abf001bb744d69b67a4b9303f64b,
     type: 3}
 --- !u!1 &254641925291180145
@@ -497,9 +494,7 @@ MonoBehaviour:
   <IsNested>k__BackingField: 0
   <ComponentIndex>k__BackingField: 0
   <PredictedSpawn>k__BackingField: {fileID: 0}
-  _networkBehaviours:
-  - {fileID: 25488941}
-  - {fileID: 0}
+  _networkBehaviours: []
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -507,13 +502,25 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 0
+  <PrefabId>k__BackingField: 7
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 0
+  _scenePathHash: 606160979
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 10213718109774591863
   _sceneNetworkObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 2133219388}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &6122212531103355682
 GameObject:
   m_ObjectHideFlags: 0
