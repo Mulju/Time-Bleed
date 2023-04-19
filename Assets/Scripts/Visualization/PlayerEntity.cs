@@ -18,7 +18,6 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject timeBindSkill;
     [SerializeField] private GameObject chronade;
 
-    private GameObject reloadBar, reloadBackground, reloadParent;
     private GameObject damageIndicatorParent;
     public Animator animator;
 
@@ -188,18 +187,7 @@ public class PlayerEntity : NetworkBehaviour
         healthTMP = GameObject.FindGameObjectWithTag("UIHealth").GetComponent<TextMeshProUGUI>();
         ammoTMP = GameObject.FindGameObjectWithTag("UIAmmo").GetComponent<TextMeshProUGUI>();
 
-        reloadParent = GameObject.FindGameObjectWithTag("ReloadParent");
-
-        foreach (Transform child in reloadParent.transform)
-        {
-            child?.gameObject.SetActive(true);
-        }
-
-        reloadBackground = GameObject.FindGameObjectWithTag("ReloadBackground");
-        reloadBar = GameObject.FindGameObjectWithTag("ReloadBar");
         damageIndicatorParent = GameObject.Find("DmgIndicatorHolder");
-
-        reloadBackground.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -244,17 +232,7 @@ public class PlayerEntity : NetworkBehaviour
             shootTimer += Time.deltaTime;
         }
 
-        if (reloadTimer < currentWeapon.reloadTime && reloading)
-        {
-            reloadTimer += Time.deltaTime;
-
-            // reload bar animation
-            reloadBar.GetComponent<RectTransform>().localScale = new Vector3(reloadTimer / currentWeapon.reloadTime, reloadBar.GetComponent<RectTransform>().localScale.y, reloadBar.GetComponent<RectTransform>().localScale.z);
-        }
-        else
-        {
-            reloadTimer += Time.deltaTime;
-        }
+        reloadTimer += Time.deltaTime;
 
         if (reloadTimer >= currentWeapon.reloadTime && reloading)
         {
@@ -263,7 +241,6 @@ public class PlayerEntity : NetworkBehaviour
             currentWeapon.ammoLeft = currentWeapon.magSize;
 
             animator.SetBool("Reloading", false);
-            reloadBackground.gameObject.SetActive(false);
         }
 
         Physics.SyncTransforms();
@@ -276,7 +253,6 @@ public class PlayerEntity : NetworkBehaviour
             animator.SetBool("Reloading", true);
 
             reloading = false;
-            reloadBackground.gameObject.SetActive(false);
 
             playerCamera.fieldOfView = 60f;
             sensitivity = 1f;
@@ -288,7 +264,6 @@ public class PlayerEntity : NetworkBehaviour
             animator.SetBool("Reloading", true);
 
             reloading = false;
-            reloadBackground.gameObject.SetActive(false);
 
             playerCamera.fieldOfView = 60f;
             sensitivity = 1f;
@@ -300,7 +275,6 @@ public class PlayerEntity : NetworkBehaviour
             animator.SetBool("Reloading", true);
 
             reloading = false;
-            reloadBackground.gameObject.SetActive(false);
 
             playerCamera.fieldOfView = 60f;
             sensitivity = 1f;
@@ -344,7 +318,6 @@ public class PlayerEntity : NetworkBehaviour
 
         if ((Input.GetKeyDown(KeyCode.R) || currentWeapon.ammoLeft == 0) && !reloading && currentWeapon.ammoLeft != currentWeapon.magSize)
         {
-            reloading = true;
             Reload();
         }
 
@@ -509,13 +482,21 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    public void Reload()
+    IEnumerator Reload()
     {
-        reloadTimer = 0;
+        reloading = true;
+
+        Debug.Log("Reloading");
 
         animator.SetBool("Reloading", true);
+        yield return new WaitForSeconds(currentWeapon.reloadTime - 0.25f);
+        animator.SetBool("Reloading", false);
+        yield return new WaitForSeconds(0.25f);
 
-        reloadBackground.gameObject.SetActive(true);
+        Debug.Log("Reloaded");
+
+        currentWeapon.ammoLeft = currentWeapon.magSize;
+        reloading = false;
     }
 
     [ServerRpc]
@@ -538,7 +519,7 @@ public class PlayerEntity : NetworkBehaviour
             float y = random.y;
             float z = random.z;
 
-            direction =new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z + z).normalized;
+            direction = new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z + z).normalized;
         }
 
         // shotgun bulletspread
@@ -548,7 +529,7 @@ public class PlayerEntity : NetworkBehaviour
             float x = random.x;
             float y = random.y;
             float z = random.z;
-            
+
             direction = new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z + z).normalized;
         }
 
@@ -690,7 +671,7 @@ public class PlayerEntity : NetworkBehaviour
             sensitivity = playerCamera.fieldOfView / 60f;
         }
 
-        
+
 
         isScoped = !isScoped;
 
