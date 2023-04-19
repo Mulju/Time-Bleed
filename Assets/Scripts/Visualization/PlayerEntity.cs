@@ -514,20 +514,22 @@ public class PlayerEntity : NetworkBehaviour
 
         if (!scoped)
         {
-            Vector2 random = Random.insideUnitCircle * 0.02f * accuracy;
+            Vector3 random = Random.insideUnitSphere * 0.02f * accuracy;
             float x = random.x;
             float y = random.y;
+            float z = random.z;
 
-            direction = (new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z)).normalized;
+            direction =new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z + z).normalized;
         }
 
         if (isShotgun)
         {
-            Vector2 random = Random.insideUnitCircle * 0.1f;
+            Vector3 random = Random.insideUnitSphere * 0.1f;
             float x = random.x;
             float y = random.y;
+            float z = random.z;
             
-            direction = (new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z)).normalized;
+            direction = new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z + z).normalized;
         }
 
         if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
