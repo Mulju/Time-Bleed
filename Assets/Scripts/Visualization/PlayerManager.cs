@@ -10,6 +10,7 @@ using FishNet.Transporting;
 using FishNet.Managing.Server;
 using System;
 using Random = UnityEngine.Random;
+using UnityEditor;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -213,6 +214,7 @@ public class PlayerManager : NetworkBehaviour
         }
         OnStartingMatch.Invoke(true);
 
+        
         // Reset the clock timers
         MatchManager.matchManager.redClock.rotation = 0;
         MatchManager.matchManager.redClock.remainingSeconds = 60;
