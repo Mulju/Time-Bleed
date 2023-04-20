@@ -73,7 +73,7 @@ public class MatchManager : NetworkBehaviour
         {
             playerManager = PlayerManager.instance;
             nextChronadeSpawn = chronadeSpawns[1];
-            playerManager.OnPlayerKilled += MoveChronadeSpawn;
+            playerManager.OnPlayerKilled += MoveChronadeSpawnServer;
         }
     }
 
@@ -83,7 +83,7 @@ public class MatchManager : NetworkBehaviour
 
         if(base.IsServer)
         {
-            playerManager.OnPlayerKilled -= MoveChronadeSpawn;
+            playerManager.OnPlayerKilled -= MoveChronadeSpawnServer;
         }
     }
 
@@ -155,12 +155,16 @@ public class MatchManager : NetworkBehaviour
         }
     }
 
-    [ObserversRpc]
-    private void MoveChronadeSpawn(bool smth)
+    private void MoveChronadeSpawnServer(bool smth)
     {
         playerManager.TotalKills();
         float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;
-        
+        MoveChronadeSpawn(redKills, totalKills);
+    }
+
+    [ObserversRpc]
+    private void MoveChronadeSpawn(float redKills, float totalKills)
+    {
         if (redKills / totalKills < 0.4f)
         {
             // Chronade spawn on green base's side
