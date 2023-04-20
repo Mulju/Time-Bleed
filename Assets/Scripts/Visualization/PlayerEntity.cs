@@ -525,7 +525,6 @@ public class PlayerEntity : NetworkBehaviour
         Vector3 startPos = shooter.transform.position + new Vector3(0, cameraYOffset, 0);
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
 
-        /// bullet spread if not scoped
         if (isShotgun)
         {
             Vector3 random = Random.insideUnitSphere * 0.1f;
@@ -538,17 +537,6 @@ public class PlayerEntity : NetworkBehaviour
         else if (!scoped)
         {
             Vector3 random = Random.insideUnitSphere * 0.02f * accuracy;
-            float x = random.x;
-            float y = random.y;
-            float z = random.z;
-
-            direction = new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z + z).normalized;
-        }
-
-        // shotgun bulletspread
-        if (isShotgun)
-        {
-            Vector3 random = Random.insideUnitSphere * 0.1f;
             float x = random.x;
             float y = random.y;
             float z = random.z;
