@@ -24,10 +24,11 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject ironSight;
     [SerializeField] private GameObject grenadePrefab;
 
+    public GameObject gunPosition;
+
     private Coroutine aimDownSightInstance;
 
     private Vector3 gunOriginalPosition;
-
 
     private GameObject damageIndicatorParent;
     public Animator animator;
@@ -167,7 +168,7 @@ public class PlayerEntity : NetworkBehaviour
 
     void Start()
     {
-        gunOriginalPosition = gunRotator.transform.localPosition;
+        gunOriginalPosition = gunPosition.transform.localPosition;
 
         mManager = MatchManager.matchManager;
 
@@ -186,7 +187,6 @@ public class PlayerEntity : NetworkBehaviour
         reloading = false;
 
         timeSlow = 1;
-
 
         mouseScroll = 0f;
 
@@ -706,7 +706,6 @@ public class PlayerEntity : NetworkBehaviour
         {
             playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 25f : 60f;
             sensitivity = playerCamera.fieldOfView / 60f;
-
             sniperScope.SetActive(!sniperScope.activeSelf);
         }
         else
@@ -740,7 +739,7 @@ public class PlayerEntity : NetworkBehaviour
             while (remainingTime > 0)
             {
                 float step = Time.deltaTime * 2;
-                gunRotator.transform.localPosition = Vector3.MoveTowards(gunRotator.transform.localPosition, aimingPosition.transform.localPosition, step);
+                gunPosition.transform.localPosition = Vector3.MoveTowards(gunPosition.transform.localPosition, aimingPosition.transform.localPosition, step);
 
                 remainingTime -= Time.deltaTime;
                 yield return null;
@@ -751,7 +750,7 @@ public class PlayerEntity : NetworkBehaviour
             while (remainingTime > 0)
             {
                 float step = Time.deltaTime * 2;
-                gunRotator.transform.localPosition = Vector3.MoveTowards(gunRotator.transform.localPosition, gunOriginalPosition, step);
+                gunPosition.transform.localPosition = Vector3.MoveTowards(gunPosition.transform.localPosition, gunOriginalPosition, step);
 
                 remainingTime -= Time.deltaTime;
                 yield return null;
