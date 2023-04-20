@@ -83,9 +83,13 @@ public class MatchManager : NetworkBehaviour
             // Don't run Update if not the server
             return;
         }
+        playerManager.TotalKills();
+        redKills = playerManager.redKills;
+        greenKills = playerManager.greenKills;
+        totalKills = redKills + greenKills;
 
         // Still waiting for players
-        if(currentMatchState == MatchState.WAITING_FOR_PLAYERS && playerManager.numberOfPlayers == 6)
+        if (currentMatchState == MatchState.WAITING_FOR_PLAYERS && playerManager.numberOfPlayers == 6)
         {
             // Waiting for players but we have 6 players. Change state to starting the match
             currentMatchState = MatchState.STARTING;
