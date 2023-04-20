@@ -20,14 +20,14 @@ public class Clock : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-        //mManager = MatchManager.matchManager;
+        mManager = MatchManager.matchManager;
     }
 
     private void Awake()
     {
         if (base.IsServer)
         {
-            //mManager = MatchManager.matchManager;
+            mManager = MatchManager.matchManager;
         }
     }
 
