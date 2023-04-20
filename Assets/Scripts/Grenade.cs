@@ -31,10 +31,10 @@ public class Grenade : MonoBehaviour
         }
         else
         {
-            timer += Time.deltaTime * 0.2f;
+            timer += Time.deltaTime * 0.5f;
         }
 
-        if (timer >= 2f)
+        if (timer >= 1.5f)
         {
             if (gameObject.transform.localScale.x <= 0.5f)
             {
@@ -42,7 +42,7 @@ public class Grenade : MonoBehaviour
             }
             else
             {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 40; i++)
                 {
                     GameObject ammoInstance = Instantiate(ammoPrefab, transform.position, Quaternion.identity);
                     ammoInstance.GetComponent<AmmoController>().direction = (Random.insideUnitSphere).normalized;
