@@ -20,6 +20,12 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject timeBindSkill;
     [SerializeField] private GameObject chronade;
     [SerializeField] private GameObject sniperScope;
+    [SerializeField] private GameObject aimingPosition;
+    [SerializeField] private GameObject ironSight;
+
+    private Coroutine aimDownSightInstance;
+
+    private Vector3 gunOriginalPosition;
 
 
     private GameObject damageIndicatorParent;
@@ -160,6 +166,8 @@ public class PlayerEntity : NetworkBehaviour
 
     void Start()
     {
+        gunOriginalPosition = gunRotator.transform.localPosition;
+
         mManager = MatchManager.matchManager;
 
         recoil = 0.3f;
@@ -256,7 +264,7 @@ public class PlayerEntity : NetworkBehaviour
             animator.SetBool("Reloading", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && currentWeapon != weaponDictionary.weapons["shotgun"])
         {
             if (currentWeapon == weaponDictionary.weapons["sniper"])
             {
@@ -334,6 +342,15 @@ public class PlayerEntity : NetworkBehaviour
     public void ChangeWeapon(int weaponIndex)
     {
         currentWeapon = weaponDictionary.weapons.ElementAt(weaponIndex).Value;
+
+        if(currentWeapon == weaponDictionary.weapons["rifle"])
+        {
+            ironSight.SetActive(true);
+        }
+        else
+        {
+            ironSight.SetActive(false);
+        }
 
         deployTimer = 0;
         animator.SetBool("Reloading", true);
@@ -501,7 +518,16 @@ public class PlayerEntity : NetworkBehaviour
         Vector3 direction = shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward;
 
         /// bullet spread if not scoped
-        if (!scoped)
+        if (isShotgun)
+        {
+            Vector3 random = Random.insideUnitSphere * 0.1f;
+            float x = random.x;
+            float y = random.y;
+            float z = random.z;
+
+            direction = new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z + z).normalized;
+        }
+        else if (!scoped)
         {
             Vector3 random = Random.insideUnitSphere * 0.02f * accuracy;
             float x = random.x;
@@ -653,9 +679,11 @@ public class PlayerEntity : NetworkBehaviour
 
     public void Aim(bool isSniper)
     {
+        isScoped = !isScoped;
+
         if (isSniper)
         {
-            playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 20f : 60f;
+            playerCamera.fieldOfView = playerCamera.fieldOfView == 60f ? 25f : 60f;
             sensitivity = playerCamera.fieldOfView / 60f;
 
             sniperScope.SetActive(!sniperScope.activeSelf);
@@ -666,13 +694,48 @@ public class PlayerEntity : NetworkBehaviour
             sensitivity = playerCamera.fieldOfView / 60f;
         }
 
-
-
-        isScoped = !isScoped;
+        if (currentWeapon == weaponDictionary.weapons["rifle"])
+        {
+            if (aimDownSightInstance != null)
+            {
+                StopCoroutine(aimDownSightInstance);
+            }
+           
+            aimDownSightInstance = StartCoroutine(AimDownSight());
+        }
 
         if (isScoped)
         {
             sensitivity *= 0.6f;
         }
+    }
+
+    IEnumerator AimDownSight()
+    {
+        float remainingTime = 1;
+
+        if (isScoped)
+        {
+            while (remainingTime > 0)
+            {
+                float step = Time.deltaTime * 2;
+                gunRotator.transform.localPosition = Vector3.MoveTowards(gunRotator.transform.localPosition, aimingPosition.transform.localPosition, step);
+
+                remainingTime -= Time.deltaTime;
+                yield return null;
+            }
+        }
+        else if (!isScoped)
+        {
+            while (remainingTime > 0)
+            {
+                float step = Time.deltaTime * 2;
+                gunRotator.transform.localPosition = Vector3.MoveTowards(gunRotator.transform.localPosition, gunOriginalPosition, step);
+
+                remainingTime -= Time.deltaTime;
+                yield return null;
+            }
+        }
+
     }
 }
