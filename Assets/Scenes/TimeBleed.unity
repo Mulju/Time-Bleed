@@ -1112,6 +1112,11 @@ PrefabInstance:
       propertyPath: _sceneNetworkObjects.Array.data[10]
       value: 
       objectReference: {fileID: 1049280331}
+    - target: {fileID: 4139192807242997319, guid: 187ef6a498595404e876aa5cbe59168a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4595616760572506415, guid: 187ef6a498595404e876aa5cbe59168a,
         type: 3}
       propertyPath: <SceneId>k__BackingField
