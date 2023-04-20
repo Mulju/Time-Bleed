@@ -24,12 +24,12 @@ public class ScoreTable : MonoBehaviour
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryTransform.gameObject.SetActive(true);
 
-        string rankString = (entryTransform.GetSiblingIndex() + 1).ToString();
+        string rankString = (_entryContainer.childCount / entryTransform.childCount).ToString();
 
-        entryTransform.Find("Rank").GetComponent<TextMesh>().text = rankString;
-        entryTransform.Find("Name").GetComponent<TextMesh>().text = name;
-        entryTransform.Find("Kills").GetComponent<TextMesh>().text = kills.ToString();
-        entryTransform.Find("Deaths").GetComponent<TextMesh>().text = deaths.ToString();
+        entryTransform.Find("Rank").GetComponent<TMPro.TextMeshProUGUI>().text = rankString;
+        entryTransform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
+        entryTransform.Find("Kills").GetComponent<TMPro.TextMeshProUGUI>().text = kills.ToString();
+        entryTransform.Find("Deaths").GetComponent<TMPro.TextMeshProUGUI>().text = deaths.ToString();
     }
 
     public void DestroyScores()

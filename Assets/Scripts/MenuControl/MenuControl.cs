@@ -14,6 +14,7 @@ public class MenuControl : MonoBehaviour
     private string currentScene;
 
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject scoreboard;
     private EventSystem eventSystem;
 
     [SerializeField] private GameObject networkManager;
@@ -24,7 +25,7 @@ public class MenuControl : MonoBehaviour
 
         currentScene = SceneManager.GetActiveScene().name;
         eventSystem = EventSystem.current;
-        
+
         // Vain main menussa on resoluution vaihto mahdollisuus
         resolutionsDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -36,8 +37,8 @@ public class MenuControl : MonoBehaviour
             string option = resolution.width + " x " + resolution.height;
             options.Add(option);
 
-            // Alla oleva if jotta valitaan sama resoluutio mikä käyttäjällä
-            // on tällä hetkellä koneessa valittuna
+            // Alla oleva if jotta valitaan sama resoluutio mikï¿½ kï¿½yttï¿½jï¿½llï¿½
+            // on tï¿½llï¿½ hetkellï¿½ koneessa valittuna
             if (resolution.width == Screen.width &&
                 resolution.height == Screen.height)
             {
@@ -49,7 +50,7 @@ public class MenuControl : MonoBehaviour
         resolutionsDropdown.AddOptions(options);
         resolutionsDropdown.value = resolutionIndex;
         resolutionsDropdown.RefreshShownValue();
-        
+
     }
 
     public void SelectActive(GameObject selected)
@@ -70,9 +71,9 @@ public class MenuControl : MonoBehaviour
 
     public void OpenCloseMenu()
     {
-        if(currentScene == "TimeBleed")
+        if (currentScene == "TimeBleed")
         {
-            if(pauseMenu.activeSelf)
+            if (pauseMenu.activeSelf)
             {
                 pauseMenu.SetActive(false);
             }
@@ -81,6 +82,22 @@ public class MenuControl : MonoBehaviour
                 pauseMenu.SetActive(true);
             }
         }
+    }
+
+    public void OpenCloseScoreboard()
+    {
+        if (currentScene == "TimeBleed")
+        {
+            if (scoreboard.activeSelf)
+            {
+                scoreboard.SetActive(false);
+            }
+            else
+            {
+                scoreboard.SetActive(true);
+            }
+        }
+
     }
 
     public void UpdateTugboat(string clientAddress)

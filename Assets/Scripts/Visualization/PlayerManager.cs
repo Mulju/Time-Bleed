@@ -349,12 +349,12 @@ public class PlayerManager : NetworkBehaviour
     {
         if (!base.IsServer) return;
 
-        GameObject.Find("Scoreboard").GetComponent<ScoreTable>().DestroyScores();
+        scoreboard.GetComponent<ScoreTable>().DestroyScores();
         players = players.OrderBy(x => x.Value.kills).ToDictionary(x => x.Key, x => x.Value);
 
         foreach (KeyValuePair<int, Data.Player> pair in players)
         {
-            GameObject.Find("Scoreboard").GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag);
+            scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag);
         }
     }
 }
