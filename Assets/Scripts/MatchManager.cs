@@ -35,7 +35,7 @@ public class MatchManager : NetworkBehaviour
     [SerializeField] private Transform[] chronadeSpawns;
     private Transform nextChronadeSpawn;
     [SerializeField] private GameObject chronadePack;
-
+    float redKills, greenKills, totalKills;
 
     private void Awake()
     {
@@ -105,7 +105,9 @@ public class MatchManager : NetworkBehaviour
             // Check the amount of kills each team has and change the chronade spawn accordingly
             // Change only the spawn location, not the objects location itself
             playerManager.TotalKills();
-            float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;
+            redKills = playerManager.redKills;
+            greenKills = playerManager.greenKills;
+            totalKills = redKills + greenKills;
             if(redKills / totalKills < 0.4f)
             {
                 // Chronade spawn on green base's side
