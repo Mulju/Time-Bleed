@@ -15,12 +15,41 @@ public class Clock : NetworkBehaviour
     [SyncVar] public float remainingSeconds = 60, remainingMinutes = 14, remainingTime = 900;
     
     public int teamIdentifier;
+    private MatchManager mManager;
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if (base.IsServer)
+        {
+            mManager = MatchManager.matchManager;
+        }
+    }
+
+    private void Awake()
+    {
+        if (base.IsServer)
+        {
+            mManager = MatchManager.matchManager;
+        }
+    }
+
+    private void Start()
+    {
+        if (base.IsServer)
+        {
+            mManager = MatchManager.matchManager;
+        }
+    }
 
     void Update()
     {
         if(base.IsServer)
         {
-            UpdateClockServer();
+            if(mManager != null && mManager.currentMatchState == MatchManager.MatchState.IN_PROGRESS)
+            {
+                UpdateClockServer();
+            }
         }
     }
 

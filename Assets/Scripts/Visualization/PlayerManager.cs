@@ -10,6 +10,8 @@ using FishNet.Transporting;
 using FishNet.Managing.Server;
 using System;
 using Random = UnityEngine.Random;
+using System.Linq;
+using UnityEditor;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -20,6 +22,7 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private List<Transform> greenSpawnPoints = new List<Transform>();
 
     [SerializeField] private MenuControl menuControl;
+    [SerializeField] private GameObject scoreboard;
 
     public TextMeshProUGUI healthTMP, ammoTMP;
     private int maxHealth = 100;
@@ -33,6 +36,9 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private Animator doorAnimator;
     public event Action<bool> OnStartingMatch;
 
+    [HideInInspector]
+    public int redKills, greenKills;
+
     private void Awake()
     {
         instance = this;
@@ -42,7 +48,7 @@ public class PlayerManager : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-        if(base.IsServer)
+        if (base.IsServer)
         {
             ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
         }
@@ -51,7 +57,7 @@ public class PlayerManager : NetworkBehaviour
     public override void OnStopClient()
     {
         base.OnStopClient();
-        if(base.IsServer)
+        if (base.IsServer)
         {
             ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
         }
@@ -64,7 +70,7 @@ public class PlayerManager : NetworkBehaviour
 
         foreach (KeyValuePair<int, Data.Player> player in players)
         {
-            if(player.Value.playerObject == null)
+            if (player.Value.playerObject == null)
             {
                 continue;
             }
@@ -83,7 +89,7 @@ public class PlayerManager : NetworkBehaviour
             // Someone joined, do something? Perhaps kick the connecting player if 6 already on server?
             // Propably call AddPlayer here and remove the call from PlayerEntity
         }
-        else if(args.ConnectionState == RemoteConnectionState.Stopped)
+        else if (args.ConnectionState == RemoteConnectionState.Stopped)
         {
             // Someone left
             RemovePlayer(connection);
@@ -92,7 +98,7 @@ public class PlayerManager : NetworkBehaviour
 
     public void AddPlayer(int id, Data.Player player)
     {
-        if(redTeamTurn)
+        if (redTeamTurn)
         {
             // Is in the red team
             player.teamTag = 0;
@@ -108,14 +114,15 @@ public class PlayerManager : NetworkBehaviour
         numberOfPlayers++;
         serverNumberOfPlayers.text = numberOfPlayers + " / 6\nPlayers";
 
-        foreach(KeyValuePair<int, Data.Player> pair in players)
+        foreach (KeyValuePair<int, Data.Player> pair in players)
         {
-            ChangePlayerTeam(pair.Value);        
+            ChangePlayerTeam(pair.Value);
         }
     }
 
     public void RemovePlayer(NetworkConnection connection)
-    {Dictionary<int, Data.Player> playersCopy = new Dictionary<int, Data.Player>(players);
+    {
+        Dictionary<int, Data.Player> playersCopy = new Dictionary<int, Data.Player>(players);
 
         foreach (KeyValuePair<int, Data.Player> pair in players)
         {
@@ -144,11 +151,11 @@ public class PlayerManager : NetworkBehaviour
         // Move all players to their own spawns and reset all the kills and deaths
         foreach (KeyValuePair<int, Data.Player> pair in players)
         {
-            if(pair.Value.teamTag == 0)
+            if (pair.Value.teamTag == 0)
             {
                 RespawnPlayer(pair.Value.connection, pair.Value.playerObject, redIndex, 0);
                 redIndex++;
-                if(redIndex == 4)
+                if (redIndex == 4)
                 {
                     redIndex = 0;
                 }
@@ -213,6 +220,7 @@ public class PlayerManager : NetworkBehaviour
         }
         OnStartingMatch.Invoke(true);
 
+
         // Reset the clock timers
         MatchManager.matchManager.redClock.rotation = 0;
         MatchManager.matchManager.redClock.remainingSeconds = 60;
@@ -258,7 +266,7 @@ public class PlayerManager : NetworkBehaviour
         players[playerID].deaths++;
         players[playerID].health = maxHealth;
 
-        if(players[playerID].teamTag == 0)
+        if (players[playerID].teamTag == 0)
         {
             // Respawn at red team's base
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, redSpawnPoints.Count), players[playerID].teamTag);
@@ -269,6 +277,8 @@ public class PlayerManager : NetworkBehaviour
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, greenSpawnPoints.Count), players[playerID].teamTag);
         }
         players[playerID].health = maxHealth;
+
+        UpdateScoreboard();
 
         StartCoroutine(MaxHealth(playerID));
     }
@@ -317,7 +327,6 @@ public class PlayerManager : NetworkBehaviour
 
             UpdateHealthUI(players[playerID].connection, players[playerID].playerObject, players[playerID].health);
         }
-
     }
 
     [TargetRpc]
@@ -337,6 +346,35 @@ public class PlayerManager : NetworkBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
+    public void TotalKills()
+    {
+        foreach(KeyValuePair<int, Data.Player> pair in players)
+        {
+            if(pair.Value.teamTag == 0)
+            {
+                redKills += pair.Value.kills;
+            }
+            else
+            {
+                greenKills += pair.Value.kills;
+            }
+        }
+    }
+
+    [ObserversRpc]
+    public void UpdateScoreboard()
+    {
+        if (!base.IsServer) return;
+
+        scoreboard.GetComponent<ScoreTable>().DestroyScores();
+        players = players.OrderBy(x => x.Value.kills).ToDictionary(x => x.Key, x => x.Value);
+
+        foreach (KeyValuePair<int, Data.Player> pair in players)
+        {
+            scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag);
         }
     }
 }

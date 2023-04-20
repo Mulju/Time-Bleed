@@ -3,6 +3,7 @@ using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MatchManager : NetworkBehaviour
 {
@@ -18,7 +19,7 @@ public class MatchManager : NetworkBehaviour
         MATCH_ENDED
     }
 
-    private enum VictoryState
+    public enum VictoryState
     {
         NONE,
         DRAW,
@@ -29,7 +30,11 @@ public class MatchManager : NetworkBehaviour
     // Syncvar for the time..?
     [HideInInspector] public Clock redClock, greenClock;
     [HideInInspector] [SyncVar] public MatchState currentMatchState = MatchState.NONE;
-    [SyncVar] private VictoryState currentVictoryState = VictoryState.NONE;
+    [HideInInspector] [SyncVar] public VictoryState currentVictoryState = VictoryState.NONE;
+    [SerializeField] private MenuControl menuControl;
+    [SerializeField] private Transform[] chronadeSpawns;
+    private Transform nextChronadeSpawn;
+    [SerializeField] private GameObject chronadePack;
 
 
     private void Awake()
@@ -99,6 +104,50 @@ public class MatchManager : NetworkBehaviour
         {
             // Check the amount of kills each team has and change the chronade spawn accordingly
             // Change only the spawn location, not the objects location itself
+            playerManager.TotalKills();
+            float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;
+            if(redKills / totalKills < 0.4f)
+            {
+                // Chronade spawn on green base's side
+
+                // Testausta varten
+                nextChronadeSpawn.gameObject.SetActive(false);
+
+                // Oikeaa koodia
+                nextChronadeSpawn = chronadeSpawns[2];
+
+                // Testausta
+                nextChronadeSpawn.gameObject.SetActive(true);
+            }
+            else if(redKills / totalKills > 0.4f && redKills / totalKills < 0.6f)
+            {
+                // Chronade spawn on middle
+
+                // Testausta varten
+                nextChronadeSpawn.gameObject.SetActive(false);
+
+                // Oikeaa koodia
+                nextChronadeSpawn = chronadeSpawns[1];
+
+                // Testausta
+                nextChronadeSpawn.gameObject.SetActive(true);
+            }
+            else if(redKills / totalKills > 0.6f)
+            {
+                // Chronade spawn on red base's side
+
+                // Testausta varten
+                nextChronadeSpawn.gameObject.SetActive(false);
+
+                // Oikeaa koodia
+                nextChronadeSpawn = chronadeSpawns[0];
+
+                // Testausta
+                nextChronadeSpawn.gameObject.SetActive(true);
+            }
+            menuControl.UpdateChronadeSlider(redKills / totalKills);
+
+            //GameObject spawnedChronade = Instantiate(chronadePack);
 
             // Different music for different states of the game.
         }
