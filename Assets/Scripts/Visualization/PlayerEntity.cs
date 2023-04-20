@@ -325,6 +325,12 @@ public class PlayerEntity : NetworkBehaviour
             menuControl.OpenCloseMenu();
         }
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            // Press Tab for scoreboard
+            menuControl.OpenCloseScoreboard();
+        }
+
         if (Input.mouseScrollDelta.y != 0)
         {
             mouseScroll = Input.mouseScrollDelta.y;
@@ -343,7 +349,7 @@ public class PlayerEntity : NetworkBehaviour
     {
         currentWeapon = weaponDictionary.weapons.ElementAt(weaponIndex).Value;
 
-        if(currentWeapon == weaponDictionary.weapons["rifle"])
+        if (currentWeapon == weaponDictionary.weapons["rifle"])
         {
             ironSight.SetActive(true);
         }
@@ -700,7 +706,7 @@ public class PlayerEntity : NetworkBehaviour
             {
                 StopCoroutine(aimDownSightInstance);
             }
-           
+
             aimDownSightInstance = StartCoroutine(AimDownSight());
         }
 
