@@ -35,6 +35,7 @@ public class PlayerManager : NetworkBehaviour
 
     [SerializeField] private Animator doorAnimator;
     public event Action<bool> OnStartingMatch;
+    public event Action<bool> OnPlayerKilled;
 
     [HideInInspector]
     public int redKills, greenKills;
@@ -263,6 +264,7 @@ public class PlayerManager : NetworkBehaviour
         if (attackerID != playerID)
         {
             players[attackerID].kills++;
+            OnPlayerKilled.Invoke(true);
         }
         players[playerID].deaths++;
         players[playerID].health = maxHealth;

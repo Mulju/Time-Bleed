@@ -29,13 +29,12 @@ public class MatchManager : NetworkBehaviour
 
     // Syncvar for the time..?
     [HideInInspector] public Clock redClock, greenClock;
-    [HideInInspector][SyncVar] public MatchState currentMatchState = MatchState.NONE;
-    [HideInInspector][SyncVar] public VictoryState currentVictoryState = VictoryState.NONE;
+    [HideInInspector] [SyncVar] public MatchState currentMatchState = MatchState.NONE;
+    [HideInInspector] [SyncVar] public VictoryState currentVictoryState = VictoryState.NONE;
     [SerializeField] private MenuControl menuControl;
     [SerializeField] private Transform[] chronadeSpawns;
     private Transform nextChronadeSpawn;
     [SerializeField] private GameObject chronadePack;
-    [SerializeField] private float redKills, greenKills, totalKills;
 
     private void Awake()
     {
@@ -70,9 +69,20 @@ public class MatchManager : NetworkBehaviour
     {
         base.OnStartClient();
 
-        if (!base.IsServer)
+        if (base.IsServer)
         {
-            //gameObject.SetActive(false);
+            playerManager = PlayerManager.instance;
+            playerManager.OnPlayerKilled += MoveChronadeSpawn;
+        }
+    }
+
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+
+        if(base.IsServer)
+        {
+            playerManager.OnPlayerKilled -= MoveChronadeSpawn;
         }
     }
 
@@ -83,13 +93,9 @@ public class MatchManager : NetworkBehaviour
             // Don't run Update if not the server
             return;
         }
-        playerManager.TotalKills();
-        redKills = playerManager.redKills;
-        greenKills = playerManager.greenKills;
-        totalKills = redKills + greenKills;
 
         // Still waiting for players
-        if (currentMatchState == MatchState.WAITING_FOR_PLAYERS && playerManager.numberOfPlayers == 6)
+        if(currentMatchState == MatchState.WAITING_FOR_PLAYERS && playerManager.numberOfPlayers == 6)
         {
             // Waiting for players but we have 6 players. Change state to starting the match
             currentMatchState = MatchState.STARTING;
@@ -106,53 +112,6 @@ public class MatchManager : NetworkBehaviour
         // Match is in progress
         if(currentMatchState == MatchState.IN_PROGRESS)
         {
-            // Check the amount of kills each team has and change the chronade spawn accordingly
-            // Change only the spawn location, not the objects location itself
-            playerManager.TotalKills();
-            redKills = playerManager.redKills;
-            greenKills = playerManager.greenKills;
-            totalKills = redKills + greenKills;
-            if(redKills / totalKills < 0.4f)
-            {
-                // Chronade spawn on green base's side
-
-                // Testausta varten
-                nextChronadeSpawn.gameObject.SetActive(false);
-
-                // Oikeaa koodia
-                nextChronadeSpawn = chronadeSpawns[2];
-
-                // Testausta
-                nextChronadeSpawn.gameObject.SetActive(true);
-            }
-            else if(redKills / totalKills > 0.4f && redKills / totalKills < 0.6f)
-            {
-                // Chronade spawn on middle
-
-                // Testausta varten
-                nextChronadeSpawn.gameObject.SetActive(false);
-
-                // Oikeaa koodia
-                nextChronadeSpawn = chronadeSpawns[1];
-
-                // Testausta
-                nextChronadeSpawn.gameObject.SetActive(true);
-            }
-            else if(redKills / totalKills > 0.6f)
-            {
-                // Chronade spawn on red base's side
-
-                // Testausta varten
-                nextChronadeSpawn.gameObject.SetActive(false);
-
-                // Oikeaa koodia
-                nextChronadeSpawn = chronadeSpawns[0];
-
-                // Testausta
-                nextChronadeSpawn.gameObject.SetActive(true);
-            }
-            menuControl.UpdateChronadeSlider(redKills / totalKills);
-
             //GameObject spawnedChronade = Instantiate(chronadePack);
 
             // Different music for different states of the game.
@@ -193,6 +152,53 @@ public class MatchManager : NetworkBehaviour
             // Show scoreboard at the end of match
             DisplayScoreboard();
         }
+    }
+
+    private void MoveChronadeSpawn(bool smth)
+    {
+        playerManager.TotalKills();
+        float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;
+        
+        if (redKills / totalKills < 0.4f)
+        {
+            // Chronade spawn on green base's side
+
+            // Testausta varten
+            nextChronadeSpawn.gameObject.SetActive(false);
+
+            // Oikeaa koodia
+            nextChronadeSpawn = chronadeSpawns[2];
+
+            // Testausta
+            nextChronadeSpawn.gameObject.SetActive(true);
+        }
+        else if (redKills / totalKills > 0.4f && redKills / totalKills < 0.6f)
+        {
+            // Chronade spawn on middle
+
+            // Testausta varten
+            nextChronadeSpawn.gameObject.SetActive(false);
+
+            // Oikeaa koodia
+            nextChronadeSpawn = chronadeSpawns[1];
+
+            // Testausta
+            nextChronadeSpawn.gameObject.SetActive(true);
+        }
+        else if (redKills / totalKills > 0.6f)
+        {
+            // Chronade spawn on red base's side
+
+            // Testausta varten
+            nextChronadeSpawn.gameObject.SetActive(false);
+
+            // Oikeaa koodia
+            nextChronadeSpawn = chronadeSpawns[0];
+
+            // Testausta
+            nextChronadeSpawn.gameObject.SetActive(true);
+        }
+        menuControl.UpdateChronadeSlider(redKills / totalKills);
     }
 
     public void ForceStart()
