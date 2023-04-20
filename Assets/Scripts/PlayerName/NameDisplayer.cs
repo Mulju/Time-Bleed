@@ -8,11 +8,15 @@ public class NameDisplayer : NetworkBehaviour
     [SerializeField]
     private TextMeshPro _text;
 
+    private PlayerManager pManager;
+
     public override void OnStartClient()
     {
         base.OnStartClient();
         SetName();
         PlayerNameTracker.OnNameChange += PlayerNameTracker_OnNameChange;
+
+        pManager = PlayerManager.instance;
     }
 
     public override void OnStopClient()
@@ -51,5 +55,6 @@ public class NameDisplayer : NetworkBehaviour
             result = "Unset";
 
         _text.text = result;
+        pManager.AddPlayerName(base.Owner, result);
     }
 }

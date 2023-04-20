@@ -97,6 +97,18 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    [ServerRpc]
+    public void AddPlayerName(NetworkConnection connection, string name)
+    {
+        foreach (KeyValuePair<int, Data.Player> pair in players)
+        {
+            if (pair.Value.connection == connection)
+            {
+                pair.Value.name = name;
+            }
+        }
+    }
+
     public void AddPlayer(int id, Data.Player player)
     {
         if (redTeamTurn)
