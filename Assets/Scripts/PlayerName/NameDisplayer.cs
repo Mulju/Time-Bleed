@@ -18,10 +18,10 @@ public class NameDisplayer : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
+        pManager = PlayerManager.instance;
         SetName();
         PlayerNameTracker.OnNameChange += PlayerNameTracker_OnNameChange;
 
-        pManager = PlayerManager.instance;
     }
 
     public override void OnStopClient()
