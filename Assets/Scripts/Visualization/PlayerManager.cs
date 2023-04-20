@@ -363,6 +363,8 @@ public class PlayerManager : NetworkBehaviour
 
     public void TotalKills()
     {
+        redKills = 0;
+        greenKills = 0;
         foreach(KeyValuePair<int, Data.Player> pair in players)
         {
             if(pair.Value.teamTag == 0)
