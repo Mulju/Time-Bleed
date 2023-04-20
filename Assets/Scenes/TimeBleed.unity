@@ -316,6 +316,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 357906718}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &76420842 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 503377999935161600, guid: 187ef6a498595404e876aa5cbe59168a,
+    type: 3}
+  m_PrefabInstance: {fileID: 357906718}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &117128336
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,6 +913,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChronadeSpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 1993211951313301898, guid: 187ef6a498595404e876aa5cbe59168a,
+        type: 3}
+      propertyPath: m_Name
+      value: GreenChronadeSpawn
+      objectReference: {fileID: 0}
     - target: {fileID: 2189134194605104932, guid: 187ef6a498595404e876aa5cbe59168a,
         type: 3}
       propertyPath: <SceneId>k__BackingField
@@ -1326,6 +1337,12 @@ MonoBehaviour:
   _updateHostVisibility: 1
   _defaultConditions:
   - {fileID: 11400000, guid: 2033f54fd2794464bae08fa5a55c8996, type: 2}
+--- !u!4 &407870378 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7076645975848522038, guid: 187ef6a498595404e876aa5cbe59168a,
+    type: 3}
+  m_PrefabInstance: {fileID: 357906718}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &450816320
 GameObject:
   m_ObjectHideFlags: 0
@@ -2669,6 +2686,11 @@ MonoBehaviour:
   greenClock: {fileID: 0}
   currentMatchState: 0
   currentVictoryState: 0
+  menuControl: {fileID: 0}
+  chronadeSpawns:
+  - {fileID: 1516567646}
+  - {fileID: 76420842}
+  - {fileID: 407870378}
 --- !u!1 &922311959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3764,6 +3786,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469548116}
   m_CullTransparentMesh: 1
+--- !u!4 &1516567646 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3454744547921927822, guid: 187ef6a498595404e876aa5cbe59168a,
+    type: 3}
+  m_PrefabInstance: {fileID: 357906718}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1537454825 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2189134196049508052, guid: 187ef6a498595404e876aa5cbe59168a,
@@ -10377,7 +10405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.size
-      value: 14
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[0]
@@ -10386,51 +10414,71 @@ PrefabInstance:
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[1]
       value: 
-      objectReference: {fileID: 357906719}
+      objectReference: {fileID: 221761316}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[2]
       value: 
-      objectReference: {fileID: 357906720}
+      objectReference: {fileID: 357906719}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[3]
       value: 
-      objectReference: {fileID: 562715416}
+      objectReference: {fileID: 357906720}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[4]
       value: 
-      objectReference: {fileID: 631396738}
+      objectReference: {fileID: 474995920}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[5]
       value: 
-      objectReference: {fileID: 918670143}
+      objectReference: {fileID: 562715416}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[6]
       value: 
-      objectReference: {fileID: 932175377}
+      objectReference: {fileID: 631396738}
+    - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
+      propertyPath: _sceneNetworkObjects.Array.data[7]
+      value: 
+      objectReference: {fileID: 698320091}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[8]
       value: 
-      objectReference: {fileID: 1088267602}
+      objectReference: {fileID: 918670143}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[9]
       value: 
-      objectReference: {fileID: 1537454825}
+      objectReference: {fileID: 932175377}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[10]
       value: 
-      objectReference: {fileID: 1607746344}
+      objectReference: {fileID: 1049280331}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[11]
       value: 
-      objectReference: {fileID: 1674640280}
+      objectReference: {fileID: 1088267602}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[12]
       value: 
-      objectReference: {fileID: 1962064014}
+      objectReference: {fileID: 1537454825}
     - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
       propertyPath: _sceneNetworkObjects.Array.data[13]
       value: 
+      objectReference: {fileID: 1607746344}
+    - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
+      propertyPath: _sceneNetworkObjects.Array.data[14]
+      value: 
+      objectReference: {fileID: 1674640280}
+    - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
+      propertyPath: _sceneNetworkObjects.Array.data[15]
+      value: 
+      objectReference: {fileID: 1962064014}
+    - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
+      propertyPath: _sceneNetworkObjects.Array.data[16]
+      value: 
       objectReference: {fileID: 2062295356}
+    - target: {fileID: 2133219388, guid: bf797651a486cf44eae72059a211468b, type: 3}
+      propertyPath: _sceneNetworkObjects.Array.data[17]
+      value: 
+      objectReference: {fileID: 2062865872}
     - target: {fileID: 252289990661069757, guid: bf797651a486cf44eae72059a211468b,
         type: 3}
       propertyPath: m_TagString

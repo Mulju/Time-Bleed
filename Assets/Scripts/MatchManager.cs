@@ -3,6 +3,7 @@ using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MatchManager : NetworkBehaviour
 {
@@ -18,7 +19,7 @@ public class MatchManager : NetworkBehaviour
         MATCH_ENDED
     }
 
-    private enum VictoryState
+    public enum VictoryState
     {
         NONE,
         DRAW,
@@ -29,7 +30,10 @@ public class MatchManager : NetworkBehaviour
     // Syncvar for the time..?
     [HideInInspector] public Clock redClock, greenClock;
     [HideInInspector] [SyncVar] public MatchState currentMatchState = MatchState.NONE;
-    [SyncVar] private VictoryState currentVictoryState = VictoryState.NONE;
+    [HideInInspector] [SyncVar] public VictoryState currentVictoryState = VictoryState.NONE;
+    [SerializeField] private MenuControl menuControl;
+    [SerializeField] private Transform[] chronadeSpawns;
+    [SerializeField] private GameObject chronadePack;
 
 
     private void Awake()
@@ -99,6 +103,13 @@ public class MatchManager : NetworkBehaviour
         {
             // Check the amount of kills each team has and change the chronade spawn accordingly
             // Change only the spawn location, not the objects location itself
+            float redKills = 0, greenKills = 0, totalKills = 0;
+            if(redKills / totalKills < 0.4f)
+            {
+
+            }
+
+            GameObject spawnedChronade = Instantiate(chronadePack);
 
             // Different music for different states of the game.
         }

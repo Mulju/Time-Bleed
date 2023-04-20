@@ -17,20 +17,6 @@ public class Clock : NetworkBehaviour
     public int teamIdentifier;
     private MatchManager mManager;
 
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-        //mManager = MatchManager.matchManager;
-    }
-
-    private void Awake()
-    {
-        if (base.IsServer)
-        {
-            //mManager = MatchManager.matchManager;
-        }
-    }
-
     private void Start()
     {
         if (base.IsServer)
