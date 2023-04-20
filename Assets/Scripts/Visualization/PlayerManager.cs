@@ -97,7 +97,7 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void AddPlayerName(NetworkConnection connection, string name)
     {
         foreach (KeyValuePair<int, Data.Player> pair in players)
