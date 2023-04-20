@@ -10,6 +10,11 @@ public class NameDisplayer : NetworkBehaviour
 
     private PlayerManager pManager;
 
+    private void Start()
+    {
+        pManager = PlayerManager.instance;
+    }
+
     public override void OnStartClient()
     {
         base.OnStartClient();
