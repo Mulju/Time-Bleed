@@ -29,13 +29,13 @@ public class MatchManager : NetworkBehaviour
 
     // Syncvar for the time..?
     [HideInInspector] public Clock redClock, greenClock;
-    [HideInInspector] [SyncVar] public MatchState currentMatchState = MatchState.NONE;
-    [HideInInspector] [SyncVar] public VictoryState currentVictoryState = VictoryState.NONE;
+    [HideInInspector][SyncVar] public MatchState currentMatchState = MatchState.NONE;
+    [HideInInspector][SyncVar] public VictoryState currentVictoryState = VictoryState.NONE;
     [SerializeField] private MenuControl menuControl;
     [SerializeField] private Transform[] chronadeSpawns;
     private Transform nextChronadeSpawn;
     [SerializeField] private GameObject chronadePack;
-    float redKills, greenKills, totalKills;
+    [SerializeField] private float redKills, greenKills, totalKills;
 
     private void Awake()
     {
