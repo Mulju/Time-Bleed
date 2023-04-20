@@ -253,6 +253,13 @@ public class PlayerManager : NetworkBehaviour
         if (!base.IsServer)
             return;
 
+        if (players[playerID].health <= 0)
+        {
+            // Don't reduce hp if already 0 or below. This will prevent players getting multiple kills
+            // within the same frame by using shotgun on a low hp player.
+            return;
+        }
+
         players[playerID].health -= damage;
 
         if (players[playerID].health <= 0)
