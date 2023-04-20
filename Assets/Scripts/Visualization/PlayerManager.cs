@@ -133,6 +133,7 @@ public class PlayerManager : NetworkBehaviour
             }
         }
 
+        redTeamTurn = !redTeamTurn;
         players = new Dictionary<int, Data.Player>(playersCopy);
         serverNumberOfPlayers.text = numberOfPlayers + " / 6\nPlayers";
     }

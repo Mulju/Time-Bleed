@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731397, g: 0.13414487, b: 0.12108168, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731427, g: 0.13414538, b: 0.121081874, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1112,6 +1112,11 @@ PrefabInstance:
       propertyPath: _sceneNetworkObjects.Array.data[10]
       value: 
       objectReference: {fileID: 1049280331}
+    - target: {fileID: 4139192807242997319, guid: 187ef6a498595404e876aa5cbe59168a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4595616760572506415, guid: 187ef6a498595404e876aa5cbe59168a,
         type: 3}
       propertyPath: <SceneId>k__BackingField
@@ -1625,10 +1630,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resolutionsDropdown: {fileID: 3203118055442548390}
-  pauseMenu: {fileID: 1501420404}
-  scoreboard: {fileID: 0}
+  pauseMenu: {fileID: 2683121968377331154}
+  scoreboard: {fileID: 1501420404}
   networkManager: {fileID: 7443408888352835008}
-  chronadeSlider: {fileID: 0}
+  chronadeSlider: {fileID: 891700410}
 --- !u!4 &477695110
 Transform:
   m_ObjectHideFlags: 0

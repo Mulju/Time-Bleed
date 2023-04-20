@@ -503,15 +503,11 @@ public class PlayerEntity : NetworkBehaviour
     {
         reloading = true;
 
-        Debug.Log("Reloading");
-
         animator.SetBool("Reloading", true);
         yield return new WaitForSeconds(currentWeapon.reloadTime - 0.25f);
 
         animator.SetBool("Reloading", false);
         yield return new WaitForSeconds(0.25f);
-
-        Debug.Log("Reloaded");
 
         currentWeapon.ammoLeft = currentWeapon.magSize;
         reloading = false;
