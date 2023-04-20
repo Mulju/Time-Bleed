@@ -40,6 +40,8 @@ public class PlayerManager : NetworkBehaviour
     [HideInInspector]
     public int redKills, greenKills;
 
+    private bool playerKilledThisFrame = false;
+
     private void Awake()
     {
         instance = this;
@@ -68,6 +70,7 @@ public class PlayerManager : NetworkBehaviour
     {
         if (!base.IsServer)
             return;
+        playerKilledThisFrame = false;
 
         foreach (KeyValuePair<int, Data.Player> player in players)
         {
@@ -280,6 +283,14 @@ public class PlayerManager : NetworkBehaviour
 
     void PlayerKilled(int playerID, int attackerID)
     {
+        if(playerKilledThisFrame)
+        {
+            // If PlayerKilled was called this frame, return. This prevents multikills.
+            return;
+        }
+        playerKilledThisFrame = true;
+
+
         if (attackerID != playerID)
         {
             players[attackerID].kills++;
