@@ -36,6 +36,9 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private Animator doorAnimator;
     public event Action<bool> OnStartingMatch;
 
+    [HideInInspector]
+    public int redKills, greenKills;
+
     private void Awake()
     {
         instance = this;
@@ -343,6 +346,21 @@ public class PlayerManager : NetworkBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
+    public void TotalKills()
+    {
+        foreach(KeyValuePair<int, Data.Player> pair in players)
+        {
+            if(pair.Value.teamTag == 0)
+            {
+                redKills += pair.Value.kills;
+            }
+            else
+            {
+                greenKills += pair.Value.kills;
+            }
         }
     }
 

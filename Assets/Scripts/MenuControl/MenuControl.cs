@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
 using FishNet.Transporting.Tugboat;
+using UnityEngine.UI;
 
 public class MenuControl : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class MenuControl : MonoBehaviour
     private EventSystem eventSystem;
 
     [SerializeField] private GameObject networkManager;
+    [SerializeField] private Slider chronadeSlider;
 
     void Start()
     {
@@ -98,6 +100,11 @@ public class MenuControl : MonoBehaviour
             }
         }
 
+    }
+
+    public void UpdateChronadeSlider(float fillAmount)
+    {
+        chronadeSlider.value = fillAmount;
     }
 
     public void UpdateTugboat(string clientAddress)
