@@ -7,8 +7,14 @@ public class Grenade : MonoBehaviour
     [HideInInspector] public GameObject ownerObject;
     private float timer;
     private int damage;
+    private bool isSlowed;
 
     public GameObject ammoPrefab;
+
+    private void Awake()
+    {
+        isSlowed = false;
+    }
 
     private void Start()
     {
@@ -17,7 +23,16 @@ public class Grenade : MonoBehaviour
 
     private void Update()
     {
-        timer += Time.deltaTime;
+        
+
+        if(!isSlowed)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            timer += Time.deltaTime * 0.2f;
+        }
 
         if (timer >= 2f)
         {
@@ -45,7 +60,9 @@ public class Grenade : MonoBehaviour
     {
         if(other.CompareTag("TimeSphere") && ownerObject != other.transform.parent?.gameObject)
         {
-            gameObject.GetComponent<Rigidbody>().velocity = new Vector3(gameObject.GetComponent<Rigidbody>().velocity.x * 0.1f, gameObject.GetComponent<Rigidbody>().velocity.y * 0.1f, gameObject.GetComponent<Rigidbody>().velocity.z * 0.1f);
+            gameObject.GetComponent<Rigidbody>().velocity = new Vector3(gameObject.GetComponent<Rigidbody>().velocity.x * 0.05f, gameObject.GetComponent<Rigidbody>().velocity.y * 0.05f, gameObject.GetComponent<Rigidbody>().velocity.z * 0.05f);
+            
+            isSlowed = true;
         }
     }
 
@@ -53,7 +70,7 @@ public class Grenade : MonoBehaviour
     {
         if (other.CompareTag("TimeSphere") && ownerObject != other.transform.parent?.gameObject)
         {
-            gameObject.GetComponent<Rigidbody>().AddForce(-Physics.gravity* 0.9f);
+            gameObject.GetComponent<Rigidbody>().AddForce(-Physics.gravity* 0.95f);
         }
     }
 
@@ -61,7 +78,9 @@ public class Grenade : MonoBehaviour
     {
         if (other.CompareTag("TimeSphere") && ownerObject != other.transform.parent?.gameObject)
         {
-            gameObject.GetComponent<Rigidbody>().velocity *= 10f;
+            gameObject.GetComponent<Rigidbody>().velocity *= 20f;
+
+            isSlowed = false;
         }
     }
 }
