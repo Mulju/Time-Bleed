@@ -35,9 +35,12 @@ public class PlayerManager : NetworkBehaviour
 
     [SerializeField] private Animator doorAnimator;
     public event Action<bool> OnStartingMatch;
+    public event Action<bool> OnPlayerKilled;
 
     [HideInInspector]
     public int redKills, greenKills;
+
+    private bool playerKilledThisFrame = false;
 
     private void Awake()
     {
@@ -67,6 +70,7 @@ public class PlayerManager : NetworkBehaviour
     {
         if (!base.IsServer)
             return;
+        playerKilledThisFrame = false;
 
         foreach (KeyValuePair<int, Data.Player> player in players)
         {
@@ -93,6 +97,18 @@ public class PlayerManager : NetworkBehaviour
         {
             // Someone left
             RemovePlayer(connection);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void AddPlayerName(NetworkConnection connection, string name)
+    {
+        foreach (KeyValuePair<int, Data.Player> pair in players)
+        {
+            if (pair.Value.connection == connection)
+            {
+                pair.Value.name = name;
+            }
         }
     }
 
@@ -240,6 +256,13 @@ public class PlayerManager : NetworkBehaviour
         if (!base.IsServer)
             return;
 
+        if (players[playerID].health <= 0)
+        {
+            // Don't reduce hp if already 0 or below. This will prevent players getting multiple kills
+            // within the same frame by using shotgun on a low hp player.
+            return;
+        }
+
         players[playerID].health -= damage;
 
         if (players[playerID].health <= 0)
@@ -260,9 +283,18 @@ public class PlayerManager : NetworkBehaviour
 
     void PlayerKilled(int playerID, int attackerID)
     {
+        if(playerKilledThisFrame)
+        {
+            // If PlayerKilled was called this frame, return. This prevents multikills.
+            return;
+        }
+        playerKilledThisFrame = true;
+
+
         if (attackerID != playerID)
         {
             players[attackerID].kills++;
+            OnPlayerKilled.Invoke(true);
         }
         players[playerID].deaths++;
         players[playerID].health = maxHealth;
@@ -278,6 +310,15 @@ public class PlayerManager : NetworkBehaviour
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, greenSpawnPoints.Count), players[playerID].teamTag);
         }
         players[playerID].health = maxHealth;
+
+
+        // Debuggausta
+        int playerIndex = 1;
+        foreach(KeyValuePair<int, Data.Player> pair in players)
+        {
+            Debug.Log("Player " + playerIndex + " Kills: " + pair.Value.kills + ", Deaths: " + pair.Value.deaths);
+            playerIndex++;
+        }
 
         UpdateScoreboard();
 
@@ -352,6 +393,8 @@ public class PlayerManager : NetworkBehaviour
 
     public void TotalKills()
     {
+        redKills = 0;
+        greenKills = 0;
         foreach(KeyValuePair<int, Data.Player> pair in players)
         {
             if(pair.Value.teamTag == 0)

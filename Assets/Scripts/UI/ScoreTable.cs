@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreTable : MonoBehaviour
 {
@@ -18,18 +19,19 @@ public class ScoreTable : MonoBehaviour
         }
     }
 
-    private void CreateScore(string name, int kills, int deaths, Transform _entryContainer)
+    private void CreateScore(string name, int kills, int deaths, Transform entryContainer)
     {
-        Transform entryTransform = Instantiate(_entryTemplate, _entryContainer);
-        RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+        Transform entryTransform = Instantiate(_entryTemplate, entryContainer);
         entryTransform.gameObject.SetActive(true);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(entryContainer.GetComponent<RectTransform>());
 
-        string rankString = (_entryContainer.childCount / entryTransform.childCount).ToString();
+        int rank = entryContainer.childCount;
+        string rankString = rank.ToString();
 
-        entryTransform.Find("Rank").GetComponent<TMPro.TextMeshProUGUI>().text = rankString;
-        entryTransform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
-        entryTransform.Find("Kills").GetComponent<TMPro.TextMeshProUGUI>().text = kills.ToString();
-        entryTransform.Find("Deaths").GetComponent<TMPro.TextMeshProUGUI>().text = deaths.ToString();
+        entryTransform.Find("InfoBox/Rank").GetComponent<TMPro.TextMeshProUGUI>().text = rankString;
+        entryTransform.Find("InfoBox/Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
+        entryTransform.Find("InfoBox/Kills").GetComponent<TMPro.TextMeshProUGUI>().text = kills.ToString();
+        entryTransform.Find("InfoBox/Deaths").GetComponent<TMPro.TextMeshProUGUI>().text = deaths.ToString();
     }
 
     public void DestroyScores()
