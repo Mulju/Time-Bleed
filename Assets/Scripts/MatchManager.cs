@@ -69,10 +69,11 @@ public class MatchManager : NetworkBehaviour
     {
         base.OnStartClient();
 
+        nextChronadeSpawn = chronadeSpawns[1];
+
         if (base.IsServer)
         {
             playerManager = PlayerManager.instance;
-            nextChronadeSpawn = chronadeSpawns[1];
             playerManager.OnPlayerKilled += MoveChronadeSpawnServer;
         }
     }
