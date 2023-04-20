@@ -40,4 +40,28 @@ public class Grenade : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("TimeSphere") && ownerObject != other.transform.parent?.gameObject)
+        {
+            gameObject.GetComponent<Rigidbody>().velocity = new Vector3(gameObject.GetComponent<Rigidbody>().velocity.x * 0.1f, gameObject.GetComponent<Rigidbody>().velocity.y * 0.1f, gameObject.GetComponent<Rigidbody>().velocity.z * 0.1f);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("TimeSphere") && ownerObject != other.transform.parent?.gameObject)
+        {
+            gameObject.GetComponent<Rigidbody>().AddForce(-Physics.gravity* 0.9f);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("TimeSphere") && ownerObject != other.transform.parent?.gameObject)
+        {
+            gameObject.GetComponent<Rigidbody>().velocity *= 10f;
+        }
+    }
 }

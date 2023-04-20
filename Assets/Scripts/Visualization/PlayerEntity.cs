@@ -18,6 +18,7 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject timeField;
     public GameObject bulletHole;
     public GameObject timeBindSkill;
+
     [SerializeField] private GameObject chronade;
     [SerializeField] private GameObject sniperScope;
     [SerializeField] private GameObject aimingPosition;
@@ -353,6 +354,12 @@ public class PlayerEntity : NetworkBehaviour
 
     public void ChangeWeapon(int weaponIndex)
     {
+        if (isScoped && currentWeapon == weaponDictionary.weapons["rifle"])
+        {
+            StopCoroutine(aimDownSightInstance);
+            gunPosition.transform.localPosition = gunOriginalPosition;
+        }
+
         currentWeapon = weaponDictionary.weapons.ElementAt(weaponIndex).Value;
 
         if (currentWeapon == weaponDictionary.weapons["rifle"])
@@ -548,9 +555,18 @@ public class PlayerEntity : NetworkBehaviour
         {
             if (!ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
+                Vector3 visualSpawn;
+                if (base.IsOwner && isScoped && currentWeapon == weaponDictionary.weapons["sniper"])
+                {
+                    visualSpawn = ammoSpawn.transform.position;
+                }
+                else
+                {
+                    visualSpawn = spawnForRayVisual.transform.position;
+                }
                 // Line visual for the shot, only if not in a timesphere
                 LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
-                instantiatedVisual.SetPosition(0, spawnForRayVisual.transform.position);
+                instantiatedVisual.SetPosition(0, visualSpawn);
                 instantiatedVisual.SetPosition(1, hit.point);
                 Destroy(instantiatedVisual.gameObject, 2);
             }
@@ -647,7 +663,7 @@ public class PlayerEntity : NetworkBehaviour
     public void ThrowFragGrenade()
     {
         GameObject grenade = Instantiate(grenadePrefab, ammoSpawn.transform.position, Quaternion.identity);
-        grenade.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 4, ForceMode.Impulse);
+        grenade.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 20, ForceMode.Impulse);
         grenade.GetComponent<Grenade>().ownerObject = gameObject;
         Destroy(grenade, 10);
     }
