@@ -2669,10 +2669,11 @@ MonoBehaviour:
   _networkObjectCache: {fileID: 918670143}
   redClock: {fileID: 0}
   greenClock: {fileID: 0}
-  redClock: {fileID: 0}
-  greenClock: {fileID: 0}
   currentMatchState: 0
   currentVictoryState: 0
+  menuControl: {fileID: 0}
+  chronadeSpawns: []
+  chronadePack: {fileID: 0}
 --- !u!1 &922311959
 GameObject:
   m_ObjectHideFlags: 0
@@ -10447,12 +10448,12 @@ PrefabInstance:
         type: 3}
       propertyPath: _redTeamContainer
       value: 
-      objectReference: {fileID: 156506536}
+      objectReference: {fileID: 5935617054178305393}
     - target: {fileID: 5505607736802187688, guid: bf797651a486cf44eae72059a211468b,
         type: 3}
       propertyPath: _greenTeamContainer
       value: 
-      objectReference: {fileID: 929267809}
+      objectReference: {fileID: 5935617054178305392}
     - target: {fileID: 5935617055376825187, guid: bf797651a486cf44eae72059a211468b,
         type: 3}
       propertyPath: m_Name
@@ -10565,6 +10566,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf797651a486cf44eae72059a211468b, type: 3}
+--- !u!224 &5935617054178305392 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 986042867114846311, guid: bf797651a486cf44eae72059a211468b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5935617054178305391}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &5935617054178305393 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5515529870333296396, guid: bf797651a486cf44eae72059a211468b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5935617054178305391}
+  m_PrefabAsset: {fileID: 0}
 --- !u!222 &6015964841680133069
 CanvasRenderer:
   m_ObjectHideFlags: 0
