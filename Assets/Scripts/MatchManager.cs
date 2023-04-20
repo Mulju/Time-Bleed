@@ -155,6 +155,7 @@ public class MatchManager : NetworkBehaviour
         }
     }
 
+    [ObserversRpc]
     private void MoveChronadeSpawn(bool smth)
     {
         playerManager.TotalKills();
