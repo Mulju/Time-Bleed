@@ -281,6 +281,15 @@ public class PlayerManager : NetworkBehaviour
         }
         players[playerID].health = maxHealth;
 
+
+        // Debuggausta
+        int playerIndex = 1;
+        foreach(KeyValuePair<int, Data.Player> pair in players)
+        {
+            Debug.Log("Player " + playerIndex + " Kills: " + pair.Value.kills + ", Deaths: " + pair.Value.deaths);
+            playerIndex++;
+        }
+
         UpdateScoreboard();
 
         StartCoroutine(MaxHealth(playerID));
