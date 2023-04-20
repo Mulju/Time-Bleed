@@ -22,6 +22,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject sniperScope;
     [SerializeField] private GameObject aimingPosition;
     [SerializeField] private GameObject ironSight;
+    [SerializeField] private GameObject grenadePrefab;
 
     private Coroutine aimDownSightInstance;
 
@@ -318,6 +319,11 @@ public class PlayerEntity : NetworkBehaviour
             TimeBindServer();
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ThrowFragGrenadeServer();
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Press Esc for pause screen and to lock/unlock cursor
@@ -337,6 +343,21 @@ public class PlayerEntity : NetworkBehaviour
 
             TimeSpeedSlider(mouseScroll * 0.05f);
         }
+    }
+
+    [ServerRpc]
+    public void ThrowFragGrenadeServer()
+    {
+        ThrowFragGrenade();
+    }
+
+    [ObserversRpc]
+    public void ThrowFragGrenade()
+    {
+        GameObject grenade = Instantiate(grenadePrefab, ammoSpawn.transform.position, Quaternion.identity);
+        grenade.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 4, ForceMode.Impulse);
+        grenade.GetComponent<ChronoGrenade>().ownerObject = this.gameObject;
+        Destroy(grenade, 10);
     }
 
     public void ChangeWeapon(int weaponIndex)

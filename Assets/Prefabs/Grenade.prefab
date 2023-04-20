@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 1468988365436106989}
   - component: {fileID: 1468988365436106988}
   - component: {fileID: 1468988365436106987}
-  - component: {fileID: 4806740778209174673}
   - component: {fileID: 4911446607131635623}
   - component: {fileID: 6010927597893743525}
+  - component: {fileID: 9169890840491694170}
   m_Layer: 2
-  m_Name: TimeBind
-  m_TagString: TimeBind
+  m_Name: Grenade
+  m_TagString: Grenade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a0534b103adf284299821986d517c5c, type: 2}
+  - {fileID: 2100000, guid: 8f0036916d7b5374295d2d9c368267f2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,21 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4806740778209174673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468988365436106985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7042bad39781b834ba789533798b6289, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeBindSphere: {fileID: 5257232343283234115, guid: 384d48edb5b59c9448e4ec399a7784b5,
-    type: 3}
-  exploded: 0
 --- !u!135 &4911446607131635623
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -130,3 +115,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &9169890840491694170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468988365436106985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17db1b36f5f5c0244a480adf13a91148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerObject: {fileID: 0}
+  ammoPrefab: {fileID: 5890851403942761072, guid: 2ef6ebce66a47a540b8397bdaa991d8f,
+    type: 3}
