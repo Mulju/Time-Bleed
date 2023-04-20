@@ -17,6 +17,23 @@ public class Clock : NetworkBehaviour
     public int teamIdentifier;
     private MatchManager mManager;
 
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if (base.IsServer)
+        {
+            mManager = MatchManager.matchManager;
+        }
+    }
+
+    private void Awake()
+    {
+        if (base.IsServer)
+        {
+            mManager = MatchManager.matchManager;
+        }
+    }
+
     private void Start()
     {
         if (base.IsServer)
@@ -29,7 +46,7 @@ public class Clock : NetworkBehaviour
     {
         if(base.IsServer)
         {
-            if(mManager.currentMatchState == MatchManager.MatchState.IN_PROGRESS)
+            if(mManager != null && mManager.currentMatchState == MatchManager.MatchState.IN_PROGRESS)
             {
                 UpdateClockServer();
             }
