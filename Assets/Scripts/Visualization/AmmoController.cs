@@ -54,7 +54,7 @@ public class AmmoController : MonoBehaviour
                 LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
                 instantiatedVisual.SetPosition(0, transform.position);
                 instantiatedVisual.SetPosition(1, hit.point);
-                Destroy(instantiatedVisual, 2);
+                Destroy(instantiatedVisual.gameObject, 2);
 
                 if (hit.collider.CompareTag("TimeSphere"))
                 {
