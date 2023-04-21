@@ -382,9 +382,11 @@ public class PlayerManager : NetworkBehaviour
     [ObserversRpc]
     public void AddChronades(GameObject player)
     {
+        player.GetComponent<PlayerEntity>().amountOfChronades = 3;
+        /*
         int playerID = player.GetInstanceID();
 
-        players[playerID].playerObject.GetComponent<PlayerEntity>().amountOfChronades = 3;
+        players[playerID].playerObject.GetComponent<PlayerEntity>().amountOfChronades = 3;*/
     }
 
     [TargetRpc]
