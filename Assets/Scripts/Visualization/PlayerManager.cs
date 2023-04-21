@@ -357,7 +357,7 @@ public class PlayerManager : NetworkBehaviour
             // Respawn at green team's base
             player.transform.position = greenSpawnPoints[spawn].position;
         }
-
+        player.GetComponent<PlayerEntity>().amountOfChronades = 1;
         player.GetComponent<PlayerEntity>().RespawnServer();
     }
 
