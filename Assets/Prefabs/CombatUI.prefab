@@ -519,8 +519,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 2133219388}
   - {fileID: 0}
+  - {fileID: 2133219388}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -612,6 +612,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5935617055376825215}
     m_Modifications:
+    - target: {fileID: 518245605933209703, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 549512885163024856, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 685500124327491028, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2951393067714848818, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3621997379373405660, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24.15
+      objectReference: {fileID: 0}
     - target: {fileID: 3652912195337455572, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
         type: 3}
       propertyPath: m_Name
@@ -655,12 +680,27 @@ PrefabInstance:
     - target: {fileID: 3652912195337455573, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -640
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3652912195337455573, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -360
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3652912195337455573, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3652912195337455573, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3652912195337455573, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3652912195337455573, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
         type: 3}
@@ -722,10 +762,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8022594499433794091, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+    - target: {fileID: 3741843480268080230, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
         type: 3}
-      propertyPath: m_ChildControlHeight
-      value: 0
+      propertyPath: m_fontSize
+      value: 24.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382218517669754512, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160370032244720006, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 50.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172329059286678250, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 50.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6668490147754079279, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841392105038780617, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 47.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191228064716927156, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba, type: 3}
