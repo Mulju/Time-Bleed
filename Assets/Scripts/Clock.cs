@@ -12,7 +12,7 @@ public class Clock : NetworkBehaviour
     private int hitChronades = 0;
 
     [SyncVar] public float rotation;
-    [SyncVar] public float remainingSeconds = 60, remainingMinutes = 14, remainingTime = 900;
+    [SyncVar] public float remainingSeconds = 60, remainingMinutes = 1, remainingTime = 120;
     
     public int teamIdentifier;
     private MatchManager mManager;
@@ -60,7 +60,7 @@ public class Clock : NetworkBehaviour
 
         // Need to round up or down to display it nicely
         remainingSeconds = 60 - rotation / 6;
-        if (remainingSeconds < 0)
+        if (remainingSeconds < 0 && remainingMinutes > 0)
         {
             rotation = 0;
             remainingMinutes--;
