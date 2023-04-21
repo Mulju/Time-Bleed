@@ -436,18 +436,25 @@ public class PlayerManager : NetworkBehaviour
     {
         if (base.IsServer)
         {
+            ClientOnServerClose();
+            
             foreach(KeyValuePair<int, Data.Player> pair in players)
             {
                 //netManager.ServerManager.Kick(pair.Value.connection, KickReason.Unset);
-                ClientOnServerClose();
             }
 
-            netManager.ServerManager.StopConnection(true);
+            StartCoroutine(KickClients());
         }
         else
         {
             netManager.ClientManager.StopConnection();
         }
+    }
+
+    IEnumerator KickClients()
+    {
+        yield return new WaitForSeconds(1);
+        netManager.ServerManager.StopConnection(true);
     }
 
     [ObserversRpc]
