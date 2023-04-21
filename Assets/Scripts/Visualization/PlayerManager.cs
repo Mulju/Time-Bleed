@@ -408,10 +408,10 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ObserversRpc]
     public void UpdateScoreboard()
     {
-        if (!base.IsServer) 
+        if (!base.IsServer)
             return;
 
         scoreboard.GetComponent<ScoreTable>().DestroyScores();

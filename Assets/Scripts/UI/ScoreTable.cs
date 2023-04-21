@@ -2,13 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using FishNet.Object;
 
-public class ScoreTable : NetworkBehaviour
+public class ScoreTable : MonoBehaviour
 {
     [SerializeField] private Transform _greenTeamContainer;
     [SerializeField] private Transform _redTeamContainer;
     [SerializeField] private Transform _entryTemplate;
 
-    [ObserversRpc]
     public void UpdateScore(string name, int kills, int deaths, int teamTag)
     {
         if (teamTag == 0)
@@ -35,7 +34,6 @@ public class ScoreTable : NetworkBehaviour
         entryTransform.Find("InfoBox/Deaths").GetComponent<TMPro.TextMeshProUGUI>().text = deaths.ToString();
     }
 
-    [ObserversRpc]
     public void DestroyScores()
     {
         foreach (Transform child in _greenTeamContainer)
