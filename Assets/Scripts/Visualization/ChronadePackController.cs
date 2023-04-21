@@ -33,9 +33,15 @@ public class ChronadePackController : NetworkBehaviour
     IEnumerator RespawnChronadePack()
     {
         yield return new WaitForSeconds(respawnTime);
-        transform.position = MatchManager.matchManager.nextChronadeSpawn.position;
+        MoveChronadeSpawn();
         ShowChronadePack();
         this.GetComponent<Collider>().enabled = true;
+    }
+
+    [ObserversRpc]
+    public void MoveChronadeSpawn()
+    {
+        transform.position = MatchManager.matchManager.nextChronadeSpawn.position;
     }
 
     [ObserversRpc]
