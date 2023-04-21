@@ -3993,7 +3993,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1469548117
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11427,7 +11427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _refreshDefaultPrefabs: 0
   _runInBackground: 1
-  _dontDestroyOnLoad: 1
+  _dontDestroyOnLoad: 0
   _objectPool: {fileID: 0}
   _persistence: 0
   _logging: {fileID: 0}
