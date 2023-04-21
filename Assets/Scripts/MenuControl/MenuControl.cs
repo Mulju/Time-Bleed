@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using FishNet.Transporting.Tugboat;
 using UnityEngine.UI;
+using FishNet.Managing.Server;
+using FishNet.Managing.Client;
+using FishNet.Managing;
 
 public class MenuControl : MonoBehaviour
 {
@@ -20,6 +23,7 @@ public class MenuControl : MonoBehaviour
 
     [SerializeField] private GameObject networkManager;
     [SerializeField] private Slider chronadeSlider;
+    [SerializeField] private NetworkManager netManager;
 
     void Start()
     {
@@ -102,8 +106,12 @@ public class MenuControl : MonoBehaviour
 
     }
 
-    public void OpenEndMatchScoreboard()
+    public void OpenEndMatchScoreboard(MatchManager.VictoryState victoriousTeam)
     {
+        // Aseta scoreboardille voittava tiimi näkyviin
+
+        // Ehkä myös timeri joka palauttaa pelaajat main menuun?
+        
         scoreboard.SetActive(true);
     }
 
@@ -115,5 +123,18 @@ public class MenuControl : MonoBehaviour
     public void UpdateTugboat(string clientAddress)
     {
         networkManager.GetComponent<Tugboat>().SetClientAddress(clientAddress);
+    }
+
+    public void DisconnectFromServer()
+    {
+        bool server = MatchManager.matchManager.IsBaseServer();
+        if(server)
+        {
+            netManager.ServerManager.StopConnection(true);
+        }
+        else
+        {
+            netManager.ClientManager.StopConnection();
+        }
     }
 }
