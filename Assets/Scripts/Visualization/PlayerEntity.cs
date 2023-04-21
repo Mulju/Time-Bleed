@@ -22,8 +22,12 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject chronade;
     [SerializeField] private GameObject sniperScope;
     [SerializeField] private GameObject aimingPosition;
-    [SerializeField] private GameObject ironSight;
     [SerializeField] private GameObject grenadePrefab;
+
+    [SerializeField] private GameObject riflePrefab;
+    [SerializeField] private GameObject sniperPrefab;
+    [SerializeField] private GameObject shotgunPrefab;
+    private GameObject currentWeaponPrefab;
 
     public GameObject gunPosition;
 
@@ -124,6 +128,7 @@ public class PlayerEntity : NetworkBehaviour
 
             weaponDictionary = new WeaponDictionary();
             currentWeapon = weaponDictionary.weapons["rifle"];
+            currentWeaponPrefab = riflePrefab;
 
             shootTimer = 3;
         }
@@ -366,6 +371,23 @@ public class PlayerEntity : NetworkBehaviour
 
     public void ChangeWeapon(int weaponIndex)
     {
+        currentWeaponPrefab.SetActive(false);
+
+        if(weaponIndex == 0)
+        {
+            currentWeaponPrefab = riflePrefab;
+        }
+        else if (weaponIndex == 1)
+        {
+            currentWeaponPrefab = sniperPrefab;
+        }
+        else if (weaponIndex == 2)
+        {
+            currentWeaponPrefab = shotgunPrefab;
+        }
+        currentWeaponPrefab.SetActive(true);
+
+
         if (isScoped && currentWeapon == weaponDictionary.weapons["rifle"])
         {
             StopCoroutine(aimDownSightInstance);
@@ -373,15 +395,6 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         currentWeapon = weaponDictionary.weapons.ElementAt(weaponIndex).Value;
-
-        if (currentWeapon == weaponDictionary.weapons["rifle"])
-        {
-            ironSight.SetActive(true);
-        }
-        else
-        {
-            ironSight.SetActive(false);
-        }
 
         deployTimer = 0;
         animator.SetBool("Reloading", true);
