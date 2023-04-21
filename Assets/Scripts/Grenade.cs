@@ -87,7 +87,7 @@ public class Grenade : MonoBehaviour
 
             if(spheresCount == 0)
             {
-                gameObject.GetComponent<Rigidbody>().velocity *= 20f;
+                gameObject.GetComponent<Rigidbody>().velocity = new Vector3(gameObject.GetComponent<Rigidbody>().velocity.x * 20f, gameObject.GetComponent<Rigidbody>().velocity.y * 10f, gameObject.GetComponent<Rigidbody>().velocity.z * 20f);
             }
         }
     }
