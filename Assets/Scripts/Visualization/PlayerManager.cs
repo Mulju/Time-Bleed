@@ -411,9 +411,6 @@ public class PlayerManager : NetworkBehaviour
     [ObserversRpc]
     public void UpdateScoreboard()
     {
-        if (!base.IsServer)
-            return;
-
         scoreboard.GetComponent<ScoreTable>().DestroyScores();
         players = players.OrderBy(x => x.Value.kills).ToDictionary(x => x.Key, x => x.Value);
 
