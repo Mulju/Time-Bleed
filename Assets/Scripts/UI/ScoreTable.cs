@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
+using FishNet.Object;
 
-public class ScoreTable : MonoBehaviour
+public class ScoreTable : NetworkBehaviour
 {
     [SerializeField] private Transform _greenTeamContainer;
     [SerializeField] private Transform _redTeamContainer;
     [SerializeField] private Transform _entryTemplate;
 
+    [ObserversRpc]
     public void UpdateScore(string name, int kills, int deaths, int teamTag)
     {
         if (teamTag == 0)
@@ -25,8 +27,7 @@ public class ScoreTable : MonoBehaviour
         entryTransform.gameObject.SetActive(true);
         LayoutRebuilder.ForceRebuildLayoutImmediate(entryContainer.GetComponent<RectTransform>());
 
-        int rank = entryContainer.childCount;
-        string rankString = rank.ToString();
+        string rankString = (entryContainer.childCount / _entryTemplate.childCount).ToString();
 
         entryTransform.Find("InfoBox/Rank").GetComponent<TMPro.TextMeshProUGUI>().text = rankString;
         entryTransform.Find("InfoBox/Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
@@ -34,6 +35,7 @@ public class ScoreTable : MonoBehaviour
         entryTransform.Find("InfoBox/Deaths").GetComponent<TMPro.TextMeshProUGUI>().text = deaths.ToString();
     }
 
+    [ObserversRpc]
     public void DestroyScores()
     {
         foreach (Transform child in _greenTeamContainer)

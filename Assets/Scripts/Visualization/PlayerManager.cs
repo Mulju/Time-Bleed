@@ -283,7 +283,7 @@ public class PlayerManager : NetworkBehaviour
 
     void PlayerKilled(int playerID, int attackerID)
     {
-        if(playerKilledThisFrame)
+        if (playerKilledThisFrame)
         {
             // If PlayerKilled was called this frame, return. This prevents multikills.
             return;
@@ -314,7 +314,7 @@ public class PlayerManager : NetworkBehaviour
 
         // Debuggausta
         int playerIndex = 1;
-        foreach(KeyValuePair<int, Data.Player> pair in players)
+        foreach (KeyValuePair<int, Data.Player> pair in players)
         {
             Debug.Log("Player " + playerIndex + " Kills: " + pair.Value.kills + ", Deaths: " + pair.Value.deaths);
             playerIndex++;
@@ -395,9 +395,9 @@ public class PlayerManager : NetworkBehaviour
     {
         redKills = 0;
         greenKills = 0;
-        foreach(KeyValuePair<int, Data.Player> pair in players)
+        foreach (KeyValuePair<int, Data.Player> pair in players)
         {
-            if(pair.Value.teamTag == 0)
+            if (pair.Value.teamTag == 0)
             {
                 redKills += pair.Value.kills;
             }
@@ -408,10 +408,10 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [ObserversRpc]
     public void UpdateScoreboard()
     {
-        if (!base.IsServer) return;
+        if (!base.IsServer) 
+            return;
 
         scoreboard.GetComponent<ScoreTable>().DestroyScores();
         players = players.OrderBy(x => x.Value.kills).ToDictionary(x => x.Key, x => x.Value);
