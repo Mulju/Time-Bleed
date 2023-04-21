@@ -46,6 +46,7 @@ public class PlayerManager : NetworkBehaviour
     private bool playerKilledThisFrame = false;
 
     [SerializeField] private NetworkManager netManager;
+    [SerializeField] private LoadScene sceneLoader;
 
     private void Awake()
     {
@@ -438,6 +439,7 @@ public class PlayerManager : NetworkBehaviour
             foreach(KeyValuePair<int, Data.Player> pair in players)
             {
                 netManager.ServerManager.Kick(pair.Value.connection, KickReason.Unset);
+                ClientOnServerClose();
             }
 
             netManager.ServerManager.StopConnection(true);
@@ -446,5 +448,11 @@ public class PlayerManager : NetworkBehaviour
         {
             netManager.ClientManager.StopConnection();
         }
+    }
+
+    [ObserversRpc]
+    public void ClientOnServerClose()
+    {
+        sceneLoader.LoadMainMenu();
     }
 }
