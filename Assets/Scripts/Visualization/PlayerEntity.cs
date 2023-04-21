@@ -662,11 +662,15 @@ public class PlayerEntity : NetworkBehaviour
             {
                 if (!isScoped)
                 {
+                    float random = Random.Range(-recoil, recoil);
                     rotationX -= recoil * currentWeapon.recoilMultiplier;
+                    transform.rotation *= Quaternion.Euler(0, random * currentWeapon.recoilMultiplier, 0);
                 }
                 else if (isScoped)
                 {
+                    float random = Random.Range(-recoil, recoil);
                     rotationX -= recoil * currentWeapon.recoilMultiplierScoped;
+                    transform.rotation *= Quaternion.Euler(0, random * currentWeapon.recoilMultiplierScoped, 0);
                 }
             }
         }
