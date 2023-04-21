@@ -12,6 +12,8 @@ using System;
 using Random = UnityEngine.Random;
 using System.Linq;
 using UnityEditor;
+using LiteNetLib;
+using FishNet.Managing;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -43,6 +45,8 @@ public class PlayerManager : NetworkBehaviour
 
     private bool playerKilledThisFrame = false;
 
+    [SerializeField] private NetworkManager netManager;
+
     private void Awake()
     {
         instance = this;
@@ -56,11 +60,6 @@ public class PlayerManager : NetworkBehaviour
         {
             ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
         }
-
-        if(!base.IsServer)
-        {
-            ServerManager.OnServerConnectionState += ServerClosing;
-        }
     }
 
     public override void OnStopClient()
@@ -69,11 +68,6 @@ public class PlayerManager : NetworkBehaviour
         if (base.IsServer)
         {
             ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
-        }
-
-        if (!base.IsServer)
-        {
-            ServerManager.OnServerConnectionState -= ServerClosing;
         }
     }
 
@@ -437,8 +431,20 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    public void ServerClosing(ServerConnectionStateArgs args)
+    public void CloseServer()
     {
-        menuControl.DisconnectFromServer();
+        if (base.IsServer)
+        {
+            foreach(KeyValuePair<int, Data.Player> pair in players)
+            {
+                netManager.ServerManager.Kick(pair.Value.connection, KickReason.Unset);
+            }
+
+            netManager.ServerManager.StopConnection(true);
+        }
+        else
+        {
+            netManager.ClientManager.StopConnection();
+        }
     }
 }

@@ -2914,6 +2914,7 @@ MonoBehaviour:
   doorAnimator: {fileID: 0}
   redKills: 0
   greenKills: 0
+  netManager: {fileID: 0}
 --- !u!4 &918670145
 Transform:
   m_ObjectHideFlags: 0
@@ -10498,7 +10499,7 @@ PrefabInstance:
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
@@ -10529,7 +10530,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 477695111}
+      objectReference: {fileID: 918670144}
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -10568,7 +10569,7 @@ PrefabInstance:
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: LoadMainMenu
+      value: CloseServer
       objectReference: {fileID: 0}
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
@@ -10588,7 +10589,7 @@ PrefabInstance:
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: LoadScene, Assembly-CSharp
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}

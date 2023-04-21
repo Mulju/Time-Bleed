@@ -124,17 +124,4 @@ public class MenuControl : MonoBehaviour
     {
         networkManager.GetComponent<Tugboat>().SetClientAddress(clientAddress);
     }
-
-    public void DisconnectFromServer()
-    {
-        bool server = MatchManager.matchManager.IsBaseServer();
-        if(server)
-        {
-            netManager.ServerManager.StopConnection(true);
-        }
-        else
-        {
-            netManager.ClientManager.StopConnection();
-        }
-    }
 }
