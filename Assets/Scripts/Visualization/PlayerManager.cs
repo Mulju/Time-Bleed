@@ -47,6 +47,7 @@ public class PlayerManager : NetworkBehaviour
 
     [SerializeField] private NetworkManager netManager;
     [SerializeField] private LoadScene sceneLoader;
+    public TextMeshProUGUI scoreboardTimer;
 
     private void Awake()
     {

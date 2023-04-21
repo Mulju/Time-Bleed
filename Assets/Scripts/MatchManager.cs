@@ -153,6 +153,7 @@ public class MatchManager : NetworkBehaviour
 
             // Show scoreboard at the end of match
             DisplayScoreboard();
+            StartOwnEndTimer(20);
         }
     }
 
@@ -218,10 +219,36 @@ public class MatchManager : NetworkBehaviour
         currentMatchState = MatchState.STARTING;
     }
 
+    [ObserversRpc]
     private void DisplayScoreboard()
     {
+        menuControl.OpenEndMatchScoreboard(currentVictoryState);
+
         // Use currentVicoryState to display correct winning team
 
         // Somekind of end of match music here, possibly different for winning and losing team..?
+    }
+
+    [ObserversRpc]
+    public void StartOwnEndTimer(int waitTime)
+    {
+        playerManager.scoreboardTimer.gameObject.SetActive(true);
+        StartCoroutine(MatchEndTimer(waitTime));
+    }
+
+    IEnumerator MatchEndTimer(int waitTime)
+    {
+        while(waitTime >= 0)
+        {
+            playerManager.scoreboardTimer.text = "Match ends in\n" + waitTime;
+            yield return new WaitForSeconds(1);
+            waitTime--;
+        }
+        playerManager.scoreboardTimer.gameObject.SetActive(false);
+
+        if(base.IsServer)
+        {
+            playerManager.CloseServer();
+        }
     }
 }
