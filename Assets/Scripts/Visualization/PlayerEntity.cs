@@ -43,6 +43,8 @@ public class PlayerEntity : NetworkBehaviour
     public float chronadeTimer, chronadeCooldown;
     public float recoil;
 
+    private bool isCooking;
+    private float cookTimer;
     private float deployTimer;
     private bool isScoped;
 
@@ -178,6 +180,8 @@ public class PlayerEntity : NetworkBehaviour
         isScoped = false;
 
         deployTimer = 4f;
+        cookTimer = 0;
+        isCooking = false;
 
         timeBindCooldown = 10f;
         timeBindTimer = timeBindCooldown;
@@ -321,9 +325,16 @@ public class PlayerEntity : NetworkBehaviour
             TimeBindServer();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && cookTimer <= 2.5f)
         {
-            ThrowFragGrenadeServer();
+            cookTimer += Time.deltaTime;
+            isCooking = true;
+        }
+        else if((Input.GetKeyUp(KeyCode.E) || cookTimer >= 2.5f) && isCooking)
+        {
+            ThrowFragGrenadeServer(cookTimer);
+            cookTimer = 0;
+            isCooking = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -655,17 +666,18 @@ public class PlayerEntity : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void ThrowFragGrenadeServer()
+    public void ThrowFragGrenadeServer(float cookTime)
     {
-        ThrowFragGrenade();
+        ThrowFragGrenade(cookTime);
     }
 
     [ObserversRpc]
-    public void ThrowFragGrenade()
+    public void ThrowFragGrenade(float cookTime)
     {
         GameObject grenade = Instantiate(grenadePrefab, ammoSpawn.transform.position, Quaternion.identity);
         grenade.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 20, ForceMode.Impulse);
         grenade.GetComponent<Grenade>().ownerObject = gameObject;
+        grenade.GetComponent<Grenade>().cookTime = cookTime;
         Destroy(grenade, 10);
     }
 
