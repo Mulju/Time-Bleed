@@ -379,6 +379,7 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    [ObserversRpc]
     public void AddChronades(GameObject player)
     {
         int playerID = player.GetInstanceID();
