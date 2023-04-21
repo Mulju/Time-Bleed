@@ -448,6 +448,7 @@ public class PlayerManager : NetworkBehaviour
         else
         {
             netManager.ClientManager.StopConnection();
+            sceneLoader.LoadMainMenu();
         }
     }
 
@@ -455,11 +456,15 @@ public class PlayerManager : NetworkBehaviour
     {
         yield return new WaitForSeconds(1);
         netManager.ServerManager.StopConnection(true);
+        sceneLoader.LoadMainMenu();
     }
 
     [ObserversRpc]
     public void ClientOnServerClose()
     {
-        sceneLoader.LoadMainMenu();
+        if(!base.IsServer)
+        {
+            sceneLoader.LoadMainMenu();
+        }
     }
 }
