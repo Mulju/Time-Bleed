@@ -44,7 +44,7 @@ public class Grenade : MonoBehaviour
             timer += Time.deltaTime * 0.5f;
         }
 
-        if (timer >= 3f)
+        if (timer >= 2.5f)
         {
             if (gameObject.transform.localScale.x <= 0.5f)
             {
