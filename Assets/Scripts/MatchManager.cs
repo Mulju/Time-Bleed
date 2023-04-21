@@ -156,6 +156,11 @@ public class MatchManager : NetworkBehaviour
         }
     }
 
+    public bool IsBaseServer()
+    {
+        return base.IsServer;
+    }
+
     private void MoveChronadeSpawnServer(bool smth)
     {
         playerManager.TotalKills();

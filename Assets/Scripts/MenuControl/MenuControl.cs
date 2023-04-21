@@ -127,6 +127,14 @@ public class MenuControl : MonoBehaviour
 
     public void DisconnectFromServer()
     {
-        netManager.ClientManager.StopConnection();
+        bool server = MatchManager.matchManager.IsBaseServer();
+        if(server)
+        {
+            netManager.ServerManager.StopConnection(true);
+        }
+        else
+        {
+            netManager.ClientManager.StopConnection();
+        }
     }
 }
