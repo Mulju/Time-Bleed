@@ -437,11 +437,11 @@ public class PlayerManager : NetworkBehaviour
         if (base.IsServer)
         {
             ClientOnServerClose();
-            
+            /*
             foreach(KeyValuePair<int, Data.Player> pair in players)
             {
                 //netManager.ServerManager.Kick(pair.Value.connection, KickReason.Unset);
-            }
+            }*/
 
             StartCoroutine(KickClients());
         }
