@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ChronadePackController : NetworkBehaviour
 {
-    [SerializeField] private float respawnTime = 10f;
+    private float respawnTime = 10f;
     PlayerManager playerManager;
 
     private void OnTriggerEnter(Collider col)
