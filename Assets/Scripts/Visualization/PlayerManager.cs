@@ -464,6 +464,8 @@ public class PlayerManager : NetworkBehaviour
     {
         if(!base.IsServer)
         {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             sceneLoader.LoadMainMenu();
         }
     }
