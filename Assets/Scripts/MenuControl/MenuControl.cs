@@ -102,6 +102,11 @@ public class MenuControl : MonoBehaviour
 
     }
 
+    public void OpenEndMatchScoreboard()
+    {
+        scoreboard.SetActive(true);
+    }
+
     public void UpdateChronadeSlider(float fillAmount)
     {
         chronadeSlider.value = fillAmount;
