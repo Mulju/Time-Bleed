@@ -43,6 +43,7 @@ public class PlayerEntity : NetworkBehaviour
     public float chronadeTimer, chronadeCooldown;
     public float recoil;
 
+    private float cookTimer;
     private float deployTimer;
     private bool isScoped;
 
@@ -178,6 +179,7 @@ public class PlayerEntity : NetworkBehaviour
         isScoped = false;
 
         deployTimer = 4f;
+        cookTimer = 0;
 
         timeBindCooldown = 10f;
         timeBindTimer = timeBindCooldown;
