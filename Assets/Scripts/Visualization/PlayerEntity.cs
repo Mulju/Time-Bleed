@@ -106,6 +106,8 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject spawnForRayVisual;
     private MatchManager mManager;
 
+    [HideInInspector] public int amountOfChronades;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,

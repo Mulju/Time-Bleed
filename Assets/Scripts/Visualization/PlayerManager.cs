@@ -379,6 +379,13 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    public void AddChronades(GameObject player)
+    {
+        int playerID = player.GetInstanceID();
+
+        players[playerID].playerObject.GetComponent<PlayerEntity>().amountOfChronades = 3;
+    }
+
     [TargetRpc]
     public void UpdateHealthUI(NetworkConnection conn, GameObject player, int health)
     {

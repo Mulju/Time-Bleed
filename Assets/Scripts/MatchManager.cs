@@ -33,7 +33,7 @@ public class MatchManager : NetworkBehaviour
     [HideInInspector] [SyncVar] public VictoryState currentVictoryState = VictoryState.NONE;
     [SerializeField] private MenuControl menuControl;
     [SerializeField] private Transform[] chronadeSpawns;
-    private Transform nextChronadeSpawn;
+    [HideInInspector] public Transform nextChronadeSpawn;
     [SerializeField] private GameObject chronadePack;
 
     private void Awake()
@@ -176,40 +176,19 @@ public class MatchManager : NetworkBehaviour
         {
             // Chronade spawn on green base's side
 
-            // Testausta varten
-            nextChronadeSpawn.gameObject.SetActive(false);
-
-            // Oikeaa koodia
             nextChronadeSpawn = chronadeSpawns[2];
-
-            // Testausta
-            nextChronadeSpawn.gameObject.SetActive(true);
         }
         else if (redKills / totalKills > 0.4f && redKills / totalKills < 0.6f)
         {
             // Chronade spawn on middle
 
-            // Testausta varten
-            nextChronadeSpawn.gameObject.SetActive(false);
-
-            // Oikeaa koodia
             nextChronadeSpawn = chronadeSpawns[1];
-
-            // Testausta
-            nextChronadeSpawn.gameObject.SetActive(true);
         }
         else if (redKills / totalKills > 0.6f)
         {
             // Chronade spawn on red base's side
 
-            // Testausta varten
-            nextChronadeSpawn.gameObject.SetActive(false);
-
-            // Oikeaa koodia
             nextChronadeSpawn = chronadeSpawns[0];
-
-            // Testausta
-            nextChronadeSpawn.gameObject.SetActive(true);
         }
         menuControl.UpdateChronadeSlider(redKills / totalKills);
     }
