@@ -473,10 +473,11 @@ public class PlayerManager : NetworkBehaviour
     [ObserversRpc]
     public void ClientOnServerClose()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        
         if(!base.IsServer)
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
             sceneLoader.LoadMainMenu();
         }
     }
