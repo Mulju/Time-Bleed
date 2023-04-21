@@ -24,6 +24,7 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private GameObject networkManager;
     [SerializeField] private Slider chronadeSlider;
     [SerializeField] private NetworkManager netManager;
+    public Image[] chronadeImages;
 
     void Start()
     {

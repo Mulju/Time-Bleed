@@ -106,7 +106,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject spawnForRayVisual;
     private MatchManager mManager;
 
-    [HideInInspector] public int amountOfChronades;
+    [HideInInspector] public int amountOfChronades = 1;
 
     public override void OnStartClient()
     {
@@ -320,10 +320,17 @@ public class PlayerEntity : NetworkBehaviour
             ammoTMP.text = "Ammo - " + currentWeapon.ammoLeft;
         }
 
-        if (Input.GetKeyDown(KeyCode.G) && chronadeTimer >= chronadeCooldown)
+        if (Input.GetKeyDown(KeyCode.G) && amountOfChronades > 0)
         {
             ThrowGrenadeServer();
-            chronadeTimer = 0;
+            amountOfChronades--;
+            menuControl.chronadeImages[amountOfChronades].enabled = false;
+        }
+
+        // Refresh the number of shown chronades in the UI
+        for(int i = 0; i < amountOfChronades; i++)
+        {
+            menuControl.chronadeImages[i].enabled = true;
         }
 
         if (Input.GetKeyDown(KeyCode.F) && timeBindTimer >= timeBindCooldown)
