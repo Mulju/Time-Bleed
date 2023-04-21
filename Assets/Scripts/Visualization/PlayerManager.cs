@@ -68,20 +68,21 @@ public class PlayerManager : NetworkBehaviour
 
     private void Update()
     {
-        if (!base.IsServer)
-            return;
-        playerKilledThisFrame = false;
-
-        foreach (KeyValuePair<int, Data.Player> player in players)
+        if (base.IsServer)
         {
-            if (player.Value.playerObject == null)
-            {
-                continue;
-            }
+            playerKilledThisFrame = false;
 
-            if (player.Value.playerObject.transform.position.y < -10)
+            foreach (KeyValuePair<int, Data.Player> player in players)
             {
-                PlayerKilled(player.Key, player.Key);
+                if (player.Value.playerObject == null)
+                {
+                    continue;
+                }
+
+                if (player.Value.playerObject.transform.position.y < -10)
+                {
+                    PlayerKilled(player.Key, player.Key);
+                }
             }
         }
     }
@@ -408,15 +409,17 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [ObserversRpc]
     public void UpdateScoreboard()
     {
-        if (!base.IsServer)
-            return;
-
-        scoreboard.GetComponent<ScoreTable>().DestroyScores();
         players = players.OrderBy(x => x.Value.kills).ToDictionary(x => x.Key, x => x.Value);
 
+        LoopScores(players);
+    }
+
+    [ObserversRpc]
+    void LoopScores(Dictionary<int, Data.Player> players)
+    {
+        scoreboard.GetComponent<ScoreTable>().DestroyScores();
         foreach (KeyValuePair<int, Data.Player> pair in players)
         {
             scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag);
