@@ -10,6 +10,7 @@ public class Grenade : MonoBehaviour
     private int spheresCount;
 
     public GameObject ammoPrefab;
+    public float cookTime;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class Grenade : MonoBehaviour
     private void Start()
     {
         damage = 10;
+        timer = cookTime;
     }
 
     private void FixedUpdate()
@@ -42,7 +44,7 @@ public class Grenade : MonoBehaviour
             timer += Time.deltaTime * 0.5f;
         }
 
-        if (timer >= 1.5f)
+        if (timer >= 3f)
         {
             if (gameObject.transform.localScale.x <= 0.5f)
             {
@@ -50,7 +52,7 @@ public class Grenade : MonoBehaviour
             }
             else
             {
-                for (int i = 0; i < 40; i++)
+                for (int i = 0; i < 80; i++)
                 {
                     GameObject ammoInstance = Instantiate(ammoPrefab, transform.position, Quaternion.identity);
                     ammoInstance.GetComponent<AmmoController>().direction = (Random.insideUnitSphere).normalized;
