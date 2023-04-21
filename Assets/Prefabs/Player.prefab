@@ -2544,8 +2544,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6194882909332942132}
-  - component: {fileID: 6808332764299587851}
   - component: {fileID: 1039084294473399309}
+  - component: {fileID: 3085118864243967258}
   m_Layer: 0
   m_Name: LegsCollider
   m_TagString: PlayerLegs
@@ -2561,26 +2561,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4624184229804980156}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.75, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 506577464686389652}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6808332764299587851
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4624184229804980156}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1039084294473399309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2597,6 +2584,19 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 8492805507051383199}
   _networkObjectCache: {fileID: 8492805507051383199}
   player: {fileID: 823353294823369346}
+--- !u!135 &3085118864243967258
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4624184229804980156}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4712892159214924292
 GameObject:
   m_ObjectHideFlags: 0
@@ -3450,8 +3450,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2351270898527964168}
-  - component: {fileID: 4026320257893209386}
   - component: {fileID: 2811268005037733396}
+  - component: {fileID: 1185636566833342025}
   m_Layer: 0
   m_Name: TorsoCollider
   m_TagString: PlayerTorso
@@ -3474,19 +3474,6 @@ Transform:
   m_Father: {fileID: 506577464686389652}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4026320257893209386
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7546927272527773101}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2811268005037733396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3503,6 +3490,19 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 8492805507051383199}
   _networkObjectCache: {fileID: 8492805507051383199}
   player: {fileID: 823353294823369346}
+--- !u!135 &1185636566833342025
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7546927272527773101}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7649743490415317026
 GameObject:
   m_ObjectHideFlags: 0
@@ -3881,8 +3881,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2386755164627600278}
-  - component: {fileID: 6866384942037109182}
   - component: {fileID: 2961581922783317921}
+  - component: {fileID: 4565342249167630126}
   m_Layer: 0
   m_Name: HeadColliider
   m_TagString: PlayerHead
@@ -3898,26 +3898,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9146562055038387050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.775, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 506577464686389652}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6866384942037109182
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9146562055038387050}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2961581922783317921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3934,6 +3921,19 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 8492805507051383199}
   _networkObjectCache: {fileID: 8492805507051383199}
   player: {fileID: 823353294823369346}
+--- !u!135 &4565342249167630126
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9146562055038387050}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &143283848818634108
 PrefabInstance:
   m_ObjectHideFlags: 0

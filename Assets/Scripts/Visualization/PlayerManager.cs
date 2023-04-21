@@ -12,6 +12,8 @@ using System;
 using Random = UnityEngine.Random;
 using System.Linq;
 using UnityEditor;
+using LiteNetLib;
+using FishNet.Managing;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -36,11 +38,15 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private Animator doorAnimator;
     public event Action<bool> OnStartingMatch;
     public event Action<bool> OnPlayerKilled;
+    public event Action<ServerConnectionStateArgs> OnServerConnectionState;
 
     [HideInInspector]
     public int redKills, greenKills;
 
     private bool playerKilledThisFrame = false;
+
+    [SerializeField] private NetworkManager netManager;
+    [SerializeField] private LoadScene sceneLoader;
 
     private void Awake()
     {
@@ -423,6 +429,44 @@ public class PlayerManager : NetworkBehaviour
         foreach (KeyValuePair<int, Data.Player> pair in players)
         {
             scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag);
+        }
+    }
+
+    public void CloseServer()
+    {
+        if (base.IsServer)
+        {
+            ClientOnServerClose();
+            /*
+            foreach(KeyValuePair<int, Data.Player> pair in players)
+            {
+                //netManager.ServerManager.Kick(pair.Value.connection, KickReason.Unset);
+            }*/
+
+            StartCoroutine(KickClients());
+        }
+        else
+        {
+            netManager.ClientManager.StopConnection();
+            sceneLoader.LoadMainMenu();
+        }
+    }
+
+    IEnumerator KickClients()
+    {
+        yield return new WaitForSeconds(1);
+        netManager.ServerManager.StopConnection(true);
+        sceneLoader.LoadMainMenu();
+    }
+
+    [ObserversRpc]
+    public void ClientOnServerClose()
+    {
+        if(!base.IsServer)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            sceneLoader.LoadMainMenu();
         }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731397, g: 0.13414487, b: 0.12108168, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731427, g: 0.13414538, b: 0.121081874, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2914,6 +2914,8 @@ MonoBehaviour:
   doorAnimator: {fileID: 0}
   redKills: 0
   greenKills: 0
+  netManager: {fileID: 7443408888352835009}
+  sceneLoader: {fileID: 477695111}
 --- !u!4 &918670145
 Transform:
   m_ObjectHideFlags: 0
@@ -10529,7 +10531,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 477695111}
+      objectReference: {fileID: 918670144}
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -10568,7 +10570,7 @@ PrefabInstance:
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: LoadMainMenu
+      value: CloseServer
       objectReference: {fileID: 0}
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
@@ -10588,7 +10590,7 @@ PrefabInstance:
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: LoadScene, Assembly-CSharp
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5919794920599211420, guid: d1abc4fd7ef15e14b96a316ca76d2c82,
         type: 3}
