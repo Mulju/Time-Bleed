@@ -36,6 +36,7 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private Animator doorAnimator;
     public event Action<bool> OnStartingMatch;
     public event Action<bool> OnPlayerKilled;
+    public event Action<ServerConnectionStateArgs> OnServerConnectionState;
 
     [HideInInspector]
     public int redKills, greenKills;
@@ -55,6 +56,11 @@ public class PlayerManager : NetworkBehaviour
         {
             ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
         }
+
+        if(!base.IsServer)
+        {
+            ServerManager.OnServerConnectionState += ServerClosing;
+        }
     }
 
     public override void OnStopClient()
@@ -63,6 +69,11 @@ public class PlayerManager : NetworkBehaviour
         if (base.IsServer)
         {
             ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
+        }
+
+        if (!base.IsServer)
+        {
+            ServerManager.OnServerConnectionState -= ServerClosing;
         }
     }
 
@@ -424,5 +435,10 @@ public class PlayerManager : NetworkBehaviour
         {
             scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag);
         }
+    }
+
+    public void ServerClosing(ServerConnectionStateArgs args)
+    {
+        menuControl.DisconnectFromServer();
     }
 }
