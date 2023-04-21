@@ -26,7 +26,9 @@ public class ScoreTable : MonoBehaviour
         entryTransform.gameObject.SetActive(true);
         LayoutRebuilder.ForceRebuildLayoutImmediate(entryContainer.GetComponent<RectTransform>());
 
-        string rankString = (entryContainer.childCount / _entryTemplate.childCount).ToString();
+        string rankString;
+        int rank = entryTransform.GetSiblingIndex() + 1;
+        rankString = rank.ToString();
 
         entryTransform.Find("InfoBox/Rank").GetComponent<TMPro.TextMeshProUGUI>().text = rankString;
         entryTransform.Find("InfoBox/Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
