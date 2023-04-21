@@ -411,18 +411,18 @@ public class PlayerManager : NetworkBehaviour
 
     public void UpdateScoreboard()
     {
-        scoreboard.GetComponent<ScoreTable>().DestroyScores();
         players = players.OrderBy(x => x.Value.kills).ToDictionary(x => x.Key, x => x.Value);
 
-        foreach (KeyValuePair<int, Data.Player> pair in players)
-        {
-            LoopScores(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag);
-        }
+        LoopScores(players);
     }
 
     [ObserversRpc]
-    void LoopScores(string name, int kills, int deaths, int teamTag)
+    void LoopScores(Dictionary<int, Data.Player> players)
     {
-        scoreboard.GetComponent<ScoreTable>().UpdateScore(name, kills, deaths, teamTag);
+        scoreboard.GetComponent<ScoreTable>().DestroyScores();
+        foreach (KeyValuePair<int, Data.Player> pair in players)
+        {
+            scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag);
+        }
     }
 }
