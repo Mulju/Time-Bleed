@@ -7,13 +7,13 @@ public class Grenade : MonoBehaviour
     [HideInInspector] public GameObject ownerObject;
     private float timer;
     private int damage;
-    private bool isSlowed;
+    private int spheresCount;
 
     public GameObject ammoPrefab;
 
     private void Awake()
     {
-        isSlowed = false;
+        spheresCount = 0;
     }
 
     private void Start()
@@ -21,11 +21,19 @@ public class Grenade : MonoBehaviour
         damage = 10;
     }
 
+    private void FixedUpdate()
+    {
+        if (spheresCount > 0)
+        {
+            gameObject.GetComponent<Rigidbody>().AddForce(-Physics.gravity * 0.95f);
+        }
+    }
+
     private void Update()
     {
         
 
-        if(!isSlowed)
+        if(spheresCount == 0)
         {
             timer += Time.deltaTime;
         }
@@ -60,27 +68,25 @@ public class Grenade : MonoBehaviour
     {
         if(other.CompareTag("TimeSphere") && ownerObject != other.transform.parent?.gameObject)
         {
-            gameObject.GetComponent<Rigidbody>().velocity = new Vector3(gameObject.GetComponent<Rigidbody>().velocity.x * 0.05f, gameObject.GetComponent<Rigidbody>().velocity.y * 0.05f, gameObject.GetComponent<Rigidbody>().velocity.z * 0.05f);
-            
-            isSlowed = true;
-        }
-    }
+            if (spheresCount == 0)
+            {
+                gameObject.GetComponent<Rigidbody>().velocity = new Vector3(gameObject.GetComponent<Rigidbody>().velocity.x * 0.05f, gameObject.GetComponent<Rigidbody>().velocity.y * 0.05f, gameObject.GetComponent<Rigidbody>().velocity.z * 0.05f);
+            }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("TimeSphere") && ownerObject != other.transform.parent?.gameObject)
-        {
-            gameObject.GetComponent<Rigidbody>().AddForce(-Physics.gravity* 0.95f);
+            spheresCount++;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("TimeSphere") && ownerObject != other.transform.parent?.gameObject)
+        if (other.CompareTag("TimeSphere") && ownerObject != other.transform.parent?.gameObject )
         {
-            gameObject.GetComponent<Rigidbody>().velocity *= 20f;
+            spheresCount--;
 
-            isSlowed = false;
+            if(spheresCount == 0)
+            {
+                gameObject.GetComponent<Rigidbody>().velocity *= 20f;
+            }
         }
     }
 }
