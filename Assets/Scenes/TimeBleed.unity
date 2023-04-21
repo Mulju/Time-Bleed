@@ -3469,6 +3469,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &607125224 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6663133224811885259, guid: 187ef6a498595404e876aa5cbe59168a,
+    type: 3}
+  m_PrefabInstance: {fileID: 357906718}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &613402672 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 613402672, guid: 187ef6a498595404e876aa5cbe59168a,
@@ -4459,9 +4465,9 @@ MonoBehaviour:
   currentVictoryState: 0
   menuControl: {fileID: 477695109}
   chronadeSpawns:
-  - {fileID: 0}
+  - {fileID: 607125224}
   - {fileID: 357906723}
-  - {fileID: 0}
+  - {fileID: 1828857440}
   nextChronadeSpawn: {fileID: 0}
   chronadePack: {fileID: 0}
 --- !u!1 &922311959
@@ -6059,6 +6065,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801307586}
   m_CullTransparentMesh: 1
+--- !u!4 &1828857440 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1278124563518946675, guid: 187ef6a498595404e876aa5cbe59168a,
+    type: 3}
+  m_PrefabInstance: {fileID: 357906718}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1890032542 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 875043010141327225, guid: e44379750f6f2d8468d7df5eb8d1afc0,
