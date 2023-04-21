@@ -1099,6 +1099,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b61bf1d86616c4e15b9f40c1ed65a3bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   _greenTeamContainer: {fileID: 6913215095749717959}
   _redTeamContainer: {fileID: 0}
   _entryTemplate: {fileID: 6357876149050716813, guid: b79f9d6f76ab0471993fe07c7bae0e2d,
