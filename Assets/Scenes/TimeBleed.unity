@@ -3291,6 +3291,10 @@ MonoBehaviour:
   networkManager: {fileID: 7443408888352835008}
   chronadeSlider: {fileID: 891700410}
   netManager: {fileID: 7443408888352835009}
+  chronadeImages:
+  - {fileID: 1341017552}
+  - {fileID: 531750830}
+  - {fileID: 1515112186}
 --- !u!4 &477695110
 Transform:
   m_ObjectHideFlags: 0
@@ -3331,7 +3335,7 @@ GameObject:
   - component: {fileID: 531750830}
   m_Layer: 5
   m_Name: ChronadeImage (1)
-  m_TagString: ChronadeImageUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5297,7 +5301,7 @@ GameObject:
   - component: {fileID: 1341017552}
   m_Layer: 5
   m_Name: ChronadeImage
-  m_TagString: ChronadeImageUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5662,7 +5666,7 @@ GameObject:
   - component: {fileID: 1515112186}
   m_Layer: 5
   m_Name: ChronadeImage (2)
-  m_TagString: ChronadeImageUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
