@@ -217,6 +217,7 @@ public class PlayerEntity : NetworkBehaviour
         if (mManager.currentMatchState == MatchManager.MatchState.MATCH_ENDED)
         {
             // Match ended
+            menuControl.OpenEndMatchScoreboard();
             return;
         }
 
