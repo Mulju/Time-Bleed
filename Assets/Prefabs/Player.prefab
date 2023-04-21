@@ -301,7 +301,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 2
+  <PrefabId>k__BackingField: 5
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -454,6 +454,7 @@ MonoBehaviour:
   rayCastVisual: {fileID: 2156424342420177019, guid: c5f83424ec9924f42847ce35b5afd510,
     type: 3}
   spawnForRayVisual: {fileID: 4712892159214924292}
+  amountOfChronades: 1
 --- !u!1 &1089226758376165242
 GameObject:
   m_ObjectHideFlags: 0

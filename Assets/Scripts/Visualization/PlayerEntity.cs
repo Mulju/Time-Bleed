@@ -106,7 +106,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject spawnForRayVisual;
     private MatchManager mManager;
 
-    [HideInInspector] public int amountOfChronades = 1;
+    public int amountOfChronades = 1;
 
     public override void OnStartClient()
     {
