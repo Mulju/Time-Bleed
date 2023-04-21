@@ -17,6 +17,8 @@ public class ChronoGrenade : MonoBehaviour
 
         if (timer >= 2f)
         {
+            
+
             gameObject.GetComponent<Renderer>().material.color = new Color(gameObject.GetComponent<Renderer>().material.color.r,
                                                                            gameObject.GetComponent<Renderer>().material.color.g,
                                                                            gameObject.GetComponent<Renderer>().material.color.b, 0.4f);
