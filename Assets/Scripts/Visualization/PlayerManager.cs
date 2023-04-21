@@ -438,7 +438,7 @@ public class PlayerManager : NetworkBehaviour
         {
             foreach(KeyValuePair<int, Data.Player> pair in players)
             {
-                netManager.ServerManager.Kick(pair.Value.connection, KickReason.Unset);
+                //netManager.ServerManager.Kick(pair.Value.connection, KickReason.Unset);
                 ClientOnServerClose();
             }
 
