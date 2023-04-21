@@ -408,6 +408,7 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    [ServerRpc]
     public void UpdateScoreboard()
     {
         if (!base.IsServer) 
