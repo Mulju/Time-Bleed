@@ -386,7 +386,7 @@ public class PlayerEntity : NetworkBehaviour
             currentWeaponPrefab = shotgunPrefab;
         }
         currentWeaponPrefab.SetActive(true);
-
+        animator = currentWeaponPrefab.GetComponent<Animator>();
 
         if (isScoped && currentWeapon == weaponDictionary.weapons["rifle"])
         {

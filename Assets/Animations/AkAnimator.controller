@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 212e1448a791c4005a89777d6b08fef5, type: 2}
+  m_Motion: {fileID: 7400000, guid: 23abd0f1a240be84eb015d5edf92b7f8, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -41,7 +41,7 @@ AnimatorStateMachine:
     m_Position: {x: 240, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2429245472559989047}
-    m_Position: {x: 430, y: 130, z: 0}
+    m_Position: {x: 340, y: 210, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -58,7 +58,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Gun
+  m_Name: AkAnimator
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Reloading
@@ -101,7 +101,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ebc9c8d56feb844dab9bfaadf0966e9f, type: 2}
+  m_Motion: {fileID: 7400000, guid: ccc5b6b3ac74f2f45a71e628fdc3f0d7, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
