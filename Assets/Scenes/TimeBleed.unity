@@ -3444,6 +3444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 602090659}
+  - component: {fileID: 602090660}
   m_Layer: 0
   m_Name: ManagerObjects
   m_TagString: Untagged
@@ -3466,9 +3467,62 @@ Transform:
   - {fileID: 918670145}
   - {fileID: 932175379}
   - {fileID: 477695110}
+  - {fileID: 2019315827}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &602090660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602090658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 0
+  <PredictedSpawn>k__BackingField: {fileID: 0}
+  _networkBehaviours:
+  - {fileID: 2019315826}
+  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ChildNetworkObjects>k__BackingField:
+  - {fileID: 918670143}
+  - {fileID: 932175377}
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 0
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 606160979
+  <SceneId>k__BackingField: 2603441583766829239
+  <AssetPathHash>k__BackingField: 0
+  _sceneNetworkObjects:
+  - {fileID: 602090660}
+  - {fileID: 3687454}
+  - {fileID: 221761316}
+  - {fileID: 357906719}
+  - {fileID: 357906720}
+  - {fileID: 357906721}
+  - {fileID: 357906724}
+  - {fileID: 474995920}
+  - {fileID: 562715416}
+  - {fileID: 631396738}
+  - {fileID: 698320091}
+  - {fileID: 918670143}
+  - {fileID: 932175377}
+  - {fileID: 1049280331}
+  - {fileID: 1088267602}
+  - {fileID: 1607746344}
+  - {fileID: 1674640280}
+  - {fileID: 1962064014}
+  - {fileID: 2062295356}
+  - {fileID: 2062865872}
 --- !u!4 &607125224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6663133224811885259, guid: 187ef6a498595404e876aa5cbe59168a,
@@ -4356,12 +4410,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsNested>k__BackingField: 0
-  <ComponentIndex>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 1
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 918670144}
   - {fileID: 918670146}
-  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ParentNetworkObject>k__BackingField: {fileID: 602090660}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
   _isGlobal: 0
@@ -4577,11 +4631,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsNested>k__BackingField: 0
-  <ComponentIndex>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 2
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 932175378}
-  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ParentNetworkObject>k__BackingField: {fileID: 602090660}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
   _isGlobal: 0
@@ -6279,6 +6333,55 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 468206675}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2019315825
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2019315827}
+  - component: {fileID: 2019315826}
+  m_Layer: 0
+  m_Name: TimeSphereSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2019315826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019315825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc46d291ca9f104bafe27d678724fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 602090660}
+  _networkObjectCache: {fileID: 602090660}
+  timeBind: {fileID: 1468988365436106985, guid: 65cfa5f02f9c5fb4db268eb315dede74,
+    type: 3}
+--- !u!4 &2019315827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019315825}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 602090659}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2062295356 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2189134195500999944, guid: 187ef6a498595404e876aa5cbe59168a,
