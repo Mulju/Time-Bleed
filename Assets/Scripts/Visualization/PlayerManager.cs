@@ -312,13 +312,15 @@ public class PlayerManager : NetworkBehaviour
 
         if (players[playerID].teamTag == 0)
         {
-            // Respawn at red team's base
+            // Respawn at red team's base and reduce 1 second from the clock
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, redSpawnPoints.Count), players[playerID].teamTag);
+            MatchManager.matchManager.redClock.OwnTeamPlayerKilled();
         }
         else
         {
-            // Respawn at green team's base
+            // Respawn at green team's base and reduce 1 second from the clock
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, greenSpawnPoints.Count), players[playerID].teamTag);
+            MatchManager.matchManager.greenClock.OwnTeamPlayerKilled();
         }
         players[playerID].health = maxHealth;
 
