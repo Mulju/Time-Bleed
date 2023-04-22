@@ -108,6 +108,7 @@ public class MatchManager : NetworkBehaviour
         {
             // Run only when the match starts and swap to IN_PROGRESS
             playerManager.StartingMatchServer();
+            MoveChronadeSpawnServer(true);
             currentMatchState = MatchState.IN_PROGRESS;
         }
 
