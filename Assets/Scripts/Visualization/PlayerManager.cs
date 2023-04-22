@@ -362,7 +362,7 @@ public class PlayerManager : NetworkBehaviour
             // Respawn at green team's base
             player.transform.position = greenSpawnPoints[spawn].position;
         }
-        
+
         player.GetComponent<PlayerEntity>().amountOfChronades = 1;
         for (int i = 1; i < 3; i++)
         {
@@ -453,6 +453,7 @@ public class PlayerManager : NetworkBehaviour
         {
             scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag);
         }
+        scoreboard.GetComponent<ScoreTable>().UpdateBoard(redKills, greenKills);
     }
 
     public void CloseServer()
@@ -487,8 +488,8 @@ public class PlayerManager : NetworkBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        
-        if(!base.IsServer)
+
+        if (!base.IsServer)
         {
             sceneLoader.LoadMainMenu();
         }
