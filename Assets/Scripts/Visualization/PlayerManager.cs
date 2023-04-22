@@ -305,7 +305,7 @@ public class PlayerManager : NetworkBehaviour
         if (attackerID != playerID)
         {
             players[attackerID].kills++;
-            OnPlayerKilled.Invoke(true);
+            OnPlayerKilled.Invoke(false);
         }
         players[playerID].deaths++;
         players[playerID].health = maxHealth;
