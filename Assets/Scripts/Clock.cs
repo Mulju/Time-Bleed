@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using UnityEditor;
 
 public class Clock : NetworkBehaviour
 {
@@ -16,6 +17,7 @@ public class Clock : NetworkBehaviour
     
     public int teamIdentifier;
     private MatchManager mManager;
+    [HideInInspector] public int playersKilled = 0;
 
     public override void OnStartClient()
     {
@@ -56,7 +58,9 @@ public class Clock : NetworkBehaviour
     public void UpdateClockServer()
     {
         // Turn clock handle
-        rotation += 6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime;
+        // First one turns 6 degrees every second, second one turns 60 degrees (equivalent to 10 seconds on a clock) when hit by a chronade
+        // and the last one turn and extra 6 degrees if a player died.
+        rotation += 6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime;
 
         // Need to round up or down to display it nicely
         remainingSeconds = 60 - rotation / 6;
@@ -97,7 +101,7 @@ public class Clock : NetworkBehaviour
             collision.gameObject.GetComponent<ChronoGrenade>().ownerObject.GetComponent<PlayerEntity>().ownTeamTag != teamIdentifier)
         {
             hitChronades++;
-            StartCoroutine(GrenadeTimer());
+            StartCoroutine(ClockTimer(true));
 
             // Destroy the grenade
             Destroy(collision.gameObject);
@@ -106,7 +110,13 @@ public class Clock : NetworkBehaviour
         }
     }
 
-    IEnumerator GrenadeTimer()
+    public void OwnTeamPlayerKilled()
+    {
+        playersKilled++;
+        StartCoroutine(ClockTimer(false));
+    }
+
+    IEnumerator ClockTimer(bool isChronade)
     {
         float remainingTime = 1;
 
@@ -116,6 +126,13 @@ public class Clock : NetworkBehaviour
             yield return null;
         }
 
-        hitChronades--;
+        if(isChronade)
+        {
+            hitChronades--;
+        }
+        else
+        {
+            playersKilled--;
+        }
     }
 }
