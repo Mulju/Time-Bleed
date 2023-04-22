@@ -33,9 +33,9 @@ public class Grenade : MonoBehaviour
 
     private void Update()
     {
-        
+        gameObject.transform.Rotate(2f, 2f, 2f);
 
-        if(spheresCount == 0)
+        if (spheresCount == 0)
         {
             timer += Time.deltaTime;
         }
