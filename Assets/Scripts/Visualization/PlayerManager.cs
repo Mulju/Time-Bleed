@@ -206,6 +206,9 @@ public class PlayerManager : NetworkBehaviour
         // Display a timer for match start
         StartMatch();
 
+        // Reset the scoreboards
+        UpdateScoreboard();
+
         // Reset / start the teams clocks after spawn doors open
 
         // After start timer is finished, change match state to in progress. Might not need this. MatchManager's update does this for now.
