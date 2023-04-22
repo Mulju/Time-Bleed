@@ -194,10 +194,7 @@ public class PlayerEntity : NetworkBehaviour
         timeBindCooldown = 10f;
         timeBindTimer = timeBindCooldown;
 
-        chronadeCooldown = 5f;
-        chronadeTimer = chronadeCooldown;
-
-        grenadeCooldown = 5f;
+        grenadeCooldown = 10f;
         grenadeTimer = grenadeCooldown;
 
         reloading = false;
@@ -254,6 +251,11 @@ public class PlayerEntity : NetworkBehaviour
         if (chronadeTimer < chronadeCooldown)
         {
             chronadeTimer += Time.deltaTime;
+        }
+
+        if (grenadeTimer < grenadeCooldown)
+        {
+            grenadeTimer += Time.deltaTime;
         }
 
         if (shootTimer < 2)
@@ -324,7 +326,7 @@ public class PlayerEntity : NetworkBehaviour
             ammoTMP.text = "Ammo - " + currentWeapon.ammoLeft;
         }
 
-        if (Input.GetKeyDown(KeyCode.G) && amountOfChronades > 0)
+        if (Input.GetKeyDown(KeyCode.E) && amountOfChronades > 0)
         {
             ThrowGrenadeServer();
             amountOfChronades--;
@@ -337,22 +339,23 @@ public class PlayerEntity : NetworkBehaviour
             menuControl.chronadeImages[i].enabled = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && timeBindTimer >= timeBindCooldown)
+        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown)
         {
             timeBindTimer = 0;
             TimeBindServer();
         }
 
-        if (Input.GetKey(KeyCode.E) && cookTimer <= 2.5f)
+        if (Input.GetKey(KeyCode.G) && cookTimer <= 2.5f && grenadeTimer >= grenadeCooldown)
         {
             cookTimer += Time.deltaTime;
             isCooking = true;
         }
-        else if((Input.GetKeyUp(KeyCode.E) || cookTimer >= 2.5f) && isCooking)
+        else if((Input.GetKeyUp(KeyCode.G) || cookTimer >= 2.5f) && isCooking)
         {
             ThrowFragGrenadeServer(cookTimer);
             cookTimer = 0;
             isCooking = false;
+            grenadeTimer = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
