@@ -163,10 +163,18 @@ public class MatchManager : NetworkBehaviour
         return base.IsServer;
     }
 
-    private void MoveChronadeSpawnServer(bool smth)
+    private void MoveChronadeSpawnServer(bool isAtStart)
     {
         playerManager.TotalKills();
         float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;
+
+        if(isAtStart)
+        {
+            // To make the correct visual at the start of the match
+            redKills = 1;
+            totalKills = 2;
+        }
+
         MoveChronadeSpawn(redKills, totalKills);
     }
 
