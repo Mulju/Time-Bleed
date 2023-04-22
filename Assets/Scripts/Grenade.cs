@@ -19,7 +19,7 @@ public class Grenade : MonoBehaviour
 
     private void Start()
     {
-        damage = 10;
+        damage = 25;
         timer = cookTime;
     }
 
