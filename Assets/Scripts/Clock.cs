@@ -13,7 +13,7 @@ public class Clock : NetworkBehaviour
     private int hitChronades = 0;
 
     [SyncVar] public float rotation;
-    [SyncVar] public float remainingSeconds = 60, remainingMinutes = 1, remainingTime = 120;
+    [SyncVar] public float remainingSeconds = 60, remainingMinutes = 14, remainingTime = 900;
     
     public int teamIdentifier;
     private MatchManager mManager;
