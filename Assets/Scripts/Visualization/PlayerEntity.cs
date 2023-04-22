@@ -45,6 +45,7 @@ public class PlayerEntity : NetworkBehaviour
     public float shootTimer;
     public float timeBindTimer, timeBindCooldown;
     public float chronadeTimer, chronadeCooldown;
+    public float grenadeTimer, grenadeCooldown;
     public float recoil;
 
     private bool isCooking;
@@ -195,6 +196,9 @@ public class PlayerEntity : NetworkBehaviour
 
         chronadeCooldown = 5f;
         chronadeTimer = chronadeCooldown;
+
+        grenadeCooldown = 5f;
+        grenadeTimer = grenadeCooldown;
 
         reloading = false;
 
