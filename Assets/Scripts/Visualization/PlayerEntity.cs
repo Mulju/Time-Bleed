@@ -29,6 +29,9 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject shotgunPrefab;
     private GameObject currentWeaponPrefab;
 
+    public Image timeBindUI;
+    public Image GrenadeUI;
+
     public GameObject gunPosition;
 
     private Coroutine aimDownSightInstance;
@@ -134,6 +137,9 @@ public class PlayerEntity : NetworkBehaviour
             currentWeaponPrefab = riflePrefab;
 
             shootTimer = 3;
+
+            timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
+            GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
         }
 
         // This part is run for all the entities in the scene if you are the server.
@@ -246,6 +252,7 @@ public class PlayerEntity : NetworkBehaviour
         if (timeBindTimer < timeBindCooldown)
         {
             timeBindTimer += Time.deltaTime;
+            timeBindUI.fillAmount -= Time.deltaTime / 10f;
         }
 
         if (chronadeTimer < chronadeCooldown)
@@ -256,6 +263,7 @@ public class PlayerEntity : NetworkBehaviour
         if (grenadeTimer < grenadeCooldown)
         {
             grenadeTimer += Time.deltaTime;
+            GrenadeUI.fillAmount -= Time.deltaTime / 10f;
         }
 
         if (shootTimer < 2)
@@ -343,6 +351,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             timeBindTimer = 0;
             TimeBindServer();
+            timeBindUI.fillAmount = 1;
         }
 
         if (Input.GetKey(KeyCode.G) && cookTimer <= 2.5f && grenadeTimer >= grenadeCooldown)
@@ -356,6 +365,7 @@ public class PlayerEntity : NetworkBehaviour
             cookTimer = 0;
             isCooking = false;
             grenadeTimer = 0;
+            GrenadeUI.fillAmount = 1;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
