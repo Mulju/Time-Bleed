@@ -311,7 +311,6 @@ public class PlayerManager : NetworkBehaviour
             OnPlayerKilled.Invoke(false);
         }
         players[playerID].deaths++;
-        players[playerID].health = maxHealth;
 
         if (players[playerID].teamTag == 0)
         {
@@ -325,8 +324,6 @@ public class PlayerManager : NetworkBehaviour
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, greenSpawnPoints.Count), players[playerID].teamTag);
             MatchManager.matchManager.greenClock.OwnTeamPlayerKilled();
         }
-        players[playerID].health = maxHealth;
-
 
         // Debuggausta
         int playerIndex = 1;
