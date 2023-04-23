@@ -112,6 +112,8 @@ public class PlayerEntity : NetworkBehaviour
 
     public int amountOfChronades = 1;
 
+    private LayerMask layerMask;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -219,6 +221,8 @@ public class PlayerEntity : NetworkBehaviour
         ammoTMP = GameObject.FindGameObjectWithTag("UIAmmo").GetComponent<TextMeshProUGUI>();
 
         damageIndicatorParent = GameObject.Find("DmgIndicatorHolder");
+
+        layerMask = LayerMask.GetMask("Player", "Terrain", "Water", "Default");
     }
 
     private void FixedUpdate()
@@ -602,7 +606,7 @@ public class PlayerEntity : NetworkBehaviour
             direction = new Vector3(shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.x + x, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.y + y, shooter.GetComponent<PlayerEntity>().gunRotator.transform.forward.z + z).normalized;
         }
 
-        if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity, layerMask))
         {
             if (!ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
@@ -632,7 +636,7 @@ public class PlayerEntity : NetworkBehaviour
             }
             if (ammoSpawn.GetComponent<AmmoSpawn>().isInsideTerrain)
             {
-                if (Physics.Raycast(startPos, direction, out RaycastHit bulletHit, Mathf.Infinity))
+                if (Physics.Raycast(startPos, direction, out RaycastHit bulletHit, Mathf.Infinity, layerMask))
                 {
                     GameObject instantiatedHole = Instantiate(bulletHole, bulletHit.point + bulletHit.normal * 0.0001f, Quaternion.LookRotation(bulletHit.normal));
                     Destroy(instantiatedHole, 10);

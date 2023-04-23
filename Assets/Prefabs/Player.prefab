@@ -416,6 +416,8 @@ MonoBehaviour:
   riflePrefab: {fileID: 5962483186718637044}
   sniperPrefab: {fileID: 8093167823172772047}
   shotgunPrefab: {fileID: 953745210984075309}
+  timeBindUI: {fileID: 0}
+  GrenadeUI: {fileID: 0}
   gunPosition: {fileID: 6284607029874420582}
   animator: {fileID: 3471599852001674791}
   timeSlow: 0
@@ -424,6 +426,8 @@ MonoBehaviour:
   timeBindCooldown: 0
   chronadeTimer: 0
   chronadeCooldown: 0
+  grenadeTimer: 0
+  grenadeCooldown: 0
   recoil: 0
   timeSpeed: 0
   headDamage: 2
@@ -2547,7 +2551,7 @@ GameObject:
   - component: {fileID: 6194882909332942132}
   - component: {fileID: 1039084294473399309}
   - component: {fileID: 3085118864243967258}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LegsCollider
   m_TagString: PlayerLegs
   m_Icon: {fileID: 0}
@@ -2921,7 +2925,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 506577464686389652}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3453,7 +3457,7 @@ GameObject:
   - component: {fileID: 2351270898527964168}
   - component: {fileID: 2811268005037733396}
   - component: {fileID: 1185636566833342025}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TorsoCollider
   m_TagString: PlayerTorso
   m_Icon: {fileID: 0}
@@ -3884,7 +3888,7 @@ GameObject:
   - component: {fileID: 2386755164627600278}
   - component: {fileID: 2961581922783317921}
   - component: {fileID: 4565342249167630126}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HeadColliider
   m_TagString: PlayerHead
   m_Icon: {fileID: 0}

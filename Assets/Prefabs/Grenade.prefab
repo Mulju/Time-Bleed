@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6010927597893743525}
   - component: {fileID: 9169890840491694170}
   - component: {fileID: 7418726168846008146}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grenade
   m_TagString: Grenade
   m_Icon: {fileID: 0}
@@ -131,6 +131,7 @@ MonoBehaviour:
   ownerObject: {fileID: 0}
   ammoPrefab: {fileID: 5890851403942761072, guid: 2ef6ebce66a47a540b8397bdaa991d8f,
     type: 3}
+  cookTime: 0
 --- !u!75 &7418726168846008146
 ConstantForce:
   m_ObjectHideFlags: 0

@@ -27,14 +27,17 @@ public class AmmoController : MonoBehaviour
     [SerializeField] private GameObject playerHitEffect;
 
     [SerializeField] private GameObject rayCastVisual;
+    private LayerMask layerMask;
 
     // Start is called before the first frame update
     void Start()
     {
         timeSlowed = 0.2f;
         timeNotSlowed = 100f;
+        layerMask = LayerMask.GetMask("Player", "Terrain", "Water", "Default");
 
         CheckForCollisions();
+
     }
 
     private void FixedUpdate()
@@ -48,7 +51,7 @@ public class AmmoController : MonoBehaviour
     {
         if (ammoSpeed == timeNotSlowed)
         {
-            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
+            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity, layerMask))
             {
                 // Line visual for the shot
                 LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
@@ -146,7 +149,7 @@ public class AmmoController : MonoBehaviour
 
     private void CheckForCollisions()
     {
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity, layerMask))
         {
             raycastHit = hit;
             objHitByRaycast = hit.point;
