@@ -44,44 +44,37 @@ public class ScoreTable : MonoBehaviour
         float greenMinutes = _matchManager.greenClock.remainingMinutes;
         float greenSeconds = _matchManager.greenClock.remainingSeconds == 0 ? 0 : Mathf.Floor(_matchManager.greenClock.remainingSeconds);
 
+        string timeText;
         if (greenMinutes < 10)
-        {
-            _greenTime.Find("Minutes").GetComponent<TMPro.TextMeshProUGUI>().text = "0" + greenMinutes + ":";
-        }
+            timeText = "0" + greenMinutes + ":";
         else
-        {
-            _greenTime.Find("Minutes").GetComponent<TMPro.TextMeshProUGUI>().text = greenMinutes + ":";
-        }
+            timeText = greenMinutes + ":";
+
+        _greenTime.Find("Minutes").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
 
         if (greenSeconds < 10)
-        {
-            _greenTime.Find("Seconds").GetComponent<TMPro.TextMeshProUGUI>().text = "0" + greenSeconds;
-        }
+            timeText = "0" + greenSeconds;
         else
-        {
-            _greenTime.Find("Seconds").GetComponent<TMPro.TextMeshProUGUI>().text = greenSeconds.ToString();
-        }
+            timeText = greenSeconds.ToString();
+
+        _greenTime.Find("Seconds").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
 
         float redMinutes = _matchManager.redClock.remainingMinutes;
         float redSeconds = _matchManager.redClock.remainingSeconds == 0 ? 0 : Mathf.Floor(_matchManager.redClock.remainingSeconds);
 
         if (redMinutes < 10)
-        {
-            _redTime.Find("Minutes").GetComponent<TMPro.TextMeshProUGUI>().text = "0" + redMinutes + ":";
-        }
+            timeText = "0" + redMinutes + ":";
         else
-        {
-            _redTime.Find("Minutes").GetComponent<TMPro.TextMeshProUGUI>().text = redMinutes + ":";
-        }
+            timeText = redMinutes + ":";
+
+        _redTime.Find("Minutes").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
 
         if (redSeconds < 10)
-        {
-            _redTime.Find("Seconds").GetComponent<TMPro.TextMeshProUGUI>().text = "0" + redSeconds;
-        }
+            timeText = "0" + redSeconds;
         else
-        {
-            _redTime.Find("Seconds").GetComponent<TMPro.TextMeshProUGUI>().text = redSeconds.ToString();
-        }
+            timeText = redSeconds.ToString();
+
+        _redTime.Find("Seconds").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
     }
 
     public void UpdateBoard(int redKills, int greenKills)
