@@ -41,38 +41,28 @@ public class ScoreTable : MonoBehaviour
 
     public void UpdateTime()
     {
+        string timeText;
+
         float greenMinutes = _matchManager.greenClock.remainingMinutes;
         float greenSeconds = _matchManager.greenClock.remainingSeconds == 0 ? 0 : Mathf.Floor(_matchManager.greenClock.remainingSeconds);
 
-        string timeText;
-        if (greenMinutes < 10)
-            timeText = "0" + greenMinutes + ":";
-        else
-            timeText = greenMinutes + ":";
+        timeText = (greenMinutes < 10 ? "0" + greenMinutes + ":" : greenMinutes + ":");
 
         _greenTime.Find("Minutes").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
 
-        if (greenSeconds < 10)
-            timeText = "0" + greenSeconds;
-        else
-            timeText = greenSeconds.ToString();
+        timeText = (greenSeconds < 10 ? "0" + greenSeconds : greenSeconds.ToString());
 
         _greenTime.Find("Seconds").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
+
 
         float redMinutes = _matchManager.redClock.remainingMinutes;
         float redSeconds = _matchManager.redClock.remainingSeconds == 0 ? 0 : Mathf.Floor(_matchManager.redClock.remainingSeconds);
 
-        if (redMinutes < 10)
-            timeText = "0" + redMinutes + ":";
-        else
-            timeText = redMinutes + ":";
+        timeText = (redMinutes < 10 ? "0" + redMinutes + ":" : redMinutes + ":");
 
         _redTime.Find("Minutes").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
 
-        if (redSeconds < 10)
-            timeText = "0" + redSeconds;
-        else
-            timeText = redSeconds.ToString();
+        timeText = (redSeconds < 10 ? "0" + redSeconds : redSeconds.ToString());
 
         _redTime.Find("Seconds").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
     }

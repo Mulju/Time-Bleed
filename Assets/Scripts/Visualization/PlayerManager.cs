@@ -442,11 +442,11 @@ public class PlayerManager : NetworkBehaviour
     {
         players = players.OrderBy(x => x.Value.kills).ToDictionary(x => x.Key, x => x.Value);
 
-        LoopScores(players);
+        LoopScores(players, redKills, greenKills);
     }
 
     [ObserversRpc]
-    void LoopScores(Dictionary<int, Data.Player> players)
+    void LoopScores(Dictionary<int, Data.Player> players, int redKills, int greenKills)
     {
         scoreboard.GetComponent<ScoreTable>().DestroyScores();
         foreach (KeyValuePair<int, Data.Player> pair in players)
