@@ -198,7 +198,7 @@ public class MatchManager : NetworkBehaviour
             // Chronade spawn on red base's side
             nextChronadeSpawn = chronadeSpawns[0];
         }
-        OnStartMoveChronadePack.Invoke(true);
+        //matchManager.OnStartMoveChronadePack.Invoke(true);
         menuControl.UpdateChronadeSlider(redKills / totalKills);
     }
 
