@@ -251,7 +251,7 @@ public class PlayerManager : NetworkBehaviour
         }
         OnStartingMatch.Invoke(true);
 
-        
+
         // Reset the clock timers
         MatchManager.matchManager.redClock.rotation = 0;
         MatchManager.matchManager.redClock.remainingSeconds = 60;
@@ -445,6 +445,7 @@ public class PlayerManager : NetworkBehaviour
 
         players = players.Reverse().ToDictionary(x => x.Key, x => x.Value);
 
+        TotalKills();
         LoopScores(players, redKills, greenKills);
     }
 
