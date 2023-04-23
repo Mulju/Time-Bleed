@@ -445,6 +445,7 @@ public class PlayerManager : NetworkBehaviour
 
         players = players.Reverse().ToDictionary(x => x.Key, x => x.Value);
 
+        TotalKills();
         LoopScores(players, redKills, greenKills);
     }
 
