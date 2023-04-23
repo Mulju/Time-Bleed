@@ -144,6 +144,8 @@ public class PlayerManager : NetworkBehaviour
         {
             ChangePlayerTeam(pair.Value);
         }
+
+        UpdateScoreboard();
     }
 
     public void RemovePlayer(NetworkConnection connection)
