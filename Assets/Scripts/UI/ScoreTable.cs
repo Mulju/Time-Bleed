@@ -19,15 +19,15 @@ public class ScoreTable : MonoBehaviour
         _matchManager = MatchManager.matchManager;
     }
 
-    public void UpdateScore(string name, int kills, int deaths, int teamTag)
+    public void UpdateScore(string name, int kills, int deaths, int teamTag, int rank)
     {
         if (teamTag == 0)
         {
-            CreateScore(name, kills, deaths, _redTeamContainer);
+            CreateScore(name, kills, deaths, _redTeamContainer, rank)
         }
         else
         {
-            CreateScore(name, kills, deaths, _greenTeamContainer);
+            CreateScore(name, kills, deaths, _greenTeamContainer, rank)
         }
     }
 
@@ -73,15 +73,13 @@ public class ScoreTable : MonoBehaviour
         _redTotal.Find("InfoBox/Kills").GetComponent<TMPro.TextMeshProUGUI>().text = redKills.ToString();
     }
 
-    private void CreateScore(string name, int kills, int deaths, Transform entryContainer)
+    private void CreateScore(string name, int kills, int deaths, Transform entryContainer, int rank)
     {
         Transform entryTransform = Instantiate(_entryTemplate, entryContainer);
         entryTransform.gameObject.SetActive(true);
         LayoutRebuilder.ForceRebuildLayoutImmediate(entryContainer.GetComponent<RectTransform>());
 
-        string rankString;
-        int rank = 1; // plöp
-        rankString = rank.ToString();
+        string rankString = rank.ToString();
 
         entryTransform.Find("InfoBox/Rank").GetComponent<TMPro.TextMeshProUGUI>().text = rankString;
         entryTransform.Find("InfoBox/Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
