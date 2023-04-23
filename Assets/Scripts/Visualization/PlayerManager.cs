@@ -446,6 +446,8 @@ public class PlayerManager : NetworkBehaviour
     {
         players = players.OrderBy(x => x.Value.kills).ToDictionary(x => x.Key, x => x.Value);
 
+        players = players.Reverse().ToDictionary(x => x.Key, x => x.Value);
+
         LoopScores(players, redKills, greenKills);
     }
 

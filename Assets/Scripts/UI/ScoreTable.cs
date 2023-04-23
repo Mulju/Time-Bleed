@@ -36,6 +36,7 @@ public class ScoreTable : MonoBehaviour
         if (_matchManager.currentMatchState == MatchManager.MatchState.IN_PROGRESS)
         {
             UpdateTime();
+            UpdateBoard(0, 0);
         }
     }
 
@@ -45,7 +46,6 @@ public class ScoreTable : MonoBehaviour
         float greenSeconds = _matchManager.greenClock.remainingSeconds == 0 ? 0 : Mathf.Floor(_matchManager.greenClock.remainingSeconds);
 
         string timeMinText = (greenMinutes < 10 ? "0" + greenMinutes + ":" : greenMinutes + ":");
-
         string timeSecText = (greenSeconds < 10 ? "0" + greenSeconds : greenSeconds.ToString());
 
         _greenTime.GetComponent<TMPro.TextMeshProUGUI>().text = timeMinText + timeSecText;
@@ -55,7 +55,6 @@ public class ScoreTable : MonoBehaviour
         float redSeconds = _matchManager.redClock.remainingSeconds == 0 ? 0 : Mathf.Floor(_matchManager.redClock.remainingSeconds);
 
         timeMinText = (redMinutes < 10 ? "0" + redMinutes + ":" : redMinutes + ":");
-
         timeSecText = (redSeconds < 10 ? "0" + redSeconds : redSeconds.ToString());
 
         _redTime.GetComponent<TMPro.TextMeshProUGUI>().text = timeMinText + timeSecText;
