@@ -342,6 +342,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             ThrowGrenadeServer();
             amountOfChronades--;
+            menuControl.chronadeImages[amountOfChronades].GetComponentInChildren<Text>().enabled = false;
             menuControl.chronadeImages[amountOfChronades].enabled = false;
         }
 
@@ -349,6 +350,7 @@ public class PlayerEntity : NetworkBehaviour
         for(int i = 0; i < amountOfChronades; i++)
         {
             menuControl.chronadeImages[i].enabled = true;
+            menuControl.chronadeImages[i].GetComponentInChildren<Text>().enabled = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown)

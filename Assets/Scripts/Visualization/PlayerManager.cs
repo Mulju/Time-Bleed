@@ -14,6 +14,7 @@ using System.Linq;
 using UnityEditor;
 using LiteNetLib;
 using FishNet.Managing;
+using UnityEngine.UI;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -367,6 +368,7 @@ public class PlayerManager : NetworkBehaviour
         for (int i = 1; i < 3; i++)
         {
             // Disable the latter 2 chronade images as you only have 1 when you respawn
+            menuControl.chronadeImages[i].GetComponentInChildren<Text>().enabled = false;
             menuControl.chronadeImages[i].enabled = false;
         }
 
