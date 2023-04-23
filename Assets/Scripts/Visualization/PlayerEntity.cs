@@ -403,22 +403,7 @@ public class PlayerEntity : NetworkBehaviour
 
     public void ChangeWeapon(int weaponIndex)
     {
-        currentWeaponPrefab.SetActive(false);
-
-        if(weaponIndex == 0)
-        {
-            currentWeaponPrefab = riflePrefab;
-        }
-        else if (weaponIndex == 1)
-        {
-            currentWeaponPrefab = sniperPrefab;
-        }
-        else if (weaponIndex == 2)
-        {
-            currentWeaponPrefab = shotgunPrefab;
-        }
-        currentWeaponPrefab.SetActive(true);
-        animator = currentWeaponPrefab.GetComponent<Animator>();
+        ChangeWeaponPrefabServer(weaponIndex);
 
         if (isScoped && currentWeapon == weaponDictionary.weapons["rifle"])
         {
@@ -439,6 +424,34 @@ public class PlayerEntity : NetworkBehaviour
         sensitivity = 1f;
         isScoped = false;
         sniperScope.SetActive(false);
+    }
+
+    [ServerRpc]
+    public void ChangeWeaponPrefabServer(int weaponIndex)
+    {
+        ChangeWeaponPrefab(weaponIndex);
+    }
+
+    [ObserversRpc]
+    public void ChangeWeaponPrefab(int weaponIndex)
+    {
+        currentWeaponPrefab.SetActive(false);
+
+        if (weaponIndex == 0)
+        {
+            currentWeaponPrefab = riflePrefab;
+        }
+        else if (weaponIndex == 1)
+        {
+            currentWeaponPrefab = sniperPrefab;
+        }
+        else if (weaponIndex == 2)
+        {
+            currentWeaponPrefab = shotgunPrefab;
+        }
+        currentWeaponPrefab.SetActive(true);
+
+        animator = currentWeaponPrefab.GetComponent<Animator>();
     }
 
     public void ChangeTeam(int teamTag)
