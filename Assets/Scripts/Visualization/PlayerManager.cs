@@ -449,9 +449,20 @@ public class PlayerManager : NetworkBehaviour
     void LoopScores(Dictionary<int, Data.Player> players, int redKills, int greenKills)
     {
         scoreboard.GetComponent<ScoreTable>().DestroyScores();
+        int redRank = 1;
+        int greenRank = 1;
         foreach (KeyValuePair<int, Data.Player> pair in players)
         {
-            scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag);
+            if (pair.Value.teamTag == 0)
+            {
+                scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag, redRank);
+                redRank++;
+            }
+            else
+            {
+                scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag, greenRank);
+                greenRank++;
+            }
         }
         scoreboard.GetComponent<ScoreTable>().UpdateBoard(redKills, greenKills);
     }
