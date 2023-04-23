@@ -251,17 +251,17 @@ public class PlayerManager : NetworkBehaviour
         }
         OnStartingMatch.Invoke(true);
 
-
+        
         // Reset the clock timers
         MatchManager.matchManager.redClock.rotation = 0;
         MatchManager.matchManager.redClock.remainingSeconds = 60;
-        MatchManager.matchManager.redClock.remainingMinutes = 14;
-        MatchManager.matchManager.redClock.remainingTime = 900;
+        MatchManager.matchManager.redClock.remainingMinutes = 1;
+        MatchManager.matchManager.redClock.remainingTime = 120;
 
         MatchManager.matchManager.greenClock.rotation = 0;
         MatchManager.matchManager.greenClock.remainingSeconds = 60;
-        MatchManager.matchManager.greenClock.remainingMinutes = 14;
-        MatchManager.matchManager.greenClock.remainingTime = 900;
+        MatchManager.matchManager.greenClock.remainingMinutes = 1;
+        MatchManager.matchManager.greenClock.remainingTime = 120;
     }
 
     public void DamagePlayer(int playerID, int damage, int shooterID)
@@ -445,6 +445,7 @@ public class PlayerManager : NetworkBehaviour
 
         players = players.Reverse().ToDictionary(x => x.Key, x => x.Value);
 
+        TotalKills();
         LoopScores(players, redKills, greenKills);
     }
 

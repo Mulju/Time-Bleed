@@ -33,9 +33,10 @@ public class ScoreTable : MonoBehaviour
 
     private void Update()
     {
-        if (_matchManager.currentMatchState == MatchManager.MatchState.IN_PROGRESS)
+        UpdateTime();
+
+        if (_matchManager.currentMatchState == MatchManager.MatchState.STARTING)
         {
-            UpdateTime();
             UpdateBoard(0, 0);
         }
     }
