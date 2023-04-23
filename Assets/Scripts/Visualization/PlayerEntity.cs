@@ -415,7 +415,6 @@ public class PlayerEntity : NetworkBehaviour
         currentWeapon = weaponDictionary.weapons.ElementAt(weaponIndex).Value;
 
         deployTimer = 0;
-        animator.SetBool("Reloading", true);
 
         if (reloadCoroutine != null)
             StopCoroutine(reloadCoroutine);
@@ -453,6 +452,7 @@ public class PlayerEntity : NetworkBehaviour
         currentWeaponPrefab.SetActive(true);
 
         animator = currentWeaponPrefab.GetComponent<Animator>();
+        animator.SetBool("Reloading", true);
     }
 
     public void ChangeTeam(int teamTag)
