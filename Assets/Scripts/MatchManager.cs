@@ -175,6 +175,8 @@ public class MatchManager : NetworkBehaviour
             // To make the correct visual at the start of the match
             redKills = 1;
             totalKills = 2;
+            MoveChronadeSpawn(redKills, totalKills);
+            matchManager.OnStartMoveChronadePack.Invoke(true);
         }
 
         MoveChronadeSpawn(redKills, totalKills);
@@ -198,7 +200,6 @@ public class MatchManager : NetworkBehaviour
             // Chronade spawn on red base's side
             nextChronadeSpawn = chronadeSpawns[0];
         }
-        //matchManager.OnStartMoveChronadePack.Invoke(true);
         menuControl.UpdateChronadeSlider(redKills / totalKills);
     }
 
