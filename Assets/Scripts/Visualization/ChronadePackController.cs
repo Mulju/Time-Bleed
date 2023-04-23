@@ -8,6 +8,25 @@ public class ChronadePackController : NetworkBehaviour
     private float respawnTime = 10f;
     PlayerManager playerManager;
 
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if(base.IsServer)
+        {
+            // Listen only on server to avoid useless event calls
+            MatchManager.matchManager.OnStartMoveChronadePack += MoveChronadeSpawn;
+        }
+    }
+
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        if(base.IsServer)
+        {
+            MatchManager.matchManager.OnStartMoveChronadePack -= MoveChronadeSpawn;
+        }
+    }
+
     private void OnTriggerEnter(Collider col)
     {
         if (!base.IsServer)
@@ -33,13 +52,13 @@ public class ChronadePackController : NetworkBehaviour
     IEnumerator RespawnChronadePack()
     {
         yield return new WaitForSeconds(respawnTime);
-        MoveChronadeSpawn();
+        MoveChronadeSpawn(true);
         ShowChronadePack();
         this.GetComponent<Collider>().enabled = true;
     }
 
     [ObserversRpc]
-    public void MoveChronadeSpawn()
+    public void MoveChronadeSpawn(bool smth)
     {
         transform.position = MatchManager.matchManager.nextChronadeSpawn.position;
     }

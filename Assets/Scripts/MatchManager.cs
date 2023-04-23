@@ -1,5 +1,6 @@
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,7 @@ public class MatchManager : NetworkBehaviour
     [SerializeField] private Transform[] chronadeSpawns;
     [HideInInspector] public Transform nextChronadeSpawn;
     [SerializeField] private GameObject chronadePack;
+    [HideInInspector] public Action<bool> OnStartMoveChronadePack;
 
     private void Awake()
     {
@@ -184,21 +186,19 @@ public class MatchManager : NetworkBehaviour
         if (redKills / totalKills < 0.4f)
         {
             // Chronade spawn on green base's side
-
             nextChronadeSpawn = chronadeSpawns[2];
         }
         else if (redKills / totalKills > 0.4f && redKills / totalKills < 0.6f)
         {
             // Chronade spawn on middle
-
             nextChronadeSpawn = chronadeSpawns[1];
         }
         else if (redKills / totalKills > 0.6f)
         {
             // Chronade spawn on red base's side
-
             nextChronadeSpawn = chronadeSpawns[0];
         }
+        OnStartMoveChronadePack.Invoke(true);
         menuControl.UpdateChronadeSlider(redKills / totalKills);
     }
 
