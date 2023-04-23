@@ -251,7 +251,7 @@ public class PlayerManager : NetworkBehaviour
         }
         OnStartingMatch.Invoke(true);
 
-        /*
+        
         // Reset the clock timers
         MatchManager.matchManager.redClock.rotation = 0;
         MatchManager.matchManager.redClock.remainingSeconds = 60;
@@ -261,7 +261,7 @@ public class PlayerManager : NetworkBehaviour
         MatchManager.matchManager.greenClock.rotation = 0;
         MatchManager.matchManager.greenClock.remainingSeconds = 60;
         MatchManager.matchManager.greenClock.remainingMinutes = 14;
-        MatchManager.matchManager.greenClock.remainingTime = 900;*/
+        MatchManager.matchManager.greenClock.remainingTime = 900;
     }
 
     public void DamagePlayer(int playerID, int damage, int shooterID)
