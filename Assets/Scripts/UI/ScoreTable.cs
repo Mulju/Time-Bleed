@@ -23,11 +23,11 @@ public class ScoreTable : MonoBehaviour
     {
         if (teamTag == 0)
         {
-            CreateScore(name, kills, deaths, _redTeamContainer, rank)
+            CreateScore(name, kills, deaths, _redTeamContainer, rank);
         }
         else
         {
-            CreateScore(name, kills, deaths, _greenTeamContainer, rank)
+            CreateScore(name, kills, deaths, _greenTeamContainer, rank);
         }
     }
 
@@ -41,30 +41,24 @@ public class ScoreTable : MonoBehaviour
 
     public void UpdateTime()
     {
-        string timeText;
-
         float greenMinutes = _matchManager.greenClock.remainingMinutes;
         float greenSeconds = _matchManager.greenClock.remainingSeconds == 0 ? 0 : Mathf.Floor(_matchManager.greenClock.remainingSeconds);
 
-        timeText = (greenMinutes < 10 ? "0" + greenMinutes + ":" : greenMinutes + ":");
+        string timeMinText = (greenMinutes < 10 ? "0" + greenMinutes + ":" : greenMinutes + ":");
 
-        _greenTime.Find("Minutes").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
+        string timeSecText = (greenSeconds < 10 ? "0" + greenSeconds : greenSeconds.ToString());
 
-        timeText = (greenSeconds < 10 ? "0" + greenSeconds : greenSeconds.ToString());
-
-        _greenTime.Find("Seconds").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
+        _greenTime.GetComponent<TMPro.TextMeshProUGUI>().text = timeMinText + timeSecText;
 
 
         float redMinutes = _matchManager.redClock.remainingMinutes;
         float redSeconds = _matchManager.redClock.remainingSeconds == 0 ? 0 : Mathf.Floor(_matchManager.redClock.remainingSeconds);
 
-        timeText = (redMinutes < 10 ? "0" + redMinutes + ":" : redMinutes + ":");
+        timeMinText = (redMinutes < 10 ? "0" + redMinutes + ":" : redMinutes + ":");
 
-        _redTime.Find("Minutes").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
+        timeSecText = (redSeconds < 10 ? "0" + redSeconds : redSeconds.ToString());
 
-        timeText = (redSeconds < 10 ? "0" + redSeconds : redSeconds.ToString());
-
-        _redTime.Find("Seconds").GetComponent<TMPro.TextMeshProUGUI>().text = timeText;
+        _redTime.GetComponent<TMPro.TextMeshProUGUI>().text = timeMinText + timeSecText;
     }
 
     public void UpdateBoard(int redKills, int greenKills)
@@ -79,9 +73,7 @@ public class ScoreTable : MonoBehaviour
         entryTransform.gameObject.SetActive(true);
         LayoutRebuilder.ForceRebuildLayoutImmediate(entryContainer.GetComponent<RectTransform>());
 
-        string rankString = rank.ToString();
-
-        entryTransform.Find("InfoBox/Rank").GetComponent<TMPro.TextMeshProUGUI>().text = rankString;
+        entryTransform.Find("InfoBox/Rank").GetComponent<TMPro.TextMeshProUGUI>().text = rank.ToString();
         entryTransform.Find("InfoBox/Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
         entryTransform.Find("InfoBox/Kills").GetComponent<TMPro.TextMeshProUGUI>().text = kills.ToString();
         entryTransform.Find("InfoBox/Deaths").GetComponent<TMPro.TextMeshProUGUI>().text = deaths.ToString();
