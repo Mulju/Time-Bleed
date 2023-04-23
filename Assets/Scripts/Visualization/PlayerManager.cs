@@ -49,6 +49,7 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private NetworkManager netManager;
     [SerializeField] private LoadScene sceneLoader;
     public TextMeshProUGUI scoreboardTimer;
+    [SerializeField] private GameObject waitingForPlayersText;
 
     private void Awake()
     {
@@ -221,6 +222,7 @@ public class PlayerManager : NetworkBehaviour
     public void StartMatch()
     {
         startMatchTimer.SetActive(true);
+        waitingForPlayersText.SetActive(false);
         StartCoroutine(StartTimer());
     }
 
