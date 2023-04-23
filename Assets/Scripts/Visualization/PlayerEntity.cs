@@ -159,7 +159,7 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     public void Hit(GameObject hitPlayer, GameObject shooter, float damageMultiplier, int damage)
     {
         if (hitPlayer.GetComponent<PlayerEntity>().ownTeamTag == shooter.GetComponent<PlayerEntity>().ownTeamTag)
