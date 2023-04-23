@@ -136,7 +136,6 @@ public class PlayerEntity : NetworkBehaviour
 
             weaponDictionary = new WeaponDictionary();
             currentWeapon = weaponDictionary.weapons["rifle"];
-            currentWeaponPrefab = riflePrefab;
 
             shootTimer = 3;
 
@@ -190,6 +189,8 @@ public class PlayerEntity : NetworkBehaviour
         gunOriginalPosition = gunPosition.transform.localPosition;
 
         mManager = MatchManager.matchManager;
+
+        currentWeaponPrefab = riflePrefab;
 
         recoil = 0.3f;
 
