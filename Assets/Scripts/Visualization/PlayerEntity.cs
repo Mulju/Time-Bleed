@@ -19,6 +19,8 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject bulletHole;
     public GameObject timeBindSkill;
 
+    public Animator playerAnimator;
+
     [SerializeField] private GameObject chronade;
     [SerializeField] private GameObject sniperScope;
     [SerializeField] private GameObject aimingPosition;
@@ -83,7 +85,7 @@ public class PlayerEntity : NetworkBehaviour
     public bool canMove = true;
 
     [SerializeField]
-    private float cameraYOffset = 0.4f;
+    private float cameraYOffset = 0.9f;
     private Camera playerCamera;
     PlayerManager playerManager;
 
@@ -249,6 +251,8 @@ public class PlayerEntity : NetworkBehaviour
             return;
         }
 
+        
+
         if (deployTimer < 4f)
         {
             deployTimer += Time.deltaTime;
@@ -278,6 +282,7 @@ public class PlayerEntity : NetworkBehaviour
 
         Physics.SyncTransforms();
         Move();
+        Animate();
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
@@ -402,6 +407,49 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
+    public void Animate()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            playerAnimator.SetBool("RunForward", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("RunForward", false);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            playerAnimator.SetBool("RunBackward", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("RunBackward", false);
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            playerAnimator.SetBool("RunLeft", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("RunLeft", false);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            playerAnimator.SetBool("RunRight", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("RunRight", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerAnimator.SetTrigger("Jump");
+        }
+    }
     public void ChangeWeapon(int weaponIndex)
     {
         ChangeWeaponPrefabServer(weaponIndex);
