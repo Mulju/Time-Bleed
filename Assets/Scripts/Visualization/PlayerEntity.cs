@@ -400,10 +400,10 @@ public class PlayerEntity : NetworkBehaviour
             // change slider value 
             if (speedSlider != null)
             {
-                speedSlider.value += mouseScroll * 0.05f;
+                speedSlider.value += mouseScroll;
             }
 
-            TimeSpeedSlider(mouseScroll * 0.05f);
+            TimeSpeedSlider(mouseScroll);
         }
     }
 
