@@ -7,6 +7,7 @@ public class ChronadePackController : NetworkBehaviour
 {
     private float respawnTime = 10f;
     PlayerManager playerManager;
+    [HideInInspector] public bool isBig = false;
 
     public override void OnStartClient()
     {
@@ -35,7 +36,7 @@ public class ChronadePackController : NetworkBehaviour
         if (col.CompareTag("Player"))
         {
             playerManager = PlayerManager.instance;
-            playerManager.AddChronades(col.gameObject);
+            playerManager.AddChronades(col.gameObject, isBig);
 
             HideChronadePack();
             this.GetComponent<Collider>().enabled = false;
@@ -55,6 +56,11 @@ public class ChronadePackController : NetworkBehaviour
         MoveChronadeSpawn(true);
         ShowChronadePack();
         this.GetComponent<Collider>().enabled = true;
+
+        if(isBig)
+        {
+            // Play cool light beam animation
+        }
     }
 
     [ObserversRpc]

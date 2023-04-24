@@ -395,7 +395,7 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [ObserversRpc]
-    public void AddChronades(GameObject player)
+    public void AddChronades(GameObject player, bool isBig)
     {
         player.GetComponent<PlayerEntity>().amountOfChronades = 3;
         /*
