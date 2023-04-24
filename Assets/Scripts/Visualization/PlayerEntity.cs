@@ -136,7 +136,6 @@ public class PlayerEntity : NetworkBehaviour
 
             weaponDictionary = new WeaponDictionary();
             currentWeapon = weaponDictionary.weapons["rifle"];
-            currentWeaponPrefab = riflePrefab;
 
             shootTimer = 3;
 
@@ -191,6 +190,8 @@ public class PlayerEntity : NetworkBehaviour
 
         mManager = MatchManager.matchManager;
 
+        currentWeaponPrefab = riflePrefab;
+
         recoil = 0.3f;
 
         isScoped = false;
@@ -239,7 +240,7 @@ public class PlayerEntity : NetworkBehaviour
         if (mManager.currentMatchState == MatchManager.MatchState.MATCH_ENDED)
         {
             // Match ended
-            menuControl.OpenEndMatchScoreboard(MatchManager.matchManager.currentVictoryState);
+            //menuControl.OpenEndMatchScoreboard(MatchManager.matchManager.currentVictoryState);
             return;
         }
 
@@ -403,9 +404,40 @@ public class PlayerEntity : NetworkBehaviour
 
     public void ChangeWeapon(int weaponIndex)
     {
+        ChangeWeaponPrefabServer(weaponIndex);
+
+        if (isScoped && currentWeapon == weaponDictionary.weapons["rifle"])
+        {
+            StopCoroutine(aimDownSightInstance);
+            gunPosition.transform.localPosition = gunOriginalPosition;
+        }
+
+        currentWeapon = weaponDictionary.weapons.ElementAt(weaponIndex).Value;
+
+        deployTimer = 0;
+
+        if (reloadCoroutine != null)
+            StopCoroutine(reloadCoroutine);
+        reloading = false;
+
+        playerCamera.fieldOfView = 60f;
+        sensitivity = 1f;
+        isScoped = false;
+        sniperScope.SetActive(false);
+    }
+
+    [ServerRpc]
+    public void ChangeWeaponPrefabServer(int weaponIndex)
+    {
+        ChangeWeaponPrefab(weaponIndex);
+    }
+
+    [ObserversRpc]
+    public void ChangeWeaponPrefab(int weaponIndex)
+    {
         currentWeaponPrefab.SetActive(false);
 
-        if(weaponIndex == 0)
+        if (weaponIndex == 0)
         {
             currentWeaponPrefab = riflePrefab;
         }
@@ -418,27 +450,13 @@ public class PlayerEntity : NetworkBehaviour
             currentWeaponPrefab = shotgunPrefab;
         }
         currentWeaponPrefab.SetActive(true);
-        animator = currentWeaponPrefab.GetComponent<Animator>();
 
-        if (isScoped && currentWeapon == weaponDictionary.weapons["rifle"])
+
+        if(base.IsOwner)
         {
-            StopCoroutine(aimDownSightInstance);
-            gunPosition.transform.localPosition = gunOriginalPosition;
+            animator = currentWeaponPrefab.GetComponent<Animator>();
+            animator.SetBool("Reloading", true);
         }
-
-        currentWeapon = weaponDictionary.weapons.ElementAt(weaponIndex).Value;
-
-        deployTimer = 0;
-        animator.SetBool("Reloading", true);
-
-        if (reloadCoroutine != null)
-            StopCoroutine(reloadCoroutine);
-        reloading = false;
-
-        playerCamera.fieldOfView = 60f;
-        sensitivity = 1f;
-        isScoped = false;
-        sniperScope.SetActive(false);
     }
 
     public void ChangeTeam(int teamTag)

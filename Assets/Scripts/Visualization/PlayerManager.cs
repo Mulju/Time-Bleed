@@ -144,6 +144,8 @@ public class PlayerManager : NetworkBehaviour
         {
             ChangePlayerTeam(pair.Value);
         }
+
+        UpdateScoreboard();
     }
 
     public void RemovePlayer(NetworkConnection connection)
@@ -251,16 +253,16 @@ public class PlayerManager : NetworkBehaviour
         }
         OnStartingMatch.Invoke(true);
 
-
+        
         // Reset the clock timers
         MatchManager.matchManager.redClock.rotation = 0;
-        MatchManager.matchManager.redClock.remainingSeconds = 60;
-        MatchManager.matchManager.redClock.remainingMinutes = 14;
+        MatchManager.matchManager.redClock.remainingSeconds = 0;
+        MatchManager.matchManager.redClock.remainingMinutes = 15;
         MatchManager.matchManager.redClock.remainingTime = 900;
 
         MatchManager.matchManager.greenClock.rotation = 0;
-        MatchManager.matchManager.greenClock.remainingSeconds = 60;
-        MatchManager.matchManager.greenClock.remainingMinutes = 14;
+        MatchManager.matchManager.greenClock.remainingSeconds = 0;
+        MatchManager.matchManager.greenClock.remainingMinutes = 15;
         MatchManager.matchManager.greenClock.remainingTime = 900;
     }
 
@@ -311,7 +313,6 @@ public class PlayerManager : NetworkBehaviour
             OnPlayerKilled.Invoke(false);
         }
         players[playerID].deaths++;
-        players[playerID].health = maxHealth;
 
         if (players[playerID].teamTag == 0)
         {
@@ -325,8 +326,6 @@ public class PlayerManager : NetworkBehaviour
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, greenSpawnPoints.Count), players[playerID].teamTag);
             MatchManager.matchManager.greenClock.OwnTeamPlayerKilled();
         }
-        players[playerID].health = maxHealth;
-
 
         // Debuggausta
         int playerIndex = 1;
@@ -448,6 +447,7 @@ public class PlayerManager : NetworkBehaviour
 
         players = players.Reverse().ToDictionary(x => x.Key, x => x.Value);
 
+        TotalKills();
         LoopScores(players, redKills, greenKills);
     }
 
