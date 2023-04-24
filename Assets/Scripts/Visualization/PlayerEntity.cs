@@ -282,7 +282,8 @@ public class PlayerEntity : NetworkBehaviour
 
         Physics.SyncTransforms();
         Move();
-        Animate();
+
+        //Animate();
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
