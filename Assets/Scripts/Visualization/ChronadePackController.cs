@@ -8,7 +8,7 @@ public class ChronadePackController : NetworkBehaviour
     private float respawnTime = 10f;
     PlayerManager playerManager;
     [HideInInspector] public bool isBig = false;
-    [SerializeField] private ParticleSystem beamEffect;
+    public ParticleSystem beamEffect;
 
     public override void OnStartClient()
     {
@@ -16,7 +16,7 @@ public class ChronadePackController : NetworkBehaviour
         if(base.IsServer)
         {
             // Listen only on server to avoid useless event calls
-            MatchManager.matchManager.OnStartMoveChronadePack += MoveChronadeSpawn;
+            //MatchManager.matchManager.OnStartMoveChronadePack += MoveChronadeSpawn;
         }
 
         // Näytä hieno light beam jos on iso
@@ -31,7 +31,7 @@ public class ChronadePackController : NetworkBehaviour
         base.OnStopClient();
         if(base.IsServer)
         {
-            MatchManager.matchManager.OnStartMoveChronadePack -= MoveChronadeSpawn;
+            //MatchManager.matchManager.OnStartMoveChronadePack -= MoveChronadeSpawn;
         }
     }
 
@@ -80,7 +80,7 @@ public class ChronadePackController : NetworkBehaviour
     [ObserversRpc]
     public void MoveChronadeSpawn(bool smth)
     {
-        transform.position = MatchManager.matchManager.nextChronadeSpawn.position;
+        //transform.position = MatchManager.matchManager.nextChronadeSpawn.position;
     }
 
     [ObserversRpc]

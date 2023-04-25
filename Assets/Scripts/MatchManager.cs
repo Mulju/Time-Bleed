@@ -33,9 +33,8 @@ public class MatchManager : NetworkBehaviour
     [HideInInspector] [SyncVar] public MatchState currentMatchState = MatchState.NONE;
     [HideInInspector] [SyncVar] public VictoryState currentVictoryState = VictoryState.NONE;
     [SerializeField] private MenuControl menuControl;
-    [SerializeField] private Transform[] chronadeSpawns;
-    [HideInInspector] public Transform nextChronadeSpawn;
-    [SerializeField] private GameObject chronadePack;
+    [SerializeField] private GameObject[] chronadePacks;
+    //[HideInInspector] public Transform nextChronadeSpawn;
     [HideInInspector] public Action<bool> OnStartMoveChronadePack;
 
     private void Awake()
@@ -65,18 +64,20 @@ public class MatchManager : NetworkBehaviour
                 greenClock = clock.GetComponent<Clock>();
             }
         }
+
+        ChangeBigChronadeSpawnServer(true);
     }
 
     public override void OnStartClient()
     {
         base.OnStartClient();
 
-        nextChronadeSpawn = chronadeSpawns[1];
+        chronadePacks[1].GetComponent<ChronadePackController>().isBig = true;
 
         if (base.IsServer)
         {
             playerManager = PlayerManager.instance;
-            playerManager.OnPlayerKilled += MoveChronadeSpawnServer;
+            playerManager.OnPlayerKilled += ChangeBigChronadeSpawnServer;
         }
     }
 
@@ -86,7 +87,7 @@ public class MatchManager : NetworkBehaviour
 
         if(base.IsServer)
         {
-            playerManager.OnPlayerKilled -= MoveChronadeSpawnServer;
+            playerManager.OnPlayerKilled -= ChangeBigChronadeSpawnServer;
         }
     }
 
@@ -110,7 +111,7 @@ public class MatchManager : NetworkBehaviour
         {
             // Run only when the match starts and swap to IN_PROGRESS
             playerManager.StartingMatchServer();
-            MoveChronadeSpawnServer(true);
+            ChangeBigChronadeSpawnServer(true);
             currentMatchState = MatchState.IN_PROGRESS;
         }
 
@@ -165,7 +166,7 @@ public class MatchManager : NetworkBehaviour
         return base.IsServer;
     }
 
-    private void MoveChronadeSpawnServer(bool isAtStart)
+    private void ChangeBigChronadeSpawnServer(bool isAtStart)
     {
         playerManager.TotalKills();
         float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;
@@ -175,30 +176,62 @@ public class MatchManager : NetworkBehaviour
             // To make the correct visual at the start of the match
             redKills = 1;
             totalKills = 2;
-            MoveChronadeSpawn(redKills, totalKills);
+            ChangeBigChronadeSpawn(redKills, totalKills);
             matchManager.OnStartMoveChronadePack.Invoke(true);
         }
-
-        MoveChronadeSpawn(redKills, totalKills);
+        else
+        {
+            ChangeBigChronadeSpawn(redKills, totalKills);
+        }
     }
 
     [ObserversRpc]
-    private void MoveChronadeSpawn(float redKills, float totalKills)
+    private void ChangeBigChronadeSpawn(float redKills, float totalKills)
     {
         if (redKills / totalKills < 0.4f)
         {
-            // Chronade spawn on green base's side
-            nextChronadeSpawn = chronadeSpawns[2];
+            // Big Chronade spawn on green base's side
+            foreach(GameObject chronade in chronadePacks)
+            {
+                chronade.GetComponent<ChronadePackController>().isBig = false;
+                if(chronade.GetComponent<ChronadePackController>().beamEffect.isPlaying)
+                {
+                    chronade.GetComponent<ChronadePackController>().beamEffect.Stop();
+                }
+            }
+
+            chronadePacks[2].GetComponent<ChronadePackController>().isBig = true;
+            chronadePacks[2].GetComponent<ChronadePackController>().beamEffect.Play();
         }
         else if (redKills / totalKills > 0.4f && redKills / totalKills < 0.6f)
         {
-            // Chronade spawn on middle
-            nextChronadeSpawn = chronadeSpawns[1];
+            // Big Chronade spawn on middle
+            foreach (GameObject chronade in chronadePacks)
+            {
+                chronade.GetComponent<ChronadePackController>().isBig = false;
+                if (chronade.GetComponent<ChronadePackController>().beamEffect.isPlaying)
+                {
+                    chronade.GetComponent<ChronadePackController>().beamEffect.Stop();
+                }
+            }
+
+            chronadePacks[1].GetComponent<ChronadePackController>().isBig = true;
+            chronadePacks[1].GetComponent<ChronadePackController>().beamEffect.Play();
         }
         else if (redKills / totalKills > 0.6f)
         {
-            // Chronade spawn on red base's side
-            nextChronadeSpawn = chronadeSpawns[0];
+            // Big Chronade spawn on red base's side
+            foreach (GameObject chronade in chronadePacks)
+            {
+                chronade.GetComponent<ChronadePackController>().isBig = false;
+                if (chronade.GetComponent<ChronadePackController>().beamEffect.isPlaying)
+                {
+                    chronade.GetComponent<ChronadePackController>().beamEffect.Stop();
+                }
+            }
+
+            chronadePacks[0].GetComponent<ChronadePackController>().isBig = true;
+            chronadePacks[0].GetComponent<ChronadePackController>().beamEffect.Play();
         }
         menuControl.UpdateChronadeSlider(redKills / totalKills);
     }
