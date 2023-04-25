@@ -134,6 +134,7 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
+            playerCamera.GetComponent<CameraFollow>().target = transform;
 
             speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
             TimeSpeedSlider(speedSlider.value);
@@ -154,7 +155,6 @@ public class PlayerEntity : NetworkBehaviour
             int id = gameObject.GetInstanceID();
 
             playerManager.AddPlayer(id, player);
-            playerCamera.GetComponent<CameraFollow>().target = transform;
 
             // Change the match state to waiting for players
             mManager.currentMatchState = MatchManager.MatchState.WAITING_FOR_PLAYERS;
@@ -286,14 +286,15 @@ public class PlayerEntity : NetworkBehaviour
         Physics.SyncTransforms();
         Move();
 
-        if((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && Input.GetKey(KeyCode.Mouse0) && !reloading)
+        if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && Input.GetKey(KeyCode.Mouse0) && !reloading)
         {
             AnimateServer(true, true);
         }
         else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             AnimateServer(true, false);
-        } else if (Input.GetKey(KeyCode.Mouse0) && !reloading)
+        }
+        else if (Input.GetKey(KeyCode.Mouse0) && !reloading)
         {
             AnimateServer(false, true);
         }
