@@ -31,6 +31,11 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject shotgunPrefab;
     private GameObject currentWeaponPrefab;
 
+    [SerializeField] private GameObject rifleAnimationsPrefab;
+    [SerializeField] private GameObject sniperAnimationsPrefab;
+    [SerializeField] private GameObject shotgunAnimationsPrefab;
+    private GameObject currentWeaponAnimationsPrefab;
+
     public Image timeBindUI;
     public Image GrenadeUI;
 
@@ -141,10 +146,16 @@ public class PlayerEntity : NetworkBehaviour
             weaponDictionary = new WeaponDictionary();
             currentWeapon = weaponDictionary.weapons["rifle"];
 
+            rifleAnimationsPrefab.SetActive(false);
+
             shootTimer = 3;
 
             timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
             GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
+        }
+        else
+        {
+            riflePrefab.SetActive(false);
         }
 
         // This part is run for all the entities in the scene if you are the server.
@@ -196,6 +207,7 @@ public class PlayerEntity : NetworkBehaviour
         mManager = MatchManager.matchManager;
 
         currentWeaponPrefab = riflePrefab;
+        currentWeaponAnimationsPrefab = rifleAnimationsPrefab;
 
         recoil = 0.3f;
 
@@ -286,22 +298,7 @@ public class PlayerEntity : NetworkBehaviour
         Physics.SyncTransforms();
         Move();
 
-        if((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && Input.GetKey(KeyCode.Mouse0) && !reloading)
-        {
-            AnimateServer(true, true);
-        }
-        else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            AnimateServer(true, false);
-        } else if (Input.GetKey(KeyCode.Mouse0) && !reloading)
-        {
-            AnimateServer(false, true);
-        }
-        else
-        {
-            AnimateServer(false, false);
-        }
-
+        AnimateServer(IsMoving(), IsShooting());
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
@@ -333,7 +330,7 @@ public class PlayerEntity : NetworkBehaviour
             }
         }
 
-        if (((currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0)) || (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0))) && currentWeapon.ammoLeft > 0 && shootTimer >= (60f / currentWeapon.fireRate) && reloading == false && deployTimer >= currentWeapon.deployTime)
+        if (IsShooting() && shootTimer >= (60f / currentWeapon.fireRate))
         {
             if (currentWeapon.bulletsPerShot == 1)
             {
@@ -426,6 +423,16 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
+    private bool IsShooting()
+    {
+        if (((currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0)) || (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0))) && currentWeapon.ammoLeft > 0 && reloading == false && deployTimer >= currentWeapon.deployTime)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     [ServerRpc]
     public void AnimateServer(bool run, bool shoot)
     {
@@ -483,31 +490,53 @@ public class PlayerEntity : NetworkBehaviour
         ChangeWeaponPrefab(weaponIndex);
     }
 
+
+    // vaihtaa itselleen "fps aseet" ja muille pelaajille animoidut aseet
     [ObserversRpc]
     public void ChangeWeaponPrefab(int weaponIndex)
     {
-        currentWeaponPrefab.SetActive(false);
-
-        if (weaponIndex == 0)
-        {
-            currentWeaponPrefab = riflePrefab;
-        }
-        else if (weaponIndex == 1)
-        {
-            currentWeaponPrefab = sniperPrefab;
-        }
-        else if (weaponIndex == 2)
-        {
-            currentWeaponPrefab = shotgunPrefab;
-        }
-        currentWeaponPrefab.SetActive(true);
-
-
         if (base.IsOwner)
         {
+            currentWeaponPrefab.SetActive(false);
+
+            if (weaponIndex == 0)
+            {
+                currentWeaponPrefab = riflePrefab;
+            }
+            else if (weaponIndex == 1)
+            {
+                currentWeaponPrefab = sniperPrefab;
+            }
+            else if (weaponIndex == 2)
+            {
+                currentWeaponPrefab = shotgunPrefab;
+            }
+            currentWeaponPrefab.SetActive(true);
+
+
             animator = currentWeaponPrefab.GetComponent<Animator>();
             animator.SetBool("Reloading", true);
         }
+        else
+        {
+            currentWeaponAnimationsPrefab.SetActive(false);
+
+            if (weaponIndex == 0)
+            {
+                currentWeaponAnimationsPrefab = rifleAnimationsPrefab;
+            }
+            else if (weaponIndex == 1)
+            {
+                currentWeaponAnimationsPrefab = sniperAnimationsPrefab;
+            }
+            else if (weaponIndex == 2)
+            {
+                currentWeaponAnimationsPrefab = shotgunAnimationsPrefab;
+            }
+            currentWeaponAnimationsPrefab.SetActive(true);
+        }
+
+
     }
 
     public void ChangeTeam(int teamTag)
@@ -565,8 +594,7 @@ public class PlayerEntity : NetworkBehaviour
 
     public bool IsMoving()
     {
-        // Reload? other actions?
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetButton("Jump") || !characterController.isGrounded || Input.GetKey(KeyCode.G))
+        if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) && characterController.isGrounded)
         {
             return true;
         }
