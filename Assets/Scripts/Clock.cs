@@ -8,12 +8,16 @@ using UnityEditor;
 
 public class Clock : NetworkBehaviour
 {
+    [SerializeField] private Transform[] clockHandAnchors;
+
     [SerializeField] private GameObject clockHand;
     [SerializeField] private TextMeshPro secondText, minuteText;
     private int hitChronades = 0;
 
-    [SyncVar] public float rotation;
-    [SyncVar] public float remainingSeconds = 60, remainingMinutes = 14, remainingTime = 900;
+    [SyncVar] public float secondRotation, minuteRotation;
+    [SyncVar] public float remainingSeconds, remainingMinutes, remainingTime;
+
+
     
     public int teamIdentifier;
     private MatchManager mManager;
@@ -60,13 +64,15 @@ public class Clock : NetworkBehaviour
         // Turn clock handle
         // First one turns 6 degrees every second, second one turns 60 degrees (equivalent to 10 seconds on a clock) when hit by a chronade
         // and the last one turn and extra 6 degrees if a player died.
-        rotation += 6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime;
+        secondRotation += 6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime;
+
+        // For minute rotations 360/15 is 24 degrees
 
         // Need to round up or down to display it nicely
-        remainingSeconds = 60 - rotation / 6;
+        remainingSeconds = 60 - secondRotation / 6;
         if (remainingSeconds < 0 && remainingMinutes > 0)
         {
-            rotation = 0;
+            secondRotation = 0;
             remainingMinutes--;
             remainingSeconds = 60;
         }
@@ -87,7 +93,8 @@ public class Clock : NetworkBehaviour
         secondText.text = "Remaining seconds: " + (remainingSeconds == 0 ? 0 : Mathf.Floor(remainingSeconds));
         minuteText.text = "Remaining minutes: " + remainingMinutes;
 
-        clockHand.transform.localRotation = Quaternion.Euler(0, rotation, 0);
+        //clockHand.transform.localRotation = Quaternion.Euler(0, rotation, 0);
+        clockHandAnchors[0].transform.localRotation = Quaternion.Euler(0, 0, secondRotation);
     }
 
     public int GetIdentifier()

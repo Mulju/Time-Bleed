@@ -258,12 +258,12 @@ public class PlayerManager : NetworkBehaviour
 
 
         // Reset the clock timers
-        MatchManager.matchManager.redClock.rotation = 0;
+        MatchManager.matchManager.redClock.secondRotation = 0;
         MatchManager.matchManager.redClock.remainingSeconds = 0;
         MatchManager.matchManager.redClock.remainingMinutes = 15;
         MatchManager.matchManager.redClock.remainingTime = 900;
 
-        MatchManager.matchManager.greenClock.rotation = 0;
+        MatchManager.matchManager.greenClock.secondRotation = 0;
         MatchManager.matchManager.greenClock.remainingSeconds = 0;
         MatchManager.matchManager.greenClock.remainingMinutes = 15;
         MatchManager.matchManager.greenClock.remainingTime = 900;
@@ -363,7 +363,7 @@ public class PlayerManager : NetworkBehaviour
 
         player.GetComponent<PlayerEntity>().isAlive = true;
         player.GetComponent<PlayerEntity>().canMove = true;
-        Camera.main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+        GameObject.Find("Main Camera").transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
 
         PlayerReset(player, spawn, teamTag);
     }
@@ -420,13 +420,13 @@ public class PlayerManager : NetworkBehaviour
     public void AddChronades(GameObject player, bool isBig)
     {
         // Give the player 3 Chronades if it was big. If it was small, give the player 1 Chronade but only up to 3.
-        if (isBig)
+        if(isBig)
         {
             player.GetComponent<PlayerEntity>().amountOfChronades = 3;
         }
         else
         {
-            if (player.GetComponent<PlayerEntity>().amountOfChronades < 3)
+            if(player.GetComponent<PlayerEntity>().amountOfChronades < 3)
             {
                 player.GetComponent<PlayerEntity>().amountOfChronades++;
             }
