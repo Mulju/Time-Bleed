@@ -397,11 +397,22 @@ public class PlayerManager : NetworkBehaviour
     [ObserversRpc]
     public void AddChronades(GameObject player, bool isBig)
     {
-        player.GetComponent<PlayerEntity>().amountOfChronades = 3;
-        /*
-        int playerID = player.GetInstanceID();
-
-        players[playerID].playerObject.GetComponent<PlayerEntity>().amountOfChronades = 3;*/
+        // Give the player 3 Chronades if it was big. If it was small, give the player 1 Chronade but only up to 3.
+        if(isBig)
+        {
+            player.GetComponent<PlayerEntity>().amountOfChronades = 3;
+        }
+        else
+        {
+            if(player.GetComponent<PlayerEntity>().amountOfChronades < 3)
+            {
+                player.GetComponent<PlayerEntity>().amountOfChronades++;
+            }
+            else
+            {
+                player.GetComponent<PlayerEntity>().amountOfChronades = 3;
+            }
+        }
     }
 
     [TargetRpc]

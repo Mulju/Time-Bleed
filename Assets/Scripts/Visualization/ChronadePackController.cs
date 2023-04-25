@@ -8,6 +8,7 @@ public class ChronadePackController : NetworkBehaviour
     private float respawnTime = 10f;
     PlayerManager playerManager;
     [HideInInspector] public bool isBig = false;
+    [SerializeField] private ParticleSystem beamEffect;
 
     public override void OnStartClient()
     {
@@ -16,6 +17,12 @@ public class ChronadePackController : NetworkBehaviour
         {
             // Listen only on server to avoid useless event calls
             MatchManager.matchManager.OnStartMoveChronadePack += MoveChronadeSpawn;
+        }
+
+        // Näytä hieno light beam jos on iso
+        if(isBig)
+        {
+            beamEffect.Play();
         }
     }
 
@@ -41,6 +48,12 @@ public class ChronadePackController : NetworkBehaviour
             HideChronadePack();
             this.GetComponent<Collider>().enabled = false;
             StartCoroutine(RespawnChronadePack());
+
+            // Lopeta hieno light beam efekti
+            if(isBig)
+            {
+                beamEffect.Stop();
+            }
         }
     }
 
@@ -60,6 +73,7 @@ public class ChronadePackController : NetworkBehaviour
         if(isBig)
         {
             // Play cool light beam animation
+            beamEffect.Play();
         }
     }
 
