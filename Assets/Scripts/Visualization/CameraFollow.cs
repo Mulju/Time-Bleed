@@ -18,20 +18,10 @@ public class CameraFollow : MonoBehaviour
 
         if (!target.GetComponent<PlayerEntity>().isAlive)
         {
-            isLerping = true;
             startPos = transform.position;
             endPos = target.position + Vector3.up * 10f;
-        }
-
-        if (isLerping)
-        {
             float t = Mathf.Clamp01(Time.deltaTime * lerpTime);
             transform.position = Vector3.Lerp(startPos, endPos, t);
-
-            if (transform.position == endPos)
-            {
-                isLerping = false;
-            }
         }
     }
 }

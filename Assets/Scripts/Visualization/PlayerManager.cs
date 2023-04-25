@@ -366,7 +366,7 @@ public class PlayerManager : NetworkBehaviour
 
         PlayerReset(player, spawn, teamTag);
 
-        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 0.9f, transform.position.z);
+        Camera.main.transform.localPosition = new Vector3(0, 1, 0);
     }
 
     void PlayerReset(GameObject player, int spawn, int teamTag)
