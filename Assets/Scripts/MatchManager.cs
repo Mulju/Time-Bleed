@@ -166,7 +166,7 @@ public class MatchManager : NetworkBehaviour
         return base.IsServer;
     }
 
-    private void ChangeBigChronadeSpawnServer(bool isAtStart)
+    public void ChangeBigChronadeSpawnServer(bool isAtStart)
     {
         playerManager.TotalKills();
         float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;

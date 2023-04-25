@@ -146,6 +146,9 @@ public class PlayerManager : NetworkBehaviour
         }
 
         UpdateScoreboard();
+
+        // This is to get the chronade pack animation to play for new players
+        MatchManager.matchManager.ChangeBigChronadeSpawnServer(false);
     }
 
     public void RemovePlayer(NetworkConnection connection)
