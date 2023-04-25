@@ -700,7 +700,7 @@ public class PlayerEntity : NetworkBehaviour
 
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
+                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.LookRotation(direction));
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 ammoInstance.GetComponent<AmmoController>().damage = damage;
@@ -716,7 +716,7 @@ public class PlayerEntity : NetworkBehaviour
             }
             else if (hit.collider.CompareTag("TimeSphere"))
             {
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
+                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.LookRotation(direction));
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 ammoInstance.GetComponent<AmmoController>().damage = damage;
