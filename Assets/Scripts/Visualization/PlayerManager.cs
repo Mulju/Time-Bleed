@@ -363,9 +363,10 @@ public class PlayerManager : NetworkBehaviour
 
         player.GetComponent<PlayerEntity>().isAlive = true;
         player.GetComponent<PlayerEntity>().canMove = true;
-        Camera.main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
 
         PlayerReset(player, spawn, teamTag);
+
+        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 0.9f, transform.position.z);
     }
 
     void PlayerReset(GameObject player, int spawn, int teamTag)
@@ -390,6 +391,8 @@ public class PlayerManager : NetworkBehaviour
         }
 
         player.GetComponent<PlayerEntity>().RespawnServer();
+
+        Camera.main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.9f, player.transform.position.z);
     }
 
     [TargetRpc]
