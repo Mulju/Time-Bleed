@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour
     public Transform target;
     public float lerpTime = 3f;
 
-    private bool isLerping = false;
+    public bool isLerping = false;
     private Vector3 startPos;
     private Vector3 endPos;
 
