@@ -302,7 +302,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 5
+  <PrefabId>k__BackingField: 4
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -383,7 +383,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &8279258441362849588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2616,8 +2616,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.45254532, y: 0.46500498, z: 0.3256269}
-  m_Center: {x: 0.054785, y: 0.2674975, z: 0.037018538}
+  m_Size: {x: 0.33675742, y: 1.3400431, z: 0.23898275}
+  m_Center: {x: -0.0031089485, y: 0.6762532, z: -0.0063035414}
 --- !u!1 &4712892159214924292
 GameObject:
   m_ObjectHideFlags: 0
@@ -3472,6 +3472,7 @@ GameObject:
   - component: {fileID: 2351270898527964168}
   - component: {fileID: 2811268005037733396}
   - component: {fileID: 1185636566833342025}
+  - component: {fileID: 2051084906608196697}
   m_Layer: 7
   m_Name: TorsoCollider
   m_TagString: PlayerTorso
@@ -3519,10 +3520,23 @@ SphereCollider:
   m_GameObject: {fileID: 7546927272527773101}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.27645388
+  m_Center: {x: -0.21277475, y: 0, z: 0.010771364}
+--- !u!65 &2051084906608196697
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7546927272527773101}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.296719, y: 0.43646723, z: 0.23777242}
+  m_Center: {x: 0.0014371872, y: 0.39394328, z: -0.030201457}
 --- !u!1 &7649743490415317026
 GameObject:
   m_ObjectHideFlags: 0
@@ -3918,7 +3932,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9146562055038387050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.735, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3952,8 +3966,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.111695334
+  m_Center: {x: -0.0028763562, y: -0.043144852, z: -0.012943491}
 --- !u!1001 &143283848818634108
 PrefabInstance:
   m_ObjectHideFlags: 0
