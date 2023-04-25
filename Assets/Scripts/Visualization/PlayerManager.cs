@@ -345,7 +345,7 @@ public class PlayerManager : NetworkBehaviour
 
     IEnumerator MaxHealth(int playerID)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
 
         if (players[playerID] != null)
         {
@@ -423,13 +423,13 @@ public class PlayerManager : NetworkBehaviour
     public void AddChronades(GameObject player, bool isBig)
     {
         // Give the player 3 Chronades if it was big. If it was small, give the player 1 Chronade but only up to 3.
-        if(isBig)
+        if (isBig)
         {
             player.GetComponent<PlayerEntity>().amountOfChronades = 3;
         }
         else
         {
-            if(player.GetComponent<PlayerEntity>().amountOfChronades < 3)
+            if (player.GetComponent<PlayerEntity>().amountOfChronades < 3)
             {
                 player.GetComponent<PlayerEntity>().amountOfChronades++;
             }
