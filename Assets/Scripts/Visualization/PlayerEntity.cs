@@ -283,7 +283,7 @@ public class PlayerEntity : NetworkBehaviour
         Physics.SyncTransforms();
         Move();
 
-        //Animate();
+        Animate();
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
@@ -410,45 +410,22 @@ public class PlayerEntity : NetworkBehaviour
 
     public void Animate()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            playerAnimator.SetBool("RunForward", true);
+            playerAnimator.SetBool("Run", true);
         }
         else
         {
-            playerAnimator.SetBool("RunForward", false);
+            playerAnimator.SetBool("Run", false);
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.Mouse0) && !reloading)
         {
-            playerAnimator.SetBool("RunBackward", true);
+            playerAnimator.SetBool("Shoot", true);
         }
         else
         {
-            playerAnimator.SetBool("RunBackward", false);
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            playerAnimator.SetBool("RunLeft", true);
-        }
-        else
-        {
-            playerAnimator.SetBool("RunLeft", false);
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            playerAnimator.SetBool("RunRight", true);
-        }
-        else
-        {
-            playerAnimator.SetBool("RunRight", false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            playerAnimator.SetTrigger("Jump");
+            playerAnimator.SetBool("Shoot", false);
         }
     }
     public void ChangeWeapon(int weaponIndex)
