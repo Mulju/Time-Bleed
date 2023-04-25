@@ -36,6 +36,8 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject shotgunAnimationsPrefab;
     private GameObject currentWeaponAnimationsPrefab;
 
+    [SerializeField] private GameObject playerMesh;
+
     public Image timeBindUI;
     public Image GrenadeUI;
 
@@ -153,6 +155,8 @@ public class PlayerEntity : NetworkBehaviour
 
             timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
             GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
+
+            playerMesh.SetActive(false);
         }
         else
         {

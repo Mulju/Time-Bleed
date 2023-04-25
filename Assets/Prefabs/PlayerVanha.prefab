@@ -305,7 +305,7 @@ MonoBehaviour:
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 7807759643866311769
+  <AssetPathHash>k__BackingField: 9764151149709705091
   _sceneNetworkObjects:
   - {fileID: 8492805507051383199}
 --- !u!114 &7946791890396349386
@@ -417,6 +417,9 @@ MonoBehaviour:
   riflePrefab: {fileID: 5962483186718637044}
   sniperPrefab: {fileID: 8093167823172772047}
   shotgunPrefab: {fileID: 953745210984075309}
+  rifleAnimationsPrefab: {fileID: 0}
+  sniperAnimationsPrefab: {fileID: 0}
+  shotgunAnimationsPrefab: {fileID: 0}
   timeBindUI: {fileID: 0}
   GrenadeUI: {fileID: 0}
   gunPosition: {fileID: 6284607029874420582}
