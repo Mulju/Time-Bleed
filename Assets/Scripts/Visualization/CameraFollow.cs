@@ -14,6 +14,8 @@ public class CameraFollow : MonoBehaviour
     {
         if (target == null) return;
 
+        transform.LookAt(target.transform);
+
         if (!target.GetComponent<PlayerEntity>().isAlive)
         {
             isLerping = true;
