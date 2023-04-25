@@ -301,7 +301,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 5
+  <PrefabId>k__BackingField: 6
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -400,13 +400,14 @@ MonoBehaviour:
   _networkObjectCache: {fileID: 8492805507051383199}
   gunRotator: {fileID: 5276633148722041832}
   ammoSpawn: {fileID: 5395425276768929657}
-  ammoPrefab: {fileID: 5890851403942761072, guid: 2ef6ebce66a47a540b8397bdaa991d8f,
+  ammoPrefab: {fileID: 1371572448835764015, guid: ec7740d15b504704db792183ff51f0f2,
     type: 3}
   timeField: {fileID: 6905162383682836886}
   bulletHole: {fileID: 2324749513270061309, guid: 4a949409e3c5014418f4c4f74cf5a975,
     type: 3}
   timeBindSkill: {fileID: 1468988365436106985, guid: 65cfa5f02f9c5fb4db268eb315dede74,
     type: 3}
+  playerAnimator: {fileID: 0}
   chronade: {fileID: 3294885659995966261, guid: d07241dce1a79424d8aaf4ec1c4a0ec3,
     type: 3}
   sniperScope: {fileID: 4562936805455457409}
@@ -433,6 +434,7 @@ MonoBehaviour:
   headDamage: 2
   torsoDamage: 1
   legsDamage: 0.7
+  isAlive: 1
   walkingSpeed: 7.5
   runningSpeed: 11.5
   jumpSpeed: 8

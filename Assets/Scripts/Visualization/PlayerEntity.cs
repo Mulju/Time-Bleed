@@ -139,6 +139,7 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
+            playerCamera.GetComponent<CameraFollow>().target = transform;
 
             speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
             TimeSpeedSlider(speedSlider.value);
@@ -165,7 +166,6 @@ public class PlayerEntity : NetworkBehaviour
             int id = gameObject.GetInstanceID();
 
             playerManager.AddPlayer(id, player);
-            playerCamera.GetComponent<CameraFollow>().target = transform;
 
             // Change the match state to waiting for players
             mManager.currentMatchState = MatchManager.MatchState.WAITING_FOR_PLAYERS;
@@ -727,7 +727,7 @@ public class PlayerEntity : NetworkBehaviour
 
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.identity);
+                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.LookRotation(direction));
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 ammoInstance.GetComponent<AmmoController>().damage = damage;
@@ -743,7 +743,7 @@ public class PlayerEntity : NetworkBehaviour
             }
             else if (hit.collider.CompareTag("TimeSphere"))
             {
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.identity);
+                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.LookRotation(direction));
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 ammoInstance.GetComponent<AmmoController>().damage = damage;
