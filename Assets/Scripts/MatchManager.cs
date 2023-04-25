@@ -64,8 +64,6 @@ public class MatchManager : NetworkBehaviour
                 greenClock = clock.GetComponent<Clock>();
             }
         }
-
-        ChangeBigChronadeSpawnServer(true);
     }
 
     public override void OnStartClient()
@@ -78,6 +76,8 @@ public class MatchManager : NetworkBehaviour
         {
             playerManager = PlayerManager.instance;
             playerManager.OnPlayerKilled += ChangeBigChronadeSpawnServer;
+        
+            ChangeBigChronadeSpawnServer(true);
         }
     }
 
@@ -177,7 +177,7 @@ public class MatchManager : NetworkBehaviour
             redKills = 1;
             totalKills = 2;
             ChangeBigChronadeSpawn(redKills, totalKills);
-            matchManager.OnStartMoveChronadePack.Invoke(true);
+            //matchManager.OnStartMoveChronadePack.Invoke(true);
         }
         else
         {

@@ -22,7 +22,7 @@ public class ChronadePackController : NetworkBehaviour
         // Näytä hieno light beam jos on iso
         if(isBig)
         {
-            beamEffect.Play();
+            //beamEffect.Play();
         }
     }
 
@@ -48,12 +48,6 @@ public class ChronadePackController : NetworkBehaviour
             HideChronadePack();
             this.GetComponent<Collider>().enabled = false;
             StartCoroutine(RespawnChronadePack());
-
-            // Lopeta hieno light beam efekti
-            if(isBig)
-            {
-                beamEffect.Stop();
-            }
         }
     }
 
@@ -61,6 +55,12 @@ public class ChronadePackController : NetworkBehaviour
     void HideChronadePack()
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        
+        // Stop the cool light beam
+        if(isBig)
+        {
+            beamEffect.Stop();
+        }
     }
 
     IEnumerator RespawnChronadePack()
@@ -70,11 +70,6 @@ public class ChronadePackController : NetworkBehaviour
         ShowChronadePack();
         this.GetComponent<Collider>().enabled = true;
 
-        if(isBig)
-        {
-            // Play cool light beam animation
-            beamEffect.Play();
-        }
     }
 
     [ObserversRpc]
@@ -87,5 +82,11 @@ public class ChronadePackController : NetworkBehaviour
     void ShowChronadePack()
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        
+        // Play cool light beam animation
+        if(isBig)
+        {
+            beamEffect.Play();
+        }
     }
 }
