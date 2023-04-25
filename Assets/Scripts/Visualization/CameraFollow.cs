@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour
         {
             isLerping = true;
             startPos = transform.position;
-            endPos = target.position + Vector3.up * 5f; // Change 5f to desired height above player
+            endPos = target.position + Vector3.up * 10f;
         }
 
         if (isLerping)
