@@ -314,18 +314,16 @@ public class PlayerManager : NetworkBehaviour
         }
         players[playerID].deaths++;
 
-        players[playerID].playerObject.GetComponent<PlayerEntity>().isAlive = false;
-
         if (players[playerID].teamTag == 0)
         {
             // Respawn at red team's base and reduce 1 second from the clock
-            RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, redSpawnPoints.Count), players[playerID].teamTag);
+            StartCoroutine(RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, redSpawnPoints.Count), players[playerID].teamTag));
             MatchManager.matchManager.redClock.OwnTeamPlayerKilled();
         }
         else
         {
             // Respawn at green team's base and reduce 1 second from the clock
-            RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, greenSpawnPoints.Count), players[playerID].teamTag);
+            StartCoroutine(RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, greenSpawnPoints.Count), players[playerID].teamTag));
             MatchManager.matchManager.greenClock.OwnTeamPlayerKilled();
         }
 
@@ -354,8 +352,15 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [TargetRpc]
-    void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn, int teamTag)
+    IEnumerator RespawnPlayer(NetworkConnection conn, GameObject player, int spawn, int teamTag)
     {
+        player.GetComponent<PlayerEntity>().isAlive = false;
+
+        yield return new WaitForSeconds(5f);
+
+        player.GetComponent<PlayerEntity>().isAlive = true;
+        GameObject.Find("Main Camera").transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+
         if (teamTag == 0)
         {
             // Respawn at red team's base

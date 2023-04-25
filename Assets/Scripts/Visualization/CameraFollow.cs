@@ -4,7 +4,7 @@ public class CameraFollow : MonoBehaviour
 {
     [HideInInspector]
     public Transform target;
-    public float lerpTime = 1.5f;
+    public float lerpTime = 3f;
 
     private bool isLerping = false;
     private Vector3 startPos;
