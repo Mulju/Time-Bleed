@@ -171,18 +171,14 @@ public class MatchManager : NetworkBehaviour
         playerManager.TotalKills();
         float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;
 
-        if(isAtStart)
+        if(totalKills == 0)
         {
-            // To make the correct visual at the start of the match
+            // This is to block strange chronade slider visuals at the start of the match
             redKills = 1;
             totalKills = 2;
-            ChangeBigChronadeSpawn(redKills, totalKills);
-            //matchManager.OnStartMoveChronadePack.Invoke(true);
         }
-        else
-        {
-            ChangeBigChronadeSpawn(redKills, totalKills);
-        }
+        
+        ChangeBigChronadeSpawn(redKills, totalKills);
     }
 
     [ObserversRpc]
