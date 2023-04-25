@@ -251,7 +251,7 @@ public class PlayerEntity : NetworkBehaviour
             return;
         }
 
-        
+
 
         if (deployTimer < 4f)
         {
@@ -283,7 +283,22 @@ public class PlayerEntity : NetworkBehaviour
         Physics.SyncTransforms();
         Move();
 
-        Animate();
+        if((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && Input.GetKey(KeyCode.Mouse0) && !reloading)
+        {
+            AnimateServer(true, true);
+        }
+        else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            AnimateServer(true, false);
+        } else if (Input.GetKey(KeyCode.Mouse0) && !reloading)
+        {
+            AnimateServer(false, true);
+        }
+        else
+        {
+            AnimateServer(false, false);
+        }
+
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
@@ -354,7 +369,7 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Refresh the number of shown chronades in the UI
-        for(int i = 0; i < amountOfChronades; i++)
+        for (int i = 0; i < amountOfChronades; i++)
         {
             menuControl.chronadeImages[i].enabled = true;
             menuControl.chronadeImages[i].GetComponentInChildren<Text>().enabled = true;
@@ -372,7 +387,7 @@ public class PlayerEntity : NetworkBehaviour
             cookTimer += Time.deltaTime;
             isCooking = true;
         }
-        else if((Input.GetKeyUp(KeyCode.G) || cookTimer >= 2.5f) && isCooking)
+        else if ((Input.GetKeyUp(KeyCode.G) || cookTimer >= 2.5f) && isCooking)
         {
             ThrowFragGrenadeServer(cookTimer);
             cookTimer = 0;
@@ -408,9 +423,16 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
-    public void Animate()
+    [ServerRpc]
+    public void AnimateServer(bool run, bool shoot)
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        Animate(run, shoot);
+    }
+
+    [ObserversRpc]
+    public void Animate(bool run, bool shoot)
+    {
+        if (run)
         {
             playerAnimator.SetBool("Run", true);
         }
@@ -419,7 +441,7 @@ public class PlayerEntity : NetworkBehaviour
             playerAnimator.SetBool("Run", false);
         }
 
-        if (Input.GetKey(KeyCode.Mouse0) && !reloading)
+        if (shoot)
         {
             playerAnimator.SetBool("Shoot", true);
         }
