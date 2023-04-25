@@ -67,6 +67,8 @@ public class PlayerEntity : NetworkBehaviour
     [HideInInspector]
     public float headDamage = 2f, torsoDamage = 1f, legsDamage = 0.7f;
 
+    [HideInInspector] public bool isAlive = true;
+
     [Header("Base setup")]
     public float walkingSpeed = 8.5f;
     public float runningSpeed = 11.5f;
@@ -152,6 +154,7 @@ public class PlayerEntity : NetworkBehaviour
             int id = gameObject.GetInstanceID();
 
             playerManager.AddPlayer(id, player);
+            playerCamera.GetComponent<CameraFollow>().target = transform;
 
             // Change the match state to waiting for players
             mManager.currentMatchState = MatchManager.MatchState.WAITING_FOR_PLAYERS;
@@ -251,7 +254,7 @@ public class PlayerEntity : NetworkBehaviour
             return;
         }
 
-        
+
 
         if (deployTimer < 4f)
         {
@@ -354,7 +357,7 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Refresh the number of shown chronades in the UI
-        for(int i = 0; i < amountOfChronades; i++)
+        for (int i = 0; i < amountOfChronades; i++)
         {
             menuControl.chronadeImages[i].enabled = true;
             menuControl.chronadeImages[i].GetComponentInChildren<Text>().enabled = true;
@@ -372,7 +375,7 @@ public class PlayerEntity : NetworkBehaviour
             cookTimer += Time.deltaTime;
             isCooking = true;
         }
-        else if((Input.GetKeyUp(KeyCode.G) || cookTimer >= 2.5f) && isCooking)
+        else if ((Input.GetKeyUp(KeyCode.G) || cookTimer >= 2.5f) && isCooking)
         {
             ThrowFragGrenadeServer(cookTimer);
             cookTimer = 0;
@@ -478,7 +481,7 @@ public class PlayerEntity : NetworkBehaviour
         currentWeaponPrefab.SetActive(true);
 
 
-        if(base.IsOwner)
+        if (base.IsOwner)
         {
             animator = currentWeaponPrefab.GetComponent<Animator>();
             animator.SetBool("Reloading", true);

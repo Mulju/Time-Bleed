@@ -256,7 +256,7 @@ public class PlayerManager : NetworkBehaviour
         }
         OnStartingMatch.Invoke(true);
 
-        
+
         // Reset the clock timers
         MatchManager.matchManager.redClock.rotation = 0;
         MatchManager.matchManager.redClock.remainingSeconds = 0;
@@ -354,8 +354,21 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [TargetRpc]
-    void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn, int teamTag)
+    IEnumerator DeathCam(GameObject player, int spawn, int teamTag)
+    {
+        player.GetComponent<PlayerEntity>().isAlive = false;
+        player.GetComponent<PlayerEntity>().canMove = false;
+
+        yield return new WaitForSeconds(5f);
+
+        player.GetComponent<PlayerEntity>().isAlive = true;
+        player.GetComponent<PlayerEntity>().canMove = true;
+        GameObject.Find("Main Camera").transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+
+        PlayerReset(player, spawn, teamTag);
+    }
+
+    void PlayerReset(GameObject player, int spawn, int teamTag)
     {
         if (teamTag == 0)
         {
@@ -377,6 +390,12 @@ public class PlayerManager : NetworkBehaviour
         }
 
         player.GetComponent<PlayerEntity>().RespawnServer();
+    }
+
+    [TargetRpc]
+    void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn, int teamTag)
+    {
+        StartCoroutine(DeathCam(player, spawn, teamTag));
     }
 
     public void RestoreHealth(GameObject player)
