@@ -253,7 +253,7 @@ public class PlayerManager : NetworkBehaviour
         }
         OnStartingMatch.Invoke(true);
 
-        
+
         // Reset the clock timers
         MatchManager.matchManager.redClock.rotation = 0;
         MatchManager.matchManager.redClock.remainingSeconds = 0;
@@ -313,6 +313,8 @@ public class PlayerManager : NetworkBehaviour
             OnPlayerKilled.Invoke(false);
         }
         players[playerID].deaths++;
+
+        players[playerID].playerObject.GetComponent<PlayerEntity>().isAlive = false;
 
         if (players[playerID].teamTag == 0)
         {

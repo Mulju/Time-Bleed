@@ -3667,6 +3667,10 @@ MonoBehaviour:
   <SceneId>k__BackingField: 2603441583766829239
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects:
+  - {fileID: 357906726}
+  - {fileID: 357906725}
+  - {fileID: 357906722}
+  - {fileID: 357906720}
   - {fileID: 2078267245}
   - {fileID: 1990439010}
   - {fileID: 680897983}
@@ -4680,6 +4684,7 @@ GameObject:
   - component: {fileID: 910567128}
   - component: {fileID: 910567127}
   - component: {fileID: 910567126}
+  - component: {fileID: 910567130}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4786,6 +4791,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &910567130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910567125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d32947e5d6ff40469e8785e5f46ab60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  lerpTime: 1.5
 --- !u!1 &918670142
 GameObject:
   m_ObjectHideFlags: 0
@@ -4836,6 +4855,10 @@ MonoBehaviour:
   <SceneId>k__BackingField: 2603441584621131941
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects:
+  - {fileID: 357906726}
+  - {fileID: 357906725}
+  - {fileID: 357906722}
+  - {fileID: 357906720}
   - {fileID: 2078267245}
   - {fileID: 1990439010}
   - {fileID: 680897983}
@@ -5054,6 +5077,10 @@ MonoBehaviour:
   <SceneId>k__BackingField: 2603441582895070161
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects:
+  - {fileID: 357906726}
+  - {fileID: 357906725}
+  - {fileID: 357906722}
+  - {fileID: 357906720}
   - {fileID: 2078267245}
   - {fileID: 1990439010}
   - {fileID: 680897983}
