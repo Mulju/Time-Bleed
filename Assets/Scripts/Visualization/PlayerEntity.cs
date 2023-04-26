@@ -774,7 +774,6 @@ public class PlayerEntity : NetworkBehaviour
                 if (Physics.Raycast(startPos, direction, out RaycastHit bulletHit, Mathf.Infinity, layerMask))
                 {
                     GameObject instantiatedHole = Instantiate(bulletHole, bulletHit.point + bulletHit.normal * 0.0001f, Quaternion.LookRotation(bulletHit.normal));
-                    soundControl.PlayWallHit();
                     Destroy(instantiatedHole, 10);
                 }
             }
@@ -816,7 +815,6 @@ public class PlayerEntity : NetworkBehaviour
             else if (!hit.collider.gameObject.CompareTag("Player"))
             {
                 GameObject instantiatedHole = Instantiate(bulletHole, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
-                soundControl.PlayWallHit();
                 Destroy(instantiatedHole, 10);
             }
         }
