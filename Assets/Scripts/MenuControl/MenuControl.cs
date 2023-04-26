@@ -26,9 +26,11 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private NetworkManager netManager;
     public Image[] chronadeImages;
 
-    [HideInInspector] public bool settingsOpen;
+    public bool settingsOpen;
+    public bool menuOpen;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject settingsButton;
+
 
     void Start()
     {
@@ -80,6 +82,11 @@ public class MenuControl : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
+    public void SetOpenMenu()
+    {
+        menuOpen = false;
+    }
+
     public void OpenCloseMenu()
     {
         if (currentScene == "TimeBleed")
@@ -87,18 +94,26 @@ public class MenuControl : MonoBehaviour
             if (pauseMenu.activeSelf)
             {
                 pauseMenu.SetActive(false);
+                menuOpen = false;
             }
             else
             {
                 pauseMenu.SetActive(true);
+                menuOpen = true;
             }
         }
+    }
+
+    public void OpenSettings()
+    {
+        settingsOpen = true;
     }
 
     public void CloseSettings()
     {
         settingsMenu.SetActive(false);
         pauseMenu.SetActive(true);
+        settingsOpen = false;
         SelectActive(settingsButton);
     }
 
