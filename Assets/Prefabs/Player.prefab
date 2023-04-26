@@ -1188,10 +1188,6 @@ MonoBehaviour:
   - {fileID: 1140820553925348917}
   - {fileID: 7871377922261220203}
   - {fileID: 7383156191932064393}
-  menuMove: {fileID: 8300000, guid: 9eb2c80b8ef2bb5478e2f0e62e17f06e, type: 3}
-  menuSelect: {fileID: 8300000, guid: 3d94a22c3052d3e4e8a82588c8e65e5f, type: 3}
-  gunShoot: {fileID: 8300000, guid: ef18aacdaec86094b885e6de5968674e, type: 3}
-  musicSource: {fileID: 885762470207026690}
   musicClips:
   - {fileID: 8300000, guid: be89fa6671c783744824eaf8adbca25d, type: 3}
   - {fileID: 8300000, guid: c4f89653225f39c498cc7bfa7b321380, type: 3}
@@ -1200,7 +1196,19 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 126e9c6b5df03cc44848471a73c7d51d, type: 3}
   - {fileID: 8300000, guid: 5d986cfb2f033f543961e81efb3ccae9, type: 3}
   - {fileID: 8300000, guid: 927f2512d8f6dcb45a5d187ff42c3683, type: 3}
+  musicSource: {fileID: 885762470207026690}
   playerEntity: {fileID: 8279258441362849588}
+  menuMove: {fileID: 8300000, guid: 9eb2c80b8ef2bb5478e2f0e62e17f06e, type: 3}
+  menuSelect: {fileID: 8300000, guid: 3d94a22c3052d3e4e8a82588c8e65e5f, type: 3}
+  gunShoot: {fileID: 8300000, guid: d0819cceb33b1374f8e92c1e1c933dbf, type: 3}
+  bulletHitWall: {fileID: 8300000, guid: 7d6aec51f694ecd4eb8b21d24a73cf1b, type: 3}
+  bulletHitBubble: {fileID: 0}
+  timeBindExplosion: {fileID: 0}
+  chronadeSound: {fileID: 0}
+  footstep: {fileID: 0}
+  playerHitSound: {fileID: 0}
+  fragGrenadeSound: {fileID: 0}
+  clockTick: {fileID: 0}
 --- !u!114 &3578576771802031643
 MonoBehaviour:
   m_ObjectHideFlags: 0

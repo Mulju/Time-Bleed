@@ -10,11 +10,12 @@ using FishNet.Managing;
 public class SoundControl : MonoBehaviour
 {
     [SerializeField] private AudioSource[] soundSources;
-    [SerializeField] private AudioClip menuMove, menuSelect, gunShoot;
-    [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioClip[] musicClips;
-    private List<int> usedSongs = new List<int>();
+    [SerializeField] private AudioSource musicSource;
     [SerializeField] private PlayerEntity playerEntity;
+    [SerializeField] private AudioClip menuMove, menuSelect, gunShoot, bulletHitWall, bulletHitBubble, timeBindExplosion, chronadeSound,
+        footstep, playerHitSound, fragGrenadeSound, clockTick;
+    private List<int> usedSongs = new List<int>();
 
     private void Update()
     {
@@ -49,6 +50,12 @@ public class SoundControl : MonoBehaviour
             }
         }
     }
+    
+    public void PlayNextBGMusic(AudioClip musicToPlay)
+    {
+        musicSource.clip = musicToPlay;
+        musicSource.Play();
+    }
 
     public void PlayMoveSound()
     {
@@ -68,9 +75,51 @@ public class SoundControl : MonoBehaviour
         PlaySound(gunShoot, volume);
     }
 
-    public void PlayNextBGMusic(AudioClip musicToPlay)
+    public void PlayWallHit()
     {
-        musicSource.clip = musicToPlay;
-        musicSource.Play();
+        float volume = 0.2f;
+        PlaySound(bulletHitWall, volume);
+    }
+
+    public void PlayBubbleHit()
+    {
+        float volume = 0.2f;
+        PlaySound(bulletHitBubble, volume);
+    }
+
+    public void PlayTimeBindExplosion()
+    {
+        float volume = 0.2f;
+        PlaySound(timeBindExplosion, volume);
+    }
+
+    public void PlayChronadeSound()
+    {
+        float volume = 0.2f;
+        PlaySound(chronadeSound, volume);
+    }
+
+    public void PlayFootstep()
+    {
+        float volume = 0.2f;
+        PlaySound(footstep, volume);
+    }
+
+    public void PlayPlayerHit()
+    {
+        float volume = 0.2f;
+        PlaySound(playerHitSound, volume);
+    }
+
+    public void PlayFragExplosion()
+    {
+        float volume = 0.2f;
+        PlaySound(fragGrenadeSound, volume);
+    }
+
+    public void PlayClockTick()
+    {
+        float volume = 0.2f;
+        PlaySound(clockTick, volume);
     }
 }
