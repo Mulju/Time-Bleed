@@ -45,7 +45,7 @@ public class AmmoController : MonoBehaviour
     private void FixedUpdate()
     {
         isInsdeTimeField = true;
-        ammoSpeed = timeNotSlowed;
+        //ammoSpeed = timeNotSlowed;
     }
 
     // Update is called once per frame
@@ -64,6 +64,7 @@ public class AmmoController : MonoBehaviour
                 if (hit.collider.CompareTag("TimeSphere"))
                 {
                     transform.position = hit.point;
+                    ammoSpeed = timeSlowed;
                 }
                 else if (hit.collider.CompareTag("PlayerHead"))
                 {
@@ -207,7 +208,7 @@ public class AmmoController : MonoBehaviour
         if (other.CompareTag("TimeSphere"))
         {
             CheckForCollisions();
-            //ammoSpeed = timeNotSlowed;
+            ammoSpeed = timeNotSlowed;
         }
     }
 }

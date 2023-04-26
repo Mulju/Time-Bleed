@@ -95,7 +95,7 @@ public class PlayerEntity : NetworkBehaviour
     public bool canMove = true;
 
     [SerializeField]
-    private float cameraYOffset = 0.9f;
+    private float cameraYOffset;
     private Camera playerCamera;
     PlayerManager playerManager;
 
