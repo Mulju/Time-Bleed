@@ -317,6 +317,8 @@ public class PlayerManager : NetworkBehaviour
         }
         players[playerID].deaths++;
 
+        players[playerID].playerObject.GetComponent<PlayerEntity>().animator.enabled = false;
+
         if (players[playerID].teamTag == 0)
         {
             // Respawn at red team's base and reduce 1 second from the clock
@@ -392,7 +394,9 @@ public class PlayerManager : NetworkBehaviour
 
         player.GetComponent<PlayerEntity>().RespawnServer();
 
-        Camera.main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.9f, player.transform.position.z);
+        Camera.main.transform.localPosition = new Vector3(0, 1, 0);
+
+        player.GetComponent<PlayerEntity>().animator.enabled = true;
     }
 
     [TargetRpc]
