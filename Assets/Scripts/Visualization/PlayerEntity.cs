@@ -190,6 +190,7 @@ public class PlayerEntity : NetworkBehaviour
 
         int damageAmount = Mathf.FloorToInt(damage * damageMultiplier);
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
+        soundControl.PlayPlayerHit();
     }
 
     public void ShowDamageDirection(GameObject player, Vector3 direction)
