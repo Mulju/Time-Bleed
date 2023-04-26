@@ -764,7 +764,7 @@ public class PlayerEntity : NetworkBehaviour
                 ammoInstance.GetComponent<AmmoController>().damage = damage;
                 Destroy(ammoInstance, 120);
             }
-            if (ammoSpawn.GetComponent<AmmoSpawn>().isInsideTerrain)
+            else if (ammoSpawn.GetComponent<AmmoSpawn>().isInsideTerrain)
             {
                 if (Physics.Raycast(startPos, direction, out RaycastHit bulletHit, Mathf.Infinity, layerMask))
                 {
