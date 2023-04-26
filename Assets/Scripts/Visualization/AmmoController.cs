@@ -125,8 +125,6 @@ public class AmmoController : MonoBehaviour
             if (isInsdeTimeField)
             {
                 rb.MovePosition(transform.position + direction * Mathf.Pow(timeSpeed, 2.3f) * 20 * Time.deltaTime);
-
-
             }
             else
             {
@@ -174,6 +172,17 @@ public class AmmoController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (other.CompareTag("TimeSphere"))
+        {
+            ammoSpeed = timeSlowed;
+            timeSpeed = other.GetComponent<TimeSphere>().timeSpeed;
+
+            if (!other.gameObject.GetComponent<TimeSphere>().isTimeField)
+            {
+                isInsdeTimeField = false;
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -198,7 +207,7 @@ public class AmmoController : MonoBehaviour
         if (other.CompareTag("TimeSphere"))
         {
             CheckForCollisions();
-            ammoSpeed = timeNotSlowed;
+            //ammoSpeed = timeNotSlowed;
         }
     }
 }
