@@ -113,38 +113,19 @@ public class AmmoController : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-
-
-        if (isInsdeTimeField)
-        {
-            rb.MovePosition(transform.position + direction * Mathf.Pow(timeSpeed, 2.3f) * 20 * Time.deltaTime);
-
-
-        }
         else
         {
-            rb.MovePosition(transform.position + direction * timeSlowed * Time.deltaTime);
+            if (isInsdeTimeField)
+            {
+                rb.MovePosition(transform.position + direction * Mathf.Pow(timeSpeed, 2.3f) * 20 * Time.deltaTime);
+
+
+            }
+            else
+            {
+                rb.MovePosition(transform.position + direction * timeSlowed * Time.deltaTime);
+            }
         }
-
-
-
-        //if (collide)
-        //{
-        //    if (Mathf.Abs((direction * timeNotSlowed * Time.deltaTime).magnitude) > Mathf.Abs((transform.position - objHitByRaycast).magnitude))
-        //    {
-        //        rb.MovePosition(objHitByRaycast);
-        //        CheckForCollisions();
-        //    }
-        //    else
-        //    {
-        //        rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
-        //    }
-        //}
-        //else
-        //{
-        //    rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
-        //    CheckForCollisions();
-        //}
     }
 
     private void CheckForCollisions()
