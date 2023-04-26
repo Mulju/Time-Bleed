@@ -16,6 +16,7 @@ public class PlayerTorso : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("PlayerTorso OnTriggerEnter");
         if (other.CompareTag("Ammo") && other.TryGetComponent<AmmoController>(out AmmoController ammo) && other.GetComponent<AmmoController>().shooter != player.gameObject)
         {
             if (base.IsServer)

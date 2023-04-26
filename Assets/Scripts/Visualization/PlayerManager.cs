@@ -317,7 +317,7 @@ public class PlayerManager : NetworkBehaviour
         }
         players[playerID].deaths++;
 
-        players[playerID].playerObject.GetComponent<PlayerEntity>().animator.enabled = false;
+        players[playerID].playerObject.GetComponent<PlayerEntity>().playerAnimator.enabled = false;
 
         if (players[playerID].teamTag == 0)
         {
@@ -396,7 +396,7 @@ public class PlayerManager : NetworkBehaviour
 
         Camera.main.transform.localPosition = new Vector3(0, 1, 0);
 
-        player.GetComponent<PlayerEntity>().animator.enabled = true;
+        player.GetComponent<PlayerEntity>().playerAnimator.enabled = true;
     }
 
     [TargetRpc]
