@@ -8,6 +8,7 @@ public class TimeBind : MonoBehaviour
     public bool exploded;
 
     private float timeSphereTime;
+    [SerializeField] private AudioSource timeBindExplosion;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class TimeBind : MonoBehaviour
         if (exploded)
             return;
 
+        timeBindExplosion.Play();
         StartCoroutine(SpawnTimeSphere());
 
         this.gameObject.GetComponent<Collider>().enabled = false;
