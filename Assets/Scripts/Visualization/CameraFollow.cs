@@ -14,10 +14,10 @@ public class CameraFollow : MonoBehaviour
     {
         if (target == null) return;
 
-        transform.LookAt(target.transform);
 
         if (!target.GetComponent<PlayerEntity>().isAlive)
         {
+            transform.LookAt(target.transform);
             startPos = transform.position;
             endPos = target.position + Vector3.up * 10f;
             float t = Mathf.Clamp01(Time.deltaTime * lerpTime);
