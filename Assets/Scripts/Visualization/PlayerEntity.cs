@@ -270,7 +270,24 @@ public class PlayerEntity : NetworkBehaviour
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // Press Esc for pause screen and to lock/unlock cursor
+            if(menuControl.settingsOpen)
+            {
+                menuControl.CloseSettings();
+            }
+            else
+            {
+                playerManager.ChangeCursorLock();
+                menuControl.OpenCloseMenu();
+            }
+        }
 
+        if(menuControl.menuOpen)
+        {
+            return;
+        }
 
         if (deployTimer < 4f)
         {
@@ -400,12 +417,6 @@ public class PlayerEntity : NetworkBehaviour
             GrenadeUI.fillAmount = 1;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            // Press Esc for pause screen and to lock/unlock cursor
-            playerManager.ChangeCursorLock();
-            menuControl.OpenCloseMenu();
-        }
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -425,6 +436,11 @@ public class PlayerEntity : NetworkBehaviour
 
             TimeSpeedSlider(mouseScroll);
         }
+    }
+
+    public bool IsOwnerOfPlayer()
+    {
+        return base.IsOwner;
     }
 
     private bool IsShooting()

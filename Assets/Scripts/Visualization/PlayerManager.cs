@@ -309,6 +309,7 @@ public class PlayerManager : NetworkBehaviour
         }
         playerKilledThisFrame = true;
 
+        players[playerID].playerObject.GetComponent<PlayerEntity>().playerAnimator.enabled = false;
 
         if (attackerID != playerID)
         {
@@ -341,6 +342,8 @@ public class PlayerManager : NetworkBehaviour
         UpdateScoreboard();
 
         StartCoroutine(MaxHealth(playerID));
+
+        players[playerID].playerObject.GetComponent<PlayerEntity>().playerAnimator.enabled = true;
     }
 
     IEnumerator MaxHealth(int playerID)
@@ -356,6 +359,8 @@ public class PlayerManager : NetworkBehaviour
 
     IEnumerator DeathCam(GameObject player, int spawn, int teamTag)
     {
+        player.GetComponent<PlayerEntity>().playerAnimator.enabled = false;
+
         player.GetComponent<PlayerEntity>().isAlive = false;
         player.GetComponent<PlayerEntity>().canMove = false;
 
@@ -392,7 +397,9 @@ public class PlayerManager : NetworkBehaviour
 
         player.GetComponent<PlayerEntity>().RespawnServer();
 
-        Camera.main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.9f, player.transform.position.z);
+        Camera.main.transform.localPosition = new Vector3(0, 1, 0);
+
+        player.GetComponent<PlayerEntity>().playerAnimator.enabled = true;
     }
 
     [TargetRpc]
