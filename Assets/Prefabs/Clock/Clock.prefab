@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 492637234412964900}
   m_Layer: 0
-  m_Name: MinuteHandAnchor
+  m_Name: SecondHandAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5366779207871350296}
   m_Layer: 0
-  m_Name: SecondHandAnchor
+  m_Name: MinuteHandAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -346,8 +346,8 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 801144068395278939}
   _networkObjectCache: {fileID: 7236674032065062529}
   clockHandAnchors:
-  - {fileID: 5366779207871350296}
   - {fileID: 492637234412964900}
+  - {fileID: 5366779207871350296}
   clockHand: {fileID: 0}
   secondText: {fileID: 0}
   minuteText: {fileID: 0}
