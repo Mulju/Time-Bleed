@@ -309,7 +309,7 @@ public class PlayerManager : NetworkBehaviour
         }
         playerKilledThisFrame = true;
 
-        players[playerID].playerObject.GetComponent<PlayerEntity>().playerAnimator.enabled = false;
+        StartRagdoll(players[playerID].playerObject);
 
         if (attackerID != playerID)
         {
@@ -342,8 +342,6 @@ public class PlayerManager : NetworkBehaviour
         UpdateScoreboard();
 
         StartCoroutine(MaxHealth(playerID));
-
-        players[playerID].playerObject.GetComponent<PlayerEntity>().playerAnimator.enabled = true;
     }
 
     IEnumerator MaxHealth(int playerID)
@@ -359,8 +357,6 @@ public class PlayerManager : NetworkBehaviour
 
     IEnumerator DeathCam(GameObject player, int spawn, int teamTag)
     {
-        player.GetComponent<PlayerEntity>().playerAnimator.enabled = false;
-
         player.GetComponent<PlayerEntity>().isAlive = false;
         player.GetComponent<PlayerEntity>().canMove = false;
 
@@ -370,8 +366,6 @@ public class PlayerManager : NetworkBehaviour
         player.GetComponent<PlayerEntity>().canMove = true;
 
         PlayerReset(player, spawn, teamTag);
-
-        Camera.main.transform.localPosition = new Vector3(0, 1, 0);
     }
 
     void PlayerReset(GameObject player, int spawn, int teamTag)
@@ -397,15 +391,28 @@ public class PlayerManager : NetworkBehaviour
 
         player.GetComponent<PlayerEntity>().RespawnServer();
 
-        Camera.main.transform.localPosition = new Vector3(0, 1, 0);
-
-        player.GetComponent<PlayerEntity>().playerAnimator.enabled = true;
+        Camera.main.transform.localPosition = new Vector3(0, 1f, 0);
     }
 
     [TargetRpc]
     void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn, int teamTag)
     {
         StartCoroutine(DeathCam(player, spawn, teamTag));
+    }
+
+    [ObserversRpc]
+    void StartRagdoll(GameObject player)
+    {
+        StartCoroutine(Ragdoll(player));
+    }
+
+    IEnumerator Ragdoll(GameObject player)
+    {
+        player.GetComponent<PlayerEntity>().playerAnimator.enabled = false;
+
+        yield return new WaitForSeconds(5f);
+
+        player.GetComponent<PlayerEntity>().playerAnimator.enabled = true;
     }
 
     public void RestoreHealth(GameObject player)
