@@ -55,6 +55,7 @@ public class Grenade : MonoBehaviour
                 for (int i = 0; i < 80; i++)
                 {
                     GameObject ammoInstance = Instantiate(ammoPrefab, transform.position, Quaternion.identity);
+                    ammoInstance.GetComponent<AmmoController>().isGrenadeShot = true;
                     ammoInstance.GetComponent<AmmoController>().direction = (Random.insideUnitSphere).normalized;
                     ammoInstance.GetComponent<AmmoController>().shooter = ownerObject;
                     ammoInstance.GetComponent<AmmoController>().damage = damage;

@@ -29,6 +29,8 @@ public class AmmoController : MonoBehaviour
     [SerializeField] private GameObject rayCastVisual;
     private LayerMask layerMask;
 
+    [HideInInspector] public bool isGrenadeShot = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -104,6 +106,11 @@ public class AmmoController : MonoBehaviour
                 else if (!hit.collider.CompareTag("Player"))
                 {
                     GameObject instantiatedHole = Instantiate(bulletHole, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
+                    if(isGrenadeShot)
+                    {
+                        // If this bullet was created by grenade, decrease the sound
+                        instantiatedHole.GetComponent<AudioSource>().volume = 0.1f;
+                    }
                     Destroy(instantiatedHole, 10);
                     Destroy(this.gameObject);
                 }
@@ -155,6 +162,11 @@ public class AmmoController : MonoBehaviour
         else if (other.gameObject.layer == 6)
         {
             GameObject instantiatedHole = Instantiate(bulletHole, objHitByRaycast + raycastHit.normal * 0.0001f, Quaternion.LookRotation(raycastHit.normal));
+            if (isGrenadeShot)
+            {
+                // If this bullet was created by grenade, decrease the sound
+                instantiatedHole.GetComponent<AudioSource>().volume = 0.1f;
+            }
             Destroy(instantiatedHole, 10);
             Destroy(this.gameObject);
         }
