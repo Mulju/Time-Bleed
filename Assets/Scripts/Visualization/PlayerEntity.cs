@@ -594,6 +594,10 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void Respawn()
     {
+        currentWeaponPrefab.SetActive(true);
+        timeField.SetActive(true);
+        nameDisplay.SetActive(true);
+        playerAnimator.enabled = true;
         timeField.GetComponent<TimeSphere>().IncreaseCircumference();
 
         if (base.IsOwner)

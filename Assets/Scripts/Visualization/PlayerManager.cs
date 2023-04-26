@@ -403,23 +403,11 @@ public class PlayerManager : NetworkBehaviour
     [ObserversRpc]
     void StartRagdoll(GameObject player)
     {
-        StartCoroutine(Ragdoll(player));
-    }
-
-    IEnumerator Ragdoll(GameObject player)
-    {
         PlayerEntity playerEntity = player.GetComponent<PlayerEntity>();
         playerEntity.currentWeaponPrefab.SetActive(false);
         playerEntity.timeField.SetActive(false);
         playerEntity.nameDisplay.SetActive(false);
         playerEntity.playerAnimator.enabled = false;
-
-        yield return new WaitForSeconds(5.3f);
-
-        playerEntity.currentWeaponPrefab.SetActive(true);
-        playerEntity.timeField.SetActive(true);
-        playerEntity.nameDisplay.SetActive(true);
-        playerEntity.playerAnimator.enabled = true;
     }
 
     public void RestoreHealth(GameObject player)
