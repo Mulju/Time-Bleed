@@ -65,7 +65,7 @@ public class Clock : NetworkBehaviour
         // First one turns 6 degrees every second, second one turns 60 degrees (equivalent to 10 seconds on a clock) when hit by a chronade
         // and the last one turn and extra 6 degrees if a player died.
         secondRotation += 6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime;
-
+        minuteRotation += (6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime) / 24;
         // For minute rotations 360/15 is 24 degrees
 
         // Need to round up or down to display it nicely
