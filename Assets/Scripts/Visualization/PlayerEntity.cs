@@ -403,8 +403,15 @@ public class PlayerEntity : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Press Esc for pause screen and to lock/unlock cursor
-            playerManager.ChangeCursorLock();
-            menuControl.OpenCloseMenu();
+            if(menuControl.settingsOpen)
+            {
+                menuControl.CloseSettings();
+            }
+            else
+            {
+                playerManager.ChangeCursorLock();
+                menuControl.OpenCloseMenu();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))

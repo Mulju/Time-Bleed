@@ -26,6 +26,10 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private NetworkManager netManager;
     public Image[] chronadeImages;
 
+    [HideInInspector] public bool settingsOpen;
+    [SerializeField] private GameObject settingsMenu;
+    [SerializeField] private GameObject settingsButton;
+
     void Start()
     {
         resolutions = Screen.resolutions;
@@ -89,6 +93,13 @@ public class MenuControl : MonoBehaviour
                 pauseMenu.SetActive(true);
             }
         }
+    }
+
+    public void CloseSettings()
+    {
+        settingsMenu.SetActive(false);
+        pauseMenu.SetActive(true);
+        SelectActive(settingsButton);
     }
 
     public void OpenCloseScoreboard()
