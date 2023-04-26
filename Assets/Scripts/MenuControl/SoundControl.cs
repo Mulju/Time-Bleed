@@ -18,10 +18,10 @@ public class SoundControl : MonoBehaviour
 
     private void Update()
     {
-        // Don't run this code in Main Menu
+        //// Don't run this code in Main Menu
         if (SceneManager.GetActiveScene().name == "MainMenu") return;
 
-        if(playerEntity.IsOwnerOfPlayer() && !musicSource.isPlaying)
+        if (playerEntity.IsOwnerOfPlayer() && !musicSource.isPlaying)
         {
             // If you're the owner of this object and the music source stopped playing audio, loop through the not used BG musics and play one
             int number;
@@ -29,7 +29,7 @@ public class SoundControl : MonoBehaviour
             {
                 number = Random.Range(0, 7);
             } while (usedSongs.Contains(number));
-            
+
             usedSongs.Add(number);
             PlayNextBGMusic(musicClips[number]);
         }
