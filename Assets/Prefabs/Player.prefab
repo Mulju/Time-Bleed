@@ -1191,14 +1191,13 @@ MonoBehaviour:
   gunShoot: {fileID: 8300000, guid: ef18aacdaec86094b885e6de5968674e, type: 3}
   musicSource: {fileID: 885762470207026690}
   musicClips:
-  - {fileID: 8300000, guid: b54be8af4a0bcc641bfe09f8ee0aee80, type: 3}
   - {fileID: 8300000, guid: be89fa6671c783744824eaf8adbca25d, type: 3}
-  - {fileID: 8300000, guid: fb98065525c363047a1ce3a5e22e1cdd, type: 3}
   - {fileID: 8300000, guid: c4f89653225f39c498cc7bfa7b321380, type: 3}
   - {fileID: 8300000, guid: 8a0a00e36b724b74baf0c6e72d5638ae, type: 3}
   - {fileID: 8300000, guid: de61f3b27c8659149b3d45eb4f284e2c, type: 3}
-  - {fileID: 8300000, guid: 99206001fcd91aa43a36525b021d8302, type: 3}
-  - {fileID: 8300000, guid: 3b7b2a34d982ea14fa95d9b4aa42c5b4, type: 3}
+  - {fileID: 8300000, guid: 126e9c6b5df03cc44848471a73c7d51d, type: 3}
+  - {fileID: 8300000, guid: 5d986cfb2f033f543961e81efb3ccae9, type: 3}
+  - {fileID: 8300000, guid: 927f2512d8f6dcb45a5d187ff42c3683, type: 3}
   playerEntity: {fileID: 8279258441362849588}
 --- !u!114 &3578576771802031643
 MonoBehaviour:
@@ -1213,6 +1212,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 0557a6ff4334eae49aca605ea2956b39, type: 2}
+  audioSliders: []
+  updateSliders: 0
 --- !u!82 &885762470207026690
 AudioSource:
   m_ObjectHideFlags: 0

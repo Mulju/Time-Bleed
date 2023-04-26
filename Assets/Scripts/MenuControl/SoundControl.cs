@@ -27,7 +27,7 @@ public class SoundControl : MonoBehaviour
             int number;
             do
             {
-                number = Random.Range(0, 8);
+                number = Random.Range(0, 7);
             } while (usedSongs.Contains(number));
             
             usedSongs.Add(number);
