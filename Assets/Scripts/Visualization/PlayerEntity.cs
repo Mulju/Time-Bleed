@@ -108,7 +108,7 @@ public class PlayerEntity : NetworkBehaviour
     // For health and ammo UI
     public TextMeshProUGUI healthTMP, ammoTMP;
 
-    [SerializeField] private SoundControl soundControl;
+    [SerializeField] public SoundControl soundControl;
     [SerializeField] private GameObject playerHitEffect;
 
     private Slider speedSlider = null;

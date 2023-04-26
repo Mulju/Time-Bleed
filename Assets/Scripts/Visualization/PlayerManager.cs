@@ -298,6 +298,14 @@ public class PlayerManager : NetworkBehaviour
         {
             PlayerKilled(playerID, shooterID);
         }
+
+        ClientPlayHitSound(players[playerID].connection, players[playerID].playerObject);
+    }
+
+    [TargetRpc]
+    private void ClientPlayHitSound(NetworkConnection connection, GameObject player)
+    {
+        player.GetComponent<PlayerEntity>().soundControl.PlayPlayerHit();
     }
 
     void PlayerKilled(int playerID, int attackerID)
