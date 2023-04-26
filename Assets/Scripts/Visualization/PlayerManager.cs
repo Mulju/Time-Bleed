@@ -357,6 +357,7 @@ public class PlayerManager : NetworkBehaviour
     IEnumerator DeathCam(GameObject player, int spawn, int teamTag)
     {
         player.GetComponent<PlayerEntity>().playerAnimator.gameObject.SetActive(false);
+
         player.GetComponent<PlayerEntity>().isAlive = false;
         player.GetComponent<PlayerEntity>().canMove = false;
 
