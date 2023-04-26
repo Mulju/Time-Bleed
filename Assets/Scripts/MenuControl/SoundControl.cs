@@ -109,7 +109,7 @@ public class SoundControl : MonoBehaviour
 
     public void PlayPlayerHit()
     {
-        float volume = 0.2f;
+        float volume = 0.6f;
         PlaySound(playerHitSound, volume, globalPitch);
     }
 

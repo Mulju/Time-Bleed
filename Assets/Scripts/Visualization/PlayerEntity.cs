@@ -108,7 +108,7 @@ public class PlayerEntity : NetworkBehaviour
     // For health and ammo UI
     public TextMeshProUGUI healthTMP, ammoTMP;
 
-    [SerializeField] private SoundControl soundControl;
+    [SerializeField] public SoundControl soundControl;
     [SerializeField] private GameObject playerHitEffect;
 
     private Slider speedSlider = null;
@@ -190,7 +190,6 @@ public class PlayerEntity : NetworkBehaviour
 
         int damageAmount = Mathf.FloorToInt(damage * damageMultiplier);
         PlayerManager.instance.DamagePlayer(hitPlayer.GetInstanceID(), damageAmount, shooter.GetInstanceID());
-        soundControl.PlayPlayerHit();
     }
 
     public void ShowDamageDirection(GameObject player, Vector3 direction)
