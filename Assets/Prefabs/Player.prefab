@@ -4102,6 +4102,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HumanMale_Character (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 151507472809613513, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 671480078807466611, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: m_RootOrder
@@ -4157,6 +4162,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1207800596374834209, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerLegs
+      objectReference: {fileID: 0}
     - target: {fileID: 2069458879221692186, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: player
@@ -4171,6 +4181,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _networkObjectCache
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2123244521209922067, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerTorso
       objectReference: {fileID: 0}
     - target: {fileID: 2319650053153087552, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
@@ -4202,6 +4217,16 @@ PrefabInstance:
       propertyPath: _networkObjectCache
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3773638092493942415, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerLegs
+      objectReference: {fileID: 0}
+    - target: {fileID: 3885158086451082246, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerLegs
+      objectReference: {fileID: 0}
     - target: {fileID: 4097280364192360526, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: player
@@ -4216,6 +4241,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _networkObjectCache
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172053293642656256, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerTorso
       objectReference: {fileID: 0}
     - target: {fileID: 4861675524468905405, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
@@ -4232,6 +4262,11 @@ PrefabInstance:
       propertyPath: _networkObjectCache
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5733985099059865161, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerLegs
+      objectReference: {fileID: 0}
     - target: {fileID: 6586346493429129714, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: player
@@ -4247,6 +4282,26 @@ PrefabInstance:
       propertyPath: _networkObjectCache
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6627117756916735112, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerTorso
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627948660690813616, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerTorso
+      objectReference: {fileID: 0}
+    - target: {fileID: 7758760423942805725, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerTorso
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218457956518326339, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerTorso
+      objectReference: {fileID: 0}
     - target: {fileID: 8588386019291496455, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: player
@@ -4261,6 +4316,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _networkObjectCache
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723517387585891984, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerHead
+      objectReference: {fileID: 0}
+    - target: {fileID: 8729644126589073813, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerTorso
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db53567b0a227df4db234d347892a0dc, type: 3}
