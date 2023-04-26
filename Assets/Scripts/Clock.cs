@@ -90,11 +90,12 @@ public class Clock : NetworkBehaviour
     [ObserversRpc]
     public void UpdateClock()
     {
-        secondText.text = "Remaining seconds: " + (remainingSeconds == 0 ? 0 : Mathf.Floor(remainingSeconds));
-        minuteText.text = "Remaining minutes: " + remainingMinutes;
+        //secondText.text = "Remaining seconds: " + (remainingSeconds == 0 ? 0 : Mathf.Floor(remainingSeconds));
+        //minuteText.text = "Remaining minutes: " + remainingMinutes;
 
         //clockHand.transform.localRotation = Quaternion.Euler(0, rotation, 0);
         clockHandAnchors[0].transform.localRotation = Quaternion.Euler(0, 0, secondRotation);
+        clockHandAnchors[1].transform.localRotation = Quaternion.Euler(0, 0, minuteRotation);
     }
 
     public int GetIdentifier()

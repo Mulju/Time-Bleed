@@ -259,13 +259,13 @@ public class PlayerManager : NetworkBehaviour
 
         // Reset the clock timers
         MatchManager.matchManager.redClock.secondRotation = 0;
-        MatchManager.matchManager.redClock.remainingSeconds = 0;
-        MatchManager.matchManager.redClock.remainingMinutes = 15;
+        MatchManager.matchManager.redClock.remainingSeconds = 60;
+        MatchManager.matchManager.redClock.remainingMinutes = 14;
         MatchManager.matchManager.redClock.remainingTime = 900;
 
         MatchManager.matchManager.greenClock.secondRotation = 0;
-        MatchManager.matchManager.greenClock.remainingSeconds = 0;
-        MatchManager.matchManager.greenClock.remainingMinutes = 15;
+        MatchManager.matchManager.greenClock.remainingSeconds = 60;
+        MatchManager.matchManager.greenClock.remainingMinutes = 14;
         MatchManager.matchManager.greenClock.remainingTime = 900;
     }
 
