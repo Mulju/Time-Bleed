@@ -156,7 +156,7 @@ public class PlayerEntity : NetworkBehaviour
             timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
             GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
 
-            playerMesh.SetActive(false);
+            //playerMesh.SetActive(false);
         }
         else
         {
@@ -302,7 +302,7 @@ public class PlayerEntity : NetworkBehaviour
         Physics.SyncTransforms();
         Move();
 
-        AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space));
+        AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space), Input.GetKeyDown(KeyCode.R), 1/currentWeapon.reloadTime);
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
@@ -438,13 +438,13 @@ public class PlayerEntity : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void AnimateServer(bool run, bool shoot, bool jump)
+    public void AnimateServer(bool run, bool shoot, bool jump, bool reload, float reloadTimeMultiplier)
     {
-        Animate(run, shoot, jump);
+        Animate(run, shoot, jump, reload, reloadTimeMultiplier);
     }
 
     [ObserversRpc]
-    public void Animate(bool run, bool shoot, bool jump)
+    public void Animate(bool run, bool shoot, bool jump, bool reload, float reloadTimeMultiplier)
     {
         if (run)
         {
@@ -467,6 +467,12 @@ public class PlayerEntity : NetworkBehaviour
         if (jump)
         {
             playerAnimator.SetTrigger("Jump");
+        }
+
+        if (reload)
+        {
+            playerAnimator.SetFloat("ReloadSpeedMultiplier", reloadTimeMultiplier);
+            playerAnimator.SetTrigger("Reload");
         }
     }
     public void ChangeWeapon(int weaponIndex)
