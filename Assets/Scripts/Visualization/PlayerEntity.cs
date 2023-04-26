@@ -18,6 +18,7 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject timeField;
     public GameObject bulletHole;
     public GameObject timeBindSkill;
+    public GameObject nameDisplay;
 
     public Animator playerAnimator;
 
@@ -29,7 +30,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject riflePrefab;
     [SerializeField] private GameObject sniperPrefab;
     [SerializeField] private GameObject shotgunPrefab;
-    private GameObject currentWeaponPrefab;
+    public GameObject currentWeaponPrefab;
 
     [SerializeField] private GameObject rifleAnimationsPrefab;
     [SerializeField] private GameObject sniperAnimationsPrefab;
@@ -107,7 +108,7 @@ public class PlayerEntity : NetworkBehaviour
     // For health and ammo UI
     public TextMeshProUGUI healthTMP, ammoTMP;
 
-    [SerializeField] private SoundControl soundControl;
+    // [SerializeField] private SoundControl soundControl;
     [SerializeField] private GameObject playerHitEffect;
 
     private Slider speedSlider = null;
@@ -273,7 +274,7 @@ public class PlayerEntity : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Press Esc for pause screen and to lock/unlock cursor
-            if(menuControl.settingsOpen)
+            if (menuControl.settingsOpen)
             {
                 menuControl.CloseSettings();
             }
@@ -284,7 +285,7 @@ public class PlayerEntity : NetworkBehaviour
             }
         }
 
-        if(menuControl.menuOpen)
+        if (menuControl.menuOpen)
         {
             return;
         }
@@ -319,7 +320,7 @@ public class PlayerEntity : NetworkBehaviour
         Physics.SyncTransforms();
         Move();
 
-        AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space), Input.GetKeyDown(KeyCode.R), 1/currentWeapon.reloadTime);
+        AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space), Input.GetKeyDown(KeyCode.R), 1 / currentWeapon.reloadTime);
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
@@ -816,7 +817,7 @@ public class PlayerEntity : NetworkBehaviour
 
         if (isLastShot)
         {
-            soundControl.PlayShootSound();
+            // soundControl.PlayShootSound();
             // recoil
             if (base.IsOwner)
             {

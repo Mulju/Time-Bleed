@@ -408,11 +408,18 @@ public class PlayerManager : NetworkBehaviour
 
     IEnumerator Ragdoll(GameObject player)
     {
-        player.GetComponent<PlayerEntity>().playerAnimator.enabled = false;
+        PlayerEntity playerEntity = player.GetComponent<PlayerEntity>();
+        playerEntity.currentWeaponPrefab.SetActive(false);
+        playerEntity.timeField.SetActive(false);
+        playerEntity.nameDisplay.SetActive(false);
+        playerEntity.playerAnimator.enabled = false;
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(5.1f);
 
-        player.GetComponent<PlayerEntity>().playerAnimator.enabled = true;
+        playerEntity.currentWeaponPrefab.SetActive(true);
+        playerEntity.timeField.SetActive(true);
+        playerEntity.nameDisplay.SetActive(true);
+        playerEntity.playerAnimator.enabled = true;
     }
 
     public void RestoreHealth(GameObject player)
