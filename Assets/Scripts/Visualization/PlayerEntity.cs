@@ -594,7 +594,11 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void Respawn()
     {
-        currentWeaponPrefab.SetActive(true);
+        if (base.IsOwner)
+        {
+            currentWeaponPrefab.SetActive(true);
+        }
+
         timeField.SetActive(true);
         nameDisplay.SetActive(true);
         playerAnimator.enabled = true;
