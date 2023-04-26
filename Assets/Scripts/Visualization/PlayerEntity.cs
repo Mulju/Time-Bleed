@@ -427,6 +427,11 @@ public class PlayerEntity : NetworkBehaviour
         }
     }
 
+    public bool IsOwnerOfPlayer()
+    {
+        return base.IsOwner;
+    }
+
     private bool IsShooting()
     {
         if (((currentWeapon.holdToShoot && Input.GetKey(KeyCode.Mouse0)) || (!currentWeapon.holdToShoot && Input.GetKeyDown(KeyCode.Mouse0))) && currentWeapon.ammoLeft > 0 && reloading == false && deployTimer >= currentWeapon.deployTime)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using FishNet.Managing;
 
 public class SoundControl : MonoBehaviour
 {
@@ -13,15 +14,16 @@ public class SoundControl : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioClip[] musicClips;
     private List<int> usedSongs = new List<int>();
+    [SerializeField] private PlayerEntity playerEntity;
 
     private void Update()
     {
         // Don't run this code in Main Menu
         if (SceneManager.GetActiveScene().name == "MainMenu") return;
 
-        if(!musicSource.isPlaying)
+        if(playerEntity.IsOwnerOfPlayer() && !musicSource.isPlaying)
         {
-            // Music source stopped playing audio, loop through the not used BG musics and play one
+            // If you're the owner of this object and the music source stopped playing audio, loop through the not used BG musics and play one
             int number;
             do
             {
