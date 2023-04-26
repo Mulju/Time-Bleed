@@ -302,7 +302,7 @@ public class PlayerEntity : NetworkBehaviour
         Physics.SyncTransforms();
         Move();
 
-        AnimateServer(IsMoving(), IsShooting());
+        AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space));
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
@@ -438,13 +438,13 @@ public class PlayerEntity : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void AnimateServer(bool run, bool shoot)
+    public void AnimateServer(bool run, bool shoot, bool jump)
     {
-        Animate(run, shoot);
+        Animate(run, shoot, jump);
     }
 
     [ObserversRpc]
-    public void Animate(bool run, bool shoot)
+    public void Animate(bool run, bool shoot, bool jump)
     {
         if (run)
         {
@@ -462,6 +462,11 @@ public class PlayerEntity : NetworkBehaviour
         else
         {
             playerAnimator.SetBool("Shoot", false);
+        }
+
+        if (jump)
+        {
+            playerAnimator.SetTrigger("Jump");
         }
     }
     public void ChangeWeapon(int weaponIndex)
