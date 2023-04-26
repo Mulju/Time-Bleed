@@ -860,7 +860,7 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void ThrowFragGrenade(float cookTime)
     {
-        GameObject grenade = Instantiate(grenadePrefab, ammoSpawn.transform.position + ammoSpawn.transform.forward, Quaternion.identity);
+        GameObject grenade = Instantiate(grenadePrefab, ammoSpawn.transform.position + ammoSpawn.transform.forward * 0.5f, Quaternion.identity);
         grenade.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 20, ForceMode.Impulse);
         grenade.GetComponent<Grenade>().ownerObject = gameObject;
         grenade.GetComponent<Grenade>().cookTime = cookTime;
@@ -876,7 +876,7 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void TimeBind()
     {
-        GameObject timeBindInstance = Instantiate(timeBindSkill, ammoSpawn.transform.position + ammoSpawn.transform.forward, Quaternion.identity);
+        GameObject timeBindInstance = Instantiate(timeBindSkill, ammoSpawn.transform.position + ammoSpawn.transform.forward * 0.5f, Quaternion.identity);
         timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 4, ForceMode.Impulse);
         Destroy(timeBindInstance, 25);
     }
@@ -890,7 +890,7 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void ThrowGrenade(/*GameObject shooter, Vector3 direction*/)
     {
-        GameObject chronadeInstance = Instantiate(chronade, ammoSpawn.transform.position + ammoSpawn.transform.forward, Quaternion.identity);
+        GameObject chronadeInstance = Instantiate(chronade, ammoSpawn.transform.position + ammoSpawn.transform.forward * 0.5f, Quaternion.identity);
         chronadeInstance.GetComponent<ChronoGrenade>().ownerObject = gameObject;
         chronadeInstance.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 4, ForceMode.Impulse);
     }
