@@ -414,7 +414,7 @@ public class PlayerManager : NetworkBehaviour
         playerEntity.nameDisplay.SetActive(false);
         playerEntity.playerAnimator.enabled = false;
 
-        yield return new WaitForSeconds(5.1f);
+        yield return new WaitForSeconds(5.3f);
 
         playerEntity.currentWeaponPrefab.SetActive(true);
         playerEntity.timeField.SetActive(true);
