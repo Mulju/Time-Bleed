@@ -87,7 +87,7 @@ public class PlayerEntity : NetworkBehaviour
 
     public float sensitivity = 1f;
 
-    CharacterController characterController;
+    public CharacterController characterController;
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
 
@@ -159,8 +159,6 @@ public class PlayerEntity : NetworkBehaviour
 
             timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
             GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
-
-            characterController.isTrigger = true;
 
             SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
 
@@ -639,6 +637,7 @@ public class PlayerEntity : NetworkBehaviour
             currentWeaponPrefab.SetActive(true);
         }
 
+        characterController.enabled = true;
         timeField.SetActive(true);
         nameDisplay.SetActive(true);
         playerAnimator.enabled = true;

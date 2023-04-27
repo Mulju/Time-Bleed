@@ -514,6 +514,7 @@ public class PlayerManager : NetworkBehaviour
         playerEntity.timeField.SetActive(false);
         playerEntity.nameDisplay.SetActive(false);
         playerEntity.playerAnimator.enabled = false;
+        playerEntity.characterController.enabled = false;
 
         if (base.IsOwner)
         {
