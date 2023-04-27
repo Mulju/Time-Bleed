@@ -124,6 +124,7 @@ public class SoundControl : MonoBehaviour
     {
         float volume = 1f;
         PlaySound(underAttack, volume, globalPitch);
+        Debug.Log("Base under attack");
     }
 
     public void PlayOneMinute()
