@@ -335,11 +335,28 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         Physics.SyncTransforms();
-        
-        if(canMove)
+
+
+        if (canMove)
         {
             Move();
         }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            // Press Tab for scoreboard
+            menuControl.OpenCloseScoreboard();
+        }
+
+        // Refresh the number of shown chronades in the UI
+        for (int i = 0; i < amountOfChronades; i++)
+        {
+            menuControl.chronadeImages[i].enabled = true;
+            menuControl.chronadeImages[i].GetComponentInChildren<Text>().enabled = true;
+        }
+
+        if (!isAlive)
+            return;
 
         AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space), Input.GetKeyDown(KeyCode.R), 1 / currentWeapon.reloadTime);
 
@@ -411,13 +428,6 @@ public class PlayerEntity : NetworkBehaviour
             menuControl.chronadeImages[amountOfChronades].enabled = false;
         }
 
-        // Refresh the number of shown chronades in the UI
-        for (int i = 0; i < amountOfChronades; i++)
-        {
-            menuControl.chronadeImages[i].enabled = true;
-            menuControl.chronadeImages[i].GetComponentInChildren<Text>().enabled = true;
-        }
-
         if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown)
         {
             timeBindTimer = 0;
@@ -437,13 +447,6 @@ public class PlayerEntity : NetworkBehaviour
             isCooking = false;
             grenadeTimer = 0;
             GrenadeUI.fillAmount = 1;
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            // Press Tab for scoreboard
-            menuControl.OpenCloseScoreboard();
         }
 
         if (Input.mouseScrollDelta.y != 0)
