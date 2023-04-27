@@ -25,7 +25,7 @@ public class Clock : NetworkBehaviour
     [HideInInspector] public int playersKilled = 0;
 
     [SerializeField] private GameObject[] bigClockHandles;
-    [HideInInspector] public Action<int> OnChronadeHit;
+    public Action<int> OnChronadeHit;
 
     public override void OnStartClient()
     {
@@ -112,7 +112,10 @@ public class Clock : NetworkBehaviour
         {
             hitChronades++;
             StartCoroutine(ClockTimer(true));
-            OnChronadeHit.Invoke(teamIdentifier);
+            if(OnChronadeHit != null)
+            {
+                OnChronadeHit.Invoke(teamIdentifier);
+            }
 
             // Destroy the grenade
             Destroy(collision.gameObject);
