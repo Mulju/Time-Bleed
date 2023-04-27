@@ -15,6 +15,7 @@ using UnityEditor;
 using LiteNetLib;
 using FishNet.Managing;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -100,6 +101,8 @@ public class PlayerManager : NetworkBehaviour
 
     public void PlayAttenborough(int i)
     {
+        // Plays the Attenborough sounds for remaining time
+
         //List<PlayerEntity> redPlayers = new List<PlayerEntity>();
         //List<PlayerEntity> greenPlayers = new List<PlayerEntity>();
         foreach (KeyValuePair<int, Data.Player> player in players)
@@ -119,6 +122,10 @@ public class PlayerManager : NetworkBehaviour
 
                     //player.Value.playerObject.GetComponent<PlayerEntity>().soundControl.PlayOneMinute();
                 }
+                else if(i == 4)
+                {
+                    ClientPlayBaseUnderAttack(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>());
+                }
 
                 //redPlayers.Add(player.Value.playerObject.GetComponent<PlayerEntity>());
             }
@@ -136,6 +143,10 @@ public class PlayerManager : NetworkBehaviour
                     ClientPlayAttenborough(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>(), false);
 
                     //player.Value.playerObject.GetComponent<PlayerEntity>().soundControl.PlayOneMinute();
+                }
+                else if (i == 5)
+                {
+                    ClientPlayBaseUnderAttack(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>());
                 }
 
                 //greenPlayers.Add(player.Value.playerObject.GetComponent<PlayerEntity>());
@@ -192,6 +203,26 @@ public class PlayerManager : NetworkBehaviour
         {
             player.soundControl.PlayOneMinute();
         }
+    }
+
+    [TargetRpc]
+    public void ClientPlayBaseUnderAttack(NetworkConnection connection, PlayerEntity player)
+    {
+        player.soundControl.PlayBaseIsUnderAttack();
+    }
+
+    public void AllClientsPlayChronadeSpawnChange()
+    {
+        foreach(KeyValuePair<int, Data.Player> player in players)
+        {
+            ClientPlayChronadeSpawnChange(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>());
+        }
+    }
+
+    [TargetRpc]
+    public void ClientPlayChronadeSpawnChange(NetworkConnection connection, PlayerEntity player)
+    {
+        player.soundControl.PlayChronadeSpawnMove();
     }
 
     public void NmrPlayersChanged(NetworkConnection connection, RemoteConnectionStateArgs args)

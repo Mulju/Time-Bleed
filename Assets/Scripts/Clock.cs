@@ -5,6 +5,7 @@ using TMPro;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using UnityEditor;
+using System;
 
 public class Clock : NetworkBehaviour
 {
@@ -24,6 +25,7 @@ public class Clock : NetworkBehaviour
     [HideInInspector] public int playersKilled = 0;
 
     [SerializeField] private GameObject[] bigClockHandles;
+    [HideInInspector] public Action<int> OnChronadeHit;
 
     public override void OnStartClient()
     {
@@ -110,6 +112,7 @@ public class Clock : NetworkBehaviour
         {
             hitChronades++;
             StartCoroutine(ClockTimer(true));
+            OnChronadeHit.Invoke(teamIdentifier);
 
             // Destroy the grenade
             Destroy(collision.gameObject);
