@@ -36,6 +36,9 @@ public class MatchManager : NetworkBehaviour
     [SerializeField] private GameObject[] chronadePacks;
     //[HideInInspector] public Transform nextChronadeSpawn;
     [HideInInspector] public Action<bool> OnStartMoveChronadePack;
+    [HideInInspector] public Action<int> OnClockTimeChange;
+
+    private bool fiveHasPlayedRed = false, oneHasPlayedRed = false, fiveHasPlayedGreen = false, oneHasPlayedGreen = false;
 
     private void Awake()
     {
@@ -131,10 +134,36 @@ public class MatchManager : NetworkBehaviour
 
 
 
+        // Play time sounds
+        if(redClock.remainingTime <= 300 && !fiveHasPlayedRed)
+        {
+            fiveHasPlayedRed = true;
+            // Play five sound for red
+            OnClockTimeChange.Invoke(0);
+        }
+        if (greenClock.remainingTime <= 300 && !fiveHasPlayedGreen)
+        {
+            fiveHasPlayedGreen = true;
+            // Play five sound for green
+            OnClockTimeChange.Invoke(1);
+        }
+        if (redClock.remainingTime <= 60 && !oneHasPlayedRed)
+        {
+            oneHasPlayedRed = true;
+            // Play one sound for red
+            OnClockTimeChange.Invoke(2);
+        }
+        if (greenClock.remainingTime <= 60 && !oneHasPlayedGreen)
+        {
+            oneHasPlayedGreen = true;
+            // Play one sound for green
+            OnClockTimeChange.Invoke(3);
+        }
+
 
 
         // Change match state to ended if time runs out on a clock
-        if(redClock.remainingTime < 0 || greenClock.remainingTime < 0)
+        if (redClock.remainingTime < 0 || greenClock.remainingTime < 0)
         {
             // Match ended
             currentMatchState = MatchState.MATCH_ENDED;

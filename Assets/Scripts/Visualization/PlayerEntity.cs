@@ -285,6 +285,12 @@ public class PlayerEntity : NetworkBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            // Test for Attenborough
+            soundControl.PlayFiveMinutes();
+        }
+
         if (menuControl.menuOpen)
         {
             return;
