@@ -14,9 +14,10 @@ public class SoundControl : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private PlayerEntity playerEntity;
     [SerializeField] private AudioClip menuMove, menuSelect, gunShoot, bulletHitWall, bulletHitBubble, timeBindExplosion, chronadeSound,
-        footstep, playerHitSound, fragGrenadeSound, clockTick;
+        footstep, playerHitSound, fragGrenadeSound, clockTick, oneMinute, fiveMinutes, chronadeSpawnMoved, underAttack;
     private List<int> usedSongs = new List<int>();
     private float globalPitch = 1;
+    private float globalVolume = 0.02f;
 
     private void Update()
     {
@@ -73,55 +74,79 @@ public class SoundControl : MonoBehaviour
 
     public void PlayShootSound()
     {
-        float volume = 0.4f;
+        float volume = globalVolume * 2;
         PlaySound(gunShoot, volume, globalPitch);
     }
 
     public void PlayWallHit()
     {
-        float volume = 0.2f;
+        float volume = globalVolume;
         PlaySound(bulletHitWall, volume, globalPitch);
     }
 
     public void PlayBubbleHit()
     {
-        float volume = 0.2f;
+        float volume = globalVolume;
         PlaySound(bulletHitBubble, volume, globalPitch);
     }
 
     public void PlayTimeBindExplosion()
     {
-        float volume = 0.2f;
+        float volume = globalVolume;
         PlaySound(timeBindExplosion, volume, globalPitch);
     }
 
     public void PlayChronadeSound()
     {
-        float volume = 0.2f;
+        float volume = globalVolume;
         PlaySound(chronadeSound, volume, globalPitch);
     }
 
     public void PlayFootstep()
     {
-        float volume = 0.2f;
+        float volume = globalVolume;
         PlaySound(footstep, volume, globalPitch);
     }
 
     public void PlayPlayerHit()
     {
-        float volume = 0.6f;
+        float volume = globalVolume * 6;
         PlaySound(playerHitSound, volume, globalPitch);
     }
 
     public void PlayFragExplosion()
     {
-        float volume = 0.2f;
+        float volume = globalVolume;
         PlaySound(fragGrenadeSound, volume, globalPitch);
     }
 
     public void PlayClockTick()
     {
-        float volume = 0.2f;
+        float volume = globalVolume;
         PlaySound(clockTick, volume, globalPitch);
+    }
+
+    public void PlayBaseIsUnderAttack()
+    {
+        float volume = 1f;
+        PlaySound(underAttack, volume, globalPitch);
+    }
+
+    public void PlayOneMinute()
+    {
+        float volume = 1f;
+        PlaySound(oneMinute, volume, globalPitch);
+    }
+
+    public void PlayFiveMinutes()
+    {
+        float volume = 1f;
+        PlaySound(fiveMinutes, volume, globalPitch);
+    }
+
+    public void PlayChronadeSpawnMove()
+    {
+        float volume = 1f;
+        PlaySound(chronadeSpawnMoved, volume, globalPitch);
     }
 }

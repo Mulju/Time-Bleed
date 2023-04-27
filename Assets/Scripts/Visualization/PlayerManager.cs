@@ -63,6 +63,7 @@ public class PlayerManager : NetworkBehaviour
         if (base.IsServer)
         {
             ServerManager.OnRemoteConnectionState += NmrPlayersChanged;
+            MatchManager.matchManager.OnClockTimeChange += PlayAttenborough;
         }
     }
 
@@ -72,6 +73,7 @@ public class PlayerManager : NetworkBehaviour
         if (base.IsServer)
         {
             ServerManager.OnRemoteConnectionState -= NmrPlayersChanged;
+            MatchManager.matchManager.OnClockTimeChange -= PlayAttenborough;
         }
     }
 
@@ -93,6 +95,102 @@ public class PlayerManager : NetworkBehaviour
                     PlayerKilled(player.Key, player.Key);
                 }
             }
+        }
+    }
+
+    public void PlayAttenborough(int i)
+    {
+        //List<PlayerEntity> redPlayers = new List<PlayerEntity>();
+        //List<PlayerEntity> greenPlayers = new List<PlayerEntity>();
+        foreach (KeyValuePair<int, Data.Player> player in players)
+        {
+            if(player.Value.playerObject.GetComponent<PlayerEntity>().ownTeamTag == 0)
+            {
+                // Is a red player
+                if(i == 0)
+                {
+                    ClientPlayAttenborough(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>(), true);
+
+                    //player.Value.playerObject.GetComponent<PlayerEntity>().soundControl.PlayFiveMinutes();
+                }
+                else if(i == 2)
+                {
+                    ClientPlayAttenborough(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>(), false);
+
+                    //player.Value.playerObject.GetComponent<PlayerEntity>().soundControl.PlayOneMinute();
+                }
+
+                //redPlayers.Add(player.Value.playerObject.GetComponent<PlayerEntity>());
+            }
+            else
+            {
+                // Is a green player
+                if (i == 1)
+                {
+                    ClientPlayAttenborough(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>(), true);
+
+                    //player.Value.playerObject.GetComponent<PlayerEntity>().soundControl.PlayFiveMinutes();
+                }
+                else if (i == 3)
+                {
+                    ClientPlayAttenborough(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>(), false);
+
+                    //player.Value.playerObject.GetComponent<PlayerEntity>().soundControl.PlayOneMinute();
+                }
+
+                //greenPlayers.Add(player.Value.playerObject.GetComponent<PlayerEntity>());
+            }
+        }
+        /*
+        switch(i)
+        {
+            case 0:
+                // Red team 5 minutes
+                foreach(PlayerEntity player in redPlayers)
+                {
+                    ClientPlayAttenborough(player.);
+                }
+                break;
+
+            case 1:
+                // Green team 5 minutes
+                foreach (PlayerEntity player in greenPlayers)
+                {
+                    player.soundControl.PlayFiveMinutes();
+                }
+                break;
+
+            case 2:
+                // Red team 1 minute
+                foreach (PlayerEntity player in redPlayers)
+                {
+                    player.soundControl.PlayOneMinute();
+                }
+                break;
+
+            case 3:
+                // Green team 1 minute
+                foreach (PlayerEntity player in greenPlayers)
+                {
+                    player.soundControl.PlayOneMinute();
+                }
+                break;
+
+            default:
+                break;
+        }*/
+    }
+
+    [TargetRpc]
+    public void ClientPlayAttenborough(NetworkConnection connection, PlayerEntity player, bool isFiveMinutes)
+    {
+        if(isFiveMinutes)
+        {
+            player.soundControl.PlayFiveMinutes();
+        }
+        else
+        {
+            player.soundControl.PlayOneMinute();
         }
     }
 
