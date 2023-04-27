@@ -62,13 +62,13 @@ public class SoundControl : MonoBehaviour
 
     public void PlayMoveSound()
     {
-        float volume = 0.2f;
+        float volume = 0.1f;
         PlaySound(menuMove, volume, globalPitch);
     }
 
     public void PlaySelectSound()
     {
-        float volume = 0.2f;
+        float volume = 0.1f;
         PlaySound(menuSelect, volume, globalPitch);
     }
 
