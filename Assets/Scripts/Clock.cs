@@ -23,6 +23,8 @@ public class Clock : NetworkBehaviour
     private MatchManager mManager;
     [HideInInspector] public int playersKilled = 0;
 
+    [SerializeField] private GameObject[] bigClockHandles;
+
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -91,6 +93,9 @@ public class Clock : NetworkBehaviour
     {
         clockHandAnchors[0].transform.localRotation = Quaternion.Euler(0, 0, secondRotation);
         clockHandAnchors[1].transform.localRotation = Quaternion.Euler(0, 0, minuteRotation);
+
+        bigClockHandles[0].transform.localRotation = Quaternion.Euler(0, 0, secondRotation);
+        bigClockHandles[1].transform.localRotation = Quaternion.Euler(0, 0, minuteRotation);
     }
 
     public int GetIdentifier()
