@@ -30,7 +30,7 @@ public class MenuControl : MonoBehaviour
     public bool menuOpen;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject settingsButton;
-    [HideInInspector] public float mouseSensitivity = 1;
+    [HideInInspector] public float mouseSensitivity;
 
 
     void Start()
@@ -65,6 +65,7 @@ public class MenuControl : MonoBehaviour
         resolutionsDropdown.value = resolutionIndex;
         resolutionsDropdown.RefreshShownValue();
 
+        mouseSensitivity = 1;
     }
 
     public void SelectActive(GameObject selected)
