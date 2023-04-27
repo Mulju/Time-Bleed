@@ -565,44 +565,46 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void ChangeWeaponPrefab(int weaponIndex)
     {
+        currentWeaponPrefab.SetActive(false);
+
+        if (weaponIndex == 0)
+        {
+            currentWeaponPrefab = riflePrefab;
+        }
+        else if (weaponIndex == 1)
+        {
+            currentWeaponPrefab = sniperPrefab;
+        }
+        else if (weaponIndex == 2)
+        {
+            currentWeaponPrefab = shotgunPrefab;
+        }
+
+
+        currentWeaponAnimationsPrefab.SetActive(false);
+
+        if (weaponIndex == 0)
+        {
+            currentWeaponAnimationsPrefab = rifleAnimationsPrefab;
+        }
+        else if (weaponIndex == 1)
+        {
+            currentWeaponAnimationsPrefab = sniperAnimationsPrefab;
+        }
+        else if (weaponIndex == 2)
+        {
+            currentWeaponAnimationsPrefab = shotgunAnimationsPrefab;
+        }
+
+
         if (base.IsOwner)
         {
-            currentWeaponPrefab.SetActive(false);
-
-            if (weaponIndex == 0)
-            {
-                currentWeaponPrefab = riflePrefab;
-            }
-            else if (weaponIndex == 1)
-            {
-                currentWeaponPrefab = sniperPrefab;
-            }
-            else if (weaponIndex == 2)
-            {
-                currentWeaponPrefab = shotgunPrefab;
-            }
             currentWeaponPrefab.SetActive(true);
-
-
             animator = currentWeaponPrefab.GetComponent<Animator>();
             animator.SetBool("Reloading", true);
         }
         else
         {
-            currentWeaponAnimationsPrefab.SetActive(false);
-
-            if (weaponIndex == 0)
-            {
-                currentWeaponAnimationsPrefab = rifleAnimationsPrefab;
-            }
-            else if (weaponIndex == 1)
-            {
-                currentWeaponAnimationsPrefab = sniperAnimationsPrefab;
-            }
-            else if (weaponIndex == 2)
-            {
-                currentWeaponAnimationsPrefab = shotgunAnimationsPrefab;
-            }
             currentWeaponAnimationsPrefab.SetActive(true);
         }
 
