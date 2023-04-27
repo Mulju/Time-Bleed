@@ -416,6 +416,13 @@ public class PlayerManager : NetworkBehaviour
         playerEntity.timeField.SetActive(false);
         playerEntity.nameDisplay.SetActive(false);
         playerEntity.playerAnimator.enabled = false;
+
+        SkinnedMeshRenderer[] meshes = playerEntity.playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        foreach (SkinnedMeshRenderer mesh in meshes)
+        {
+            mesh.renderingLayerMask = 1;
+        }
     }
 
     public void RestoreHealth(GameObject player)

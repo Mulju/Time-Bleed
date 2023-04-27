@@ -6256,6 +6256,21 @@ PrefabInstance:
       propertyPath: m_TagString
       value: PlayerTorso
       objectReference: {fileID: 0}
+    - target: {fileID: 6816201152003462491, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816201152003462491, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9caca04a26f06b243ba078eb93a58436, type: 2}
+    - target: {fileID: 6947930909869169543, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7390999412856902037, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: m_TagString
