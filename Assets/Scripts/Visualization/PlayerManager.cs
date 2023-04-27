@@ -515,11 +515,14 @@ public class PlayerManager : NetworkBehaviour
         playerEntity.nameDisplay.SetActive(false);
         playerEntity.playerAnimator.enabled = false;
 
-        SkinnedMeshRenderer[] meshes = playerEntity.playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-        foreach (SkinnedMeshRenderer mesh in meshes)
+        if (base.IsOwner)
         {
-            mesh.renderingLayerMask = 1;
+            SkinnedMeshRenderer[] meshes = playerEntity.playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.renderingLayerMask = 1;
+            }
         }
     }
 

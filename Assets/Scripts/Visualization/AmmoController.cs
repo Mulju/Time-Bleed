@@ -45,7 +45,7 @@ public class AmmoController : MonoBehaviour
     private void FixedUpdate()
     {
         isInsdeTimeField = true;
-        //ammoSpeed = timeNotSlowed;
+        ammoSpeed = timeNotSlowed;
     }
 
     // Update is called once per frame
