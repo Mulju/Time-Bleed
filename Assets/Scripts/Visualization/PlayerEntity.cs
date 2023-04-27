@@ -335,7 +335,11 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         Physics.SyncTransforms();
-        Move();
+        
+        if(canMove)
+        {
+            Move();
+        }
 
         AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space), Input.GetKeyDown(KeyCode.R), 1 / currentWeapon.reloadTime);
 
