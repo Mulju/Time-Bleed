@@ -506,12 +506,10 @@ public class PlayerManager : NetworkBehaviour
         player.GetComponent<PlayerEntity>().currentWeaponAnimationsPrefab.SetActive(true);
 
         player.GetComponent<PlayerEntity>().isAlive = false;
-        player.GetComponent<PlayerEntity>().canMove = false;
 
         yield return new WaitForSeconds(5f);
 
         player.GetComponent<PlayerEntity>().isAlive = true;
-        player.GetComponent<PlayerEntity>().canMove = true;
 
         PlayerReset(player, spawn, teamTag);
     }
