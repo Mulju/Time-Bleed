@@ -127,6 +127,7 @@ public class PlayerEntity : NetworkBehaviour
     private LayerMask layerMask;
 
     private bool footstepSoundHasPlayed = false;
+    [SerializeField] private AudioSource footstepSource;
 
     public override void OnStartClient()
     {
@@ -484,7 +485,7 @@ public class PlayerEntity : NetworkBehaviour
                 // Don't play footstep sound for self
                 if(!footstepSoundHasPlayed)
                 {
-                    soundControl.PlayFootstepSound();
+                    footstepSource.Play();
                     footstepSoundHasPlayed = true;
                     StartCoroutine(FootstepSoundCooldown());
                 }
@@ -518,7 +519,7 @@ public class PlayerEntity : NetworkBehaviour
 
     IEnumerator FootstepSoundCooldown()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         footstepSoundHasPlayed = false;
     }
 
