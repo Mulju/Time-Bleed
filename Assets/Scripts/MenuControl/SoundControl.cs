@@ -17,7 +17,7 @@ public class SoundControl : MonoBehaviour
         footstep, playerHitSound, fragGrenadeSound, clockTick, oneMinute, fiveMinutes, chronadeSpawnMoved, underAttack;
     private List<int> usedSongs = new List<int>();
     private float globalPitch = 1;
-    private float globalVolume = 0.1f;
+    private float globalVolume = 0.02f;
 
     private void Update()
     {
@@ -62,13 +62,13 @@ public class SoundControl : MonoBehaviour
 
     public void PlayMoveSound()
     {
-        float volume = globalVolume;
+        float volume = 0.2f;
         PlaySound(menuMove, volume, globalPitch);
     }
 
     public void PlaySelectSound()
     {
-        float volume = globalVolume;
+        float volume = 0.2f;
         PlaySound(menuSelect, volume, globalPitch);
     }
 
