@@ -551,7 +551,6 @@ MonoBehaviour:
   sniperAnimationsPrefab: {fileID: 5082363974376619877}
   shotgunAnimationsPrefab: {fileID: 4234350870898486152}
   playerMesh: {fileID: 1338180277213278948}
-  transparentMaterial: {fileID: 2100000, guid: 9caca04a26f06b243ba078eb93a58436, type: 2}
   timeBindUI: {fileID: 0}
   GrenadeUI: {fileID: 0}
   gunPosition: {fileID: 6284607029874420582}
@@ -1760,6 +1759,7 @@ MonoBehaviour:
   fiveMinutes: {fileID: 8300000, guid: de752b8ff5a0c634eac3e32fc631ce7b, type: 3}
   chronadeSpawnMoved: {fileID: 8300000, guid: 0f1e78f786cdd0049b66d3eedd3d974a, type: 3}
   underAttack: {fileID: 8300000, guid: f546957f81eb02049b9a78c6c8802faa, type: 3}
+  footstepSound: {fileID: 8300000, guid: e955e8d8f74d9bf44857da507c092a15, type: 3}
 --- !u!114 &3578576771802031643
 MonoBehaviour:
   m_ObjectHideFlags: 0

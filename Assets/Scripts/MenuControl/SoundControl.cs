@@ -14,7 +14,7 @@ public class SoundControl : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private PlayerEntity playerEntity;
     [SerializeField] private AudioClip menuMove, menuSelect, gunShoot, bulletHitWall, bulletHitBubble, timeBindExplosion, chronadeSound,
-        footstep, playerHitSound, fragGrenadeSound, clockTick, oneMinute, fiveMinutes, chronadeSpawnMoved, underAttack;
+        footstep, playerHitSound, fragGrenadeSound, clockTick, oneMinute, fiveMinutes, chronadeSpawnMoved, underAttack, footstepSound;
     private List<int> usedSongs = new List<int>();
     private float globalPitch = 1;
     private float globalVolume = 0.02f;
