@@ -104,7 +104,7 @@ public class SoundControl : MonoBehaviour
 
     public void PlayPlayerHit()
     {
-        float volume = globalVolume * 6;
+        float volume = globalVolume * 10;
         PlaySound(playerHitSound, volume, globalPitch);
     }
 
