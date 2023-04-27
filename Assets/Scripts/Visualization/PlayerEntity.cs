@@ -37,8 +37,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject shotgunAnimationsPrefab;
     private GameObject currentWeaponAnimationsPrefab;
 
-    [SerializeField] private GameObject playerMesh;
-    [SerializeField] private Material transparentMaterial;
+    public GameObject playerMesh;
 
     public Image timeBindUI;
     public Image GrenadeUI;
@@ -162,7 +161,7 @@ public class PlayerEntity : NetworkBehaviour
 
             foreach (SkinnedMeshRenderer mesh in meshes)
             {
-                mesh.material = transparentMaterial;
+                mesh.renderingLayerMask = 0;
             }
         }
         else
@@ -608,6 +607,13 @@ public class PlayerEntity : NetworkBehaviour
     {
         if (base.IsOwner)
         {
+            SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.renderingLayerMask = 0;
+            }
+
             currentWeaponPrefab.SetActive(true);
         }
 
