@@ -88,7 +88,9 @@ public class MatchManager : NetworkBehaviour
         {
             playerManager = PlayerManager.instance;
             playerManager.OnPlayerKilled += ChangeBigChronadeSpawnServer;
-        
+            redClock.OnChronadeHit += TeamBaseUnderAttack;
+            greenClock.OnChronadeHit += TeamBaseUnderAttack;
+
             ChangeBigChronadeSpawnServer(true);
         }
     }
@@ -100,6 +102,8 @@ public class MatchManager : NetworkBehaviour
         if(base.IsServer)
         {
             playerManager.OnPlayerKilled -= ChangeBigChronadeSpawnServer;
+            redClock.OnChronadeHit -= TeamBaseUnderAttack;
+            greenClock.OnChronadeHit -= TeamBaseUnderAttack;
         }
     }
 
