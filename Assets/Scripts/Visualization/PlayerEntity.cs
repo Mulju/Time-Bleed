@@ -153,7 +153,8 @@ public class PlayerEntity : NetworkBehaviour
             weaponDictionary = new WeaponDictionary();
             currentWeapon = weaponDictionary.weapons["rifle"];
 
-            rifleAnimationsPrefab.SetActive(false);
+            currentWeaponAnimationsPrefab = rifleAnimationsPrefab;
+            currentWeaponAnimationsPrefab.SetActive(false);
 
             shootTimer = 3;
 
@@ -169,7 +170,8 @@ public class PlayerEntity : NetworkBehaviour
         }
         else
         {
-            riflePrefab.SetActive(false);
+            currentWeaponPrefab = riflePrefab;
+            currentWeaponPrefab.SetActive(false);
         }
 
         // This part is run for all the entities in the scene if you are the server.
