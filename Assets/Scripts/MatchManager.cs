@@ -163,22 +163,22 @@ public class MatchManager : NetworkBehaviour
 
 
         // Change match state to ended if time runs out on a clock
-        if (redClock.remainingTime < 0 || greenClock.remainingTime < 0)
+        if (redClock.remainingTime <= 0 || greenClock.remainingTime <= 0)
         {
             // Match ended
             currentMatchState = MatchState.MATCH_ENDED;
 
-            if(redClock.remainingTime < 0 && greenClock.remainingTime < 0)
+            if(redClock.remainingTime <= 0 && greenClock.remainingTime <= 0)
             {
                 // Draw
                 currentVictoryState = VictoryState.DRAW;
             }
-            else if (redClock.remainingTime < 0)
+            else if (redClock.remainingTime <= 0)
             {
                 // Blue team won
                 currentVictoryState = VictoryState.BLUE_TEAM_WIN;
             }
-            else if (greenClock.remainingTime < 0)
+            else if (greenClock.remainingTime <= 0)
             {
                 // Red team won
                 currentVictoryState = VictoryState.RED_TEAM_WIN;

@@ -23,6 +23,8 @@ public class Clock : NetworkBehaviour
     private MatchManager mManager;
     [HideInInspector] public int playersKilled = 0;
 
+    [SerializeField] private GameObject[] bigClockHandles;
+
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -65,7 +67,7 @@ public class Clock : NetworkBehaviour
         // First one turns 6 degrees every second, second one turns 60 degrees (equivalent to 10 seconds on a clock) when hit by a chronade
         // and the last one turn and extra 6 degrees if a player died.
         secondRotation += 6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime;
-        minuteRotation += (6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime) / 15;
+        minuteRotation += (6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime) / 15 - 90;
 
         // Need to round up or down to display it nicely
         remainingSeconds = 60 - secondRotation / 6;
@@ -91,6 +93,9 @@ public class Clock : NetworkBehaviour
     {
         clockHandAnchors[0].transform.localRotation = Quaternion.Euler(0, 0, secondRotation);
         clockHandAnchors[1].transform.localRotation = Quaternion.Euler(0, 0, minuteRotation);
+
+        bigClockHandles[0].transform.localRotation = Quaternion.Euler(0, 0, secondRotation);
+        bigClockHandles[1].transform.localRotation = Quaternion.Euler(0, 0, minuteRotation);
     }
 
     public int GetIdentifier()
