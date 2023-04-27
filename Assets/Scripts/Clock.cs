@@ -26,6 +26,7 @@ public class Clock : NetworkBehaviour
 
     [SerializeField] private GameObject[] bigClockHandles;
     public Action<int> OnChronadeHit;
+    private int timeGained = 0;
 
     public override void OnStartClient()
     {
@@ -68,8 +69,8 @@ public class Clock : NetworkBehaviour
         // Turn clock handle
         // First one turns 6 degrees every second, second one turns 60 degrees (equivalent to 10 seconds on a clock) when hit by a chronade
         // and the last one turn and extra 6 degrees if a player died.
-        secondRotation += 6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime;
-        minuteRotation += (6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime) / 15;
+        secondRotation += 6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime - 6 * timeGained * Time.deltaTime;
+        minuteRotation += (6 * Time.deltaTime + 60 * hitChronades * Time.deltaTime + 6 * playersKilled * Time.deltaTime - 6 * timeGained * Time.deltaTime) / 15;
 
         // Need to round up or down to display it nicely
         remainingSeconds = 60 - secondRotation / 6;
@@ -126,6 +127,24 @@ public class Clock : NetworkBehaviour
     {
         playersKilled++;
         StartCoroutine(ClockTimer(false));
+    }
+
+    public void GainTime()
+    {
+        timeGained++;
+        StartCoroutine(GainTimer());
+    }
+
+    IEnumerator GainTimer()
+    {
+        float remainingTime = 1;
+
+        while (remainingTime > 0)
+        {
+            remainingTime -= Time.deltaTime;
+            yield return null;
+        }
+        timeGained--;
     }
 
     IEnumerator ClockTimer(bool isChronade)
