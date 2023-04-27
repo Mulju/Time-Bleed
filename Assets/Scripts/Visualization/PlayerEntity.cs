@@ -30,7 +30,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject riflePrefab;
     [SerializeField] private GameObject sniperPrefab;
     [SerializeField] private GameObject shotgunPrefab;
-    public GameObject currentWeaponPrefab;
+    [HideInInspector] public GameObject currentWeaponPrefab;
 
     [SerializeField] private GameObject rifleAnimationsPrefab;
     [SerializeField] private GameObject sniperAnimationsPrefab;
@@ -38,6 +38,7 @@ public class PlayerEntity : NetworkBehaviour
     private GameObject currentWeaponAnimationsPrefab;
 
     [SerializeField] private GameObject playerMesh;
+    [SerializeField] private Material transparentMaterial;
 
     public Image timeBindUI;
     public Image GrenadeUI;
@@ -157,7 +158,12 @@ public class PlayerEntity : NetworkBehaviour
             timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
             GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
 
-            playerMesh.SetActive(false);
+            SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.material = transparentMaterial;
+            }
         }
         else
         {
