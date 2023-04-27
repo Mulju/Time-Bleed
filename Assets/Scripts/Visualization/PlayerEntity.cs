@@ -126,6 +126,9 @@ public class PlayerEntity : NetworkBehaviour
 
     private LayerMask layerMask;
 
+    private bool footstepSoundHasPlayed = false;
+    [SerializeField] private AudioSource footstepSource;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -479,6 +482,16 @@ public class PlayerEntity : NetworkBehaviour
         if (run)
         {
             playerAnimator.SetBool("Run", true);
+            if(!base.IsOwner)
+            {
+                // Don't play footstep sound for self
+                if(!footstepSoundHasPlayed)
+                {
+                    footstepSource.Play();
+                    footstepSoundHasPlayed = true;
+                    StartCoroutine(FootstepSoundCooldown());
+                }
+            }
         }
         else
         {
@@ -505,6 +518,13 @@ public class PlayerEntity : NetworkBehaviour
             playerAnimator.SetTrigger("Reload");
         }
     }
+
+    IEnumerator FootstepSoundCooldown()
+    {
+        yield return new WaitForSeconds(0.25f);
+        footstepSoundHasPlayed = false;
+    }
+
     public void ChangeWeapon(int weaponIndex)
     {
         ChangeWeaponPrefabServer(weaponIndex);

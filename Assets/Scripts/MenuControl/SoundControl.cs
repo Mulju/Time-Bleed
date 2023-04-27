@@ -14,7 +14,7 @@ public class SoundControl : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private PlayerEntity playerEntity;
     [SerializeField] private AudioClip menuMove, menuSelect, gunShoot, bulletHitWall, bulletHitBubble, timeBindExplosion, chronadeSound,
-        footstep, playerHitSound, fragGrenadeSound, clockTick, oneMinute, fiveMinutes, chronadeSpawnMoved, underAttack, footstepSound;
+        playerHitSound, fragGrenadeSound, clockTick, oneMinute, fiveMinutes, chronadeSpawnMoved, underAttack, footstepSound;
     private List<int> usedSongs = new List<int>();
     private float globalPitch = 1;
     private float globalVolume = 0.02f;
@@ -102,12 +102,6 @@ public class SoundControl : MonoBehaviour
         PlaySound(chronadeSound, volume, globalPitch);
     }
 
-    public void PlayFootstep()
-    {
-        float volume = globalVolume;
-        PlaySound(footstep, volume, globalPitch);
-    }
-
     public void PlayPlayerHit()
     {
         float volume = globalVolume * 6;
@@ -148,5 +142,11 @@ public class SoundControl : MonoBehaviour
     {
         float volume = 1f;
         PlaySound(chronadeSpawnMoved, volume, globalPitch);
+    }
+
+    public void PlayFootstepSound()
+    {
+        float volume = globalVolume;
+        PlaySound(footstepSound, volume, globalPitch);
     }
 }
