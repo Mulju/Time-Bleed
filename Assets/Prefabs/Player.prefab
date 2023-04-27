@@ -595,6 +595,7 @@ MonoBehaviour:
     type: 3}
   spawnForRayVisual: {fileID: 4712892159214924292}
   amountOfChronades: 1
+  footstepSource: {fileID: 3110155678639122417}
 --- !u!1 &832002410115213892
 GameObject:
   m_ObjectHideFlags: 0
@@ -3792,7 +3793,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: e955e8d8f74d9bf44857da507c092a15, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
