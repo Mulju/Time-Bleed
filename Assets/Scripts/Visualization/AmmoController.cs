@@ -110,7 +110,7 @@ public class AmmoController : MonoBehaviour
                     if(isGrenadeShot)
                     {
                         // If this bullet was created by grenade, decrease the sound
-                        instantiatedHole.GetComponent<AudioSource>().volume = 0.1f;
+                        instantiatedHole.GetComponent<AudioSource>().volume = 0.01f;
                     }
                     Destroy(instantiatedHole, 10);
                     Destroy(this.gameObject);
@@ -164,7 +164,7 @@ public class AmmoController : MonoBehaviour
             if (isGrenadeShot)
             {
                 // If this bullet was created by grenade, decrease the sound
-                instantiatedHole.GetComponent<AudioSource>().volume = 0.1f;
+                instantiatedHole.GetComponent<AudioSource>().volume = 0.01f;
             }
             Destroy(instantiatedHole, 10);
             Destroy(this.gameObject);
