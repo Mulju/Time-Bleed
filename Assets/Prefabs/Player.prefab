@@ -551,6 +551,7 @@ MonoBehaviour:
   sniperAnimationsPrefab: {fileID: 5082363974376619877}
   shotgunAnimationsPrefab: {fileID: 4234350870898486152}
   playerMesh: {fileID: 1338180277213278948}
+  transparentMaterial: {fileID: 2100000, guid: 9caca04a26f06b243ba078eb93a58436, type: 2}
   timeBindUI: {fileID: 0}
   GrenadeUI: {fileID: 0}
   gunPosition: {fileID: 6284607029874420582}
@@ -3896,7 +3897,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5276633148722041832}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.863, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4436,7 +4437,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6284607029874420582}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 0.2, z: 0.06}
+  m_LocalPosition: {x: 0.25, y: 0.05, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4642,7 +4643,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6758740974194119704}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 0.2, z: 0.06}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5966,7 +5967,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b48629b0a07655b4ba86cdbff2a534a2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.278
+      value: 0.271
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b48629b0a07655b4ba86cdbff2a534a2,
         type: 3}
@@ -6185,6 +6186,11 @@ PrefabInstance:
       propertyPath: _networkObjectCache
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2955065184099759906, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3773638092493942415, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: m_TagString
@@ -6251,6 +6257,11 @@ PrefabInstance:
       value: PlayerTorso
       objectReference: {fileID: 0}
     - target: {fileID: 7390999412856902037, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerTorso
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627948660690813616, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: m_TagString
       value: PlayerTorso

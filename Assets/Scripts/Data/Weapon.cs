@@ -26,16 +26,16 @@ namespace Data
 
         public bool holdToShoot { get; private set; }
 
-        public Weapon(int magSize, int damage, int fireRate, int bulletsPerShot, int maxAmmoInReserve, int ammoLeft, 
+        public Weapon(int magSize, int damage, int fireRate, int bulletsPerShot, int maxAmmoInReserve,  
             float reloadTime, float recoilMultiplier, float recoilMultiplierScoped, float movementSpeedMultiplier, float movementSpeedMultiplierScoped, float deployTime, float hipFireAccuracy,
             bool holdToShoot)
         {
             this.magSize = magSize;
+            this.ammoLeft = magSize;
             this.damage = damage;
             this.fireRate = fireRate;
             this.bulletsPerShot = bulletsPerShot;
             this.maxAmmoInReserve = maxAmmoInReserve;
-            this.ammoLeft = ammoLeft;
             this.reloadTime = reloadTime;
             this.recoilMultiplier = recoilMultiplier;
             this.recoilMultiplierScoped = recoilMultiplierScoped;
