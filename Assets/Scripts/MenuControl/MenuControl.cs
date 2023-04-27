@@ -30,6 +30,7 @@ public class MenuControl : MonoBehaviour
     public bool menuOpen;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject settingsButton;
+    [HideInInspector] public float mouseSensitivity = 1;
 
 
     void Start()
@@ -80,6 +81,11 @@ public class MenuControl : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    public void SetMouseSensitivity(float sens)
+    {
+        mouseSensitivity = sens;
     }
 
     public void SetOpenMenu()

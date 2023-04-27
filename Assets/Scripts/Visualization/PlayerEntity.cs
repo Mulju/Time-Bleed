@@ -739,10 +739,10 @@ public class PlayerEntity : NetworkBehaviour
         // Player and Camera rotation
         if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
         {
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed * sensitivity;
+            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed * sensitivity * menuControl.mouseSensitivity;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed * sensitivity, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed * sensitivity * menuControl.mouseSensitivity, 0);
 
             gunRotator.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         }
