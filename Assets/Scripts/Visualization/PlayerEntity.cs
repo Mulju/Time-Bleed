@@ -35,7 +35,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject rifleAnimationsPrefab;
     [SerializeField] private GameObject sniperAnimationsPrefab;
     [SerializeField] private GameObject shotgunAnimationsPrefab;
-    private GameObject currentWeaponAnimationsPrefab;
+    [HideInInspector] public GameObject currentWeaponAnimationsPrefab;
 
     public GameObject playerMesh;
 
@@ -641,10 +641,12 @@ public class PlayerEntity : NetworkBehaviour
                 mesh.renderingLayerMask = 0;
             }
 
+            currentWeaponAnimationsPrefab.SetActive(false);
             currentWeaponPrefab.SetActive(true);
         }
 
         characterController.enabled = true;
+        canMove = true;
         timeField.SetActive(true);
         nameDisplay.SetActive(true);
         playerAnimator.enabled = true;

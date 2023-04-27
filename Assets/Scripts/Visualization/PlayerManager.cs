@@ -503,6 +503,8 @@ public class PlayerManager : NetworkBehaviour
             mesh.renderingLayerMask = 1;
         }
 
+        player.GetComponent<PlayerEntity>().currentWeaponAnimationsPrefab.SetActive(true);
+
         player.GetComponent<PlayerEntity>().isAlive = false;
         player.GetComponent<PlayerEntity>().canMove = false;
 
@@ -554,6 +556,7 @@ public class PlayerManager : NetworkBehaviour
         playerEntity.timeField.SetActive(false);
         playerEntity.nameDisplay.SetActive(false);
         playerEntity.playerAnimator.enabled = false;
+        playerEntity.canMove = false;
         playerEntity.characterController.enabled = false;
     }
 
