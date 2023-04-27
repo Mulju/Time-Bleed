@@ -461,6 +461,12 @@ public class PlayerManager : NetworkBehaviour
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, redSpawnPoints.Count), players[playerID].teamTag);
             MatchManager.matchManager.redClock.OwnTeamPlayerKilled();
             MatchManager.matchManager.greenClock.GainTime();
+
+            if (MatchManager.matchManager.redClock.remainingTime - MatchManager.matchManager.greenClock.remainingTime >= 60)
+            {
+                MatchManager.matchManager.redClock.OwnTeamPlayerKilled();
+                MatchManager.matchManager.greenClock.GainTime();
+            }
         }
         else
         {
@@ -468,6 +474,13 @@ public class PlayerManager : NetworkBehaviour
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, greenSpawnPoints.Count), players[playerID].teamTag);
             MatchManager.matchManager.greenClock.OwnTeamPlayerKilled();
             MatchManager.matchManager.redClock.GainTime();
+
+            if(MatchManager.matchManager.greenClock.remainingTime - MatchManager.matchManager.redClock.remainingTime >= 60)
+            {
+                // Red player killed a green player, and the red team is over a minute behind. Gain an additional second
+                MatchManager.matchManager.greenClock.OwnTeamPlayerKilled();
+                MatchManager.matchManager.redClock.GainTime();
+            }
         }
 
         // Debuggausta
