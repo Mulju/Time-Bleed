@@ -1756,6 +1756,10 @@ MonoBehaviour:
   playerHitSound: {fileID: 8300000, guid: e51dd3b77f44af24ba8837f4939a8e17, type: 3}
   fragGrenadeSound: {fileID: 0}
   clockTick: {fileID: 0}
+  oneMinute: {fileID: 8300000, guid: 1570f92b276aaa841a9394e53d541ca7, type: 3}
+  fiveMinutes: {fileID: 8300000, guid: de752b8ff5a0c634eac3e32fc631ce7b, type: 3}
+  chronadeSpawnMoved: {fileID: 8300000, guid: 0f1e78f786cdd0049b66d3eedd3d974a, type: 3}
+  underAttack: {fileID: 8300000, guid: f546957f81eb02049b9a78c6c8802faa, type: 3}
 --- !u!114 &3578576771802031643
 MonoBehaviour:
   m_ObjectHideFlags: 0
