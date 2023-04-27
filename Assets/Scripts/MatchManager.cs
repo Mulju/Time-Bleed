@@ -39,6 +39,7 @@ public class MatchManager : NetworkBehaviour
     [HideInInspector] public Action<int> OnClockTimeChange;
 
     private bool fiveHasPlayedRed = false, oneHasPlayedRed = false, fiveHasPlayedGreen = false, oneHasPlayedGreen = false;
+    private float oldKillsRatio;
 
     private void Awake()
     {
@@ -61,12 +62,20 @@ public class MatchManager : NetworkBehaviour
             if(clock.GetComponent<Clock>().teamIdentifier == 0)
             {
                 redClock = clock.GetComponent<Clock>();
+                redClock.OnChronadeHit += TeamBaseUnderAttack;
             }
             else if (clock.GetComponent<Clock>().teamIdentifier == 1)
             {
                 greenClock = clock.GetComponent<Clock>();
+                greenClock.OnChronadeHit += TeamBaseUnderAttack;
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        redClock.OnChronadeHit -= TeamBaseUnderAttack;
+        greenClock.OnChronadeHit -= TeamBaseUnderAttack;
     }
 
     public override void OnStartClient()
@@ -190,6 +199,18 @@ public class MatchManager : NetworkBehaviour
         }
     }
 
+    public void TeamBaseUnderAttack(int teamID)
+    {
+        if(teamID == 0)
+        {
+            playerManager.PlayAttenborough(4);
+        }
+        else
+        {
+            playerManager.PlayAttenborough(5);
+        }
+    }
+
     public bool IsBaseServer()
     {
         return base.IsServer;
@@ -197,6 +218,7 @@ public class MatchManager : NetworkBehaviour
 
     public void ChangeBigChronadeSpawnServer(bool isAtStart)
     {
+        oldKillsRatio = playerManager.redKills + playerManager.greenKills;
         playerManager.TotalKills();
         float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;
 
@@ -207,6 +229,24 @@ public class MatchManager : NetworkBehaviour
             totalKills = 2;
         }
         
+        if (oldKillsRatio != 0)
+        {
+            // Check if the Chronade spawn is going to move this frame
+            if(redKills / totalKills < 0.4f && !(redKills / oldKillsRatio < 0.4f))
+            {
+                playerManager.AllClientsPlayChronadeSpawnChange();
+            }
+            else if((redKills / totalKills > 0.4f && redKills / totalKills < 0.6f) && 
+                !(redKills / oldKillsRatio > 0.4f && redKills / oldKillsRatio < 0.6f))
+            {
+                playerManager.AllClientsPlayChronadeSpawnChange();
+            }
+            else if(redKills / totalKills > 0.6f && !(redKills / oldKillsRatio > 0.6f))
+            {
+                playerManager.AllClientsPlayChronadeSpawnChange();
+            }
+        }
+
         ChangeBigChronadeSpawn(redKills, totalKills);
     }
 
