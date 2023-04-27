@@ -155,7 +155,7 @@ public class AmmoController : MonoBehaviour
         {
             if (other.CompareTag("Player") && other.gameObject != shooter.gameObject)
             {
-                Instantiate(playerHitEffect, gameObject.transform.position, Quaternion.LookRotation(new Vector3(0, 0, gameObject.transform.rotation.z * -1)));
+                //Instantiate(playerHitEffect, gameObject.transform.position, Quaternion.LookRotation(new Vector3(0, 0, gameObject.transform.rotation.z * -1)));
             }
         }
         else if (other.gameObject.layer == 6)
@@ -171,7 +171,7 @@ public class AmmoController : MonoBehaviour
         }
         else if (!other.CompareTag("PlayerHead") && !other.CompareTag("PlayerTorso") && !other.CompareTag("PlayerLegs"))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 
         if (other.CompareTag("TimeSphere"))
