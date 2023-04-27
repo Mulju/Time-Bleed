@@ -576,6 +576,7 @@ MonoBehaviour:
   lookSpeed: 2
   lookXLimit: 90
   sensitivity: 1
+  characterController: {fileID: 0}
   canMove: 1
   cameraYOffset: 1
   playerName: asd
@@ -6470,18 +6471,106 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3439720064071896389}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3660037298533764950 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2123244521209922067, guid: db53567b0a227df4db234d347892a0dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 3439720064071896389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8239837978300000733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3660037298533764950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc1920bc39e74a4b83c15f826d941e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8492805507051383199}
+  _networkObjectCache: {fileID: 0}
+  player: {fileID: 823353294823369346}
 --- !u!1 &4234350870898486152 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1549018928834881229, guid: db53567b0a227df4db234d347892a0dc,
     type: 3}
   m_PrefabInstance: {fileID: 3439720064071896389}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4904684237635081624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7758760423942805725, guid: db53567b0a227df4db234d347892a0dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 3439720064071896389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &407328459800803778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4904684237635081624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc1920bc39e74a4b83c15f826d941e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8492805507051383199}
+  _networkObjectCache: {fileID: 0}
+  player: {fileID: 823353294823369346}
 --- !u!1 &5082363974376619877 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7580816254387089952, guid: db53567b0a227df4db234d347892a0dc,
     type: 3}
   m_PrefabInstance: {fileID: 3439720064071896389}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6240223509941892304 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8729644126589073813, guid: db53567b0a227df4db234d347892a0dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 3439720064071896389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &22273599433380833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6240223509941892304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc1920bc39e74a4b83c15f826d941e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8492805507051383199}
+  _networkObjectCache: {fileID: 0}
+  player: {fileID: 823353294823369346}
+--- !u!1 &6751323394048523526 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8218457956518326339, guid: db53567b0a227df4db234d347892a0dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 3439720064071896389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3502062653009204711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6751323394048523526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc1920bc39e74a4b83c15f826d941e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8492805507051383199}
+  _networkObjectCache: {fileID: 0}
+  player: {fileID: 823353294823369346}
 --- !u!95 &8074365253064185164 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6895502813836597257, guid: db53567b0a227df4db234d347892a0dc,

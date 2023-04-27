@@ -202,7 +202,10 @@ public class PlayerEntity : NetworkBehaviour
 
     public void ShowDamageDirection(GameObject player, Vector3 direction)
     {
-        damageIndicatorParent.GetComponent<DmgIndicatorSystem>().AddDamageIndicator(player, direction);
+        if (base.IsOwner)
+        {
+            damageIndicatorParent.GetComponent<DmgIndicatorSystem>().AddDamageIndicator(player, direction);
+        }
     }
 
     public void AmmoHit(GameObject hitPlayer, GameObject shooter, float damageMultiplier, int damage)
