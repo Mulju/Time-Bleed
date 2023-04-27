@@ -496,13 +496,20 @@ public class PlayerManager : NetworkBehaviour
 
     IEnumerator DeathCam(GameObject player, int spawn, int teamTag)
     {
+        SkinnedMeshRenderer[] meshes = player.GetComponent<PlayerEntity>().playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        foreach (SkinnedMeshRenderer mesh in meshes)
+        {
+            mesh.renderingLayerMask = 1;
+        }
+
+        player.GetComponent<PlayerEntity>().currentWeaponAnimationsPrefab.SetActive(true);
+
         player.GetComponent<PlayerEntity>().isAlive = false;
-        player.GetComponent<PlayerEntity>().canMove = false;
 
         yield return new WaitForSeconds(5f);
 
         player.GetComponent<PlayerEntity>().isAlive = true;
-        player.GetComponent<PlayerEntity>().canMove = true;
 
         PlayerReset(player, spawn, teamTag);
     }
@@ -547,17 +554,8 @@ public class PlayerManager : NetworkBehaviour
         playerEntity.timeField.SetActive(false);
         playerEntity.nameDisplay.SetActive(false);
         playerEntity.playerAnimator.enabled = false;
+        playerEntity.canMove = false;
         playerEntity.characterController.enabled = false;
-
-        if (base.IsOwner)
-        {
-            SkinnedMeshRenderer[] meshes = playerEntity.playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-            foreach (SkinnedMeshRenderer mesh in meshes)
-            {
-                mesh.renderingLayerMask = 1;
-            }
-        }
     }
 
     public void RestoreHealth(GameObject player)
