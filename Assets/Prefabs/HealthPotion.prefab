@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 451138044380211404}
   - component: {fileID: 1450734010745467155}
   - component: {fileID: 3997021989260571209}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: korkki1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,10 +94,10 @@ GameObject:
   - component: {fileID: 3484769446746693168}
   - component: {fileID: 5478198326956374697}
   - component: {fileID: 3461751845451776584}
-  - component: {fileID: 9194377400823282657}
   - component: {fileID: 3657480723925278145}
   - component: {fileID: 8290675353082196103}
-  m_Layer: 0
+  - component: {fileID: 8998534852249778397}
+  m_Layer: 2
   m_Name: polySurface1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,20 +169,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &9194377400823282657
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3694906229239639533}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6329158148709259305, guid: fbd45e250b65952459ccfaf89879a980, type: 3}
 --- !u!114 &3657480723925278145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 3328241500041341737}
-  _networkObjectCache: {fileID: 3328241500041341737}
+  _networkObjectCache: {fileID: 8290675353082196103}
   respawnTime: 5
 --- !u!114 &8290675353082196103
 MonoBehaviour:
@@ -212,10 +198,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsNested>k__BackingField: 1
-  <ComponentIndex>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 1
   <PredictedSpawn>k__BackingField: {fileID: 0}
-  _networkBehaviours: []
-  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  _networkBehaviours:
+  - {fileID: 3657480723925278145}
+  <ParentNetworkObject>k__BackingField: {fileID: 3328241500041341737}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
   _isGlobal: 0
@@ -228,6 +215,19 @@ MonoBehaviour:
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects: []
+--- !u!135 &8998534852249778397
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694906229239639533}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.014607853
+  m_Center: {x: 4.656613e-10, y: 0.004626937, z: -4.656613e-10}
 --- !u!1 &6136434528771337042
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6801330566637236712}
   - component: {fileID: 3328241500041341737}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HealthPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,10 +277,10 @@ MonoBehaviour:
   <IsNested>k__BackingField: 0
   <ComponentIndex>k__BackingField: 0
   <PredictedSpawn>k__BackingField: {fileID: 0}
-  _networkBehaviours:
-  - {fileID: 3657480723925278145}
+  _networkBehaviours: []
   <ParentNetworkObject>k__BackingField: {fileID: 0}
-  <ChildNetworkObjects>k__BackingField: []
+  <ChildNetworkObjects>k__BackingField:
+  - {fileID: 8290675353082196103}
   _isNetworked: 1
   _isGlobal: 0
   _initializeOrder: 0
@@ -301,7 +301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8727612863757471116}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: transform1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 4020503724020575211}
   - component: {fileID: 4320156983291392261}
   - component: {fileID: 1217295137016491983}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: polySurface2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7448728651959516317}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: pSphere1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
