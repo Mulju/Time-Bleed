@@ -396,7 +396,7 @@ public class PlayerEntity : NetworkBehaviour
         if (!isAlive)
             return;
 
-        AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space), Input.GetKeyDown(KeyCode.R), 1 / currentWeapon.reloadTime);
+        AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space), TryReload(), 1 / currentWeapon.reloadTime);
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
@@ -447,7 +447,7 @@ public class PlayerEntity : NetworkBehaviour
             currentWeapon.ammoLeft -= 1;
         }
 
-        if ((Input.GetKeyDown(KeyCode.R) || currentWeapon.ammoLeft == 0) && !reloading && currentWeapon.ammoLeft != currentWeapon.magSize)
+        if (TryReload())
         {
             reloadCoroutine = StartCoroutine(Reload());
         }
@@ -503,6 +503,15 @@ public class PlayerEntity : NetworkBehaviour
             TimeSpeedSlider(mouseScroll);
         }
         */
+    }
+
+    public bool TryReload()
+    {
+        if ((Input.GetKeyDown(KeyCode.R) || currentWeapon.ammoLeft == 0) && !reloading && currentWeapon.ammoLeft != currentWeapon.magSize)
+        {
+            return true;
+        }
+        return false;
     }
 
     public bool IsOwnerOfPlayer()
