@@ -167,8 +167,16 @@ public class PlayerEntity : NetworkBehaviour
             timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
             GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
 
-            SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
 
+            // set all timefields off
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject player in players)
+            {
+                player.GetComponent<PlayerEntity>()?.TimeFieldServer(false);
+            }
+
+            // make own character model invisible
+            SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in meshes)
             {
                 mesh.renderingLayerMask = 0;
@@ -226,8 +234,6 @@ public class PlayerEntity : NetworkBehaviour
 
     void Start()
     {
-        TimeFieldServer(timeFieldIsOn);
-
         gunOriginalPosition = gunPosition.transform.localPosition;
 
         mManager = MatchManager.matchManager;
