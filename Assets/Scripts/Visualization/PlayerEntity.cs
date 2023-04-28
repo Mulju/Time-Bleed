@@ -72,7 +72,6 @@ public class PlayerEntity : NetworkBehaviour
     private Coroutine reloadCoroutine;
 
     [SyncVar] public float timeSpeed;
-    private float mouseScroll;
 
     [HideInInspector]
     public float headDamage = 2f, torsoDamage = 1f, legsDamage = 0.7f;
@@ -112,8 +111,6 @@ public class PlayerEntity : NetworkBehaviour
 
     [SerializeField] public SoundControl soundControl;
     [SerializeField] private GameObject playerHitEffect;
-
-    private Slider speedSlider = null;
 
     [SerializeField] private Material redTeamMaterial;
     [SerializeField] private Material greenTeamMaterial;
@@ -261,8 +258,6 @@ public class PlayerEntity : NetworkBehaviour
         reloading = false;
 
         timeSlow = 1;
-
-        mouseScroll = 0f;
 
         timeField.GetComponent<TimeSphere>().isTimeField = true;
 
