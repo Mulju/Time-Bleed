@@ -46,7 +46,7 @@ public class TimeSphere : MonoBehaviour
 
     IEnumerator GetSmaller()
     {
-        while(currentScale.x > 0.01)
+        while(currentScale.x > 0.001)
         {
             currentScale = new Vector3(currentScale.x - Time.deltaTime * expansionMultiplier, 
                                        currentScale.y - Time.deltaTime * expansionMultiplier,
@@ -57,11 +57,11 @@ public class TimeSphere : MonoBehaviour
 
         yield return new WaitForSeconds(10);
 
-        if (!isTimeBind)
+        if (!isTimeBind && !isTimeField)
         {
             StartCoroutine(GetBigger());
         }
-        else
+        else if (!isTimeField)
         {
             Destroy(this.gameObject);
         }
