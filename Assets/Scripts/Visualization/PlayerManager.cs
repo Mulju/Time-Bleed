@@ -509,12 +509,12 @@ public class PlayerManager : NetworkBehaviour
 
     IEnumerator DeathCam(GameObject player, int spawn, int teamTag)
     {
-        SkinnedMeshRenderer[] meshes = player.GetComponent<PlayerEntity>().playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+        //SkinnedMeshRenderer[] meshes = player.GetComponent<PlayerEntity>().playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
 
-        foreach (SkinnedMeshRenderer mesh in meshes)
-        {
-            mesh.renderingLayerMask = 1;
-        }
+        //foreach (SkinnedMeshRenderer mesh in meshes)
+        //{
+        //    mesh.renderingLayerMask = 1;
+        //}
 
         player.GetComponent<PlayerEntity>().currentWeaponAnimationsPrefab.SetActive(true);
 
