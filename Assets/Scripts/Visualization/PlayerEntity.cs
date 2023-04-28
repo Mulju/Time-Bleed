@@ -1069,4 +1069,18 @@ public class PlayerEntity : NetworkBehaviour
         }
 
     }
+
+    public void StartReducingResource()
+    {
+        StartCoroutine(ReduceTimeResource());
+    }
+
+    IEnumerator ReduceTimeResource()
+    {
+        while(timeResource > 0)
+        {
+            timeResource -= 50 * Time.deltaTime;
+            yield return null;
+        }
+    }
 }

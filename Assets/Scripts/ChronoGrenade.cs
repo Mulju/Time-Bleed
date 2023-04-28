@@ -51,8 +51,17 @@ public class ChronoGrenade : MonoBehaviour
                 return;
             }
 
-            // Reduce the timesphere when hit with Chronade
-            col.GetComponent<TimeSphere>().ReduceCircumference();
+            if(col.GetComponent<TimeSphere>().isTimeField)
+            {
+                // Is a players time field, reduce the time resource to 0
+                col.transform.parent.GetComponent<PlayerEntity>().StartReducingResource();
+            }
+            else
+            {
+                // Reduce the timesphere when hit with Chronade
+                col.GetComponent<TimeSphere>().ReduceCircumference();
+            }
+
 
             // Tee joku hieno animaatio tässä
             ParticleSystem instantiatedEffect = Instantiate(chronadeEffect, transform.position, Quaternion.identity);
