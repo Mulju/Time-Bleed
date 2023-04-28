@@ -6549,6 +6549,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2636385360786282220, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2955065184099759906, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: m_Enabled
@@ -6707,6 +6712,11 @@ PrefabInstance:
     - target: {fileID: 5001583810123081410, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5134256199165926764, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5207706027758670333, guid: db53567b0a227df4db234d347892a0dc,
@@ -7364,6 +7374,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: shotgunFPS
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743473287297696772, guid: 95c221f2ea025e24383241bc9813e368,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4087207643485789886, guid: 95c221f2ea025e24383241bc9813e368,
         type: 3}
