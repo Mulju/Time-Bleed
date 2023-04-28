@@ -81,7 +81,7 @@ public class PlayerEntity : NetworkBehaviour
 
     [Header("Base setup")]
     public float walkingSpeed = 8.5f;
-    public float runningSpeed = 30f;
+    public float runningSpeed = 11.5f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     public float lookSpeed = 2.0f;
@@ -226,6 +226,8 @@ public class PlayerEntity : NetworkBehaviour
 
     void Start()
     {
+        TimeFieldServer(timeFieldIsOn);
+
         gunOriginalPosition = gunPosition.transform.localPosition;
 
         mManager = MatchManager.matchManager;
@@ -241,7 +243,7 @@ public class PlayerEntity : NetworkBehaviour
         cookTimer = 0;
         isCooking = false;
 
-        dashTime = 0;
+        dashTime = 0.15f;
         dashTimer = 0;
 
         timeBindCooldown = 10f;
@@ -597,8 +599,6 @@ public class PlayerEntity : NetworkBehaviour
         ChangeWeaponPrefab(weaponIndex);
     }
 
-
-    // vaihtaa itselleen "fps aseet" ja muille pelaajille animoidut aseet
     [ObserversRpc]
     public void ChangeWeaponPrefab(int weaponIndex)
     {
@@ -689,7 +689,7 @@ public class PlayerEntity : NetworkBehaviour
         timeField.SetActive(true);
         nameDisplay.SetActive(true);
         playerAnimator.enabled = true;
-        timeField.GetComponent<TimeSphere>().IncreaseCircumference();
+        timeField.GetComponent<TimeSphere>().ReduceCircumference();
 
         if (base.IsOwner)
         {
@@ -740,12 +740,17 @@ public class PlayerEntity : NetworkBehaviour
             isRunning = true;
             dashTimer += Time.deltaTime;
         }
+        else if (dashTimer >= dashTime)
+        {
+            isRunning = false;
+            dashTimer += Time.deltaTime;
+        }
         else
         {
             isRunning = false;
         }
 
-        if(dashTimer > 5)
+        if(dashTimer > 3)
         {
             dashTimer = 0;
         }
