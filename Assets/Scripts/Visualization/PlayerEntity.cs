@@ -757,7 +757,7 @@ public class PlayerEntity : NetworkBehaviour
     public void Move()
     {
         // Dash
-        if((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime)
+        if((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource == 4)
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
@@ -765,16 +765,12 @@ public class PlayerEntity : NetworkBehaviour
         else if (dashTimer >= dashTime)
         {
             isRunning = false;
-            dashTimer += Time.deltaTime;
+            dashTimer = 0;
+            timeResource = 0;
         }
         else
         {
             isRunning = false;
-        }
-
-        if(dashTimer > 3)
-        {
-            dashTimer = 0;
         }
 
         // We are grounded, so recalculate move direction based on axis
@@ -814,7 +810,15 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Move the controller
-        characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed * 0.8f);
+        if(isRunning)
+        {
+            characterController.Move(moveDirection * Time.deltaTime * 0.8f);
+        }
+        else
+        {
+            characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed * 0.8f);
+        }
+
 
         // Player and Camera rotation
         if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
