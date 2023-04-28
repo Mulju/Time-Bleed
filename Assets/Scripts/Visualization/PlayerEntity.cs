@@ -151,9 +151,6 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera.transform.SetParent(transform);
             playerCamera.GetComponent<CameraFollow>().target = transform;
 
-            //speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
-            //TimeSpeedSlider(speedSlider.value);
-
             resourceSlider = GameObject.FindGameObjectWithTag("ResourceSlider").GetComponent<Slider>();
             TimeFieldServer(timeFieldIsOn);
 
