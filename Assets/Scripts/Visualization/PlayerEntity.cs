@@ -147,9 +147,6 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera.transform.SetParent(transform);
             playerCamera.GetComponent<CameraFollow>().target = transform;
 
-            speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
-            TimeSpeedSlider(speedSlider.value);
-
             weaponDictionary = new WeaponDictionary();
             currentWeapon = weaponDictionary.weapons["rifle"];
 
@@ -173,6 +170,9 @@ public class PlayerEntity : NetworkBehaviour
             currentWeaponPrefab = riflePrefab;
             currentWeaponPrefab.SetActive(false);
         }
+
+        speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
+        TimeSpeedSlider(speedSlider.value);
 
         // This part is run for all the entities in the scene if you are the server.
         if (base.IsServer)
