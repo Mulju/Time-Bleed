@@ -366,13 +366,13 @@ public class PlayerEntity : NetworkBehaviour
         {
             ChangeWeapon(0);
         }
-        else if (Input.GetKey(KeyCode.Alpha2) && currentWeapon != weaponDictionary.weapons["sniper"])
-        {
-            ChangeWeapon(1);
-        }
-        else if (Input.GetKey(KeyCode.Alpha3) && currentWeapon != weaponDictionary.weapons["shotgun"])
+        else if (Input.GetKey(KeyCode.Alpha2) && currentWeapon != weaponDictionary.weapons["shotgun"])
         {
             ChangeWeapon(2);
+        }
+        else if (Input.GetKey(KeyCode.Alpha3) && currentWeapon != weaponDictionary.weapons["sniper"])
+        {
+            //ChangeWeapon(1);
         }
 
         if (deployTimer >= currentWeapon.deployTime && !reloading)
