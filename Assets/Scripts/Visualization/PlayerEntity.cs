@@ -131,6 +131,7 @@ public class PlayerEntity : NetworkBehaviour
     [HideInInspector] public float timeResource;
     private Slider resourceSlider = null;
     private bool timeFieldIsOn = false;
+    private bool resourceOnCooldown = false;
 
     public override void OnStartClient()
     {
@@ -297,7 +298,11 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Charge time resource
-        timeResource += Time.deltaTime;
+        if(!resourceOnCooldown)
+        {
+            timeResource += Time.deltaTime;
+        }
+        
         if(timeResource >= 4)
         {
             timeResource = 4;
@@ -1093,8 +1098,19 @@ public class PlayerEntity : NetworkBehaviour
     {
         while(timeResource > 0)
         {
-            timeResource -= 50 * Time.deltaTime;
+            timeResource -= 30 * Time.deltaTime;
             yield return null;
         }
+
+        // Put the resource on a cooldown
+        resourceOnCooldown = true;
+        float cooldown = 5;
+        while(cooldown > 0)
+        {
+            cooldown -= Time.deltaTime;
+            yield return null;
+        }
+
+        resourceOnCooldown = false;
     }
 }
