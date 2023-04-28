@@ -66,6 +66,8 @@ public class PlayerEntity : NetworkBehaviour
     private float deployTimer;
     private bool isScoped;
 
+    private float dashTimer, dashTime;
+
     private bool reloading;
     private Coroutine reloadCoroutine;
 
@@ -79,7 +81,7 @@ public class PlayerEntity : NetworkBehaviour
 
     [Header("Base setup")]
     public float walkingSpeed = 8.5f;
-    public float runningSpeed = 11.5f;
+    public float runningSpeed = 30f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     public float lookSpeed = 2.0f;
@@ -238,6 +240,9 @@ public class PlayerEntity : NetworkBehaviour
         deployTimer = 4f;
         cookTimer = 0;
         isCooking = false;
+
+        dashTime = 0;
+        dashTimer = 0;
 
         timeBindCooldown = 10f;
         timeBindTimer = timeBindCooldown;
@@ -730,7 +735,20 @@ public class PlayerEntity : NetworkBehaviour
         bool isRunning = false;
 
         // Press Left Shift to run
-        // isRunning = Input.GetKey(KeyCode.LeftShift);
+        if(Input.GetKey(KeyCode.LeftShift) && dashTimer < dashTime)
+        {
+            isRunning = true;
+            dashTimer += Time.deltaTime;
+        }
+        else
+        {
+            isRunning = false;
+        }
+
+        if(dashTimer > 5)
+        {
+            dashTimer = 0;
+        }
 
         // We are grounded, so recalculate move direction based on axis
         Vector3 forward = transform.TransformDirection(Vector3.forward);
