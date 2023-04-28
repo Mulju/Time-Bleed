@@ -18,7 +18,6 @@ public class AmmoController : MonoBehaviour
     public GameObject shooter;
     public int damage;
 
-    private bool collide;
     private bool isInsdeTimeField;
 
     [SerializeField] private GameObject bulletHole;
@@ -140,11 +139,6 @@ public class AmmoController : MonoBehaviour
         {
             raycastHit = hit;
             objHitByRaycast = hit.point;
-            collide = true;
-        }
-        else
-        {
-            collide = false;
         }
 
     }
@@ -198,9 +192,6 @@ public class AmmoController : MonoBehaviour
                 isInsdeTimeField = false;
             }
         }
-
-
-        collide = false;
     }
 
     private void OnTriggerExit(Collider other)

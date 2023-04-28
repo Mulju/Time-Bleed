@@ -66,11 +66,12 @@ public class PlayerEntity : NetworkBehaviour
     private float deployTimer;
     private bool isScoped;
 
+    private float dashTimer, dashTime;
+
     private bool reloading;
     private Coroutine reloadCoroutine;
 
     [SyncVar] public float timeSpeed;
-    private float mouseScroll;
 
     [HideInInspector]
     public float headDamage = 2f, torsoDamage = 1f, legsDamage = 0.7f;
@@ -110,8 +111,6 @@ public class PlayerEntity : NetworkBehaviour
 
     [SerializeField] public SoundControl soundControl;
     [SerializeField] private GameObject playerHitEffect;
-
-    private Slider speedSlider = null;
 
     [SerializeField] private Material redTeamMaterial;
     [SerializeField] private Material greenTeamMaterial;
@@ -165,8 +164,16 @@ public class PlayerEntity : NetworkBehaviour
             timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
             GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
 
-            SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
 
+            // set all timefields off
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject player in players)
+            {
+                player.GetComponent<PlayerEntity>()?.timeField.GetComponent<TimeSphere>().ReduceCircumference();
+            }
+
+            // make own character model invisible
+            SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in meshes)
             {
                 mesh.renderingLayerMask = 0;
@@ -239,6 +246,9 @@ public class PlayerEntity : NetworkBehaviour
         cookTimer = 0;
         isCooking = false;
 
+        dashTime = 0.15f;
+        dashTimer = 0;
+
         timeBindCooldown = 10f;
         timeBindTimer = timeBindCooldown;
 
@@ -248,8 +258,6 @@ public class PlayerEntity : NetworkBehaviour
         reloading = false;
 
         timeSlow = 1;
-
-        mouseScroll = 0f;
 
         timeField.GetComponent<TimeSphere>().isTimeField = true;
 
@@ -383,7 +391,7 @@ public class PlayerEntity : NetworkBehaviour
         if (!isAlive)
             return;
 
-        AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space), Input.GetKeyDown(KeyCode.R), 1 / currentWeapon.reloadTime);
+        AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space), TryReload(), 1 / currentWeapon.reloadTime);
 
         if (Input.GetKey(KeyCode.Alpha1) && currentWeapon != weaponDictionary.weapons["rifle"])
         {
@@ -434,7 +442,7 @@ public class PlayerEntity : NetworkBehaviour
             currentWeapon.ammoLeft -= 1;
         }
 
-        if ((Input.GetKeyDown(KeyCode.R) || currentWeapon.ammoLeft == 0) && !reloading && currentWeapon.ammoLeft != currentWeapon.magSize)
+        if (TryReload())
         {
             reloadCoroutine = StartCoroutine(Reload());
         }
@@ -490,6 +498,15 @@ public class PlayerEntity : NetworkBehaviour
             TimeSpeedSlider(mouseScroll);
         }
         */
+    }
+
+    public bool TryReload()
+    {
+        if ((Input.GetKeyDown(KeyCode.R) || currentWeapon.ammoLeft == 0) && !reloading && currentWeapon.ammoLeft != currentWeapon.magSize)
+        {
+            return true;
+        }
+        return false;
     }
 
     public bool IsOwnerOfPlayer()
@@ -592,8 +609,6 @@ public class PlayerEntity : NetworkBehaviour
         ChangeWeaponPrefab(weaponIndex);
     }
 
-
-    // vaihtaa itselleen "fps aseet" ja muille pelaajille animoidut aseet
     [ObserversRpc]
     public void ChangeWeaponPrefab(int weaponIndex)
     {
@@ -684,7 +699,9 @@ public class PlayerEntity : NetworkBehaviour
         timeField.SetActive(true);
         nameDisplay.SetActive(true);
         playerAnimator.enabled = true;
-        timeField.GetComponent<TimeSphere>().IncreaseCircumference();
+
+        timeFieldIsOn = false;
+        TimeFieldServer(timeFieldIsOn);
 
         if (base.IsOwner)
         {
@@ -703,13 +720,15 @@ public class PlayerEntity : NetworkBehaviour
     {
         if(isOn)
         {
+            timeSpeed = 0.1f;
             timeField.GetComponent<TimeSphere>().IncreaseCircumference();
-            timeField.GetComponent<TimeSphere>().timeSpeed = 0.1f;
+            timeField.GetComponent<TimeSphere>().timeSpeed = timeSpeed;
         }
         else
         {
+            timeSpeed = 1f;
             timeField.GetComponent<TimeSphere>().ReduceCircumference();
-            timeField.GetComponent<TimeSphere>().timeSpeed = 1;
+            timeField.GetComponent<TimeSphere>().timeSpeed = timeSpeed;
         }
 
         //timeField.GetComponent<TimeSphere>().ChangeAlpha(speed);
@@ -730,7 +749,25 @@ public class PlayerEntity : NetworkBehaviour
         bool isRunning = false;
 
         // Press Left Shift to run
-        // isRunning = Input.GetKey(KeyCode.LeftShift);
+        if(Input.GetKey(KeyCode.LeftShift) && dashTimer < dashTime)
+        {
+            isRunning = true;
+            dashTimer += Time.deltaTime;
+        }
+        else if (dashTimer >= dashTime)
+        {
+            isRunning = false;
+            dashTimer += Time.deltaTime;
+        }
+        else
+        {
+            isRunning = false;
+        }
+
+        if(dashTimer > 3)
+        {
+            dashTimer = 0;
+        }
 
         // We are grounded, so recalculate move direction based on axis
         Vector3 forward = transform.TransformDirection(Vector3.forward);
