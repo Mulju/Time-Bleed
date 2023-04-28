@@ -46,7 +46,7 @@ public class TimeSphere : MonoBehaviour
 
     IEnumerator GetSmaller()
     {
-        while(currentScale.x > 0.001)
+        while(currentScale.x > 0.0001)
         {
             currentScale = new Vector3(currentScale.x - Time.deltaTime * expansionMultiplier, 
                                        currentScale.y - Time.deltaTime * expansionMultiplier,

@@ -172,7 +172,7 @@ public class PlayerEntity : NetworkBehaviour
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject player in players)
             {
-                player.GetComponent<PlayerEntity>()?.TimeFieldServer(false);
+                player.GetComponent<PlayerEntity>()?.timeField.GetComponent<TimeSphere>().ReduceCircumference();
             }
 
             // make own character model invisible
@@ -695,7 +695,9 @@ public class PlayerEntity : NetworkBehaviour
         timeField.SetActive(true);
         nameDisplay.SetActive(true);
         playerAnimator.enabled = true;
-        timeField.GetComponent<TimeSphere>().ReduceCircumference();
+
+        timeFieldIsOn = false;
+        TimeFieldServer(timeFieldIsOn);
 
         if (base.IsOwner)
         {
@@ -714,13 +716,15 @@ public class PlayerEntity : NetworkBehaviour
     {
         if(isOn)
         {
+            timeSpeed = 0.1f;
             timeField.GetComponent<TimeSphere>().IncreaseCircumference();
-            timeField.GetComponent<TimeSphere>().timeSpeed = 0.1f;
+            timeField.GetComponent<TimeSphere>().timeSpeed = timeSpeed;
         }
         else
         {
+            timeSpeed = 1f;
             timeField.GetComponent<TimeSphere>().ReduceCircumference();
-            timeField.GetComponent<TimeSphere>().timeSpeed = 1;
+            timeField.GetComponent<TimeSphere>().timeSpeed = timeSpeed;
         }
 
         //timeField.GetComponent<TimeSphere>().ChangeAlpha(speed);
