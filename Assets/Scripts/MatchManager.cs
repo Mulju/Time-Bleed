@@ -39,7 +39,7 @@ public class MatchManager : NetworkBehaviour
     [HideInInspector] public Action<int> OnClockTimeChange;
 
     private bool fiveHasPlayedRed = false, oneHasPlayedRed = false, fiveHasPlayedGreen = false, oneHasPlayedGreen = false;
-    private float oldKillsRatio;
+    private float oldKillsRatio, oldRedKills;
 
     private void Awake()
     {
@@ -223,6 +223,8 @@ public class MatchManager : NetworkBehaviour
     public void ChangeBigChronadeSpawnServer(bool isAtStart)
     {
         oldKillsRatio = playerManager.redKills + playerManager.greenKills;
+        oldRedKills = playerManager.redKills;
+
         playerManager.TotalKills();
         float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;
 
@@ -236,16 +238,16 @@ public class MatchManager : NetworkBehaviour
         if (oldKillsRatio != 0)
         {
             // Check if the Chronade spawn is going to move this frame
-            if(redKills / totalKills < 0.4f && !(redKills / oldKillsRatio < 0.4f))
+            if(redKills / totalKills < 0.4f && !(oldRedKills / oldKillsRatio < 0.4f))
             {
                 playerManager.AllClientsPlayChronadeSpawnChange();
             }
             else if((redKills / totalKills > 0.4f && redKills / totalKills < 0.6f) && 
-                !(redKills / oldKillsRatio > 0.4f && redKills / oldKillsRatio < 0.6f))
+                !(oldRedKills / oldKillsRatio > 0.4f && oldRedKills / oldKillsRatio < 0.6f))
             {
                 playerManager.AllClientsPlayChronadeSpawnChange();
             }
-            else if(redKills / totalKills > 0.6f && !(redKills / oldKillsRatio > 0.6f))
+            else if(redKills / totalKills > 0.6f && !(oldRedKills / oldKillsRatio > 0.6f))
             {
                 playerManager.AllClientsPlayChronadeSpawnChange();
             }

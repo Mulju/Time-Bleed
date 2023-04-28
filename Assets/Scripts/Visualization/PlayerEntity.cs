@@ -129,6 +129,10 @@ public class PlayerEntity : NetworkBehaviour
     private bool footstepSoundHasPlayed = false;
     [SerializeField] private AudioSource footstepSource;
 
+    [HideInInspector] public float timeResource;
+    private Slider resourceSlider = null;
+    private bool timeFieldIsOn = false;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -146,6 +150,12 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
             playerCamera.GetComponent<CameraFollow>().target = transform;
+
+            //speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
+            //TimeSpeedSlider(speedSlider.value);
+
+            resourceSlider = GameObject.FindGameObjectWithTag("ResourceSlider").GetComponent<Slider>();
+            TimeFieldServer(timeFieldIsOn);
 
             weaponDictionary = new WeaponDictionary();
             currentWeapon = weaponDictionary.weapons["rifle"];
@@ -170,9 +180,6 @@ public class PlayerEntity : NetworkBehaviour
             currentWeaponPrefab = riflePrefab;
             currentWeaponPrefab.SetActive(false);
         }
-
-        speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
-        TimeSpeedSlider(speedSlider.value);
 
         // This part is run for all the entities in the scene if you are the server.
         if (base.IsServer)
@@ -284,6 +291,13 @@ public class PlayerEntity : NetworkBehaviour
             return;
         }
 
+        // Charge time resource
+        timeResource += Time.deltaTime;
+        if(timeResource >= 4)
+        {
+            timeResource = 4;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Press Esc for pause screen and to lock/unlock cursor
@@ -296,12 +310,6 @@ public class PlayerEntity : NetworkBehaviour
                 playerManager.ChangeCursorLock();
                 menuControl.OpenCloseMenu();
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            // Test for Attenborough
-            soundControl.PlayFiveMinutes();
         }
 
         if (menuControl.menuOpen)
@@ -344,6 +352,24 @@ public class PlayerEntity : NetworkBehaviour
             Move();
         }
 
+        if (Input.GetKeyDown(KeyCode.F) && timeResource > 0.1f)
+        {
+            timeFieldIsOn = !timeFieldIsOn;
+            TimeFieldServer(timeFieldIsOn);
+        }
+        
+        if(timeFieldIsOn)
+        {
+            // If Time Field is on, reduce time resource
+            timeResource -= 2 * Time.deltaTime;
+        }
+
+        if(timeFieldIsOn && timeResource < 0.01f)
+        {
+            timeFieldIsOn = false;
+            TimeFieldServer(timeFieldIsOn);
+        }
+        
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             // Press Tab for scoreboard
@@ -451,6 +477,9 @@ public class PlayerEntity : NetworkBehaviour
             GrenadeUI.fillAmount = 1;
         }
 
+        resourceSlider.value = timeResource;
+
+        /*
         if (Input.mouseScrollDelta.y != 0)
         {
             mouseScroll = Input.mouseScrollDelta.y;
@@ -463,6 +492,7 @@ public class PlayerEntity : NetworkBehaviour
 
             TimeSpeedSlider(mouseScroll);
         }
+        */
     }
 
     public bool IsOwnerOfPlayer()
@@ -666,32 +696,23 @@ public class PlayerEntity : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void TimeSpeedSlider(float sliderValue)
+    public void TimeFieldServer(bool isOn)
     {
-        timeSpeed += sliderValue;
-        if (timeSpeed < 0.1)
-        {
-            timeSpeed = 0.1f;
-        }
-        else if (timeSpeed > 1f)
-        {
-            timeSpeed = 1f;
-        }
-        UpdateTimeSpeed(timeSpeed);
+        TimeFieldClient(isOn);
     }
 
     [ObserversRpc]
-    public void UpdateTimeSpeed(float speed)
+    public void TimeFieldClient(bool isOn)
     {
-        timeField.GetComponent<TimeSphere>().timeSpeed = speed;
-
-        if(speed == 1f)
+        if(isOn)
         {
-            timeField.GetComponent<TimeSphere>().ReduceCircumference();
+            timeField.GetComponent<TimeSphere>().IncreaseCircumference();
+            timeField.GetComponent<TimeSphere>().timeSpeed = 0.1f;
         }
         else
         {
-            timeField.GetComponent<TimeSphere>().IncreaseCircumference();
+            timeField.GetComponent<TimeSphere>().ReduceCircumference();
+            timeField.GetComponent<TimeSphere>().timeSpeed = 1;
         }
 
         //timeField.GetComponent<TimeSphere>().ChangeAlpha(speed);
