@@ -359,12 +359,6 @@ public class PlayerEntity : NetworkBehaviour
 
         Physics.SyncTransforms();
 
-
-        if (canMove)
-        {
-            Move();
-        }
-
         if (Input.GetKeyDown(KeyCode.F) && timeResource > 0.1f)
         {
             timeFieldIsOn = !timeFieldIsOn;
@@ -391,6 +385,11 @@ public class PlayerEntity : NetworkBehaviour
             timeBindUI.fillAmount = 1;
         }
         
+        if (canMove)
+        {
+            Move();
+        }
+
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             // Press Tab for scoreboard
@@ -757,7 +756,7 @@ public class PlayerEntity : NetworkBehaviour
     public void Move()
     {
         // Dash
-        if((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource == 4)
+        if((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource > 3.9f)
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
