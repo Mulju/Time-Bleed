@@ -66,6 +66,8 @@ public class PlayerEntity : NetworkBehaviour
     private float deployTimer;
     private bool isScoped;
 
+    private bool isRunning;
+
     private float dashTimer, dashTime;
 
     private bool reloading;
@@ -256,6 +258,7 @@ public class PlayerEntity : NetworkBehaviour
         grenadeTimer = grenadeCooldown;
 
         reloading = false;
+        isRunning = false;
 
         timeSlow = 1;
 
@@ -746,10 +749,8 @@ public class PlayerEntity : NetworkBehaviour
 
     public void Move()
     {
-        bool isRunning = false;
-
-        // Press Left Shift to run
-        if(Input.GetKey(KeyCode.LeftShift) && dashTimer < dashTime)
+        // Dash
+        if((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime)
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
