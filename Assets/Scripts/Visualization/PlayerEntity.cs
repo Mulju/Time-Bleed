@@ -133,6 +133,7 @@ public class PlayerEntity : NetworkBehaviour
     [HideInInspector] public float timeResource;
     private Slider resourceSlider = null;
     private bool timeFieldIsOn = false;
+    [HideInInspector] public bool resourceOnCooldown = false;
 
     public override void OnStartClient()
     {
@@ -300,7 +301,11 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Charge time resource
-        timeResource += Time.deltaTime;
+        if(!resourceOnCooldown)
+        {
+            timeResource += Time.deltaTime;
+        }
+        
         if(timeResource >= 4)
         {
             timeResource = 4;
@@ -376,6 +381,14 @@ public class PlayerEntity : NetworkBehaviour
         {
             timeFieldIsOn = false;
             TimeFieldServer(timeFieldIsOn);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown && timeResource > 2)
+        {
+            timeResource -= 2;
+            timeBindTimer = 0;
+            TimeBindServer();
+            timeBindUI.fillAmount = 1;
         }
         
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -464,12 +477,6 @@ public class PlayerEntity : NetworkBehaviour
             menuControl.chronadeImages[amountOfChronades].enabled = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown)
-        {
-            timeBindTimer = 0;
-            TimeBindServer();
-            timeBindUI.fillAmount = 1;
-        }
 
         if (Input.GetKey(KeyCode.G) && cookTimer <= 2.5f && grenadeTimer >= grenadeCooldown)
         {
@@ -1094,8 +1101,19 @@ public class PlayerEntity : NetworkBehaviour
     {
         while(timeResource > 0)
         {
-            timeResource -= 50 * Time.deltaTime;
+            timeResource -= 30 * Time.deltaTime;
             yield return null;
         }
+
+        // Put the resource on a cooldown
+        resourceOnCooldown = true;
+        float cooldown = 5;
+        while(cooldown > 0)
+        {
+            cooldown -= Time.deltaTime;
+            yield return null;
+        }
+
+        resourceOnCooldown = false;
     }
 }

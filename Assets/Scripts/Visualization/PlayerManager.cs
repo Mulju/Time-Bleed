@@ -452,6 +452,11 @@ public class PlayerManager : NetworkBehaviour
         {
             players[attackerID].kills++;
             OnPlayerKilled.Invoke(false);
+
+            // Regenerate time resource
+            players[attackerID].playerObject.GetComponent<PlayerEntity>().timeResource = 4;
+            // Stop possible cooldown on the regeneration on the player that died
+            players[playerID].playerObject.GetComponent<PlayerEntity>().resourceOnCooldown = false;
         }
         players[playerID].deaths++;
 
