@@ -129,6 +129,10 @@ public class PlayerEntity : NetworkBehaviour
     private bool footstepSoundHasPlayed = false;
     [SerializeField] private AudioSource footstepSource;
 
+    [HideInInspector] public float timeResource;
+    private Slider resourceSlider = null;
+    private bool timeFieldIsOn = false;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -149,6 +153,8 @@ public class PlayerEntity : NetworkBehaviour
 
             speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
             TimeSpeedSlider(speedSlider.value);
+
+            resourceSlider = GameObject.FindGameObjectWithTag("ResourceSlider").GetComponent<Slider>();
 
             weaponDictionary = new WeaponDictionary();
             currentWeapon = weaponDictionary.weapons["rifle"];
@@ -284,6 +290,13 @@ public class PlayerEntity : NetworkBehaviour
             return;
         }
 
+        // Charge time resource
+        timeResource += Time.deltaTime;
+        if(timeResource >= 4)
+        {
+            timeResource = 4;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Press Esc for pause screen and to lock/unlock cursor
@@ -296,12 +309,6 @@ public class PlayerEntity : NetworkBehaviour
                 playerManager.ChangeCursorLock();
                 menuControl.OpenCloseMenu();
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            // Test for Attenborough
-            soundControl.PlayFiveMinutes();
         }
 
         if (menuControl.menuOpen)
@@ -344,6 +351,17 @@ public class PlayerEntity : NetworkBehaviour
             Move();
         }
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            timeFieldIsOn = !timeFieldIsOn;
+
+            if(timeFieldIsOn)
+            {
+                // TimeSpeedSlider(timeFieldIsOn);
+                // 
+            }
+        }
+        
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             // Press Tab for scoreboard
