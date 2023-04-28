@@ -181,9 +181,6 @@ public class PlayerEntity : NetworkBehaviour
             currentWeaponPrefab.SetActive(false);
         }
 
-        speedSlider = GameObject.FindGameObjectWithTag("SpeedSlider").GetComponent<Slider>();
-        TimeSpeedSlider(speedSlider.value);
-
         // This part is run for all the entities in the scene if you are the server.
         if (base.IsServer)
         {
@@ -355,7 +352,7 @@ public class PlayerEntity : NetworkBehaviour
             Move();
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && timeResource > 0.1f)
         {
             timeFieldIsOn = !timeFieldIsOn;
             TimeFieldServer(timeFieldIsOn);
@@ -364,7 +361,13 @@ public class PlayerEntity : NetworkBehaviour
         if(timeFieldIsOn)
         {
             // If Time Field is on, reduce time resource
-            timeResource -= 3 * Time.deltaTime;
+            timeResource -= 2 * Time.deltaTime;
+        }
+
+        if(timeFieldIsOn && timeResource < 0.01f)
+        {
+            timeFieldIsOn = false;
+            TimeFieldServer(timeFieldIsOn);
         }
         
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -473,6 +476,8 @@ public class PlayerEntity : NetworkBehaviour
             grenadeTimer = 0;
             GrenadeUI.fillAmount = 1;
         }
+
+        resourceSlider.value = timeResource;
 
         /*
         if (Input.mouseScrollDelta.y != 0)
