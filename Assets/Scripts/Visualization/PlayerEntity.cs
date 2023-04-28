@@ -693,12 +693,12 @@ public class PlayerEntity : NetworkBehaviour
     {
         if (base.IsOwner)
         {
-            //SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
 
-            //foreach (SkinnedMeshRenderer mesh in meshes)
-            //{
-            //    mesh.renderingLayerMask = 0;
-            //}
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.renderingLayerMask = 0;
+            }
 
             currentWeaponAnimationsPrefab.SetActive(false);
             currentWeaponPrefab.SetActive(true);
