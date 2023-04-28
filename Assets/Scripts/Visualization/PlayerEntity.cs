@@ -380,6 +380,14 @@ public class PlayerEntity : NetworkBehaviour
             TimeFieldServer(timeFieldIsOn);
         }
         
+        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown && timeResource > 2)
+        {
+            timeResource -= 2;
+            timeBindTimer = 0;
+            TimeBindServer();
+            timeBindUI.fillAmount = 1;
+        }
+        
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             // Press Tab for scoreboard
@@ -466,12 +474,6 @@ public class PlayerEntity : NetworkBehaviour
             menuControl.chronadeImages[amountOfChronades].enabled = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown)
-        {
-            timeBindTimer = 0;
-            TimeBindServer();
-            timeBindUI.fillAmount = 1;
-        }
 
         if (Input.GetKey(KeyCode.G) && cookTimer <= 2.5f && grenadeTimer >= grenadeCooldown)
         {
