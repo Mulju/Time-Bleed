@@ -677,14 +677,24 @@ public class PlayerEntity : NetworkBehaviour
         {
             timeSpeed = 1f;
         }
-        UpdateTimeSpeed();
+        UpdateTimeSpeed(timeSpeed);
     }
 
     [ObserversRpc]
-    public void UpdateTimeSpeed()
+    public void UpdateTimeSpeed(float speed)
     {
-        timeField.GetComponent<TimeSphere>().timeSpeed = timeSpeed;
-        timeField.GetComponent<TimeSphere>().ChangeAlpha(timeSpeed);
+        timeField.GetComponent<TimeSphere>().timeSpeed = speed;
+
+        if(speed == 1f)
+        {
+            timeField.GetComponent<TimeSphere>().ReduceCircumference();
+        }
+        else
+        {
+            timeField.GetComponent<TimeSphere>().IncreaseCircumference();
+        }
+
+        //timeField.GetComponent<TimeSphere>().ChangeAlpha(speed);
     }
 
     public bool IsMoving()
