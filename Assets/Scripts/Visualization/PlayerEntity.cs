@@ -131,7 +131,7 @@ public class PlayerEntity : NetworkBehaviour
     [HideInInspector] public float timeResource;
     private Slider resourceSlider = null;
     private bool timeFieldIsOn = false;
-    private bool resourceOnCooldown = false;
+    [HideInInspector] public bool resourceOnCooldown = false;
 
     public override void OnStartClient()
     {
