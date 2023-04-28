@@ -66,6 +66,8 @@ public class PlayerEntity : NetworkBehaviour
     private float deployTimer;
     private bool isScoped;
 
+    private bool isRunning;
+
     private float dashTimer, dashTime;
 
     private bool reloading;
@@ -257,6 +259,7 @@ public class PlayerEntity : NetworkBehaviour
         grenadeTimer = grenadeCooldown;
 
         reloading = false;
+        isRunning = false;
 
         timeSlow = 1;
 
@@ -690,12 +693,12 @@ public class PlayerEntity : NetworkBehaviour
     {
         if (base.IsOwner)
         {
-            //SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
 
-            //foreach (SkinnedMeshRenderer mesh in meshes)
-            //{
-            //    mesh.renderingLayerMask = 0;
-            //}
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.renderingLayerMask = 0;
+            }
 
             currentWeaponAnimationsPrefab.SetActive(false);
             currentWeaponPrefab.SetActive(true);
@@ -753,10 +756,8 @@ public class PlayerEntity : NetworkBehaviour
 
     public void Move()
     {
-        bool isRunning = false;
-
-        // Press Left Shift to run
-        if(Input.GetKey(KeyCode.LeftShift) && dashTimer < dashTime)
+        // Dash
+        if((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource == 4)
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
@@ -764,16 +765,12 @@ public class PlayerEntity : NetworkBehaviour
         else if (dashTimer >= dashTime)
         {
             isRunning = false;
-            dashTimer += Time.deltaTime;
+            dashTimer = 0;
+            timeResource = 0;
         }
         else
         {
             isRunning = false;
-        }
-
-        if(dashTimer > 3)
-        {
-            dashTimer = 0;
         }
 
         // We are grounded, so recalculate move direction based on axis
@@ -813,7 +810,15 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Move the controller
-        characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed * 0.8f);
+        if(isRunning)
+        {
+            characterController.Move(moveDirection * Time.deltaTime * 0.8f);
+        }
+        else
+        {
+            characterController.Move(moveDirection * Time.deltaTime * timeSlow * timeSpeed * 0.8f);
+        }
+
 
         // Player and Camera rotation
         if (canMove && playerCamera != null && Cursor.lockState == CursorLockMode.Locked)
