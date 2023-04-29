@@ -730,7 +730,7 @@ public class PlayerEntity : NetworkBehaviour
         if(isOn)
         {
             timeSpeed = 0.1f;
-            timeField.GetComponent<TimeSphere>().IncreaseCircumference();
+            timeField.GetComponent<TimeSphere>().IncreaseCircumference(5f);
             timeField.GetComponent<TimeSphere>().timeSpeed = timeSpeed;
         }
         else

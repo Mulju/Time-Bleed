@@ -38,10 +38,10 @@ public class TimeSphere : MonoBehaviour
         StartCoroutine(GetSmaller());
     }
 
-    public void IncreaseCircumference()
+    public void IncreaseCircumference(float speed)
     {
         StopAllCoroutines();
-        StartCoroutine(GetBigger());
+        StartCoroutine(GetBigger(speed));
     }
 
     IEnumerator GetSmaller()
@@ -59,7 +59,7 @@ public class TimeSphere : MonoBehaviour
 
         if (!isTimeBind && !isTimeField)
         {
-            StartCoroutine(GetBigger());
+            StartCoroutine(GetBigger(1f));
         }
         else if (!isTimeField)
         {
@@ -67,13 +67,13 @@ public class TimeSphere : MonoBehaviour
         }
     }
 
-    IEnumerator GetBigger()
+    IEnumerator GetBigger(float speed)
     {
         while (currentScale.x < originalScale.x)
         {
-            currentScale = new Vector3(currentScale.x + Time.deltaTime * expansionMultiplier,
-                                       currentScale.y + Time.deltaTime * expansionMultiplier,
-                                       currentScale.z + Time.deltaTime * expansionMultiplier);
+            currentScale = new Vector3(currentScale.x + Time.deltaTime * expansionMultiplier * speed,
+                                       currentScale.y + Time.deltaTime * expansionMultiplier * speed,
+                                       currentScale.z + Time.deltaTime * expansionMultiplier * speed);
             transform.localScale = currentScale;
             yield return null;
         }
