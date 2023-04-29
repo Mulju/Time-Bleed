@@ -27,12 +27,20 @@ public class HealthPackController : NetworkBehaviour
     [ObserversRpc]
     void HideHealthPack()
     {
-        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
-        Canvas[] canvases = this.gameObject.GetComponentsInChildren<Canvas>();
+        //this.gameObject.GetComponent<MeshRenderer>().enabled = false;
 
-        foreach (Canvas canvas in canvases)
+        //Canvas[] canvases = this.gameObject.GetComponentsInChildren<Canvas>();
+
+        //foreach (Canvas canvas in canvases)
+        //{
+        //    canvas.GetComponent<Canvas>().enabled = false;
+        //}
+
+        MeshRenderer[] renderers = transform.parent.parent.GetComponentsInChildren<MeshRenderer>();
+
+        foreach (MeshRenderer renderer in renderers)
         {
-            canvas.GetComponent<Canvas>().enabled = false;
+            renderer.enabled = false;
         }
     }
 
@@ -46,13 +54,20 @@ public class HealthPackController : NetworkBehaviour
     [ObserversRpc]
     void ShowHealthPack()
     {
-        this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        //this.gameObject.GetComponent<MeshRenderer>().enabled = true;
 
-        Canvas[] canvases = this.gameObject.GetComponentsInChildren<Canvas>();
+        //Canvas[] canvases = this.gameObject.GetComponentsInChildren<Canvas>();
 
-        foreach (Canvas canvas in canvases)
+        //foreach (Canvas canvas in canvases)
+        //{
+        //    canvas.GetComponent<Canvas>().enabled = true;
+        //}
+
+        MeshRenderer[] renderers = transform.parent.parent.GetComponentsInChildren<MeshRenderer>();
+
+        foreach (MeshRenderer renderer in renderers)
         {
-            canvas.GetComponent<Canvas>().enabled = true;
+            renderer.enabled = true;
         }
     }
 }
