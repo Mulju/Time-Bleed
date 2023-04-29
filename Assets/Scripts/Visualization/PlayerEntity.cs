@@ -118,6 +118,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private Material redTeamMaterial;
     [SerializeField] private Material greenTeamMaterial;
     [SerializeField] private GameObject body;
+
     [HideInInspector] public int ownTeamTag;
 
     [SerializeField] private GameObject rayCastVisual;
@@ -179,6 +180,13 @@ public class PlayerEntity : NetworkBehaviour
             // make own character model invisible
             SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.renderingLayerMask = 0;
+            }
+
+            // make own team armor invisible
+            SkinnedMeshRenderer[] armorMeshes = body.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (SkinnedMeshRenderer mesh in armorMeshes)
             {
                 mesh.renderingLayerMask = 0;
             }
@@ -682,11 +690,19 @@ public class PlayerEntity : NetworkBehaviour
 
         if (teamTag == 0)
         {
-            body.GetComponent<Renderer>().material = redTeamMaterial;
+            SkinnedMeshRenderer[] meshes = body.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.material = redTeamMaterial;
+            }
         }
         else
         {
-            body.GetComponent<Renderer>().material = greenTeamMaterial;
+            SkinnedMeshRenderer[] meshes = body.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.material = greenTeamMaterial;
+            }
         }
     }
 

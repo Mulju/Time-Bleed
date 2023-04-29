@@ -5923,6 +5923,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 671480078807466611}
     m_Modifications:
+    - target: {fileID: -9103170663695939541, guid: ecec9226167ad6a449f4f1b112b740b3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a9dc4250e9fc2b40bc1434eb2ef30c1, type: 2}
     - target: {fileID: -8679921383154817045, guid: ecec9226167ad6a449f4f1b112b740b3,
         type: 3}
       propertyPath: m_RootOrder
@@ -5982,6 +5987,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: StarterArmor_HumanMale
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811138388015063408, guid: ecec9226167ad6a449f4f1b112b740b3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecec9226167ad6a449f4f1b112b740b3, type: 3}
