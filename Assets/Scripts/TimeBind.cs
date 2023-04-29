@@ -10,6 +10,11 @@ public class TimeBind : MonoBehaviour
     private float timeSphereTime;
     [SerializeField] private AudioSource timeBindExplosion;
 
+    [SerializeField] private GameObject vfx;
+    [SerializeField] private GameObject pointLight;
+    [SerializeField] private TrailRenderer trail1;
+    [SerializeField] private TrailRenderer trail2;
+
     private void Start()
     {
         exploded = false;
@@ -32,6 +37,11 @@ public class TimeBind : MonoBehaviour
         this.gameObject.GetComponent<Collider>().enabled = false;
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         exploded = true;
+
+        vfx.SetActive(false);
+        pointLight.SetActive(false);
+        trail1.emitting = false;
+        trail2.emitting = false;
     }
 
     IEnumerator SpawnTimeSphere()

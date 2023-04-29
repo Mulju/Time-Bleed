@@ -116,6 +116,10 @@ MonoBehaviour:
     type: 3}
   ownerObject: {fileID: 0}
   updateID: 0
+  vfx: {fileID: 1520307862197012295}
+  pointLight: {fileID: 9220796121418070596}
+  trail1: {fileID: 2042429720975504567}
+  trail2: {fileID: 7213113066964465293}
 --- !u!54 &7645926696338265796
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -204,6 +208,30 @@ PrefabInstance:
 --- !u!4 &782566414433010928 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 233319500242960312, guid: dff9e11e48f86ee4ca51f531231a82f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 711804966780107592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1520307862197012295 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2087947475069828111, guid: dff9e11e48f86ee4ca51f531231a82f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 711804966780107592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &2042429720975504567 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 1565279983779745791, guid: dff9e11e48f86ee4ca51f531231a82f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 711804966780107592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &7213113066964465293 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 7924917827585985989, guid: dff9e11e48f86ee4ca51f531231a82f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 711804966780107592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9220796121418070596 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8509006066764546316, guid: dff9e11e48f86ee4ca51f531231a82f7,
     type: 3}
   m_PrefabInstance: {fileID: 711804966780107592}
   m_PrefabAsset: {fileID: 0}

@@ -104,6 +104,10 @@ MonoBehaviour:
     type: 3}
   exploded: 0
   timeBindExplosion: {fileID: 6308910384236435664}
+  vfx: {fileID: 6668753873290096006}
+  pointLight: {fileID: 3919190047154737285}
+  trail1: {fileID: 6182651328175152758}
+  trail2: {fileID: 3282908334527536204}
 --- !u!135 &4911446607131635623
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -292,6 +296,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2087947475069828111, guid: 4ea5e0a07fb07a54c99d16557136936e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580824358541813110, guid: 4ea5e0a07fb07a54c99d16557136936e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8509006066764546316, guid: 4ea5e0a07fb07a54c99d16557136936e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9047852772809620072, guid: 4ea5e0a07fb07a54c99d16557136936e,
         type: 3}
       propertyPath: m_Name
@@ -299,9 +318,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ea5e0a07fb07a54c99d16557136936e, type: 3}
+--- !u!96 &3282908334527536204 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 7924917827585985989, guid: 4ea5e0a07fb07a54c99d16557136936e,
+    type: 3}
+  m_PrefabInstance: {fileID: 4644844515222524297}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3919190047154737285 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8509006066764546316, guid: 4ea5e0a07fb07a54c99d16557136936e,
+    type: 3}
+  m_PrefabInstance: {fileID: 4644844515222524297}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4848450056181100081 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 233319500242960312, guid: 4ea5e0a07fb07a54c99d16557136936e,
+    type: 3}
+  m_PrefabInstance: {fileID: 4644844515222524297}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &6182651328175152758 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 1565279983779745791, guid: 4ea5e0a07fb07a54c99d16557136936e,
+    type: 3}
+  m_PrefabInstance: {fileID: 4644844515222524297}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6668753873290096006 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2087947475069828111, guid: 4ea5e0a07fb07a54c99d16557136936e,
     type: 3}
   m_PrefabInstance: {fileID: 4644844515222524297}
   m_PrefabAsset: {fileID: 0}
