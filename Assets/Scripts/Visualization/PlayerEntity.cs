@@ -14,7 +14,8 @@ public class PlayerEntity : NetworkBehaviour
 {
     public GameObject gunRotator;
     public GameObject ammoSpawn;
-    public GameObject ammoPrefab;
+    public GameObject redAmmoPrefab;
+    public GameObject greenAmmoPrefab;
     public GameObject timeField;
     public GameObject bulletHole;
     public GameObject timeBindSkill;
@@ -923,7 +924,16 @@ public class PlayerEntity : NetworkBehaviour
 
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.LookRotation(direction));
+                GameObject ammoInstance;
+                if(ownTeamTag == 0)
+                {
+                    ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().redAmmoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.LookRotation(direction));
+                }
+                else
+                {
+                    ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().greenAmmoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.LookRotation(direction));
+                }
+                
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 ammoInstance.GetComponent<AmmoController>().damage = damage;
@@ -939,7 +949,16 @@ public class PlayerEntity : NetworkBehaviour
             }
             else if (hit.collider.CompareTag("TimeSphere"))
             {
-                GameObject ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().ammoPrefab, hit.point, Quaternion.LookRotation(direction));
+                GameObject ammoInstance;
+                if(ownTeamTag == 0)
+                {
+                    ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().redAmmoPrefab, hit.point, Quaternion.LookRotation(direction));
+                }
+                else
+                {
+                    ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().greenAmmoPrefab, hit.point, Quaternion.LookRotation(direction));
+                }
+
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 ammoInstance.GetComponent<AmmoController>().damage = damage;

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class ChronoGrenade : MonoBehaviour
 {
@@ -10,6 +12,11 @@ public class ChronoGrenade : MonoBehaviour
     public int updateID;
 
     private float timer;
+
+    [SerializeField] private GameObject vfx;
+    [SerializeField] private GameObject pointLight;
+    [SerializeField] private TrailRenderer trail1;
+    [SerializeField] private TrailRenderer trail2;
 
     private void Update()
     {
@@ -31,7 +38,15 @@ public class ChronoGrenade : MonoBehaviour
             }
             else
             {
-                Destroy(this.gameObject);
+                this.gameObject.GetComponent<Collider>().enabled = false;
+                this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+                vfx.SetActive(false);
+                pointLight.SetActive(false);
+                trail1.emitting = false;
+                trail2.emitting = false;
+
+                Destroy(this.gameObject, 5);
             }
             
 
@@ -62,12 +77,20 @@ public class ChronoGrenade : MonoBehaviour
                 col.GetComponent<TimeSphere>().ReduceCircumference();
             }
 
+            this.gameObject.GetComponent<Collider>().enabled = false;
+            this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+            vfx.SetActive(false);
+            pointLight.SetActive(false);
+            trail1.emitting = false;
+            trail2.emitting = false;
+
 
             // Tee joku hieno animaatio tässä
             ParticleSystem instantiatedEffect = Instantiate(chronadeEffect, transform.position, Quaternion.identity);
             instantiatedEffect.Play();
             Destroy(instantiatedEffect, animationLength);
-            Destroy(gameObject);
+            Destroy(gameObject, 5);
         }
     }
 }
