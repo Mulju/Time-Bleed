@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6611788206085466926}
   - component: {fileID: -730028539775677765}
   m_Layer: 2
-  m_Name: LaserAmmo
+  m_Name: RedLaserAmmo
   m_TagString: Ammo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76cb3e8034d6e3f49bceeaa145291322, type: 2}
+  - {fileID: 2100000, guid: 3c57a1df262e6ac4eabfb2c93d76499f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
