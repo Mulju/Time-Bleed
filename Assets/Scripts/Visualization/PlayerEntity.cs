@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-
+//using UnityEngine.UIElements;
 
 public class PlayerEntity : NetworkBehaviour
 {
@@ -135,6 +135,8 @@ public class PlayerEntity : NetworkBehaviour
     private Slider resourceSlider = null;
     private bool timeFieldIsOn = false;
     [HideInInspector] public bool resourceOnCooldown = false;
+
+    [SerializeField] private GameObject bulletTrail;
 
     public override void OnStartClient()
     {
@@ -890,11 +892,15 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     visualSpawn = spawnForRayVisual.transform.position;
                 }
+
+                StartCoroutine(BulletTrail(visualSpawn, hit.point, direction));
+                /*
                 // Line visual for the shot, only if not in a timesphere
                 LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
                 instantiatedVisual.SetPosition(0, visualSpawn);
                 instantiatedVisual.SetPosition(1, hit.point);
                 Destroy(instantiatedVisual.gameObject, 2);
+                */
             }
 
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
@@ -1137,5 +1143,19 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         resourceOnCooldown = false;
+    }
+
+    IEnumerator BulletTrail(Vector3 startPos, Vector3 endPos, Vector3 direction)
+    {
+        GameObject instansiatedTrail = Instantiate(bulletTrail, startPos, Quaternion.LookRotation(direction));
+
+        float distance = Vector3.Distance(endPos, startPos) / 5;
+        for(int i = 0; i < 5; i++)
+        {
+            instansiatedTrail.transform.position += direction * distance;
+            yield return null;
+        }
+
+        Destroy(instansiatedTrail, 2);
     }
 }
