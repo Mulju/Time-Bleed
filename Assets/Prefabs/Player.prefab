@@ -539,6 +539,7 @@ MonoBehaviour:
     type: 3}
   nameDisplay: {fileID: 3306375285355357045}
   playerAnimator: {fileID: 8074365253064185164}
+  armorAnimator: {fileID: 7445735089026885989}
   chronade: {fileID: 3294885659995966261, guid: d07241dce1a79424d8aaf4ec1c4a0ec3,
     type: 3}
   sniperScope: {fileID: 4562936805455457409}
@@ -591,9 +592,9 @@ MonoBehaviour:
   soundControl: {fileID: 1830912536117039440}
   playerHitEffect: {fileID: 8072162771976409813, guid: afda4783977dadd4e81266a2940b317c,
     type: 3}
-  redTeamMaterial: {fileID: 2100000, guid: cb13d877f5528a646b0f2e1131e9f6ab, type: 2}
-  greenTeamMaterial: {fileID: 2100000, guid: 7b5c3b2915addd545805a940d71c2f77, type: 2}
-  body: {fileID: 3542491589387581788}
+  redTeamMaterial: {fileID: 2100000, guid: 4399fb8409b6a664d95cf35fafc8c1fd, type: 2}
+  greenTeamMaterial: {fileID: 2100000, guid: f56ba82efef584341806ee1a36275b87, type: 2}
+  body: {fileID: 829326742971908444}
   ownTeamTag: 0
   rayCastVisual: {fileID: 2156424342420177019, guid: c5f83424ec9924f42847ce35b5afd510,
     type: 3}
@@ -6365,6 +6366,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 897180517614499770, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 897180517614499770, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
       propertyPath: _networkBehaviours.Array.size
       value: 11
       objectReference: {fileID: 0}
@@ -7101,6 +7107,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3439720064071896389}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &829326742971908444 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2611537391807663129, guid: db53567b0a227df4db234d347892a0dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 3439720064071896389}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1338180277213278948 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4408598471673724833, guid: db53567b0a227df4db234d347892a0dc,
@@ -7219,6 +7231,12 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 8492805507051383199}
   _networkObjectCache: {fileID: 2580346815414680319}
   player: {fileID: 823353294823369346}
+--- !u!95 &7445735089026885989 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5253668531585803296, guid: db53567b0a227df4db234d347892a0dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 3439720064071896389}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7565165441252577321 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5134256199165926764, guid: db53567b0a227df4db234d347892a0dc,

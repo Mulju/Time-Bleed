@@ -22,6 +22,7 @@ public class PlayerEntity : NetworkBehaviour
     public GameObject nameDisplay;
 
     public Animator playerAnimator;
+    public Animator armorAnimator;
 
     [SerializeField] private GameObject chronade;
     [SerializeField] private GameObject sniperScope;
@@ -118,6 +119,7 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private Material redTeamMaterial;
     [SerializeField] private Material greenTeamMaterial;
     [SerializeField] private GameObject body;
+
     [HideInInspector] public int ownTeamTag;
 
     [SerializeField] private GameObject rayCastVisual;
@@ -181,6 +183,13 @@ public class PlayerEntity : NetworkBehaviour
             // make own character model invisible
             SkinnedMeshRenderer[] meshes = playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.renderingLayerMask = 0;
+            }
+
+            // make own team armor invisible
+            SkinnedMeshRenderer[] armorMeshes = body.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (SkinnedMeshRenderer mesh in armorMeshes)
             {
                 mesh.renderingLayerMask = 0;
             }
@@ -548,7 +557,8 @@ public class PlayerEntity : NetworkBehaviour
         if (run)
         {
             playerAnimator.SetBool("Run", true);
-            if(!base.IsOwner)
+            armorAnimator.SetBool("Run", true);
+            if (!base.IsOwner)
             {
                 // Don't play footstep sound for self
                 if(!footstepSoundHasPlayed)
@@ -562,26 +572,33 @@ public class PlayerEntity : NetworkBehaviour
         else
         {
             playerAnimator.SetBool("Run", false);
+            armorAnimator.SetBool("Run", false);
         }
 
         if (shoot)
         {
             playerAnimator.SetBool("Shoot", true);
+            armorAnimator.SetBool("Shoot", true);
         }
         else
         {
             playerAnimator.SetBool("Shoot", false);
+            armorAnimator.SetBool("Shoot", false);
         }
 
         if (jump)
         {
             playerAnimator.SetTrigger("Jump");
+            armorAnimator.SetTrigger("Jump");
         }
 
         if (reload)
         {
             playerAnimator.SetFloat("ReloadSpeedMultiplier", reloadTimeMultiplier);
             playerAnimator.SetTrigger("Reload");
+
+            armorAnimator.SetFloat("ReloadSpeedMultiplier", reloadTimeMultiplier);
+            armorAnimator.SetTrigger("Reload");
         }
     }
 
@@ -676,11 +693,19 @@ public class PlayerEntity : NetworkBehaviour
 
         if (teamTag == 0)
         {
-            body.GetComponent<Renderer>().material = redTeamMaterial;
+            SkinnedMeshRenderer[] meshes = body.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.material = redTeamMaterial;
+            }
         }
         else
         {
-            body.GetComponent<Renderer>().material = greenTeamMaterial;
+            SkinnedMeshRenderer[] meshes = body.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.material = greenTeamMaterial;
+            }
         }
     }
 
