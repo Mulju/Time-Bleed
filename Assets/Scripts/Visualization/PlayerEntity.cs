@@ -377,7 +377,7 @@ public class PlayerEntity : NetworkBehaviour
             TimeFieldServer(timeFieldIsOn);
         }
         
-        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown && timeResource > 2)
+        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown && timeResource > 2 && !isScoped)
         {
             timeResource -= 2;
             timeBindTimer = 0;
@@ -468,7 +468,7 @@ public class PlayerEntity : NetworkBehaviour
             ammoTMP.text = "Ammo - " + currentWeapon.ammoLeft;
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && amountOfChronades > 0)
+        if (Input.GetKeyDown(KeyCode.E) && amountOfChronades > 0 && !isScoped)
         {
             ThrowGrenadeServer();
             amountOfChronades--;
@@ -477,12 +477,12 @@ public class PlayerEntity : NetworkBehaviour
         }
 
 
-        if (Input.GetKey(KeyCode.G) && cookTimer <= 2.5f && grenadeTimer >= grenadeCooldown)
+        if (Input.GetKey(KeyCode.G) && cookTimer <= 2.5f && grenadeTimer >= grenadeCooldown && !isScoped)
         {
             cookTimer += Time.deltaTime;
             isCooking = true;
         }
-        else if ((Input.GetKeyUp(KeyCode.G) || cookTimer >= 2.5f) && isCooking)
+        else if ((Input.GetKeyUp(KeyCode.G) || cookTimer >= 2.5f) && isCooking && !isScoped)
         {
             ThrowFragGrenadeServer(cookTimer);
             cookTimer = 0;
