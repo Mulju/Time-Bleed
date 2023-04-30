@@ -40,6 +40,7 @@ public class PlayerEntity : NetworkBehaviour
     [HideInInspector] public GameObject currentWeaponAnimationsPrefab;
 
     public GameObject playerMesh;
+    public GameObject playerColliders;
 
     public Image timeBindUI;
     public Image GrenadeUI;
@@ -118,7 +119,9 @@ public class PlayerEntity : NetworkBehaviour
 
     [SerializeField] private Material redTeamMaterial;
     [SerializeField] private Material greenTeamMaterial;
-    [SerializeField] private GameObject body;
+    [SerializeField] private GameObject armorMesh;
+
+    [SerializeField] private GameObject bodyMesh;
 
     [HideInInspector] public int ownTeamTag;
 
@@ -173,7 +176,6 @@ public class PlayerEntity : NetworkBehaviour
             timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
             GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
 
-
             // set all timefields off
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject player in players)
@@ -189,7 +191,7 @@ public class PlayerEntity : NetworkBehaviour
             }
 
             // make own team armor invisible
-            SkinnedMeshRenderer[] armorMeshes = body.GetComponentsInChildren<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer[] armorMeshes = armorMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in armorMeshes)
             {
                 mesh.renderingLayerMask = 0;
@@ -694,7 +696,7 @@ public class PlayerEntity : NetworkBehaviour
 
         if (teamTag == 0)
         {
-            SkinnedMeshRenderer[] meshes = body.GetComponentsInChildren<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer[] meshes = armorMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in meshes)
             {
                 mesh.material = redTeamMaterial;
@@ -702,7 +704,7 @@ public class PlayerEntity : NetworkBehaviour
         }
         else
         {
-            SkinnedMeshRenderer[] meshes = body.GetComponentsInChildren<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer[] meshes = armorMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in meshes)
             {
                 mesh.material = greenTeamMaterial;
@@ -730,6 +732,26 @@ public class PlayerEntity : NetworkBehaviour
 
             currentWeaponAnimationsPrefab.SetActive(false);
             currentWeaponPrefab.SetActive(true);
+        }
+        else
+        {
+            SkinnedMeshRenderer[] armorMeshes = armorMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (SkinnedMeshRenderer mesh in armorMeshes)
+            {
+                mesh.renderingLayerMask = 1;
+            }
+        }
+
+        SkinnedMeshRenderer[] bodyMeshes = bodyMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer mesh in bodyMeshes)
+        {
+            mesh.renderingLayerMask = 0;
+        }
+
+        Rigidbody[] rigidbodies = playerColliders.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = true;
         }
 
         characterController.enabled = true;

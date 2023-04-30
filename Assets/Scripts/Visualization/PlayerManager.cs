@@ -521,6 +521,10 @@ public class PlayerManager : NetworkBehaviour
             mesh.renderingLayerMask = 1;
         }
 
+        player.GetComponent<PlayerEntity>().ArmorInvisibleServer();
+        player.GetComponent<PlayerEntity>().BodyVisibleServer();
+        player.GetComponent<PlayerEntity>().RigidbodyNotKinematicServer();
+
         player.GetComponent<PlayerEntity>().currentWeaponAnimationsPrefab.SetActive(true);
 
         player.GetComponent<PlayerEntity>().isAlive = false;
