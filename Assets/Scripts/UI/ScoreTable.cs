@@ -81,17 +81,13 @@ public class ScoreTable : MonoBehaviour
         // if (infobox/time + time >= 60)
         int stoleTime = int.TryParse(entryTransform.Find("InfoBox2/Time").GetComponent<TMPro.TextMeshProUGUI>().text, out stoleTime) ? stoleTime : 0;
 
-        // break up time into minutes and seconds, 01:37
-        if (stoleTime + time >= 60)
-        {
-            int minutes = (stoleTime + time) / 60;
-            int seconds = (stoleTime + time) % 60;
+        int minutes = (stoleTime + time) / 60;
+        int seconds = (stoleTime + time) % 60;
 
-            string timeMinText = (minutes < 10 ? "0" + minutes + ":" : minutes + ":");
-            string timeSecText = (seconds < 10 ? "0" + seconds : seconds.ToString());
+        string timeMinText = (minutes < 10 ? "0" + minutes + ":" : minutes + ":");
+        string timeSecText = (seconds < 10 ? "0" + seconds : seconds.ToString());
 
-            entryTransform.Find("InfoBox2/Time").GetComponent<TMPro.TextMeshProUGUI>().text = timeMinText + timeSecText;
-        }
+        entryTransform.Find("InfoBox2/Time").GetComponent<TMPro.TextMeshProUGUI>().text = timeMinText + timeSecText;
     }
 
     public void DestroyScores()
