@@ -430,7 +430,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 6
+  <PrefabId>k__BackingField: 7
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -606,7 +606,9 @@ MonoBehaviour:
   footstepSource: {fileID: 3110155678639122417}
   timeResource: 0
   resourceOnCooldown: 0
-  bulletTrail: {fileID: 9047852772809620072, guid: 4511ba28f7ee3a3449072be6adb94b25,
+  redBulletTrail: {fileID: 9047852772809620072, guid: 4511ba28f7ee3a3449072be6adb94b25,
+    type: 3}
+  greenBulletTrail: {fileID: 9047852772809620072, guid: e0d04b86d2debd742bc4751fab5c942b,
     type: 3}
 --- !u!1 &832002410115213892
 GameObject:
