@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371572448835764015}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.03, y: 1.92, z: -30.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -142,6 +142,8 @@ MonoBehaviour:
   rayCastVisual: {fileID: 2156424342420177019, guid: c5f83424ec9924f42847ce35b5afd510,
     type: 3}
   isGrenadeShot: 0
+  bulletTrail: {fileID: 9047852772809620072, guid: e0d04b86d2debd742bc4751fab5c942b,
+    type: 3}
 --- !u!82 &-730028539775677765
 AudioSource:
   m_ObjectHideFlags: 0

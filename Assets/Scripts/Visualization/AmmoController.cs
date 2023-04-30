@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AmmoController : MonoBehaviour
 {
@@ -30,6 +31,10 @@ public class AmmoController : MonoBehaviour
 
     [HideInInspector] public bool isGrenadeShot = false;
 
+    [SerializeField] private GameObject bulletTrail;
+
+    private bool hitFlag = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,20 +55,28 @@ public class AmmoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (hitFlag) return;
+
         if (ammoSpeed == timeNotSlowed)
         {
             if (Physics.Raycast(transform.position, direction, out RaycastHit hit, Mathf.Infinity, layerMask))
             {
+                /*
                 // Line visual for the shot
                 LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
                 instantiatedVisual.SetPosition(0, transform.position);
                 instantiatedVisual.SetPosition(1, hit.point);
                 Destroy(instantiatedVisual.gameObject, 2);
+                */
+                bool hitTimeSphere = false;
+                Vector3 ogPos = transform.position;
+
 
                 if (hit.collider.CompareTag("TimeSphere"))
                 {
                     transform.position = hit.point;
                     ammoSpeed = timeSlowed;
+                    hitTimeSphere = true;
                 }
                 else if (hit.collider.CompareTag("PlayerHead"))
                 {
@@ -112,7 +125,18 @@ public class AmmoController : MonoBehaviour
                         instantiatedHole.GetComponent<AudioSource>().volume = 0.01f;
                     }
                     Destroy(instantiatedHole, 10);
-                    Destroy(this.gameObject);
+                    Destroy(this.gameObject, 4);
+
+                    this.GetComponent<MeshRenderer>().enabled = false;
+                    this.GetComponent<Collider>().enabled = false;
+
+                    hitFlag = true;
+                }
+
+                Debug.Log("Visual hit: " + hit.collider.name);
+                if(!hitTimeSphere)
+                {
+                    StartCoroutine(BulletTrail(ogPos, hit.point, hitTimeSphere));
                 }
             }
             else
@@ -201,5 +225,22 @@ public class AmmoController : MonoBehaviour
             CheckForCollisions();
             ammoSpeed = timeNotSlowed;
         }
+    }
+
+    IEnumerator BulletTrail(Vector3 startPos, Vector3 endPos, bool hitTimeSphere)
+    {
+        Vector3 direction = (endPos - startPos).normalized;
+        GameObject instansiatedTrail = Instantiate(bulletTrail, startPos, Quaternion.LookRotation(direction));
+        Destroy(instansiatedTrail, 1.6f);
+
+        float distance = Vector3.Distance(hitTimeSphere ? endPos + new Vector3(0, 0, 0.1f) : endPos, startPos) / 5;
+        for (int i = 0; i < 5; i++)
+        {
+            instansiatedTrail.transform.position += direction * distance;
+            yield return null;
+        }
+
+        instansiatedTrail.GetComponent<TrailRenderer>().emitting = false;
+        instansiatedTrail.GetComponentInChildren<TrailRenderer>().emitting = false;
     }
 }

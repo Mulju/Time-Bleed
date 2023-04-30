@@ -138,7 +138,8 @@ public class PlayerEntity : NetworkBehaviour
     private bool timeFieldIsOn = false;
     [HideInInspector] public bool resourceOnCooldown = false;
 
-    [SerializeField] private GameObject bulletTrail;
+    [SerializeField] private GameObject redBulletTrail;
+    [SerializeField] private GameObject greenBulletTrail;
 
     public override void OnStartClient()
     {
@@ -906,6 +907,8 @@ public class PlayerEntity : NetworkBehaviour
 
         if (Physics.Raycast(startPos + direction, direction, out RaycastHit hit, Mathf.Infinity, layerMask))
         {
+            bool hitTimeSphere = false;
+            /*
             if (!ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 Vector3 visualSpawn;
@@ -918,15 +921,15 @@ public class PlayerEntity : NetworkBehaviour
                     visualSpawn = spawnForRayVisual.transform.position;
                 }
 
-                StartCoroutine(BulletTrail(visualSpawn, hit.point, direction));
-                /*
+                //StartCoroutine(BulletTrail(visualSpawn, hit.point));
+                
                 // Line visual for the shot, only if not in a timesphere
                 LineRenderer instantiatedVisual = Instantiate(rayCastVisual).GetComponent<LineRenderer>();
                 instantiatedVisual.SetPosition(0, visualSpawn);
                 instantiatedVisual.SetPosition(1, hit.point);
                 Destroy(instantiatedVisual.gameObject, 2);
-                */
-            }
+                
+            }*/
 
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
@@ -939,7 +942,7 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().greenAmmoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.LookRotation(direction));
                 }
-                
+
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
                 ammoInstance.GetComponent<AmmoController>().damage = damage;
@@ -964,6 +967,8 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().greenAmmoPrefab, hit.point, Quaternion.LookRotation(direction));
                 }
+
+                hitTimeSphere = true;
 
                 ammoInstance.GetComponent<AmmoController>().direction = direction;
                 ammoInstance.GetComponent<AmmoController>().shooter = shooter;
@@ -1002,7 +1007,13 @@ public class PlayerEntity : NetworkBehaviour
                 GameObject instantiatedHole = Instantiate(bulletHole, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
                 Destroy(instantiatedHole, 10);
             }
+            
+            if (!ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
+            {
+                StartCoroutine(BulletTrail(spawnForRayVisual.transform.position, hit.point, hitTimeSphere));
+            }
         }
+
 
         if (isLastShot)
         {
@@ -1170,17 +1181,29 @@ public class PlayerEntity : NetworkBehaviour
         resourceOnCooldown = false;
     }
 
-    IEnumerator BulletTrail(Vector3 startPos, Vector3 endPos, Vector3 direction)
+    IEnumerator BulletTrail(Vector3 startPos, Vector3 endPos, bool hitTimeSphere)
     {
-        GameObject instansiatedTrail = Instantiate(bulletTrail, startPos, Quaternion.LookRotation(direction));
+        Vector3 direction = (endPos - startPos).normalized;
+        GameObject instansiatedTrail;
+        if (ownTeamTag == 0)
+        {
+            instansiatedTrail = Instantiate(redBulletTrail, startPos, Quaternion.LookRotation(direction));
+        }
+        else
+        {
+            instansiatedTrail = Instantiate(greenBulletTrail, startPos, Quaternion.LookRotation(direction));
+        }
 
-        float distance = Vector3.Distance(endPos, startPos) / 5;
-        for(int i = 0; i < 5; i++)
+        float distance = Vector3.Distance(hitTimeSphere ? endPos + new Vector3(0, 0, 0.1f) : endPos, startPos) / 5;
+        for (int i = 0; i < 5; i++)
         {
             instansiatedTrail.transform.position += direction * distance;
             yield return null;
         }
 
-        Destroy(instansiatedTrail, 2);
+        instansiatedTrail.GetComponent<TrailRenderer>().emitting = false;
+        instansiatedTrail.GetComponentInChildren<TrailRenderer>().emitting = false;
+
+        Destroy(instansiatedTrail, 1.5f);
     }
 }
