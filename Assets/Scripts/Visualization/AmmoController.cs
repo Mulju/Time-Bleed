@@ -133,8 +133,7 @@ public class AmmoController : MonoBehaviour
                     hitFlag = true;
                 }
 
-                Debug.Log("Visual hit: " + hit.collider.name);
-                if(!hitTimeSphere)
+                if(!isGrenadeShot && !hitTimeSphere)
                 {
                     StartCoroutine(BulletTrail(ogPos, hit.point, hitTimeSphere));
                 }

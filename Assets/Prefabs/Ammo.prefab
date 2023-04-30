@@ -141,6 +141,7 @@ MonoBehaviour:
   rayCastVisual: {fileID: 2156424342420177019, guid: c5f83424ec9924f42847ce35b5afd510,
     type: 3}
   isGrenadeShot: 0
+  bulletTrail: {fileID: 0}
 --- !u!82 &-3606777594226469829
 AudioSource:
   m_ObjectHideFlags: 0
@@ -154,7 +155,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 1b45f2dbb5b5cab4ea64ce623e0030aa, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.01
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -78,46 +78,16 @@ public class SoundControl : MonoBehaviour
         PlaySound(gunShoot, volume, globalPitch);
     }
 
-    public void PlayWallHit()
-    {
-        float volume = globalVolume;
-        PlaySound(bulletHitWall, volume, globalPitch);
-    }
-
     public void PlayBubbleHit()
     {
         float volume = globalVolume;
         PlaySound(bulletHitBubble, volume, globalPitch);
     }
 
-    public void PlayTimeBindExplosion()
-    {
-        float volume = globalVolume;
-        PlaySound(timeBindExplosion, volume, globalPitch);
-    }
-
-    public void PlayChronadeSound()
-    {
-        float volume = globalVolume;
-        PlaySound(chronadeSound, volume, globalPitch);
-    }
-
     public void PlayPlayerHit()
     {
         float volume = globalVolume * 10;
         PlaySound(playerHitSound, volume, globalPitch);
-    }
-
-    public void PlayFragExplosion()
-    {
-        float volume = globalVolume;
-        PlaySound(fragGrenadeSound, volume, globalPitch);
-    }
-
-    public void PlayClockTick()
-    {
-        float volume = globalVolume;
-        PlaySound(clockTick, volume, globalPitch);
     }
 
     public void PlayBaseIsUnderAttack()
@@ -143,11 +113,5 @@ public class SoundControl : MonoBehaviour
     {
         float volume = 1f;
         PlaySound(chronadeSpawnMoved, volume, globalPitch);
-    }
-
-    public void PlayFootstepSound()
-    {
-        float volume = globalVolume;
-        PlaySound(footstepSound, volume, globalPitch);
     }
 }
