@@ -503,7 +503,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 9
+  <PrefabId>k__BackingField: 12
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 606160979
   <SceneId>k__BackingField: 0
@@ -643,6 +643,26 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2177584230728146440, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: _redTotal
+      value: 
+      objectReference: {fileID: 1461071817793819160}
+    - target: {fileID: 2177584230728146440, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: _greenTime
+      value: 
+      objectReference: {fileID: 6817174676721755997}
+    - target: {fileID: 2177584230728146440, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: _greenTotal
+      value: 
+      objectReference: {fileID: 6045646377898827654}
+    - target: {fileID: 2177584230728146440, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: _greenTeamContainer
+      value: 
+      objectReference: {fileID: 9087822728684246951}
     - target: {fileID: 2951393067714848818, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
         type: 3}
       propertyPath: m_fontSize
@@ -793,6 +813,11 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 24.15
       objectReference: {fileID: 0}
+    - target: {fileID: 4468752070735880875, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+        type: 3}
+      propertyPath: m_Name
+      value: GreenBoard
+      objectReference: {fileID: 0}
     - target: {fileID: 5160370032244720006, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
         type: 3}
       propertyPath: m_fontSize
@@ -820,9 +845,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba, type: 3}
+--- !u!224 &1461071817793819160 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5051149067948583942, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+    type: 3}
+  m_PrefabInstance: {fileID: 5935617055107694110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6045646377898827654 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 124410952202903960, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+    type: 3}
+  m_PrefabInstance: {fileID: 5935617055107694110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6817174676721755997 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 920129039681214787, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+    type: 3}
+  m_PrefabInstance: {fileID: 5935617055107694110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6984603681332771275 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3652912195337455573, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
+    type: 3}
+  m_PrefabInstance: {fileID: 5935617055107694110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &9087822728684246951 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3189079446623857081, guid: 0b0dcac3f4eb449d49ddf3e10fe33dba,
     type: 3}
   m_PrefabInstance: {fileID: 5935617055107694110}
   m_PrefabAsset: {fileID: 0}
