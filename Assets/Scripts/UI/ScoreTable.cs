@@ -19,15 +19,15 @@ public class ScoreTable : MonoBehaviour
         _matchManager = MatchManager.matchManager;
     }
 
-    public void UpdateScore(string name, int kills, int deaths, int teamTag, int rank)
+    public void UpdateScore(string name, int kills, int deaths, int time, int teamTag, int rank)
     {
         if (teamTag == 0)
         {
-            CreateScore(name, kills, deaths, _redTeamContainer, rank);
+            CreateScore(name, kills, deaths, time, _redTeamContainer, rank);
         }
         else
         {
-            CreateScore(name, kills, deaths, _greenTeamContainer, rank);
+            CreateScore(name, kills, deaths, time, _greenTeamContainer, rank);
         }
     }
 
@@ -63,11 +63,11 @@ public class ScoreTable : MonoBehaviour
 
     public void UpdateBoard(int redKills, int greenKills)
     {
-        _greenTotal.Find("InfoBox/Kills").GetComponent<TMPro.TextMeshProUGUI>().text = greenKills.ToString();
-        _redTotal.Find("InfoBox/Kills").GetComponent<TMPro.TextMeshProUGUI>().text = redKills.ToString();
+        // _greenTotal.Find("InfoBox/Kills").GetComponent<TMPro.TextMeshProUGUI>().text = greenKills.ToString();
+        // _redTotal.Find("InfoBox/Kills").GetComponent<TMPro.TextMeshProUGUI>().text = redKills.ToString();
     }
 
-    private void CreateScore(string name, int kills, int deaths, Transform entryContainer, int rank)
+    private void CreateScore(string name, int kills, int deaths, int time, Transform entryContainer, int rank)
     {
         Transform entryTransform = Instantiate(_entryTemplate, entryContainer);
         entryTransform.gameObject.SetActive(true);
@@ -75,8 +75,27 @@ public class ScoreTable : MonoBehaviour
 
         entryTransform.Find("InfoBox/Rank").GetComponent<TMPro.TextMeshProUGUI>().text = rank.ToString();
         entryTransform.Find("InfoBox/Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
-        entryTransform.Find("InfoBox/Kills").GetComponent<TMPro.TextMeshProUGUI>().text = kills.ToString();
-        entryTransform.Find("InfoBox/Deaths").GetComponent<TMPro.TextMeshProUGUI>().text = deaths.ToString();
+        entryTransform.Find("InfoBox2/Kills").GetComponent<TMPro.TextMeshProUGUI>().text = kills.ToString();
+        entryTransform.Find("InfoBox2/Deaths").GetComponent<TMPro.TextMeshProUGUI>().text = deaths.ToString();
+
+        // if (infobox/time + time >= 60)
+        int stoleTime = int.TryParse(entryTransform.Find("InfoBox2/Time").GetComponent<TMPro.TextMeshProUGUI>().text, out stoleTime) ? stoleTime : 0;
+
+        // break up time into minutes and seconds, 01:37
+        if (stoleTime + time >= 60)
+        {
+            int minutes = (stoleTime + time) / 60;
+            int seconds = (stoleTime + time) % 60;
+
+            string timeMinText = (minutes < 10 ? "0" + minutes + ":" : minutes + ":");
+            string timeSecText = (seconds < 10 ? "0" + seconds : seconds.ToString());
+
+            entryTransform.Find("InfoBox2/Time").GetComponent<TMPro.TextMeshProUGUI>().text = timeMinText + timeSecText;
+        }
+        else
+        {
+            entryTransform.Find("InfoBox2/Time").GetComponent<TMPro.TextMeshProUGUI>().text = (stoleTime + time).ToString();
+        }
     }
 
     public void DestroyScores()
