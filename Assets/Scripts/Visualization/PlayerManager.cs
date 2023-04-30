@@ -333,6 +333,7 @@ public class PlayerManager : NetworkBehaviour
 
             pair.Value.kills = 0;
             pair.Value.deaths = 0;
+            pair.Value.stolenTime = 0;
         }
 
         // Close spawn doors and start a timer to open them
@@ -733,7 +734,7 @@ public class PlayerManager : NetworkBehaviour
 
     public void OnChronadeHit(int id)
     {
-        players[id].stolenTime += 5;
+        players[id].stolenTime += 10;
         UpdateScoreboard();
     }
 }
