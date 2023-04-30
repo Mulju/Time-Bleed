@@ -40,6 +40,7 @@ public class PlayerEntity : NetworkBehaviour
     [HideInInspector] public GameObject currentWeaponAnimationsPrefab;
 
     public GameObject playerMesh;
+    public GameObject playerColliders;
 
     public Image timeBindUI;
     public Image GrenadeUI;
@@ -171,7 +172,6 @@ public class PlayerEntity : NetworkBehaviour
 
             timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
             GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
-
 
             // set all timefields off
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -745,6 +745,12 @@ public class PlayerEntity : NetworkBehaviour
             mesh.renderingLayerMask = 0;
         }
 
+        Rigidbody[] rigidbodies = playerColliders.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = true;
+        }
+
         characterController.enabled = true;
         canMove = true;
         timeField.SetActive(true);
@@ -1211,4 +1217,22 @@ public class PlayerEntity : NetworkBehaviour
             mesh.renderingLayerMask = 1;
         }
     }
+
+    [ServerRpc]
+    public void RigidbodyNotKinematicServer()
+    {
+        RigidbodyNotKinematic();
+    }
+
+    [ObserversRpc]
+    public void RigidbodyNotKinematic()
+    {
+        Rigidbody[] rigidbodies = playerColliders.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = false;
+        }
+    }
+
+
 }

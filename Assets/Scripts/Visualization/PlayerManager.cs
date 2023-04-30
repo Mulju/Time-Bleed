@@ -523,6 +523,7 @@ public class PlayerManager : NetworkBehaviour
 
         player.GetComponent<PlayerEntity>().ArmorInvisibleServer();
         player.GetComponent<PlayerEntity>().BodyVisibleServer();
+        player.GetComponent<PlayerEntity>().RigidbodyNotKinematicServer();
 
         player.GetComponent<PlayerEntity>().currentWeaponAnimationsPrefab.SetActive(true);
 
