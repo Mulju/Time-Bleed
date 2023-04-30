@@ -11,6 +11,7 @@ namespace Data
         public int health = 100;
         public int kills = 0;
         public int deaths = 0;
+        public int stolenTime = 0;
         public GameObject playerObject;
         public NetworkConnection connection;
         public int teamTag;

@@ -107,22 +107,22 @@ public class PlayerManager : NetworkBehaviour
         //List<PlayerEntity> greenPlayers = new List<PlayerEntity>();
         foreach (KeyValuePair<int, Data.Player> player in players)
         {
-            if(player.Value.playerObject.GetComponent<PlayerEntity>().ownTeamTag == 0)
+            if (player.Value.playerObject.GetComponent<PlayerEntity>().ownTeamTag == 0)
             {
                 // Is a red player
-                if(i == 0)
+                if (i == 0)
                 {
                     ClientPlayAttenborough(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>(), true);
 
                     //player.Value.playerObject.GetComponent<PlayerEntity>().soundControl.PlayFiveMinutes();
                 }
-                else if(i == 2)
+                else if (i == 2)
                 {
                     ClientPlayAttenborough(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>(), false);
 
                     //player.Value.playerObject.GetComponent<PlayerEntity>().soundControl.PlayOneMinute();
                 }
-                else if(i == 4)
+                else if (i == 4)
                 {
                     ClientPlayBaseUnderAttack(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>());
                 }
@@ -195,7 +195,7 @@ public class PlayerManager : NetworkBehaviour
     [TargetRpc]
     public void ClientPlayAttenborough(NetworkConnection connection, PlayerEntity player, bool isFiveMinutes)
     {
-        if(isFiveMinutes)
+        if (isFiveMinutes)
         {
             player.soundControl.PlayFiveMinutes();
         }
@@ -213,7 +213,7 @@ public class PlayerManager : NetworkBehaviour
 
     public void AllClientsPlayChronadeSpawnChange()
     {
-        foreach(KeyValuePair<int, Data.Player> player in players)
+        foreach (KeyValuePair<int, Data.Player> player in players)
         {
             ClientPlayChronadeSpawnChange(player.Value.connection, player.Value.playerObject.GetComponent<PlayerEntity>());
         }
@@ -466,11 +466,13 @@ public class PlayerManager : NetworkBehaviour
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, redSpawnPoints.Count), players[playerID].teamTag);
             MatchManager.matchManager.redClock.OwnTeamPlayerKilled();
             MatchManager.matchManager.greenClock.GainTime();
+            players[playerID].stolenTime += 1;
 
             if (MatchManager.matchManager.redClock.remainingTime - MatchManager.matchManager.greenClock.remainingTime >= 60)
             {
                 MatchManager.matchManager.redClock.OwnTeamPlayerKilled();
                 MatchManager.matchManager.greenClock.GainTime();
+                players[playerID].stolenTime += 1;
             }
         }
         else
@@ -479,12 +481,14 @@ public class PlayerManager : NetworkBehaviour
             RespawnPlayer(players[playerID].connection, players[playerID].playerObject, Random.Range(0, greenSpawnPoints.Count), players[playerID].teamTag);
             MatchManager.matchManager.greenClock.OwnTeamPlayerKilled();
             MatchManager.matchManager.redClock.GainTime();
+            players[playerID].stolenTime += 1;
 
-            if(MatchManager.matchManager.greenClock.remainingTime - MatchManager.matchManager.redClock.remainingTime >= 60)
+            if (MatchManager.matchManager.greenClock.remainingTime - MatchManager.matchManager.redClock.remainingTime >= 60)
             {
                 // Red player killed a green player, and the red team is over a minute behind. Gain an additional second
                 MatchManager.matchManager.greenClock.OwnTeamPlayerKilled();
                 MatchManager.matchManager.redClock.GainTime();
+                players[playerID].stolenTime += 1;
             }
         }
 
@@ -676,12 +680,12 @@ public class PlayerManager : NetworkBehaviour
         {
             if (pair.Value.teamTag == 0)
             {
-                scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag, redRank);
+                scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.stolenTime, pair.Value.teamTag, redRank);
                 redRank++;
             }
             else
             {
-                scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.teamTag, greenRank);
+                scoreboard.GetComponent<ScoreTable>().UpdateScore(pair.Value.name, pair.Value.kills, pair.Value.deaths, pair.Value.stolenTime, pair.Value.teamTag, greenRank);
                 greenRank++;
             }
         }
@@ -725,5 +729,10 @@ public class PlayerManager : NetworkBehaviour
         {
             sceneLoader.LoadMainMenu();
         }
+    }
+
+    public void OnChronadeHit(int id)
+    {
+        players[id].stolenTime += 1;
     }
 }
