@@ -19,9 +19,10 @@ public class Clock : NetworkBehaviour
     [SyncVar] public float remainingSeconds, remainingMinutes, remainingTime;
 
 
-    
+
     public int teamIdentifier;
     private MatchManager mManager;
+    private PlayerManager pManager;
     [HideInInspector] public int playersKilled = 0;
 
     [SerializeField] private GameObject[] bigClockHandles;
@@ -34,6 +35,7 @@ public class Clock : NetworkBehaviour
         if (base.IsServer)
         {
             mManager = MatchManager.matchManager;
+            pManager = PlayerManager.instance;
         }
     }
 
@@ -42,6 +44,7 @@ public class Clock : NetworkBehaviour
         if (base.IsServer)
         {
             mManager = MatchManager.matchManager;
+            pManager = PlayerManager.instance;
         }
     }
 
@@ -50,14 +53,15 @@ public class Clock : NetworkBehaviour
         if (base.IsServer)
         {
             mManager = MatchManager.matchManager;
+            pManager = PlayerManager.instance;
         }
     }
 
     void Update()
     {
-        if(base.IsServer)
+        if (base.IsServer)
         {
-            if(mManager != null && mManager.currentMatchState == MatchManager.MatchState.IN_PROGRESS)
+            if (mManager != null && mManager.currentMatchState == MatchManager.MatchState.IN_PROGRESS)
             {
                 UpdateClockServer();
             }
@@ -81,7 +85,7 @@ public class Clock : NetworkBehaviour
             remainingSeconds = 60;
         }
 
-        if(remainingMinutes < 0)
+        if (remainingMinutes < 0)
         {
             remainingSeconds = 0;
             remainingMinutes = 0;
@@ -113,9 +117,14 @@ public class Clock : NetworkBehaviour
         {
             hitChronades++;
             StartCoroutine(ClockTimer(true));
-            if(OnChronadeHit != null)
+            if (OnChronadeHit != null)
             {
                 OnChronadeHit.Invoke(teamIdentifier);
+            }
+
+            if (base.IsServer)
+            {
+                pManager.OnChronadeHit(collision.gameObject.GetComponent<ChronoGrenade>().ownerObject.GetInstanceID());
             }
 
             // Destroy the grenade
@@ -157,7 +166,7 @@ public class Clock : NetworkBehaviour
             yield return null;
         }
 
-        if(isChronade)
+        if (isChronade)
         {
             hitChronades--;
         }
