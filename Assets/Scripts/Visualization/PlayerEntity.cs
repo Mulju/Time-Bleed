@@ -1228,4 +1228,52 @@ public class PlayerEntity : NetworkBehaviour
 
         Destroy(instansiatedTrail, 1.5f);
     }
+
+    [ServerRpc]
+    public void ArmorInvisibleServer()
+    {
+        ArmorInvisible();
+    }
+
+    [ObserversRpc]
+    public void ArmorInvisible()
+    {
+        SkinnedMeshRenderer[] armorMeshes = armorMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer mesh in armorMeshes)
+        {
+            mesh.renderingLayerMask = 0;
+        }
+    }
+
+    [ServerRpc]
+    public void BodyVisibleServer()
+    {
+        BodyVisible();
+    }
+
+    [ObserversRpc]
+    public void BodyVisible()
+    {
+        SkinnedMeshRenderer[] bodyMeshes = bodyMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer mesh in bodyMeshes)
+        {
+            mesh.renderingLayerMask = 1;
+        }
+    }
+
+    [ServerRpc]
+    public void RigidbodyNotKinematicServer()
+    {
+        RigidbodyNotKinematic();
+    }
+
+    [ObserversRpc]
+    public void RigidbodyNotKinematic()
+    {
+        Rigidbody[] rigidbodies = playerColliders.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = false;
+        }
+    }
 }
