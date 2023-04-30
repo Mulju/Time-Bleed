@@ -734,5 +734,6 @@ public class PlayerManager : NetworkBehaviour
     public void OnChronadeHit(int id)
     {
         players[id].stolenTime += 5;
+        UpdateScoreboard();
     }
 }

@@ -92,10 +92,6 @@ public class ScoreTable : MonoBehaviour
 
             entryTransform.Find("InfoBox2/Time").GetComponent<TMPro.TextMeshProUGUI>().text = timeMinText + timeSecText;
         }
-        else
-        {
-            entryTransform.Find("InfoBox2/Time").GetComponent<TMPro.TextMeshProUGUI>().text = (stoleTime + time).ToString();
-        }
     }
 
     public void DestroyScores()
