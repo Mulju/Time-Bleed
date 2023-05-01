@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using FishNet.Object;
 
-public class KillFeed : MonoBehaviour
+public class KillFeed : NetworkBehaviour
 {
     [SerializeField] private GameObject _entryTemplate;
     [SerializeField] private Transform _feedContainer;
@@ -20,6 +20,7 @@ public class KillFeed : MonoBehaviour
         _playerManager.OnKillFeedUpdate -= CreateKillFeed;
     }
 
+    [ObserversRpc]
     private void CreateKillFeed(string killerName, string victimName)
     {
         Transform entryTransform = Instantiate(_entryTemplate, _feedContainer).transform;
