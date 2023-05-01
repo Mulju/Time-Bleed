@@ -10,10 +10,11 @@ public class TimeSphere : MonoBehaviour
     public Vector3 originalScale, currentScale;
     public int expansionMultiplier = 5;
 
-    [HideInInspector]
-    public bool isTimeBind;
-    public bool isTimeField;
-    public float timeSpeed;
+
+    [HideInInspector] public bool isTimeBind;
+    [HideInInspector] public bool isTimeField;
+    [HideInInspector] public float timeSpeed;
+    [HideInInspector] public int teamTag;
 
     private void Awake()
     {
@@ -24,6 +25,20 @@ public class TimeSphere : MonoBehaviour
 
         originalScale = transform.localScale;
         currentScale = transform.localScale;
+    }
+
+    private void Start()
+    {
+        // set layer and change color based on teamtag 
+        if (isTimeBind)
+        {
+            gameObject.layer = 10 + teamTag;
+
+            if(teamTag == 1)
+            {
+                gameObject.GetComponent<Renderer>().material.color = new Color(102/225, 255/255, 185/255, gameObject.GetComponent<Renderer>().material.color.a);
+            }
+        }
     }
 
     public void ChangeAlpha(float sliderValue)

@@ -292,8 +292,6 @@ public class PlayerEntity : NetworkBehaviour
         ammoTMP = GameObject.FindGameObjectWithTag("UIAmmo").GetComponent<TextMeshProUGUI>();
 
         damageIndicatorParent = GameObject.Find("DmgIndicatorHolder");
-
-        layerMask = LayerMask.GetMask("Player", "Terrain", "Water", "Default");
     }
 
     private void FixedUpdate()
@@ -718,7 +716,29 @@ public class PlayerEntity : NetworkBehaviour
                 mesh.material = greenTeamMaterial;
             }
         }
+
+        SetLayerMaskServer();
     }
+
+    [ServerRpc]
+    public void SetLayerMaskServer()
+    {
+        SetLayerMask();
+    }
+
+    [ObserversRpc]
+    public void SetLayerMask()
+    {
+        if (ownTeamTag == 0)
+        {
+            layerMask = LayerMask.GetMask("Player", "Terrain", "Water", "Default", "GreenTimeSphere");
+        }
+        else
+        {
+            layerMask = LayerMask.GetMask("Player", "Terrain", "Water", "Default", "RedTimeSphere");
+        }
+    }
+
 
     [ServerRpc]
     public void RespawnServer()
@@ -830,6 +850,9 @@ public class PlayerEntity : NetworkBehaviour
         {
             isRunning = false;
         }
+
+        if (timeSpeed == 0.1f)
+            timeSpeed = 0.2f;
 
         // We are grounded, so recalculate move direction based on axis
         Vector3 forward = transform.TransformDirection(Vector3.forward);
@@ -1100,6 +1123,7 @@ public class PlayerEntity : NetworkBehaviour
     {
         GameObject timeBindInstance = Instantiate(timeBindSkill, ammoSpawn.transform.position + ammoSpawn.transform.forward * 0.5f, Quaternion.identity);
         timeBindInstance.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(ammoSpawn.transform.forward.x, ammoSpawn.transform.forward.y + 0.2f, ammoSpawn.transform.forward.z) * 4, ForceMode.Impulse);
+        timeBindInstance.GetComponent<TimeBind>().teamTag = ownTeamTag;
         Destroy(timeBindInstance, 25);
     }
 
@@ -1119,7 +1143,7 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("TimeSphere") && (other.transform.parent == null || !other.transform.parent.CompareTag("Player")))
+        if (other.CompareTag("TimeSphere") && other.GetComponent<TimeSphere>().isTimeBind && other.GetComponent<TimeSphere>().teamTag != ownTeamTag && (other.transform.parent == null || !other.transform.parent.CompareTag("Player")))
         {
             timeSlow = 0.25f;
         }
