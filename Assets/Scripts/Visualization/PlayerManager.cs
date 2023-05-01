@@ -40,6 +40,7 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private Animator doorAnimator;
     public event Action<bool> OnStartingMatch;
     public event Action<bool> OnPlayerKilled;
+    public event Action<string, string> OnKillFeedUpdate;
     public event Action<ServerConnectionStateArgs> OnServerConnectionState;
 
     [HideInInspector]
@@ -453,6 +454,7 @@ public class PlayerManager : NetworkBehaviour
         {
             players[attackerID].kills++;
             OnPlayerKilled.Invoke(false);
+            OnKillFeedUpdate.Invoke(players[attackerID].name, players[playerID].name);
 
             // Regenerate time resource
             players[attackerID].playerObject.GetComponent<PlayerEntity>().timeResource = 4;
