@@ -168,16 +168,6 @@ public class PlayerEntity : NetworkBehaviour
 
             timeSpeed = 1f;
         }
-        
-        // Set player name to team color
-        if(ownTeamTag == 0)
-        {
-            nameField.color = redColor;
-        }
-        else
-        {
-            nameField.color = greenColor;
-        }
 
         // Only run if you are the owner of this object. Skip for all other player entities in the scene.
         if (base.IsOwner)
@@ -710,6 +700,8 @@ public class PlayerEntity : NetworkBehaviour
 
         if (teamTag == 0)
         {
+            nameField.color = redColor;
+            
             SkinnedMeshRenderer[] meshes = armorMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in meshes)
             {
@@ -718,6 +710,8 @@ public class PlayerEntity : NetworkBehaviour
         }
         else
         {
+            nameField.color = greenColor;
+            
             SkinnedMeshRenderer[] meshes = armorMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in meshes)
             {
