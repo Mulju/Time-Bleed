@@ -144,12 +144,40 @@ public class PlayerEntity : NetworkBehaviour
     [SerializeField] private GameObject redBulletTrail;
     [SerializeField] private GameObject greenBulletTrail;
 
+    private Color redColor = new Color(1, 0, 0.007f, 1);
+    private Color greenColor = new Color(0, 1, 0.043f, 1);
+    [SerializeField] private TextMeshPro nameField;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
         // different behaviours are done.
         base.OnStartClient();
         playerManager = PlayerManager.instance;
+
+        // This part is run for all the entities in the scene if you are the server.
+        if (base.IsServer)
+        {
+            Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
+            int id = gameObject.GetInstanceID();
+
+            playerManager.AddPlayer(id, player);
+
+            // Change the match state to waiting for players
+            mManager.currentMatchState = MatchManager.MatchState.WAITING_FOR_PLAYERS;
+
+            timeSpeed = 1f;
+        }
+        
+        // Set player name to team color
+        if(ownTeamTag == 0)
+        {
+            nameField.color = redColor;
+        }
+        else
+        {
+            nameField.color = greenColor;
+        }
 
         // Only run if you are the owner of this object. Skip for all other player entities in the scene.
         if (base.IsOwner)
@@ -201,20 +229,6 @@ public class PlayerEntity : NetworkBehaviour
         {
             currentWeaponPrefab = riflePrefab;
             currentWeaponPrefab.SetActive(false);
-        }
-
-        // This part is run for all the entities in the scene if you are the server.
-        if (base.IsServer)
-        {
-            Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
-            int id = gameObject.GetInstanceID();
-
-            playerManager.AddPlayer(id, player);
-
-            // Change the match state to waiting for players
-            mManager.currentMatchState = MatchManager.MatchState.WAITING_FOR_PLAYERS;
-
-            timeSpeed = 1f;
         }
     }
 

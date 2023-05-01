@@ -61,5 +61,10 @@ public class NameDisplayer : NetworkBehaviour
 
         _text.text = result;
         pManager.AddPlayerName(base.Owner, result);
+
+        if(base.IsOwner)
+        {
+            _text.enabled = false;
+        }
     }
 }
