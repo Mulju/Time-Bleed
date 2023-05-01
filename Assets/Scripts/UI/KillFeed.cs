@@ -12,15 +12,15 @@ public class KillFeed : MonoBehaviour
     private void OnEnable()
     {
         _playerManager = PlayerManager.instance;
-        _playerManager.OnKillFeedUpdate += CreateScore;
+        _playerManager.OnKillFeedUpdate += CreateKillFeed;
     }
 
     private void OnDisable()
     {
-        _playerManager.OnKillFeedUpdate -= CreateScore;
+        _playerManager.OnKillFeedUpdate -= CreateKillFeed;
     }
 
-    private void CreateScore(string killerName, string victimName)
+    private void CreateKillFeed(string killerName, string victimName)
     {
         Transform entryTransform = Instantiate(_entryTemplate, _feedContainer).transform;
 
