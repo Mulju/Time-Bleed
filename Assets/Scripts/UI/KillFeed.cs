@@ -11,6 +11,7 @@ public class KillFeed : MonoBehaviour
 
     private void OnEnable()
     {
+        _playerManager = PlayerManager.instance;
         _playerManager.OnKillFeedUpdate += CreateScore;
     }
 
