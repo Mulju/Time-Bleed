@@ -19,6 +19,8 @@ public class SoundControl : MonoBehaviour
     private float globalPitch = 1;
     private float globalVolume = 0.02f;
 
+    private bool attenBoroughCooldown = false;
+
     private void Update()
     {
         //// Don't run this code in Main Menu
@@ -92,9 +94,12 @@ public class SoundControl : MonoBehaviour
 
     public void PlayBaseIsUnderAttack()
     {
-        float volume = 1f;
-        PlaySound(underAttack, volume, globalPitch);
-        Debug.Log("Base under attack");
+        if(!attenBoroughCooldown)
+        {
+            float volume = 1f;
+            PlaySound(underAttack, volume, globalPitch);
+            StartCoroutine(AttenboroughCooldown());
+        }
     }
 
     public void PlayOneMinute()
@@ -113,5 +118,12 @@ public class SoundControl : MonoBehaviour
     {
         float volume = 1f;
         PlaySound(chronadeSpawnMoved, volume, globalPitch);
+    }
+
+    IEnumerator AttenboroughCooldown()
+    {
+        attenBoroughCooldown = true;
+        yield return new WaitForSeconds(2);
+        attenBoroughCooldown = false;
     }
 }
