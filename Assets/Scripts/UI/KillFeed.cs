@@ -27,8 +27,8 @@ public class KillFeed : NetworkBehaviour
     {
         Transform entryTransform = Instantiate(_entryTemplate, _feedContainer).transform;
 
-        entryTransform.Find("FeedInstance/KillerName").GetComponent<TMPro.TextMeshProUGUI>().text = killerName;
-        entryTransform.Find("FeedInstance/VictimName").GetComponent<TMPro.TextMeshProUGUI>().text = victimName;
+        entryTransform.Find("KillerName").GetComponent<TMPro.TextMeshProUGUI>().text = killerName;
+        entryTransform.Find("VictimName").GetComponent<TMPro.TextMeshProUGUI>().text = victimName;
 
         Destroy(entryTransform.gameObject, 5);
     }
