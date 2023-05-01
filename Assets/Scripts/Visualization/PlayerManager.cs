@@ -430,13 +430,28 @@ public class PlayerManager : NetworkBehaviour
             PlayerKilled(playerID, shooterID);
         }
 
-        ClientPlayHitSound(players[playerID].connection, players[playerID].playerObject);
+        ClientPlayDamageSound(players[playerID].connection, players[playerID].playerObject);
+        ClientPlayHitSound(players[shooterID].connection, players[shooterID].playerObject);
+    }
+
+    [TargetRpc]
+    private void ClientPlayDamageSound(NetworkConnection connection, GameObject player)
+    {
+        player.GetComponent<PlayerEntity>().soundControl.PlayPlayerDamage();
     }
 
     [TargetRpc]
     private void ClientPlayHitSound(NetworkConnection connection, GameObject player)
     {
         player.GetComponent<PlayerEntity>().soundControl.PlayPlayerHit();
+        StartCoroutine(HitMarker());
+    }
+
+    IEnumerator HitMarker()
+    {
+        GameObject.Find("CombatUI/Crosshair/HitMarker").SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        GameObject.Find("CombatUI/Crosshair/HitMarker").SetActive(false);
     }
 
     void PlayerKilled(int playerID, int attackerID)

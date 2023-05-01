@@ -320,12 +320,12 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Charge time resource
-        if(!resourceOnCooldown)
+        if (!resourceOnCooldown)
         {
             timeResource += Time.deltaTime;
         }
-        
-        if(timeResource >= 4)
+
+        if (timeResource >= 4)
         {
             timeResource = 4;
         }
@@ -383,19 +383,19 @@ public class PlayerEntity : NetworkBehaviour
             timeFieldIsOn = !timeFieldIsOn;
             TimeFieldServer(timeFieldIsOn);
         }
-        
-        if(timeFieldIsOn)
+
+        if (timeFieldIsOn)
         {
             // If Time Field is on, reduce time resource
             timeResource -= 2 * Time.deltaTime;
         }
 
-        if(timeFieldIsOn && timeResource < 0.01f)
+        if (timeFieldIsOn && timeResource < 0.01f)
         {
             timeFieldIsOn = false;
             TimeFieldServer(timeFieldIsOn);
         }
-        
+
         if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown && timeResource > 2 && !isScoped)
         {
             timeResource -= 2;
@@ -403,7 +403,7 @@ public class PlayerEntity : NetworkBehaviour
             TimeBindServer();
             timeBindUI.fillAmount = 1;
         }
-        
+
         if (canMove)
         {
             Move();
@@ -568,7 +568,7 @@ public class PlayerEntity : NetworkBehaviour
             if (!base.IsOwner)
             {
                 // Don't play footstep sound for self
-                if(!footstepSoundHasPlayed)
+                if (!footstepSoundHasPlayed)
                 {
                     footstepSource.Play();
                     footstepSoundHasPlayed = true;
@@ -701,7 +701,7 @@ public class PlayerEntity : NetworkBehaviour
         if (teamTag == 0)
         {
             nameField.color = redColor;
-            
+
             SkinnedMeshRenderer[] meshes = armorMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in meshes)
             {
@@ -711,7 +711,7 @@ public class PlayerEntity : NetworkBehaviour
         else
         {
             nameField.color = greenColor;
-            
+
             SkinnedMeshRenderer[] meshes = armorMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in meshes)
             {
@@ -786,7 +786,7 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void TimeFieldClient(bool isOn)
     {
-        if(isOn)
+        if (isOn)
         {
             timeSpeed = 0.1f;
             timeField.GetComponent<TimeSphere>().IncreaseCircumference(5f);
@@ -815,7 +815,7 @@ public class PlayerEntity : NetworkBehaviour
     public void Move()
     {
         // Dash
-        if((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource > 3.9f)
+        if ((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource > 3.9f)
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
@@ -868,7 +868,7 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Move the controller
-        if(isRunning)
+        if (isRunning)
         {
             characterController.Move(moveDirection * Time.deltaTime * 0.8f);
         }
@@ -964,7 +964,7 @@ public class PlayerEntity : NetworkBehaviour
             if (ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 GameObject ammoInstance;
-                if(ownTeamTag == 0)
+                if (ownTeamTag == 0)
                 {
                     ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().redAmmoPrefab, shooter.GetComponent<PlayerEntity>().ammoSpawn.transform.position, Quaternion.LookRotation(direction));
                 }
@@ -989,7 +989,7 @@ public class PlayerEntity : NetworkBehaviour
             else if (hit.collider.CompareTag("TimeSphere"))
             {
                 GameObject ammoInstance;
-                if(ownTeamTag == 0)
+                if (ownTeamTag == 0)
                 {
                     ammoInstance = Instantiate(shooter.GetComponent<PlayerEntity>().redAmmoPrefab, hit.point, Quaternion.LookRotation(direction));
                 }
@@ -1037,7 +1037,7 @@ public class PlayerEntity : NetworkBehaviour
                 GameObject instantiatedHole = Instantiate(bulletHole, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
                 Destroy(instantiatedHole, 10);
             }
-            
+
             if (!ammoSpawn.GetComponent<AmmoSpawn>().isSlowed)
             {
                 StartCoroutine(BulletTrail(spawnForRayVisual.transform.position, hit.point, hitTimeSphere));
@@ -1193,7 +1193,7 @@ public class PlayerEntity : NetworkBehaviour
 
     IEnumerator ReduceTimeResource()
     {
-        while(timeResource > 0)
+        while (timeResource > 0)
         {
             timeResource -= 30 * Time.deltaTime;
             yield return null;
@@ -1202,7 +1202,7 @@ public class PlayerEntity : NetworkBehaviour
         // Put the resource on a cooldown
         resourceOnCooldown = true;
         float cooldown = 5;
-        while(cooldown > 0)
+        while (cooldown > 0)
         {
             cooldown -= Time.deltaTime;
             yield return null;
