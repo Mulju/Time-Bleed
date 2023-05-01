@@ -12862,7 +12862,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -22772,6 +22772,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <SceneId>k__BackingField
       value: 2603441582546142691
+      objectReference: {fileID: 0}
+    - target: {fileID: 213689405029659440, guid: bf797651a486cf44eae72059a211468b,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 213689405029659440, guid: bf797651a486cf44eae72059a211468b,
         type: 3}
