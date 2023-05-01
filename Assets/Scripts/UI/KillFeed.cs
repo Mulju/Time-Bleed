@@ -9,14 +9,16 @@ public class KillFeed : NetworkBehaviour
 
     PlayerManager _playerManager;
 
-    private void OnEnable()
+    public override void OnStartClient()
     {
+        base.OnStartClient();
         _playerManager = PlayerManager.instance;
         _playerManager.OnKillFeedUpdate += CreateKillFeed;
     }
 
-    private void OnDisable()
+    public override void OnStopClient()
     {
+        base.OnStopClient();
         _playerManager.OnKillFeedUpdate -= CreateKillFeed;
     }
 

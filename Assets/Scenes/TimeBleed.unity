@@ -9066,7 +9066,7 @@ PrefabInstance:
     - target: {fileID: 8325329978985596274, guid: 187ef6a498595404e876aa5cbe59168a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8325329978985596274, guid: 187ef6a498595404e876aa5cbe59168a,
         type: 3}
@@ -11699,7 +11699,7 @@ Transform:
   - {fileID: 477695110}
   - {fileID: 2019315827}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &602090660
 MonoBehaviour:
@@ -12257,7 +12257,7 @@ PrefabInstance:
     - target: {fileID: 4303905352436882820, guid: f7ecd7a0c4f0311449a057ec0e239d92,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5001768639166066526, guid: f7ecd7a0c4f0311449a057ec0e239d92,
         type: 3}
@@ -21969,18 +21969,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 6531247385397419748}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 477695109}
         m_TargetAssemblyTypeName: MenuControl, Assembly-CSharp
         m_MethodName: SelectActive
@@ -22004,6 +21992,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6531247385397419748}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!224 &4567738805631370526
 RectTransform:
@@ -23309,7 +23309,7 @@ PrefabInstance:
     - target: {fileID: 5935617055376825215, guid: bf797651a486cf44eae72059a211468b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5935617055376825215, guid: bf797651a486cf44eae72059a211468b,
         type: 3}
@@ -23918,7 +23918,7 @@ Transform:
   m_Children:
   - {fileID: 4393252310052223487}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7443408888352835023
 MonoBehaviour:
