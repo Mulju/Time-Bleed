@@ -665,8 +665,7 @@ public class PlayerManager : NetworkBehaviour
 
     public void UpdateScoreboard()
     {
-        players = players.OrderBy(x => x.Value.kills).ToDictionary(x => x.Key, x => x.Value);
-
+        players = players.OrderBy(x => x.Value.stolenTime).ToDictionary(x => x.Key, x => x.Value);
         players = players.Reverse().ToDictionary(x => x.Key, x => x.Value);
 
         TotalKills();
