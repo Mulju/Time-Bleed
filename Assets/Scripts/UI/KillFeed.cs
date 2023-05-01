@@ -7,8 +7,8 @@ public class KillFeed : NetworkBehaviour
     [SerializeField] private GameObject _entryTemplate;
     [SerializeField] private Transform _feedContainer;
 
-    [SerializeField] private Color redColor = new Color(255, 0, 2, 255);
-    [SerializeField] private Color greenColor = new Color(0, 255, 11, 255);
+    private Color redColor = new Color(255, 0, 2, 255);
+    private Color greenColor = new Color(0, 255, 11, 255);
 
     PlayerManager _playerManager;
 
