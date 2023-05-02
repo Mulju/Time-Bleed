@@ -43,6 +43,8 @@ public class MatchManager : NetworkBehaviour
     private bool fiveHasPlayedRed = false, oneHasPlayedRed = false, fiveHasPlayedGreen = false, oneHasPlayedGreen = false;
     private float oldKillsRatio, oldRedKills;
 
+    [SerializeField] private PlayerUIControl uiControl;
+
     private void Awake()
     {
         // Singleton
@@ -209,6 +211,7 @@ public class MatchManager : NetworkBehaviour
 
     public void TeamBaseUnderAttack(int teamID)
     {
+        uiControl.UpdateTimeChronadeHit(teamID);
         if(teamID == 0)
         {
             playerManager.PlayAttenborough(4);

@@ -24,16 +24,26 @@ public class PlayerUIControl : NetworkBehaviour
 
     private Coroutine redKillTimer, greenKillTimer, redTimeTimer, greenTimeTimer;
 
+    private void Update()
+    {
+        float redSeconds = MathF.Floor(MatchManager.matchManager.redClock.remainingSeconds);
+        float greenSeconds = MathF.Floor(MatchManager.matchManager.greenClock.remainingSeconds);
+        redUITime.text = MatchManager.matchManager.redClock.remainingMinutes + ":" + (redSeconds < 10 ? "0" + redSeconds : redSeconds);
+        greenUITime.text = MatchManager.matchManager.greenClock.remainingMinutes + ":" + (greenSeconds < 10 ? "0" + greenSeconds : greenSeconds);
+    }
+
     public override void OnStartClient()
     {
         base.OnStartClient();
         playerManager.OnPlayerKilled += UpdateUIKillsServer;
+        playerManager.OnPlayerKilled += UpdateUITimesServer;
     }
 
     public override void OnStopClient()
     {
         base.OnStopClient();
         playerManager.OnPlayerKilled -= UpdateUIKillsServer;
+        playerManager.OnPlayerKilled -= UpdateUITimesServer;
     }
 
     private void UpdateUIKillsServer(bool ïrrelevant, int teamTag)
@@ -65,7 +75,7 @@ public class PlayerUIControl : NetworkBehaviour
             {
                 StopCoroutine(redKillTimer);
             }
-            redKillTimer = StartCoroutine(ShowKillPlus(true));
+            redKillTimer = StartCoroutine(ShowPlus(true, true));
         }
         else
         {
@@ -78,28 +88,101 @@ public class PlayerUIControl : NetworkBehaviour
             {
                 StopCoroutine(greenKillTimer);
             }
-            greenKillTimer = StartCoroutine(ShowKillPlus(false));
+            greenKillTimer = StartCoroutine(ShowPlus(false, true));
         }
     }
 
-    public void UpdateUITimes()
+    public void UpdateTimeChronadeHit(int teamTag)
     {
-
+        UpdateUITimes(teamTag, true);
     }
 
-    IEnumerator ShowKillPlus(bool isRed)
+    public void UpdateUITimesServer(bool irrelevant, int teamTag)
     {
-        yield return new WaitForSeconds(3);
+        UpdateUITimes(teamTag, false);
+    }
 
-        if(isRed)
+    [ObserversRpc]
+    public void UpdateUITimes(int teamTag, bool hitWithChronade)
+    {
+        if(teamTag == 0)
         {
-            redKPlus.gameObject.SetActive(false);
-            newRedKills = 0;
+            if(hitWithChronade)
+            {
+                newRedTime -= 10;
+            }
+            else
+            {
+                newRedTime++;
+                if (MatchManager.matchManager.greenClock.remainingTime - MatchManager.matchManager.redClock.remainingTime >= 60)
+                {
+                    newRedTime++;
+                }
+            }
+            redTPlus.gameObject.SetActive(true);
+            // - if the change in time is below 0, + otherwise
+            redTPlus.text = ((newRedTime < 0) ? " " : "+") + newRedTime;
+
+            if(redTimeTimer != null)
+            {
+                StopCoroutine(redTimeTimer);
+            }
+            redTimeTimer = StartCoroutine(ShowPlus(true, false));
         }
         else
         {
-            greenKPlus.gameObject.SetActive(false);
-            newGreenKills = 0;
+            if(hitWithChronade)
+            {
+                newGreenTime -= 10;
+            }
+            else
+            {
+                newGreenTime++;
+                if (MatchManager.matchManager.redClock.remainingTime - MatchManager.matchManager.greenClock.remainingTime >= 60)
+                {
+                    newGreenTime++;
+                }
+            }
+            greenTPlus.gameObject.SetActive(true);
+            greenTPlus.text = ((newGreenTime < 0) ? " " : "+") + newGreenTime;
+
+            if (greenTimeTimer != null)
+            {
+                StopCoroutine(greenTimeTimer);
+            }
+            greenTimeTimer = StartCoroutine(ShowPlus(false, false));
+        }
+    }
+
+    IEnumerator ShowPlus(bool isRed, bool isKill)
+    {
+        yield return new WaitForSeconds(3);
+        Debug.Log("Plus timer ended");
+        if(isRed)
+        {
+            if(isKill)
+            {
+                redKPlus.gameObject.SetActive(false);
+                newRedKills = 0;
+            }
+            else
+            {
+                redTPlus.gameObject.SetActive(false);
+                newRedTime = 0;
+            }
+        }
+        else
+        {
+            if(isKill)
+            {
+                greenKPlus.gameObject.SetActive(false);
+                newGreenKills = 0;
+            }
+            else
+            {
+                greenTPlus.gameObject.SetActive(false);
+                newGreenTime = 0;
+            }
         }
     }
 }

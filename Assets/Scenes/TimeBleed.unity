@@ -1420,7 +1420,7 @@ PrefabInstance:
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
       propertyPath: m_Name
-      value: +1
+      value: +1GT
       objectReference: {fileID: 0}
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
@@ -4071,7 +4071,7 @@ PrefabInstance:
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
       propertyPath: m_Name
-      value: +1
+      value: +1RK
       objectReference: {fileID: 0}
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
@@ -5290,12 +5290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &773953569 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2011950803667934939, guid: 187ef6a498595404e876aa5cbe59168a,
-    type: 3}
-  m_PrefabInstance: {fileID: 357906718}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &777472145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5639,7 +5633,7 @@ PrefabInstance:
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
       propertyPath: m_Name
-      value: +1
+      value: +1RT
       objectReference: {fileID: 0}
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
@@ -6098,7 +6092,7 @@ MonoBehaviour:
   - {fileID: 972663185}
   - {fileID: 155993076}
   - {fileID: 1209726816}
-  middleTimeSphere: {fileID: 773953569}
+  uiControl: {fileID: 1637784032}
 --- !u!1 &922311959
 GameObject:
   m_ObjectHideFlags: 0
@@ -9623,7 +9617,7 @@ PrefabInstance:
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
       propertyPath: m_Name
-      value: +1
+      value: +1GK
       objectReference: {fileID: 0}
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
