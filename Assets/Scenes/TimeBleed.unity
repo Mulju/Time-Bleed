@@ -1420,7 +1420,7 @@ PrefabInstance:
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
       propertyPath: m_Name
-      value: +1
+      value: +1GT
       objectReference: {fileID: 0}
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
@@ -4061,7 +4061,7 @@ PrefabInstance:
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
       propertyPath: m_Name
-      value: +1
+      value: +1RK
       objectReference: {fileID: 0}
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
@@ -4124,6 +4124,7 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 2019315826}
+  - {fileID: 1637784032}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField:
   - {fileID: 918670143}
@@ -5622,7 +5623,7 @@ PrefabInstance:
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
       propertyPath: m_Name
-      value: +1
+      value: +1RT
       objectReference: {fileID: 0}
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
@@ -6081,6 +6082,7 @@ MonoBehaviour:
   - {fileID: 972663185}
   - {fileID: 155993076}
   - {fileID: 1209726816}
+  uiControl: {fileID: 1637784032}
 --- !u!1 &922311959
 GameObject:
   m_ObjectHideFlags: 0
@@ -8628,9 +8630,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4990aeea69248e4429a2a2377e846da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 1
   _addedNetworkObject: {fileID: 602090660}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 602090660}
   playerManager: {fileID: 918670144}
   redUIKills: {fileID: 911138722}
   redUITime: {fileID: 1783292401}
@@ -9605,7 +9607,7 @@ PrefabInstance:
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
       propertyPath: m_Name
-      value: +1
+      value: +1GK
       objectReference: {fileID: 0}
     - target: {fileID: 5785076481545320430, guid: e44379750f6f2d8468d7df5eb8d1afc0,
         type: 3}
