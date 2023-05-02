@@ -14,7 +14,7 @@ public class PlayerDashTrail : MonoBehaviour
 
     IEnumerator StopTrails()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.4f);
 
         foreach(TrailRenderer trail in trails)
         {
