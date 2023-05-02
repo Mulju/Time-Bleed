@@ -14,7 +14,7 @@ public class HealthPackController : NetworkBehaviour
     {
         //rotator.transform.Rotate(new Vector3(0,1,0),Time.timeScale * 0.5f);
 
-        rotator.transform.Rotate(new Vector3(0, Time.timeScale * 0.5f, 0), Space.Self);
+        rotator.transform.Rotate(new Vector3(0, Time.timeScale * 0.1f * Screen.width, 0), Space.Self);
     }
 
     private void OnTriggerEnter(Collider col)
