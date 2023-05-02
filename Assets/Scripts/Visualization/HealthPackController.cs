@@ -9,12 +9,22 @@ public class HealthPackController : NetworkBehaviour
     PlayerManager playerManager;
 
     [SerializeField] private GameObject rotator;
+    private float rotation;
+
+    private void Start()
+    {
+        rotation = 0;
+    }
 
     private void Update()
     {
         //rotator.transform.Rotate(new Vector3(0,1,0),Time.timeScale * 0.5f);
 
-        rotator.transform.Rotate(new Vector3(0, Time.timeScale * 0.1f * Screen.width, 0), Space.Self);
+        //rotator.transform.Rotate(new Vector3(0, Time.timeScale * 0.1f * Screen.width, 0), Space.Self);
+
+        rotation += Time.deltaTime * 150f;
+
+        rotator.transform.eulerAngles = new Vector3(0, rotation, 0);
     }
 
     private void OnTriggerEnter(Collider col)
