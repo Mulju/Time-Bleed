@@ -11,6 +11,7 @@ using FishNet.Managing.Client;
 using FishNet.Managing;
 using FishNet.Object;
 using System;
+using Unity.VisualScripting;
 
 public class PlayerUIControl : NetworkBehaviour
 {
@@ -20,6 +21,8 @@ public class PlayerUIControl : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI redUIKills, redUITime, greenUIKills, greenUITime;
     [SerializeField] private TextMeshProUGUI redKPlus, redTPlus, greenKPlus, greenTPlus;
     private int newRedKills = 0, newRedTime = 0, newGreenKills = 0, newGreenTime = 0;
+
+    private Coroutine redKillTimer, greenKillTimer, redTimeTimer, greenTimeTimer;
 
     public override void OnStartClient()
     {
@@ -58,8 +61,11 @@ public class PlayerUIControl : NetworkBehaviour
             redKPlus.text = "+" + newRedKills;
 
             // Refresh the timer on the plus
-            StopCoroutine(ShowKillPlus(true));
-            StartCoroutine(ShowKillPlus(true));
+            if(redKillTimer != null)
+            {
+                StopCoroutine(redKillTimer);
+            }
+            redKillTimer = StartCoroutine(ShowKillPlus(true));
         }
         else
         {
@@ -68,8 +74,11 @@ public class PlayerUIControl : NetworkBehaviour
             greenKPlus.gameObject.SetActive(true);
             greenKPlus.text = "+" + newGreenKills;
 
-            StopCoroutine(ShowKillPlus(false));
-            StartCoroutine(ShowKillPlus(false));
+            if (greenKillTimer != null)
+            {
+                StopCoroutine(greenKillTimer);
+            }
+            greenKillTimer = StartCoroutine(ShowKillPlus(false));
         }
     }
 
