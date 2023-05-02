@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using FishNet.Managing.Server;
 using FishNet.Managing.Client;
 using FishNet.Managing;
+using FishNet.Object;
 
 public class MenuControl : MonoBehaviour
 {
@@ -181,6 +182,7 @@ public class MenuControl : MonoBehaviour
         networkManager.GetComponent<Tugboat>().SetClientAddress(clientAddress);
     }
 
+    [ObserversRpc]
     public void UpdateUIKills(bool irrelevant, int teamTag)
     {
         playerManager.TotalKills();
