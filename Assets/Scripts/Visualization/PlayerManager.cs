@@ -39,7 +39,7 @@ public class PlayerManager : NetworkBehaviour
 
     [SerializeField] private Animator doorAnimator;
     public event Action<bool> OnStartingMatch;
-    public event Action<bool> OnPlayerKilled;
+    public event Action<bool, int> OnPlayerKilled;
     public event Action<string, string, int> OnKillFeedUpdate;
     public event Action<ServerConnectionStateArgs> OnServerConnectionState;
 
@@ -277,8 +277,8 @@ public class PlayerManager : NetworkBehaviour
 
         UpdateScoreboard();
 
-        // This is to get the chronade pack animation to play for new players
-        MatchManager.matchManager.ChangeBigChronadeSpawnServer(false);
+        // This is to get the chronade pack animation to play for new players. 2 as a parameter as that's not a team tag
+        MatchManager.matchManager.ChangeBigChronadeSpawnServer(false, 2);
     }
 
     public void RemovePlayer(NetworkConnection connection)
@@ -468,7 +468,7 @@ public class PlayerManager : NetworkBehaviour
         if (attackerID != playerID)
         {
             players[attackerID].kills++;
-            OnPlayerKilled.Invoke(false);
+            OnPlayerKilled.Invoke(false, players[attackerID].teamTag);
             OnKillFeedUpdate.Invoke(players[attackerID].name, players[playerID].name, players[attackerID].teamTag);
 
             // Regenerate time resource

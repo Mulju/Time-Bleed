@@ -91,7 +91,8 @@ public class MatchManager : NetworkBehaviour
             redClock.OnChronadeHit += TeamBaseUnderAttack;
             greenClock.OnChronadeHit += TeamBaseUnderAttack;
 
-            ChangeBigChronadeSpawnServer(true);
+            // Number 2 as that is not a team tag for any team
+            ChangeBigChronadeSpawnServer(true, 2);
         }
     }
 
@@ -127,7 +128,8 @@ public class MatchManager : NetworkBehaviour
         {
             // Run only when the match starts and swap to IN_PROGRESS
             playerManager.StartingMatchServer();
-            ChangeBigChronadeSpawnServer(true);
+            // 2 because it's not a team tag
+            ChangeBigChronadeSpawnServer(true, 2);
             currentMatchState = MatchState.IN_PROGRESS;
         }
 
@@ -220,7 +222,7 @@ public class MatchManager : NetworkBehaviour
         return base.IsServer;
     }
 
-    public void ChangeBigChronadeSpawnServer(bool isAtStart)
+    public void ChangeBigChronadeSpawnServer(bool isAtStart, int killerTeamTag)
     {
         oldKillsRatio = playerManager.redKills + playerManager.greenKills;
         oldRedKills = playerManager.redKills;
