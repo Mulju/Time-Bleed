@@ -61,6 +61,7 @@ public class ChronadePackController : NetworkBehaviour
         if(isBig)
         {
             beamEffect.Stop();
+            triplePack.SetActive(false);
         }
     }
 
@@ -88,6 +89,7 @@ public class ChronadePackController : NetworkBehaviour
         if(isBig)
         {
             beamEffect.Play();
+            triplePack.SetActive(true);
         }
     }
 }
