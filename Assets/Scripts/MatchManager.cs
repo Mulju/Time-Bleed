@@ -38,6 +38,8 @@ public class MatchManager : NetworkBehaviour
     [HideInInspector] public Action<bool> OnStartMoveChronadePack;
     [HideInInspector] public Action<int> OnClockTimeChange;
 
+    [SerializeField] private GameObject middleTimeSphere;
+
     private bool fiveHasPlayedRed = false, oneHasPlayedRed = false, fiveHasPlayedGreen = false, oneHasPlayedGreen = false;
     private float oldKillsRatio, oldRedKills;
 
@@ -215,6 +217,8 @@ public class MatchManager : NetworkBehaviour
         {
             playerManager.PlayAttenborough(5);
         }
+
+        TeamTimeDiffChanged();
     }
 
     public bool IsBaseServer()
@@ -256,6 +260,8 @@ public class MatchManager : NetworkBehaviour
         }
 
         ChangeBigChronadeSpawn(redKills, totalKills);
+
+        TeamTimeDiffChanged();
     }
 
     [ObserversRpc]
@@ -351,6 +357,14 @@ public class MatchManager : NetworkBehaviour
         if(base.IsServer)
         {
             playerManager.CloseServer();
+        }
+    }
+
+    public void TeamTimeDiffChanged()
+    {
+        if (redClock.remainingTime > greenClock.remainingTime)
+        {
+            //middleTimeSphere
         }
     }
 }

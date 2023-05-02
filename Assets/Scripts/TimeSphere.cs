@@ -38,6 +38,10 @@ public class TimeSphere : MonoBehaviour
             {
                 gameObject.GetComponent<Renderer>().material.color = new Color(102 / 225, 255 / 255, 185 / 255, gameObject.GetComponent<Renderer>().material.color.a);
             }
+            else
+            {
+                gameObject.GetComponent<Renderer>().material.color = new Color(102 / 225, 255 / 255, 185 / 255, gameObject.GetComponent<Renderer>().material.color.a);
+            }
         }
     }
 
