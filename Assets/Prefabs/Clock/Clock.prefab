@@ -359,6 +359,7 @@ MonoBehaviour:
   teamIdentifier: 0
   playersKilled: 0
   bigClockHandles: []
+  parentAnimator: {fileID: 4991573618400933841}
 --- !u!114 &7236674032065062529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,6 +400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9187736736257229860}
   - component: {fileID: 801144068395278939}
+  - component: {fileID: 4991573618400933841}
   m_Layer: 0
   m_Name: Clock
   m_TagString: Untagged
@@ -455,6 +457,27 @@ MonoBehaviour:
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 16171478536639323472
   _sceneNetworkObjects: []
+--- !u!95 &4991573618400933841
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8415738202938875550}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 946213e8f86afdf47b44430da93ab2ef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8598358592009084810
 GameObject:
   m_ObjectHideFlags: 0

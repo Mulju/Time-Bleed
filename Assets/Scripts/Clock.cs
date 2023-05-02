@@ -29,6 +29,8 @@ public class Clock : NetworkBehaviour
     public Action<int> OnChronadeHit;
     private int timeGained = 0;
 
+    [SerializeField] private Animator parentAnimator;
+
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -129,6 +131,9 @@ public class Clock : NetworkBehaviour
 
             // Destroy the grenade
             Destroy(collision.gameObject);
+
+            StartCoroutine(ShieldTimer());
+            parentAnimator.SetBool("isShowing", false);
         }
     }
 
@@ -179,5 +184,11 @@ public class Clock : NetworkBehaviour
         {
             mManager.TeamTimeDiffChanged();
         }
+    }
+
+    IEnumerator ShieldTimer()
+    {
+        yield return new WaitForSeconds(5);
+        parentAnimator.SetBool("isShowing", true);
     }
 }
