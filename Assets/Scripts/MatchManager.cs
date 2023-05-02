@@ -221,7 +221,7 @@ public class MatchManager : NetworkBehaviour
             playerManager.PlayAttenborough(5);
         }
 
-        TeamTimeDiffChanged();
+        //TeamTimeDiffChanged();
     }
 
     public bool IsBaseServer()
@@ -264,7 +264,7 @@ public class MatchManager : NetworkBehaviour
 
         ChangeBigChronadeSpawn(redKills, totalKills);
 
-        TeamTimeDiffChanged();
+        //TeamTimeDiffChanged();
     }
 
     [ObserversRpc]

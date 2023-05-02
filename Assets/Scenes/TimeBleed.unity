@@ -6092,6 +6092,7 @@ MonoBehaviour:
   - {fileID: 972663185}
   - {fileID: 155993076}
   - {fileID: 1209726816}
+  middleTimeSphere: {fileID: 1072269538}
   uiControl: {fileID: 1637784032}
 --- !u!1 &922311959
 GameObject:
@@ -6440,6 +6441,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1072269538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2011950803667934939, guid: 187ef6a498595404e876aa5cbe59168a,
+    type: 3}
+  m_PrefabInstance: {fileID: 357906718}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1074727532 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4464449872880591599, guid: e44379750f6f2d8468d7df5eb8d1afc0,
