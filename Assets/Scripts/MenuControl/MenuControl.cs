@@ -33,12 +33,6 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private GameObject settingsButton;
     [HideInInspector] public float mouseSensitivity;
 
-    [SerializeField] private PlayerManager playerManager;
-
-    [SerializeField] private TextMeshProUGUI redUIKills, redUITime, greenUIKills, greenUITime;
-    [SerializeField] private TextMeshProUGUI redKPlus, redTPlus, greenKPlus, greenTPlus;
-    private int newRedKills = 0, newRedTime = 0, newGreenKills = 0, newGreenTime = 0;
-
 
     void Start()
     {
@@ -73,22 +67,6 @@ public class MenuControl : MonoBehaviour
         resolutionsDropdown.RefreshShownValue();
 
         mouseSensitivity = 1;
-    }
-
-    private void OnEnable()
-    {
-        if(SceneManager.GetActiveScene().name == "TimeBleed")
-        {
-            playerManager.OnPlayerKilled += UpdateUIKills;
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (SceneManager.GetActiveScene().name == "TimeBleed")
-        {
-            playerManager.OnPlayerKilled -= UpdateUIKills;
-        }
     }
 
     public void SelectActive(GameObject selected)
@@ -180,54 +158,5 @@ public class MenuControl : MonoBehaviour
     public void UpdateTugboat(string clientAddress)
     {
         networkManager.GetComponent<Tugboat>().SetClientAddress(clientAddress);
-    }
-
-    [ObserversRpc]
-    public void UpdateUIKills(bool irrelevant, int teamTag)
-    {
-        playerManager.TotalKills();
-
-        if(teamTag == 0)
-        {
-            redUIKills.text = "" + playerManager.redKills;
-            newRedKills++;
-            redKPlus.gameObject.SetActive(true);
-            redKPlus.text = "+" + newRedKills;
-
-            // Refresh the timer on the plus
-            StopCoroutine(ShowKillPlus(true));
-            StartCoroutine(ShowKillPlus(true));
-        }
-        else
-        {
-            greenUIKills.text = "" + playerManager.greenKills;
-            newGreenKills++;
-            greenKPlus.gameObject.SetActive(true);
-            greenKPlus.text = "+" + newGreenKills;
-
-            StopCoroutine(ShowKillPlus(false));
-            StartCoroutine(ShowKillPlus(false));
-        }
-    }
-
-    public void UpdateUITimes()
-    {
-
-    }
-
-    IEnumerator ShowKillPlus(bool isRed)
-    {
-        yield return new WaitForSeconds(3);
-
-        if(isRed)
-        {
-            redKPlus.gameObject.SetActive(false);
-            newRedKills = 0;
-        }
-        else
-        {
-            greenKPlus.gameObject.SetActive(false);
-            newGreenKills = 0;
-        }
     }
 }

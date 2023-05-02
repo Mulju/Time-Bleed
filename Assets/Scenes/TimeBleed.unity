@@ -3491,15 +3491,6 @@ MonoBehaviour:
   settingsMenu: {fileID: 1387482974050672028}
   settingsButton: {fileID: 242158671}
   mouseSensitivity: 0
-  playerManager: {fileID: 918670144}
-  redUIKills: {fileID: 911138722}
-  redUITime: {fileID: 1783292401}
-  greenUIKills: {fileID: 658012426}
-  greenUITime: {fileID: 771612890}
-  redKPlus: {fileID: 1074727532}
-  redTPlus: {fileID: 716804307}
-  greenKPlus: {fileID: 594310504}
-  greenTPlus: {fileID: 1984518989}
 --- !u!4 &477695110
 Transform:
   m_ObjectHideFlags: 0
@@ -4112,6 +4103,7 @@ Transform:
   - {fileID: 932175379}
   - {fileID: 477695110}
   - {fileID: 2019315827}
+  - {fileID: 1637784031}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8592,6 +8584,62 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1627642689}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1637784030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1637784031}
+  - component: {fileID: 1637784032}
+  m_Layer: 0
+  m_Name: PlayerUIController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1637784031
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637784030}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 602090659}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1637784032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637784030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4990aeea69248e4429a2a2377e846da4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 602090660}
+  _networkObjectCache: {fileID: 0}
+  playerManager: {fileID: 918670144}
+  redUIKills: {fileID: 911138722}
+  redUITime: {fileID: 1783292401}
+  greenUIKills: {fileID: 658012426}
+  greenUITime: {fileID: 771612890}
+  redKPlus: {fileID: 1074727532}
+  redTPlus: {fileID: 716804307}
+  greenKPlus: {fileID: 594310504}
+  greenTPlus: {fileID: 1984518989}
 --- !u!114 &1657624404 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2407405571045742808, guid: 187ef6a498595404e876aa5cbe59168a,
