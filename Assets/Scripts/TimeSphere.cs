@@ -34,9 +34,9 @@ public class TimeSphere : MonoBehaviour
         {
             gameObject.layer = 10 + teamTag;
 
-            if(teamTag == 1)
+            if (teamTag == 1)
             {
-                gameObject.GetComponent<Renderer>().material.color = new Color(102/225, 255/255, 185/255, gameObject.GetComponent<Renderer>().material.color.a);
+                gameObject.GetComponent<Renderer>().material.color = new Color(102 / 225, 255 / 255, 185 / 255, gameObject.GetComponent<Renderer>().material.color.a);
             }
         }
     }
@@ -61,16 +61,20 @@ public class TimeSphere : MonoBehaviour
 
     IEnumerator GetSmaller()
     {
-        while(currentScale.x > 0.0001)
+        while (currentScale.x > 0.0001)
         {
-            currentScale = new Vector3(currentScale.x - Time.deltaTime * expansionMultiplier, 
+            currentScale = new Vector3(currentScale.x - Time.deltaTime * expansionMultiplier,
                                        currentScale.y - Time.deltaTime * expansionMultiplier,
                                        currentScale.z - Time.deltaTime * expansionMultiplier);
             transform.localScale = currentScale;
             yield return null;
         }
 
+        gameObject.GetComponent<Renderer>().enabled = false;
+
         yield return new WaitForSeconds(10);
+
+        gameObject.GetComponent<Renderer>().enabled = true;
 
         if (!isTimeBind && !isTimeField)
         {
