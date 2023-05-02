@@ -53,6 +53,8 @@ public class PlayerManager : NetworkBehaviour
     public TextMeshProUGUI scoreboardTimer;
     [SerializeField] private GameObject waitingForPlayersText;
 
+    [SerializeField] private PlayerUIControl uiControl;
+
     private void Awake()
     {
         instance = this;
@@ -346,6 +348,9 @@ public class PlayerManager : NetworkBehaviour
 
         // Reset the scoreboards
         UpdateScoreboard();
+
+        uiControl.UpdateUIKillsServer(true, 0);
+        uiControl.UpdateUIKillsServer(true, 1);
 
         // Reset / start the teams clocks after spawn doors open
 
