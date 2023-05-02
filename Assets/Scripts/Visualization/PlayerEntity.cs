@@ -868,7 +868,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
-            Instantiate(ownTeamTag == 0 ? redDashTrail : greenDashTrail, gameObject.transform);
+            ShowDashTrail();
         }
         else if (dashTimer >= dashTime)
         {
@@ -940,6 +940,16 @@ public class PlayerEntity : NetworkBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed * sensitivity * menuControl.mouseSensitivity, 0);
 
             gunRotator.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        }
+    }
+
+    [ObserversRpc]
+    public void ShowDashTrail()
+    {
+        if(!base.IsOwner)
+        {
+            // Don't show dash thingy to yourself
+            Instantiate(ownTeamTag == 0 ? redDashTrail : greenDashTrail, gameObject.transform);
         }
     }
 
