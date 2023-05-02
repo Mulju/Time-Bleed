@@ -63,7 +63,7 @@ public class ChronoGrenade : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if(col.CompareTag("TimeSphere") && teamTag != col.gameObject.GetComponent<TimeSphere>().teamTag)
+        if(col.CompareTag("TimeSphere") && (teamTag != col.gameObject.GetComponent<TimeSphere>().teamTag || !col.gameObject.GetComponent<TimeSphere>().isTimeBind))
         {
             //Debug.Log("OwnerID: " + ownerID + "\nColliderID: " + col.transform.parent.GetInstanceID() + "\nUpdateID: " + updateID);
             if(ownerObject == col.transform.parent?.gameObject || 
