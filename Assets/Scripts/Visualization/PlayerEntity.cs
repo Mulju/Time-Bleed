@@ -868,7 +868,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
-            ShowDashTrail();
+            ShowDashTrailServer();
         }
         else if (dashTimer >= dashTime)
         {
@@ -941,6 +941,12 @@ public class PlayerEntity : NetworkBehaviour
 
             gunRotator.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         }
+    }
+
+    [ServerRpc]
+    public void ShowDashTrailServer()
+    {
+        ShowDashTrail();
     }
 
     [ObserversRpc]
