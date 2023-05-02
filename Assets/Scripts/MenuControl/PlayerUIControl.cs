@@ -26,8 +26,10 @@ public class PlayerUIControl : NetworkBehaviour
 
     private void Update()
     {
-        redUITime.text = MatchManager.matchManager.redClock.remainingMinutes + ":" + MatchManager.matchManager.redClock.remainingSeconds;
-        greenUITime.text = MatchManager.matchManager.greenClock.remainingMinutes + ":" + MatchManager.matchManager.greenClock.remainingSeconds;
+        float redSeconds = MathF.Floor(MatchManager.matchManager.redClock.remainingSeconds);
+        float greenSeconds = MathF.Floor(MatchManager.matchManager.greenClock.remainingSeconds);
+        redUITime.text = MatchManager.matchManager.redClock.remainingMinutes + ":" + (redSeconds < 10 ? "0" + redSeconds : redSeconds);
+        greenUITime.text = MatchManager.matchManager.greenClock.remainingMinutes + ":" + (greenSeconds < 10 ? "0" + greenSeconds : greenSeconds);
     }
 
     public override void OnStartClient()

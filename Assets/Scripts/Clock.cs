@@ -85,7 +85,7 @@ public class Clock : NetworkBehaviour
             remainingSeconds = 60;
         }
 
-        if (remainingMinutes < 0)
+        if (remainingSeconds < 0 && remainingMinutes == 0)
         {
             remainingSeconds = 0;
             remainingMinutes = 0;
