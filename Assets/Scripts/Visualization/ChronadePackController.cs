@@ -9,6 +9,7 @@ public class ChronadePackController : NetworkBehaviour
     PlayerManager playerManager;
     [HideInInspector] public bool isBig = false;
     public ParticleSystem beamEffect;
+    public GameObject triplePack;
 
     public override void OnStartClient()
     {

@@ -265,7 +265,9 @@ public class MatchManager : NetworkBehaviour
             foreach(GameObject chronade in chronadePacks)
             {
                 chronade.GetComponent<ChronadePackController>().isBig = false;
-                if(chronade.GetComponent<ChronadePackController>().beamEffect.isPlaying)
+                chronade.GetComponent<ChronadePackController>().triplePack.SetActive(false);
+                chronade.GetComponent<MeshRenderer>().enabled = true;
+                if (chronade.GetComponent<ChronadePackController>().beamEffect.isPlaying)
                 {
                     chronade.GetComponent<ChronadePackController>().beamEffect.Stop();
                 }
@@ -273,6 +275,8 @@ public class MatchManager : NetworkBehaviour
 
             chronadePacks[2].GetComponent<ChronadePackController>().isBig = true;
             chronadePacks[2].GetComponent<ChronadePackController>().beamEffect.Play();
+            chronadePacks[2].GetComponent<ChronadePackController>().triplePack.SetActive(true);
+            chronadePacks[2].GetComponent<MeshRenderer>().enabled = false;
         }
         else if (redKills / totalKills > 0.4f && redKills / totalKills < 0.6f)
         {
@@ -280,6 +284,8 @@ public class MatchManager : NetworkBehaviour
             foreach (GameObject chronade in chronadePacks)
             {
                 chronade.GetComponent<ChronadePackController>().isBig = false;
+                chronade.GetComponent<ChronadePackController>().triplePack.SetActive(false);
+                chronade.GetComponent<MeshRenderer>().enabled = true;
                 if (chronade.GetComponent<ChronadePackController>().beamEffect.isPlaying)
                 {
                     chronade.GetComponent<ChronadePackController>().beamEffect.Stop();
@@ -288,6 +294,8 @@ public class MatchManager : NetworkBehaviour
 
             chronadePacks[1].GetComponent<ChronadePackController>().isBig = true;
             chronadePacks[1].GetComponent<ChronadePackController>().beamEffect.Play();
+            chronadePacks[1].GetComponent<ChronadePackController>().triplePack.SetActive(true);
+            chronadePacks[1].GetComponent<MeshRenderer>().enabled = false;
         }
         else if (redKills / totalKills > 0.6f)
         {
@@ -295,6 +303,8 @@ public class MatchManager : NetworkBehaviour
             foreach (GameObject chronade in chronadePacks)
             {
                 chronade.GetComponent<ChronadePackController>().isBig = false;
+                chronade.GetComponent<ChronadePackController>().triplePack.SetActive(false);
+                chronade.GetComponent<MeshRenderer>().enabled = true;
                 if (chronade.GetComponent<ChronadePackController>().beamEffect.isPlaying)
                 {
                     chronade.GetComponent<ChronadePackController>().beamEffect.Stop();
@@ -303,6 +313,8 @@ public class MatchManager : NetworkBehaviour
 
             chronadePacks[0].GetComponent<ChronadePackController>().isBig = true;
             chronadePacks[0].GetComponent<ChronadePackController>().beamEffect.Play();
+            chronadePacks[0].GetComponent<ChronadePackController>().triplePack.SetActive(true);
+            chronadePacks[0].GetComponent<MeshRenderer>().enabled = false;
         }
         menuControl.UpdateChronadeSlider(redKills / totalKills);
     }
