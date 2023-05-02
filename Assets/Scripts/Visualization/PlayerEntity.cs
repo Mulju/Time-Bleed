@@ -472,12 +472,6 @@ public class PlayerEntity : NetworkBehaviour
 
             shootTimer = 0;
             currentWeapon.ammoLeft -= 1;
-
-            //animator.SetBool("Shooting", true);
-        }
-        else if(!IsShooting())
-        {
-            //animator.SetBool("Shooting", false);
         }
 
         if (TryReload())
