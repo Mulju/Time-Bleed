@@ -13,10 +13,17 @@ public class ChronoGrenade : MonoBehaviour
 
     private float timer;
 
+    private int teamTag;
+
     [SerializeField] private GameObject vfx;
     [SerializeField] private GameObject pointLight;
     [SerializeField] private TrailRenderer trail1;
     [SerializeField] private TrailRenderer trail2;
+
+    private void Start()
+    {
+        teamTag = ownerObject.GetComponent<PlayerEntity>().ownTeamTag;
+    }
 
     private void Update()
     {
@@ -56,7 +63,7 @@ public class ChronoGrenade : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if(col.CompareTag("TimeSphere"))
+        if(col.CompareTag("TimeSphere") && (teamTag != col.gameObject.GetComponent<TimeSphere>().teamTag || !col.gameObject.GetComponent<TimeSphere>().isTimeBind))
         {
             //Debug.Log("OwnerID: " + ownerID + "\nColliderID: " + col.transform.parent.GetInstanceID() + "\nUpdateID: " + updateID);
             if(ownerObject == col.transform.parent?.gameObject || 
