@@ -4208,7 +4208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &634134959
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6053,6 +6053,7 @@ MonoBehaviour:
   sceneLoader: {fileID: 477695111}
   scoreboardTimer: {fileID: 5935617054178305392}
   waitingForPlayersText: {fileID: 777472147}
+  uiControl: {fileID: 0}
 --- !u!4 &918670145
 Transform:
   m_ObjectHideFlags: 0

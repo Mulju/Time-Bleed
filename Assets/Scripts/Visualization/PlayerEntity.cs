@@ -196,7 +196,7 @@ public class PlayerEntity : NetworkBehaviour
             shootTimer = 3;
 
             timeBindUI = GameObject.FindGameObjectWithTag("TimeBindCooldown").GetComponent<Image>();
-            GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
+            //GrenadeUI = GameObject.FindGameObjectWithTag("GrenadeCooldown").GetComponent<Image>();
 
             // set all timefields off
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -369,11 +369,13 @@ public class PlayerEntity : NetworkBehaviour
             chronadeTimer += Time.deltaTime;
         }
 
+        /*
         if (grenadeTimer < grenadeCooldown)
         {
             grenadeTimer += Time.deltaTime;
             GrenadeUI.fillAmount -= Time.deltaTime / 10f;
         }
+        */
 
         if (shootTimer < 2)
         {
@@ -502,12 +504,14 @@ public class PlayerEntity : NetworkBehaviour
             menuControl.chronadeImages[amountOfChronades].enabled = false;
         }
 
-
+        /*
         if (Input.GetKey(KeyCode.G) && cookTimer <= 2.5f && grenadeTimer >= grenadeCooldown && !isScoped)
         {
             cookTimer += Time.deltaTime;
             isCooking = true;
         }
+        */
+
         else if ((Input.GetKeyUp(KeyCode.G) || cookTimer >= 2.5f) && isCooking && !isScoped)
         {
             ThrowFragGrenadeServer(cookTimer);
