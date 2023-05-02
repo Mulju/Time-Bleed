@@ -150,6 +150,8 @@ public class PlayerEntity : NetworkBehaviour
     private Color greenColor = new Color(0, 1, 0.043f, 1);
     [SerializeField] private TextMeshPro nameField;
 
+    [SerializeField] private GameObject redDashTrail, greenDashTrail;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -866,6 +868,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
+            Instantiate(ownTeamTag == 0 ? redDashTrail : greenDashTrail);
         }
         else if (dashTimer >= dashTime)
         {

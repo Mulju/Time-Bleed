@@ -606,11 +606,15 @@ MonoBehaviour:
   footstepSource: {fileID: 3110155678639122417}
   timeResource: 0
   resourceOnCooldown: 0
+  timeResourceSpendingMultiplier: 0
   redBulletTrail: {fileID: 9047852772809620072, guid: 4511ba28f7ee3a3449072be6adb94b25,
     type: 3}
   greenBulletTrail: {fileID: 9047852772809620072, guid: e0d04b86d2debd742bc4751fab5c942b,
     type: 3}
   nameField: {fileID: 2372661360542935777}
+  redDashTrail: {fileID: 7084719865550816100, guid: 0615c41de7ed89044b9b730718607bb4,
+    type: 3}
+  greenDashTrail: {fileID: 0}
 --- !u!1 &832002410115213892
 GameObject:
   m_ObjectHideFlags: 0
