@@ -10,6 +10,7 @@ using FishNet.Managing.Server;
 using FishNet.Managing.Client;
 using FishNet.Managing;
 using FishNet.Object;
+using System;
 
 public class PlayerUIControl : NetworkBehaviour
 {
@@ -23,23 +24,35 @@ public class PlayerUIControl : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-        playerManager.OnPlayerKilled += UpdateUIKills;
+        playerManager.OnPlayerKilled += UpdateUIKillsServer;
     }
 
     public override void OnStopClient()
     {
         base.OnStopClient();
-        playerManager.OnPlayerKilled -= UpdateUIKills;
+        playerManager.OnPlayerKilled -= UpdateUIKillsServer;
     }
 
-    [ObserversRpc]
-    public void UpdateUIKills(bool irrelevant, int teamTag)
+    private void UpdateUIKillsServer(bool ïrrelevant, int teamTag)
     {
         playerManager.TotalKills();
 
+        if (teamTag == 0)
+        {
+            UpdateUIKills(teamTag, playerManager.redKills);
+        }
+        else
+        {
+            UpdateUIKills(teamTag, playerManager.greenKills);
+        }
+    }
+
+    [ObserversRpc]
+    public void UpdateUIKills(int teamTag, int amountOfKills)
+    {
         if(teamTag == 0)
         {
-            redUIKills.text = "" + playerManager.redKills;
+            redUIKills.text = "" + amountOfKills;
             newRedKills++;
             redKPlus.gameObject.SetActive(true);
             redKPlus.text = "+" + newRedKills;
@@ -50,7 +63,7 @@ public class PlayerUIControl : NetworkBehaviour
         }
         else
         {
-            greenUIKills.text = "" + playerManager.greenKills;
+            greenUIKills.text = "" + amountOfKills;
             newGreenKills++;
             greenKPlus.gameObject.SetActive(true);
             greenKPlus.text = "+" + newGreenKills;
