@@ -1086,14 +1086,7 @@ public class PlayerEntity : NetworkBehaviour
                     rotationX -= recoil * currentWeapon.recoilMultiplierScoped;
                     transform.rotation *= Quaternion.Euler(0, random * currentWeapon.recoilMultiplierScoped, 0);
                 }
-
-                Vector3 weaponShake = Random.insideUnitSphere * 0.02f * accuracy;
-                float x = weaponShake.x;
-                float y = weaponShake.y;
-                float z = weaponShake.z;
-
-
-                currentWeaponPrefab.transform.position = new Vector3(currentWeaponPrefab.transform.position.x + x, currentWeaponPrefab.transform.position.y + y, currentWeaponPrefab.transform.position.z + z);
+                animator.SetTrigger("Shoot");
             }
         }
     }
