@@ -32,6 +32,8 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private GameObject settingsButton;
     [HideInInspector] public float mouseSensitivity;
 
+    [SerializeField] private PlayerManager playerManager;
+
     [SerializeField] private TextMeshProUGUI redUIKills, redUITime, greenUIKills, greenUITime;
     [SerializeField] private TextMeshProUGUI redKPlus, redTPlus, greenKPlus, greenTPlus;
     private int newRedKills = 0, newRedTime = 0, newGreenKills = 0, newGreenTime = 0;
@@ -76,7 +78,7 @@ public class MenuControl : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name == "TimeBleed")
         {
-            PlayerManager.instance.OnPlayerKilled += UpdateUIKills;
+            playerManager.OnPlayerKilled += UpdateUIKills;
         }
     }
 
@@ -84,7 +86,7 @@ public class MenuControl : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "TimeBleed")
         {
-            PlayerManager.instance.OnPlayerKilled -= UpdateUIKills;
+            playerManager.OnPlayerKilled -= UpdateUIKills;
         }
     }
 
@@ -181,11 +183,11 @@ public class MenuControl : MonoBehaviour
 
     public void UpdateUIKills(bool irrelevant, int teamTag)
     {
-        PlayerManager.instance.TotalKills();
+        playerManager.TotalKills();
 
         if(teamTag == 0)
         {
-            redUIKills.text = "" + PlayerManager.instance.redKills;
+            redUIKills.text = "" + playerManager.redKills;
             newRedKills++;
             redKPlus.gameObject.SetActive(true);
             redKPlus.text = "+" + newRedKills;
@@ -196,7 +198,7 @@ public class MenuControl : MonoBehaviour
         }
         else
         {
-            greenUIKills.text = "" + PlayerManager.instance.greenKills;
+            greenUIKills.text = "" + playerManager.greenKills;
             newGreenKills++;
             greenKPlus.gameObject.SetActive(true);
             greenKPlus.text = "+" + newGreenKills;
