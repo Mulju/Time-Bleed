@@ -33,6 +33,7 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private GameObject settingsButton;
     [HideInInspector] public float mouseSensitivity;
 
+    public Image dashHover, fieldHover;
 
     void Start()
     {

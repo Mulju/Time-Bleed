@@ -388,6 +388,14 @@ public class PlayerEntity : NetworkBehaviour
         {
             timeFieldIsOn = !timeFieldIsOn;
             TimeFieldServer(timeFieldIsOn);
+            if(timeFieldIsOn)
+            {
+                menuControl.fieldHover.enabled = true;
+            }
+            else
+            {
+                menuControl.fieldHover.enabled = false;
+            }
         }
 
         if (timeFieldIsOn)
@@ -402,6 +410,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             timeFieldIsOn = false;
             TimeFieldServer(timeFieldIsOn);
+            menuControl.fieldHover.enabled = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown && timeResource > 2 * timeResourceSpendingMultiplier && !isScoped)
@@ -867,6 +876,13 @@ public class PlayerEntity : NetworkBehaviour
 
     public void Move()
     {
+        menuControl.dashHover.enabled = false;
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            // Show image if pressing shift
+            menuControl.dashHover.enabled = true;
+        }
+
         // Dash
         if ((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource > 3.9f * timeResourceSpendingMultiplier)
         {
