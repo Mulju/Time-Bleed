@@ -6,6 +6,7 @@ public class TimeBind : MonoBehaviour
 {
     public GameObject timeBindSphere;
     public bool exploded;
+    public int teamTag;
 
     private float timeSphereTime;
     [SerializeField] private AudioSource timeBindExplosion;
@@ -49,6 +50,7 @@ public class TimeBind : MonoBehaviour
         GameObject timeBindSphereInstance = Instantiate(timeBindSphere, this.gameObject.transform.position, Quaternion.identity);
         timeBindSphereInstance.transform.localScale = new Vector3(7f, 7f, 7f);
         timeBindSphereInstance.GetComponent<TimeSphere>().isTimeBind = true;
+        timeBindSphereInstance.GetComponent<TimeSphere>().teamTag = teamTag;
         timeBindSphereInstance.GetComponent<TimeSphere>().currentScale = timeBindSphereInstance.transform.localScale;
 
         yield return new WaitForSeconds(timeSphereTime);

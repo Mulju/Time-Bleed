@@ -8,16 +8,17 @@ public class AmmoController : MonoBehaviour
 {
     public Rigidbody rb;
 
-    public float timeSlowed;
-    public float timeNotSlowed;
+    [HideInInspector] public float timeSlowed;
+    [HideInInspector] public float timeNotSlowed;
 
     private float ammoSpeed;
     private float timeSpeed;
 
     private Vector3 objHitByRaycast;
-    public Vector3 direction;
-    public GameObject shooter;
-    public int damage;
+
+    [HideInInspector] public Vector3 direction;
+    [HideInInspector] public GameObject shooter;
+    [HideInInspector] public int damage;
 
     private bool isInsdeTimeField;
 
@@ -33,6 +34,9 @@ public class AmmoController : MonoBehaviour
 
     [SerializeField] private GameObject bulletTrail;
 
+    [Tooltip("Red team = 0, Green team = 1")]
+    public int teamTag;
+
     private bool hitFlag = false;
 
     // Start is called before the first frame update
@@ -40,7 +44,16 @@ public class AmmoController : MonoBehaviour
     {
         timeSlowed = 0.2f;
         timeNotSlowed = 100f;
-        layerMask = LayerMask.GetMask("Player", "Terrain", "Water", "Default");
+        
+
+        if(teamTag == 0)
+        {
+            layerMask = LayerMask.GetMask("Player", "Terrain", "Water", "Default", "GreenTimeSphere");
+        }
+        else
+        {
+            layerMask = LayerMask.GetMask("Player", "Terrain", "Water", "Default", "RedTimeSphere");
+        }
 
         CheckForCollisions();
 
@@ -193,7 +206,11 @@ public class AmmoController : MonoBehaviour
 
         if (other.CompareTag("TimeSphere"))
         {
-            ammoSpeed = timeSlowed;
+            if(other.gameObject.layer != 10 + teamTag)
+            {
+                ammoSpeed = timeSlowed;
+            }
+
             timeSpeed = other.GetComponent<TimeSphere>().timeSpeed;
 
             if (!other.gameObject.GetComponent<TimeSphere>().isTimeField)
@@ -207,7 +224,11 @@ public class AmmoController : MonoBehaviour
     {
         if (other.CompareTag("TimeSphere"))
         {
-            ammoSpeed = timeSlowed;
+            if (other.gameObject.layer != 10 + teamTag)
+            {
+                ammoSpeed = timeSlowed;
+            }
+
             timeSpeed = other.GetComponent<TimeSphere>().timeSpeed;
 
             if (!other.gameObject.GetComponent<TimeSphere>().isTimeField)
@@ -219,7 +240,7 @@ public class AmmoController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("TimeSphere"))
+        if (other.CompareTag("TimeSphere") && other.gameObject.layer != 10 + teamTag)
         {
             CheckForCollisions();
             ammoSpeed = timeNotSlowed;

@@ -1830,7 +1830,8 @@ MonoBehaviour:
   bulletHitBubble: {fileID: 0}
   timeBindExplosion: {fileID: 0}
   chronadeSound: {fileID: 0}
-  playerHitSound: {fileID: 8300000, guid: e51dd3b77f44af24ba8837f4939a8e17, type: 3}
+  playerDamageSound: {fileID: 8300000, guid: e51dd3b77f44af24ba8837f4939a8e17, type: 3}
+  playerHitSound: {fileID: 8300000, guid: f730b15b08bca49629490b10bdf2b2a6, type: 3}
   fragGrenadeSound: {fileID: 0}
   clockTick: {fileID: 0}
   oneMinute: {fileID: 8300000, guid: 1570f92b276aaa841a9394e53d541ca7, type: 3}
@@ -4649,7 +4650,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6284607029874420582}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 0.05, z: 0.15}
+  m_LocalPosition: {x: 0.15, y: 0.05, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

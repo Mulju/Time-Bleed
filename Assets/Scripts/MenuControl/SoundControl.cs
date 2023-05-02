@@ -13,8 +13,9 @@ public class SoundControl : MonoBehaviour
     [SerializeField] private AudioClip[] musicClips;
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private PlayerEntity playerEntity;
-    [SerializeField] private AudioClip menuMove, menuSelect, gunShoot, bulletHitWall, bulletHitBubble, timeBindExplosion, chronadeSound,
-        playerHitSound, fragGrenadeSound, clockTick, oneMinute, fiveMinutes, chronadeSpawnMoved, underAttack, footstepSound;
+    [SerializeField]
+    private AudioClip menuMove, menuSelect, gunShoot, bulletHitWall, bulletHitBubble, timeBindExplosion, chronadeSound,
+        playerDamageSound, playerHitSound, fragGrenadeSound, clockTick, oneMinute, fiveMinutes, chronadeSpawnMoved, underAttack, footstepSound;
     private List<int> usedSongs = new List<int>();
     private float globalPitch = 1;
     private float globalVolume = 0.02f;
@@ -40,7 +41,7 @@ public class SoundControl : MonoBehaviour
         }
     }
 
-    public void PlaySound(AudioClip soundEffect, float volume, float pitch)
+    public void PlaySound(AudioClip soundEffect, float volume, float pitch, float time = 0)
     {
         foreach (AudioSource source in soundSources)
         {
@@ -50,6 +51,7 @@ public class SoundControl : MonoBehaviour
                 source.clip = soundEffect;
                 source.volume = volume;
                 source.pitch = pitch;
+                source.time = time;
                 source.Play();
                 break;
             }
@@ -86,15 +88,21 @@ public class SoundControl : MonoBehaviour
         PlaySound(bulletHitBubble, volume, globalPitch);
     }
 
-    public void PlayPlayerHit()
+    public void PlayPlayerDamage()
     {
         float volume = globalVolume * 10;
-        PlaySound(playerHitSound, volume, globalPitch);
+        PlaySound(playerDamageSound, volume, globalPitch);
+    }
+
+    public void PlayPlayerHit()
+    {
+        float volume = globalVolume * 7;
+        PlaySound(playerHitSound, volume, globalPitch, 0.25f);
     }
 
     public void PlayBaseIsUnderAttack()
     {
-        if(!attenBoroughCooldown)
+        if (!attenBoroughCooldown)
         {
             float volume = 1f;
             PlaySound(underAttack, volume, globalPitch);
