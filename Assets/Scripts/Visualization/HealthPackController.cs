@@ -8,6 +8,15 @@ public class HealthPackController : NetworkBehaviour
     [SerializeField] private float respawnTime = 5f;
     PlayerManager playerManager;
 
+    [SerializeField] private GameObject rotator;
+
+    private void Update()
+    {
+        //rotator.transform.Rotate(new Vector3(0,1,0),Time.timeScale * 0.5f);
+
+        rotator.transform.Rotate(new Vector3(0, Time.timeScale * 0.5f, 0), Space.Self);
+    }
+
     private void OnTriggerEnter(Collider col)
     {
         if (!base.IsServer)
