@@ -868,7 +868,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
-            Instantiate(ownTeamTag == 0 ? redDashTrail : greenDashTrail);
+            Instantiate(ownTeamTag == 0 ? redDashTrail : greenDashTrail, gameObject.transform);
         }
         else if (dashTimer >= dashTime)
         {
