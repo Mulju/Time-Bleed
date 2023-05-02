@@ -368,11 +368,11 @@ public class MatchManager : NetworkBehaviour
     {
         int losingTeam;
 
-        if (redClock.remainingTime < greenClock.remainingTime)
+        if (redClock.remainingTime + 60f < greenClock.remainingTime)
         {
             losingTeam = 0;
         }
-        else if (redClock.remainingTime > greenClock.remainingTime)
+        else if (redClock.remainingTime > greenClock.remainingTime + 60f)
         {
             losingTeam = 1;
         }
