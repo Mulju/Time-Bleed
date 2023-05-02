@@ -174,5 +174,10 @@ public class Clock : NetworkBehaviour
         {
             playersKilled--;
         }
+
+        if(base.IsServer)
+        {
+            mManager.TeamTimeDiffChanged();
+        }
     }
 }
