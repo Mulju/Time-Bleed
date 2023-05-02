@@ -400,7 +400,7 @@ public class PlayerEntity : NetworkBehaviour
             TimeFieldServer(timeFieldIsOn);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown && timeResource > 2 && !isScoped)
+        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown && timeResource > 2 * timeResourceSpendingMultiplier && !isScoped)
         {
             //timeResource -= 2;
             UpdateTimeResource(-2f);
@@ -862,7 +862,7 @@ public class PlayerEntity : NetworkBehaviour
     public void Move()
     {
         // Dash
-        if ((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource > 3.9f)
+        if ((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource > 3.9f * timeResourceSpendingMultiplier)
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
