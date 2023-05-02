@@ -88,8 +88,6 @@ public class TimeSphere : MonoBehaviour
 
         yield return new WaitForSeconds(10);
 
-        gameObject.GetComponent<Renderer>().enabled = true;
-
         if (!isTimeBind && !isTimeField)
         {
             StartCoroutine(GetBigger(1f));
@@ -102,6 +100,8 @@ public class TimeSphere : MonoBehaviour
 
     IEnumerator GetBigger(float speed)
     {
+        gameObject.GetComponent<Renderer>().enabled = true;
+
         while (currentScale.x < originalScale.x)
         {
             currentScale = new Vector3(currentScale.x + Time.deltaTime * expansionMultiplier * speed,
