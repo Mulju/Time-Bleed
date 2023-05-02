@@ -83,13 +83,15 @@ public class ChronadePackController : NetworkBehaviour
     [ObserversRpc]
     void ShowChronadePack()
     {
-        this.gameObject.GetComponent<MeshRenderer>().enabled = true;
-        
         // Play cool light beam animation
         if(isBig)
         {
             beamEffect.Play();
             triplePack.SetActive(true);
+        }
+        else
+        {
+            this.gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 }
