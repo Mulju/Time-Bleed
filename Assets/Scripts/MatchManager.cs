@@ -38,6 +38,8 @@ public class MatchManager : NetworkBehaviour
     [HideInInspector] public Action<bool> OnStartMoveChronadePack;
     [HideInInspector] public Action<int> OnClockTimeChange;
 
+    [SerializeField] private GameObject middleTimeSphere;
+
     private bool fiveHasPlayedRed = false, oneHasPlayedRed = false, fiveHasPlayedGreen = false, oneHasPlayedGreen = false;
     private float oldKillsRatio, oldRedKills;
 
@@ -218,6 +220,8 @@ public class MatchManager : NetworkBehaviour
         {
             playerManager.PlayAttenborough(5);
         }
+
+        TeamTimeDiffChanged();
     }
 
     public bool IsBaseServer()
@@ -259,6 +263,8 @@ public class MatchManager : NetworkBehaviour
         }
 
         ChangeBigChronadeSpawn(redKills, totalKills);
+
+        TeamTimeDiffChanged();
     }
 
     [ObserversRpc]
@@ -355,5 +361,36 @@ public class MatchManager : NetworkBehaviour
         {
             playerManager.CloseServer();
         }
+    }
+
+    [ObserversRpc]
+    public void TeamTimeDiffChanged()
+    {
+        int losingTeam;
+
+        if (redClock.remainingTime + 60f < greenClock.remainingTime)
+        {
+            losingTeam = 0;
+        }
+        else if (redClock.remainingTime > greenClock.remainingTime + 60f)
+        {
+            losingTeam = 1;
+        }
+        else
+        {
+            // neutral
+            losingTeam = 2;
+        }
+
+        middleTimeSphere.GetComponent<TimeSphere>().SetTeamTag(losingTeam);
+
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject player in players)
+        {
+            player.TryGetComponent<PlayerEntity>(out PlayerEntity script);
+            script.UpdateTimeResourceSpendingMultiplier(losingTeam);
+        }
+        
     }
 }

@@ -141,6 +141,8 @@ public class PlayerEntity : NetworkBehaviour
     private bool timeFieldIsOn = false;
     [HideInInspector] public bool resourceOnCooldown = false;
 
+    [HideInInspector] public float timeResourceSpendingMultiplier;
+
     [SerializeField] private GameObject redBulletTrail;
     [SerializeField] private GameObject greenBulletTrail;
 
@@ -253,6 +255,8 @@ public class PlayerEntity : NetworkBehaviour
 
     void Start()
     {
+        timeResourceSpendingMultiplier = 1f;
+
         gunOriginalPosition = gunPosition.transform.localPosition;
 
         mManager = MatchManager.matchManager;
@@ -385,7 +389,9 @@ public class PlayerEntity : NetworkBehaviour
         if (timeFieldIsOn)
         {
             // If Time Field is on, reduce time resource
-            timeResource -= 2 * Time.deltaTime;
+            UpdateTimeResource(-2 * Time.deltaTime);
+
+            //timeResource -= 2 * Time.deltaTime;
         }
 
         if (timeFieldIsOn && timeResource < 0.01f)
@@ -394,9 +400,10 @@ public class PlayerEntity : NetworkBehaviour
             TimeFieldServer(timeFieldIsOn);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown && timeResource > 2 && !isScoped)
+        if (Input.GetKeyDown(KeyCode.Q) && timeBindTimer >= timeBindCooldown && timeResource > 2 * timeResourceSpendingMultiplier && !isScoped)
         {
-            timeResource -= 2;
+            //timeResource -= 2;
+            UpdateTimeResource(-2f);
             timeBindTimer = 0;
             TimeBindServer();
             timeBindUI.fillAmount = 1;
@@ -524,6 +531,26 @@ public class PlayerEntity : NetworkBehaviour
             TimeSpeedSlider(mouseScroll);
         }
         */
+    }
+
+    public void UpdateTimeResourceSpendingMultiplier(int losingTeam)
+    {
+        if(base.IsOwner)
+        {
+            if (losingTeam == ownTeamTag)
+            {
+                timeResourceSpendingMultiplier = 0.5f;
+            }
+            else
+            {
+                timeResourceSpendingMultiplier = 1f;
+            }
+        }
+    }
+
+    public void UpdateTimeResource(float amount)
+    {
+        timeResource += amount * timeResourceSpendingMultiplier;
     }
 
     public bool TryReload()
@@ -835,7 +862,7 @@ public class PlayerEntity : NetworkBehaviour
     public void Move()
     {
         // Dash
-        if ((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource > 3.9f)
+        if ((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource > 3.9f * timeResourceSpendingMultiplier)
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
@@ -844,7 +871,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             isRunning = false;
             dashTimer = 0;
-            timeResource = 0;
+            UpdateTimeResource(-4f);
         }
         else
         {
