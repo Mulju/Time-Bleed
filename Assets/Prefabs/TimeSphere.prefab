@@ -111,6 +111,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26549d5b3c090f64eb465af6f6271f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalScale: {x: 0, y: 0, z: 0}
+  currentScale: {x: 0, y: 0, z: 0}
+  expansionMultiplier: 5
+  isTimeBind: 0
+  isTimeField: 0
+  timeSpeed: 0
+  teamTag: 0
+  neutralColor: {fileID: 2100000, guid: 64ea3dd21ab3e0e4db75d0afd2abd645, type: 2}
 --- !u!54 &2780882641466546393
 Rigidbody:
   m_ObjectHideFlags: 0

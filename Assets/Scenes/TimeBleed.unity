@@ -4134,6 +4134,7 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 2019315826}
+  - {fileID: 1637784032}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField:
   - {fileID: 918670143}
@@ -5289,6 +5290,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &773953569 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2011950803667934939, guid: 187ef6a498595404e876aa5cbe59168a,
+    type: 3}
+  m_PrefabInstance: {fileID: 357906718}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &777472145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6091,6 +6098,7 @@ MonoBehaviour:
   - {fileID: 972663185}
   - {fileID: 155993076}
   - {fileID: 1209726816}
+  middleTimeSphere: {fileID: 773953569}
 --- !u!1 &922311959
 GameObject:
   m_ObjectHideFlags: 0
@@ -8638,9 +8646,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4990aeea69248e4429a2a2377e846da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 1
   _addedNetworkObject: {fileID: 602090660}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 602090660}
   playerManager: {fileID: 918670144}
   redUIKills: {fileID: 911138722}
   redUITime: {fileID: 1783292401}

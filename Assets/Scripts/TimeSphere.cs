@@ -16,6 +16,8 @@ public class TimeSphere : MonoBehaviour
     [HideInInspector] public float timeSpeed;
     [HideInInspector] public int teamTag;
 
+    [SerializeField] private Material neutralColor;
+
     private void Awake()
     {
         timeSpeed = 0.2f;
@@ -27,21 +29,29 @@ public class TimeSphere : MonoBehaviour
         currentScale = transform.localScale;
     }
 
-    private void Start()
+    /// <param name = "team" > 0 = red team, 1 = green team, 2 = neutral.</param>
+    public void SetTeamTag(int team)
     {
-        // set layer and change color based on teamtag 
-        if (isTimeBind)
-        {
-            gameObject.layer = 10 + teamTag;
+        teamTag = team;
 
-            if (teamTag == 1)
-            {
-                gameObject.GetComponent<Renderer>().material.color = new Color(102 / 225, 255 / 255, 185 / 255, gameObject.GetComponent<Renderer>().material.color.a);
-            }
-            else
-            {
-                gameObject.GetComponent<Renderer>().material.color = new Color(102 / 225, 255 / 255, 185 / 255, gameObject.GetComponent<Renderer>().material.color.a);
-            }
+        // set layer and change color based on teamtag 
+        gameObject.layer = 10 + teamTag;
+
+        if (teamTag == 1)
+        {
+            // green color
+            gameObject.GetComponent<Renderer>().material.color = new Color(102 / 225, 255 / 255, 185 / 255, gameObject.GetComponent<Renderer>().material.color.a);
+        }
+        else if (teamTag == 0)
+        {
+            // red color
+            gameObject.GetComponent<Renderer>().material.color = new Color(255 / 225, 117 / 255, 102 / 255, gameObject.GetComponent<Renderer>().material.color.a);
+        }
+        else if(teamTag == 2)
+        {
+            // blue color (neutral)
+            gameObject.GetComponent<Renderer>().material.color = neutralColor.color;
+            gameObject.layer = 0;
         }
     }
 

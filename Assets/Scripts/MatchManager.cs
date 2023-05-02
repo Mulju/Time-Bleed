@@ -360,11 +360,34 @@ public class MatchManager : NetworkBehaviour
         }
     }
 
+    [ObserversRpc]
     public void TeamTimeDiffChanged()
     {
-        if (redClock.remainingTime > greenClock.remainingTime)
+        int losingTeam;
+
+        if (redClock.remainingTime < greenClock.remainingTime)
         {
-            //middleTimeSphere
+            losingTeam = 0;
         }
+        else if (redClock.remainingTime > greenClock.remainingTime)
+        {
+            losingTeam = 1;
+        }
+        else
+        {
+            // neutral
+            losingTeam = 2;
+        }
+
+        middleTimeSphere.GetComponent<TimeSphere>().SetTeamTag(losingTeam);
+
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject player in players)
+        {
+            player.TryGetComponent<PlayerEntity>(out PlayerEntity script);
+            script.UpdateTimeResourceSpendingMultiplier(losingTeam);
+        }
+        
     }
 }
