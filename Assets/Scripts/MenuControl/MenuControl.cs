@@ -13,7 +13,8 @@ using FishNet.Object;
 
 public class MenuControl : MonoBehaviour
 {
-    private Resolution[] resolutions;
+    private Resolution[] sResolutions;
+    private List<Resolution> resolutions = new List<Resolution>();
     [SerializeField] private TMP_Dropdown resolutionsDropdown;
 
     private string currentScene;
@@ -37,7 +38,24 @@ public class MenuControl : MonoBehaviour
 
     void Start()
     {
-        resolutions = Screen.resolutions;
+        bool alreadyFound = false;
+        sResolutions = Screen.resolutions;
+        foreach(Resolution sResolution in sResolutions)
+        {
+            foreach(Resolution resolution in resolutions)
+            {
+                if(sResolution.width == resolution.width && sResolution.height == resolution.height)
+                {
+                    alreadyFound = true;
+                }
+            }
+            if(!alreadyFound)
+            {
+                resolutions.Add(sResolution);
+            }
+
+            alreadyFound = false;
+        }
 
         currentScene = SceneManager.GetActiveScene().name;
         eventSystem = EventSystem.current;
