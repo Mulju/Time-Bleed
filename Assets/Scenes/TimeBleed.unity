@@ -6164,7 +6164,6 @@ MonoBehaviour:
   scoreboardTimer: {fileID: 5935617054178305392}
   waitingForPlayersText: {fileID: 777472147}
   uiControl: {fileID: 1637784032}
-  matchStarted: 0
 --- !u!4 &918670145
 Transform:
   m_ObjectHideFlags: 0
@@ -6961,7 +6960,7 @@ GameObject:
   - component: {fileID: 1177645835}
   m_Layer: 5
   m_Name: Filler
-  m_TagString: TimeBindCooldown
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8452,7 +8451,7 @@ GameObject:
   - component: {fileID: 1470634746}
   m_Layer: 5
   m_Name: Filler
-  m_TagString: TimeBindCooldown
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
