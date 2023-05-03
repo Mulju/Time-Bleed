@@ -637,7 +637,9 @@ public class PlayerEntity : NetworkBehaviour
         {
             playerAnimator.SetTrigger("Jump");
             armorAnimator.SetTrigger("Jump");
-        }
+
+            StartCoroutine(ResetTriggers());
+        } 
 
         if (reload)
         {
@@ -646,7 +648,23 @@ public class PlayerEntity : NetworkBehaviour
 
             armorAnimator.SetFloat("ReloadSpeedMultiplier", reloadTimeMultiplier);
             armorAnimator.SetTrigger("Reload");
+
+            StartCoroutine(ResetTriggers());
         }
+    }
+
+    IEnumerator ResetTriggers()
+    {
+        while (playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+
+        playerAnimator.ResetTrigger("Jump");
+        armorAnimator.ResetTrigger("Jump");
+
+        playerAnimator.ResetTrigger("Reload");
+        armorAnimator.ResetTrigger("Reload");
     }
 
     IEnumerator FootstepSoundCooldown()
