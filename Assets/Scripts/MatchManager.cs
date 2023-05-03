@@ -246,6 +246,7 @@ public class MatchManager : NetworkBehaviour
         
         if (oldKillsRatio != 0)
         {
+            Debug.Log("Old kill ratio reached");
             // Check if the Chronade spawn is going to move this frame
             if(redKills / totalKills < 0.4f && !(oldRedKills / oldKillsRatio < 0.4f))
             {
