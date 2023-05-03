@@ -846,7 +846,7 @@ public class PlayerEntity : NetworkBehaviour
 
         characterController.enabled = true;
         canMove = true;
-        timeField.SetActive(true);
+        timeField.GetComponent<MeshRenderer>().enabled = true;
         nameDisplay.SetActive(true);
         playerAnimator.enabled = true;
 
