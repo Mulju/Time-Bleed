@@ -131,13 +131,13 @@ public class SoundControl : MonoBehaviour
 
     public void PlayChronadePickup()
     {
-        float volume = 0.5f;
+        float volume = 0.25f;
         PlaySound(chronoPickuUpSound, volume, globalPitch);
     }
 
     public void PlayHealthPickup()
     {
-        float volume = 1f;
+        float volume = 1.5f;
         PlaySound(healthPickUpSound, volume, globalPitch);
     }
 
