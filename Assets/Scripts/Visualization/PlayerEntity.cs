@@ -1122,7 +1122,11 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     Hit(hit.collider.GetComponent<PlayerHead>().player.gameObject, this.gameObject, headDamage, damage);
                 }
-                hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
+                if (hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().ownTeamTag != ownTeamTag)
+                {
+                    hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
+                }
+                
             }
             else if (hit.collider.CompareTag("PlayerTorso") && hit.collider.GetComponent<PlayerTorso>().player.gameObject != this.gameObject)
             {
@@ -1131,7 +1135,11 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     Hit(hit.collider.GetComponent<PlayerTorso>().player.gameObject, this.gameObject, torsoDamage, damage);
                 }
-                hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerTorso>().player.gameObject, direction);
+                if (hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ownTeamTag != ownTeamTag)
+                {
+                    hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerTorso>().player.gameObject, direction);
+                }
+                
             }
             else if (hit.collider.CompareTag("PlayerLegs") && hit.collider.GetComponent<PlayerLegs>().player.gameObject != this.gameObject)
             {
@@ -1140,7 +1148,11 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     Hit(hit.collider.GetComponent<PlayerLegs>().player.gameObject, this.gameObject, legsDamage, damage);
                 }
-                hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerLegs>().player.gameObject, direction);
+                if (hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ownTeamTag != ownTeamTag)
+                {
+                    hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerLegs>().player.gameObject, direction);
+                }
+                
             }
             else if (!hit.collider.gameObject.CompareTag("Player"))
             {
