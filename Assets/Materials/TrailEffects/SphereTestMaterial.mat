@@ -84,6 +84,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaPower: 0.01
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -99,7 +100,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NoiseScale: 20
+    - _NoiseScale: 5
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -117,7 +118,9 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 0.1019297, g: 18.449276, b: 19.468573, a: 1}
-    - _Color2: {r: 0.011480933, g: 0.8113208, b: 0.08830386, a: 1}
+    - _Color1Power: {r: 0.2, g: 0, b: 0, a: 0}
+    - _Color2: {r: 0.011764706, g: 0.8117647, b: 0.09019608, a: 1}
+    - _Color2Power: {r: 0.6, g: 0.5, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _InnerColor: {r: 0.5377358, g: 0.33735314, b: 0.33735314, a: 0}
     - _OuterColor: {r: 0.8396226, g: 0.21782663, b: 0.21782663, a: 0}
