@@ -390,6 +390,9 @@ public class PlayerEntity : NetworkBehaviour
 
         Physics.SyncTransforms();
 
+        if (!isAlive)
+            return;
+
         if (Input.GetKeyDown(KeyCode.F) && timeResource > 0.1f)
         {
             timeFieldIsOn = !timeFieldIsOn;
@@ -445,9 +448,6 @@ public class PlayerEntity : NetworkBehaviour
             menuControl.chronadeImages[i].enabled = true;
             menuControl.chronadeImages[i].GetComponentInChildren<Text>().enabled = true;
         }
-
-        if (!isAlive)
-            return;
 
         AnimateServer(IsMoving(), IsShooting(), Input.GetKeyDown(KeyCode.Space), TryReload(), 1 / currentWeapon.reloadTime);
 
@@ -1134,7 +1134,7 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     hit.collider.GetComponent<PlayerHead>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerHead>().player.gameObject, direction);
                 }
-                
+
             }
             else if (hit.collider.CompareTag("PlayerTorso") && hit.collider.GetComponent<PlayerTorso>().player.gameObject != this.gameObject)
             {
@@ -1147,7 +1147,7 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     hit.collider.GetComponent<PlayerTorso>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerTorso>().player.gameObject, direction);
                 }
-                
+
             }
             else if (hit.collider.CompareTag("PlayerLegs") && hit.collider.GetComponent<PlayerLegs>().player.gameObject != this.gameObject)
             {
