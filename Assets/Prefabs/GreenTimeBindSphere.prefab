@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4915580861969795871}
   - component: {fileID: 2780882641466546393}
   m_Layer: 0
-  m_Name: TimeBindSphere
+  m_Name: GreenTimeBindSphere
   m_TagString: TimeSphere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28db08fc2aee4bc4da01942b3c6952db, type: 2}
+  - {fileID: 2100000, guid: e22c437b7eee94943b8087f420424a5d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,6 +118,7 @@ MonoBehaviour:
   isTimeField: 0
   timeSpeed: 0
   teamTag: 2
+  neutralColor: {fileID: 0}
 --- !u!54 &2780882641466546393
 Rigidbody:
   m_ObjectHideFlags: 0

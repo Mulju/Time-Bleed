@@ -2175,6 +2175,11 @@ PrefabInstance:
       propertyPath: _sceneNetworkObjects.Array.data[34]
       value: 
       objectReference: {fileID: 5935617054178305393}
+    - target: {fileID: 3911378646696416222, guid: 187ef6a498595404e876aa5cbe59168a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81ad952a246e96c47842342cfa3e41a3, type: 2}
     - target: {fileID: 3951846983871043072, guid: 187ef6a498595404e876aa5cbe59168a,
         type: 3}
       propertyPath: _scenePathHash

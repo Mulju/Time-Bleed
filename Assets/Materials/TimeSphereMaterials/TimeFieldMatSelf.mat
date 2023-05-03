@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SphereTestMaterial
+  m_Name: TimeFieldMatSelf
   m_Shader: {fileID: -6465566751694194690, guid: 5074a291a457284419db66e60446c6d0,
     type: 3}
   m_ValidKeywords: []
@@ -117,9 +117,9 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 0.1019297, g: 18.449276, b: 19.468573, a: 1}
+    - _Color1: {r: 0.23431373, g: 0.24705882, b: 0, a: 1}
     - _Color1Power: {r: 0.2, g: 0, b: 0, a: 0}
-    - _Color2: {r: 0.011764706, g: 0.8117647, b: 0.09019608, a: 1}
+    - _Color2: {r: 0, g: 0, b: 0, a: 1}
     - _Color2Power: {r: 0.6, g: 0.5, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _InnerColor: {r: 0.5377358, g: 0.33735314, b: 0.33735314, a: 0}

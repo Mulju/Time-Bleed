@@ -596,6 +596,8 @@ MonoBehaviour:
     type: 3}
   redTeamMaterial: {fileID: 2100000, guid: 4399fb8409b6a664d95cf35fafc8c1fd, type: 2}
   greenTeamMaterial: {fileID: 2100000, guid: f56ba82efef584341806ee1a36275b87, type: 2}
+  clientTimeFieldMaterial: {fileID: 2100000, guid: f06b3226c528efa419ad8c0410067d3a,
+    type: 2}
   armorMesh: {fileID: 829326742971908444}
   bodyMesh: {fileID: 5788562537899422256}
   ownTeamTag: 0
@@ -6374,6 +6376,11 @@ PrefabInstance:
     - target: {fileID: 897180517614499770, guid: db53567b0a227df4db234d347892a0dc,
         type: 3}
       propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 897180517614499770, guid: db53567b0a227df4db234d347892a0dc,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 897180517614499770, guid: db53567b0a227df4db234d347892a0dc,
