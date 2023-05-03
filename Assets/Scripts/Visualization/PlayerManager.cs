@@ -601,6 +601,18 @@ public class PlayerManager : NetworkBehaviour
         StartCoroutine(DeathCam(player, spawn, teamTag));
     }
 
+    [TargetRpc]
+    private void ClientPlayChronadePickupSound(NetworkConnection connection, GameObject player)
+    {
+        player.GetComponent<PlayerEntity>().soundControl.PlayChronadePickup();
+    }
+
+    [TargetRpc]
+    private void ClientPlayHealthPickupSound(NetworkConnection connection, GameObject player)
+    {
+        player.GetComponent<PlayerEntity>().soundControl.PlayHealthPickup();
+    }
+
     [ObserversRpc]
     void StartRagdoll(GameObject player)
     {
@@ -617,7 +629,7 @@ public class PlayerManager : NetworkBehaviour
     {
         int playerID = player.GetInstanceID();
 
-        player.GetComponent<PlayerEntity>().soundControl.PlayHealthPickup();
+        ClientPlayHealthPickupSound(players[playerID].connection, players[playerID].playerObject);
 
         if (players[playerID].health < maxHealth)
         {
@@ -652,7 +664,7 @@ public class PlayerManager : NetworkBehaviour
                 player.GetComponent<PlayerEntity>().amountOfChronades = 3;
             }
         }
-        player.GetComponent<PlayerEntity>().soundControl.PlayChronadePickup();
+        ClientPlayChronadePickupSound(players[player.GetInstanceID()].connection, player);
     }
 
     [TargetRpc]
