@@ -560,7 +560,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             if (losingTeam == ownTeamTag)
             {
-                timeResourceSpendingMultiplier = 0.5f;
+                timeResourceSpendingMultiplier = 0.65f;
 
                 // Efekti UIhin
                 sliderFill.color = resModifierColor;
