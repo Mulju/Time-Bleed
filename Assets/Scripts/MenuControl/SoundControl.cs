@@ -125,6 +125,7 @@ public class SoundControl : MonoBehaviour
 
     public void PlayChronadeSpawnMove()
     {
+        Debug.Log("Attenborough played");
         float volume = 1f;
         PlaySound(chronadeSpawnMoved, volume, globalPitch);
     }
