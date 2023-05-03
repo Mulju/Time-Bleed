@@ -990,6 +990,7 @@ public class PlayerEntity : NetworkBehaviour
         yield return new WaitForSeconds(0.25f);
 
         currentWeapon.ammoLeft = currentWeapon.magSize;
+        animator.ResetTrigger("Shoot");
         reloading = false;
     }
 
