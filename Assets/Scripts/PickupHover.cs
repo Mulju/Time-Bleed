@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lerpperi : MonoBehaviour
+public class PickupHover : MonoBehaviour
 {
     public Transform positionA;
     public Transform positionB;
@@ -12,9 +12,11 @@ public class Lerpperi : MonoBehaviour
     private float startTime;
     private float journeyLength;
 
+    public int startMultiplier;
+
     void Start()
     {
-        startTime = Time.time;
+        startTime = Time.time * startMultiplier;
         journeyLength = Vector3.Distance(positionA.position, positionB.position);
     }
 

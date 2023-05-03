@@ -14,30 +14,8 @@ public class ChronadePackController : NetworkBehaviour
     [SerializeField] private Transform rotator, r1, r2, r3;
     private float rotation, rot123;
 
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-        if(base.IsServer)
-        {
-            // Listen only on server to avoid useless event calls
-            //MatchManager.matchManager.OnStartMoveChronadePack += MoveChronadeSpawn;
-        }
-
-        // Näytä hieno light beam jos on iso
-        if(isBig)
-        {
-            //beamEffect.Play();
-        }
-    }
-
-    public override void OnStopClient()
-    {
-        base.OnStopClient();
-        if(base.IsServer)
-        {
-            //MatchManager.matchManager.OnStartMoveChronadePack -= MoveChronadeSpawn;
-        }
-    }
+    [SerializeField] private PickupHover pickUpHover;
+    [SerializeField] private Transform ogPosition;
 
     private void Update()
     {
@@ -45,8 +23,12 @@ public class ChronadePackController : NetworkBehaviour
 
         rotator.transform.eulerAngles = new Vector3(0, rotation, 0);
 
+        pickUpHover.enabled = true;
+
         if(isBig)
         {
+            transform.position = ogPosition.position;
+            pickUpHover.enabled = false;
             rot123 -= Time.deltaTime * 150f;
             r1.transform.eulerAngles = new Vector3(0, rot123, 0);
             r2.transform.eulerAngles = new Vector3(0, rot123, 0);
@@ -86,16 +68,9 @@ public class ChronadePackController : NetworkBehaviour
     IEnumerator RespawnChronadePack()
     {
         yield return new WaitForSeconds(respawnTime);
-        MoveChronadeSpawn(true);
         ShowChronadePack();
         this.GetComponent<Collider>().enabled = true;
 
-    }
-
-    [ObserversRpc]
-    public void MoveChronadeSpawn(bool smth)
-    {
-        //transform.position = MatchManager.matchManager.nextChronadeSpawn.position;
     }
 
     [ObserversRpc]
