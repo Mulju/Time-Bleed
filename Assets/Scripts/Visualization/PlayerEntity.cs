@@ -119,6 +119,7 @@ public class PlayerEntity : NetworkBehaviour
 
     [SerializeField] private Material redTeamMaterial;
     [SerializeField] private Material greenTeamMaterial;
+    [SerializeField] private Material clientTimeFieldMaterial;
     [SerializeField] private GameObject armorMesh;
 
     [SerializeField] private GameObject bodyMesh;
@@ -176,6 +177,7 @@ public class PlayerEntity : NetworkBehaviour
         // Only run if you are the owner of this object. Skip for all other player entities in the scene.
         if (base.IsOwner)
         {
+            timeField.GetComponent<MeshRenderer>().material = clientTimeFieldMaterial;
             // Sis�lt��k� "player" nyt kopion "playerData"sta, vai onko se referenssi t�h�n? Vanha syntaksi alla
             //Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
 
@@ -388,7 +390,7 @@ public class PlayerEntity : NetworkBehaviour
         {
             timeFieldIsOn = !timeFieldIsOn;
             TimeFieldServer(timeFieldIsOn);
-            if(timeFieldIsOn)
+            if (timeFieldIsOn)
             {
                 menuControl.fieldHover.enabled = true;
             }
@@ -550,7 +552,7 @@ public class PlayerEntity : NetworkBehaviour
 
     public void UpdateTimeResourceSpendingMultiplier(int losingTeam)
     {
-        if(base.IsOwner)
+        if (base.IsOwner)
         {
             if (losingTeam == ownTeamTag)
             {
@@ -639,7 +641,7 @@ public class PlayerEntity : NetworkBehaviour
             armorAnimator.SetTrigger("Jump");
 
             StartCoroutine(ResetTriggers());
-        } 
+        }
 
         if (reload)
         {
@@ -895,7 +897,7 @@ public class PlayerEntity : NetworkBehaviour
     public void Move()
     {
         menuControl.dashHover.enabled = false;
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             // Show image if pressing shift
             menuControl.dashHover.enabled = true;
@@ -990,7 +992,7 @@ public class PlayerEntity : NetworkBehaviour
     [ObserversRpc]
     public void ShowDashTrail()
     {
-        if(!base.IsOwner)
+        if (!base.IsOwner)
         {
             // Don't show dash thingy to yourself
             Instantiate(ownTeamTag == 0 ? redDashTrail : greenDashTrail, gameObject.transform);
