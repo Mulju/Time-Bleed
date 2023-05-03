@@ -348,10 +348,11 @@ public class PlayerManager : NetworkBehaviour
 
         // Reset the scoreboards
         UpdateScoreboard();
-        /*
+        
         uiControl.UpdateUIKillsServer(true, 0);
         uiControl.UpdateUIKillsServer(true, 1);
         
+        /*
         // Destroy all ammos left in the scene. Can't use a foreach as we're changing the array at run time
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("Ammo");
         int length = bullets.Length;
