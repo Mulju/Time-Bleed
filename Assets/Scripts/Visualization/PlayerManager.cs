@@ -55,8 +55,6 @@ public class PlayerManager : NetworkBehaviour
 
     [SerializeField] private PlayerUIControl uiControl;
 
-    [SerializeField] private bool matchStarted = false;
-
     private void Awake()
     {
         instance = this;
@@ -319,7 +317,7 @@ public class PlayerManager : NetworkBehaviour
         {
             if (pair.Value.teamTag == 0)
             {
-                RespawnPlayer(pair.Value.connection, pair.Value.playerObject, redIndex, 0);
+                RespawnPlayer(pair.Value.connection, pair.Value.playerObject, redIndex, 0, true);
                 redIndex++;
                 if (redIndex == 4)
                 {
@@ -328,7 +326,7 @@ public class PlayerManager : NetworkBehaviour
             }
             else
             {
-                RespawnPlayer(pair.Value.connection, pair.Value.playerObject, greenIndex, 1);
+                RespawnPlayer(pair.Value.connection, pair.Value.playerObject, greenIndex, 1, true);
                 greenIndex++;
                 if (greenIndex == 4)
                 {
@@ -549,12 +547,10 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    IEnumerator DeathCam(GameObject player, int spawn, int teamTag)
+    IEnumerator DeathCam(GameObject player, int spawn, int teamTag, bool matchStart = false)
     {
-        if (!matchStarted)
+        if (!matchStart)
         {
-            matchStarted = true;
-
             SkinnedMeshRenderer[] meshes = player.GetComponent<PlayerEntity>().playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
 
             foreach (SkinnedMeshRenderer mesh in meshes)
@@ -605,9 +601,9 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [TargetRpc]
-    void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn, int teamTag)
+    void RespawnPlayer(NetworkConnection conn, GameObject player, int spawn, int teamTag, bool matchStart = false)
     {
-        StartCoroutine(DeathCam(player, spawn, teamTag));
+        StartCoroutine(DeathCam(player, spawn, teamTag, matchStart));
     }
 
     [TargetRpc]
