@@ -265,10 +265,6 @@ public class MatchManager : NetworkBehaviour
                 playerManager.AllClientsPlayChronadeSpawnChange();
             }
         }
-        else
-        {
-            playerManager.AllClientsPlayChronadeSpawnChange();
-        }
 
         ChangeBigChronadeSpawn(redKills, totalKills);
 
