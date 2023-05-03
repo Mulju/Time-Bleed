@@ -15,7 +15,8 @@ public class SoundControl : MonoBehaviour
     [SerializeField] private PlayerEntity playerEntity;
     [SerializeField]
     private AudioClip menuMove, menuSelect, gunShoot, bulletHitWall, bulletHitBubble, timeBindExplosion, chronadeSound,
-        playerDamageSound, playerHitSound, fragGrenadeSound, clockTick, oneMinute, fiveMinutes, chronadeSpawnMoved, underAttack, footstepSound;
+        playerDamageSound, playerHitSound, fragGrenadeSound, clockTick, oneMinute, fiveMinutes, chronadeSpawnMoved, underAttack, footstepSound,
+        chronoPickuUpSound, healthPickUpSound;
     private List<int> usedSongs = new List<int>();
     private float globalPitch = 1;
     private float globalVolume = 0.02f;
@@ -126,6 +127,18 @@ public class SoundControl : MonoBehaviour
     {
         float volume = 1f;
         PlaySound(chronadeSpawnMoved, volume, globalPitch);
+    }
+
+    public void PlayChronadePickup()
+    {
+        float volume = 0.5f;
+        PlaySound(chronoPickuUpSound, volume, globalPitch);
+    }
+
+    public void PlayHealthPickup()
+    {
+        float volume = 1f;
+        PlaySound(healthPickUpSound, volume, globalPitch);
     }
 
     IEnumerator AttenboroughCooldown()

@@ -33,7 +33,7 @@ public class ChronoGrenade : MonoBehaviour
 
         if (timer >= 2f)
         {
-            
+
 
             gameObject.GetComponent<Renderer>().material.color = new Color(gameObject.GetComponent<Renderer>().material.color.r,
                                                                            gameObject.GetComponent<Renderer>().material.color.g,
@@ -55,7 +55,7 @@ public class ChronoGrenade : MonoBehaviour
 
                 Destroy(this.gameObject, 5);
             }
-            
+
 
             // gameObject.GetComponent<SphereCollider>().radius += 0.1f;
         }
@@ -63,17 +63,17 @@ public class ChronoGrenade : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if(col.CompareTag("TimeSphere") && (teamTag != col.gameObject.GetComponent<TimeSphere>().teamTag || !col.gameObject.GetComponent<TimeSphere>().isTimeBind))
+        if (col.CompareTag("TimeSphere") && (teamTag != col.gameObject.GetComponent<TimeSphere>().teamTag || !col.gameObject.GetComponent<TimeSphere>().isTimeBind))
         {
             //Debug.Log("OwnerID: " + ownerID + "\nColliderID: " + col.transform.parent.GetInstanceID() + "\nUpdateID: " + updateID);
-            if(ownerObject == col.transform.parent?.gameObject || 
+            if (ownerObject == col.transform.parent?.gameObject ||
                 ownerObject.GetComponent<PlayerEntity>().ownTeamTag == col.transform.parent?.GetComponent<PlayerEntity>()?.ownTeamTag)
             {
                 // Did we hit the players own or a teammates timesphere?
                 return;
             }
 
-            if(col.GetComponent<TimeSphere>().isTimeField)
+            if (col.GetComponent<TimeSphere>().isTimeField)
             {
                 // Is a players time field, reduce the time resource to 0
                 col.transform.parent.GetComponent<PlayerEntity>().StartReducingResource();
@@ -93,7 +93,7 @@ public class ChronoGrenade : MonoBehaviour
             trail2.emitting = false;
 
 
-            // Tee joku hieno animaatio tässä
+            // Tee joku hieno animaatio tï¿½ssï¿½
             ParticleSystem instantiatedEffect = Instantiate(chronadeEffect, transform.position, Quaternion.identity);
             instantiatedEffect.Play();
             Destroy(instantiatedEffect, animationLength);
