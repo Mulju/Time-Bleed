@@ -55,6 +55,8 @@ public class PlayerManager : NetworkBehaviour
 
     [SerializeField] private PlayerUIControl uiControl;
 
+    [SerializeField] private bool matchStarted = false;
+
     private void Awake()
     {
         instance = this;
@@ -549,24 +551,29 @@ public class PlayerManager : NetworkBehaviour
 
     IEnumerator DeathCam(GameObject player, int spawn, int teamTag)
     {
-        SkinnedMeshRenderer[] meshes = player.GetComponent<PlayerEntity>().playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-        foreach (SkinnedMeshRenderer mesh in meshes)
+        if (!matchStarted)
         {
-            mesh.renderingLayerMask = 1;
+            matchStarted = true;
+
+            SkinnedMeshRenderer[] meshes = player.GetComponent<PlayerEntity>().playerMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                mesh.renderingLayerMask = 1;
+            }
+
+            PlayerEntity playerEntity = player.GetComponent<PlayerEntity>();
+            playerEntity.ArmorInvisibleServer();
+            playerEntity.BodyVisibleServer();
+            playerEntity.RigidbodyNotKinematicServer();
+            playerEntity.currentWeaponAnimationsPrefab.SetActive(true);
+
+            playerEntity.isAlive = false;
+
+            yield return new WaitForSeconds(5f);
+
+            playerEntity.isAlive = true;
         }
-
-        player.GetComponent<PlayerEntity>().ArmorInvisibleServer();
-        player.GetComponent<PlayerEntity>().BodyVisibleServer();
-        player.GetComponent<PlayerEntity>().RigidbodyNotKinematicServer();
-
-        player.GetComponent<PlayerEntity>().currentWeaponAnimationsPrefab.SetActive(true);
-
-        player.GetComponent<PlayerEntity>().isAlive = false;
-
-        yield return new WaitForSeconds(5f);
-
-        player.GetComponent<PlayerEntity>().isAlive = true;
 
         PlayerReset(player, spawn, teamTag);
     }
