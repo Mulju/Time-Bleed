@@ -119,7 +119,6 @@ public class PlayerEntity : NetworkBehaviour
 
     [SerializeField] private Material redTeamMaterial;
     [SerializeField] private Material greenTeamMaterial;
-    [SerializeField] private Material clientTimeFieldMaterial;
     [SerializeField] private GameObject armorMesh;
 
     [SerializeField] private GameObject bodyMesh;
@@ -177,7 +176,8 @@ public class PlayerEntity : NetworkBehaviour
         // Only run if you are the owner of this object. Skip for all other player entities in the scene.
         if (base.IsOwner)
         {
-            timeField.GetComponent<MeshRenderer>().material = clientTimeFieldMaterial;
+            // reduce alpha
+            timeField.GetComponent<MeshRenderer>().material.color = new Color(timeField.GetComponent<MeshRenderer>().material.color.r, timeField.GetComponent<MeshRenderer>().material.color.g, timeField.GetComponent<MeshRenderer>().material.color.b, 0.1f);
             // Sis�lt��k� "player" nyt kopion "playerData"sta, vai onko se referenssi t�h�n? Vanha syntaksi alla
             //Data.Player player = new Data.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner };
 
