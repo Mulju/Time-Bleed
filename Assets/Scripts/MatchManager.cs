@@ -250,15 +250,18 @@ public class MatchManager : NetworkBehaviour
             // Check if the Chronade spawn is going to move this frame
             if(redKills / totalKills < 0.4f && !(oldRedKills / oldKillsRatio < 0.4f))
             {
+                Debug.Log("Green");
                 playerManager.AllClientsPlayChronadeSpawnChange();
             }
             else if((redKills / totalKills > 0.4f && redKills / totalKills < 0.6f) && 
                 !(oldRedKills / oldKillsRatio > 0.4f && oldRedKills / oldKillsRatio < 0.6f))
             {
+                Debug.Log("Middle");
                 playerManager.AllClientsPlayChronadeSpawnChange();
             }
             else if(redKills / totalKills > 0.6f && !(oldRedKills / oldKillsRatio > 0.6f))
             {
+                Debug.Log("Red");
                 playerManager.AllClientsPlayChronadeSpawnChange();
             }
         }
