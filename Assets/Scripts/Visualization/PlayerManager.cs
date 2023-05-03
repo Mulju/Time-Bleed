@@ -355,7 +355,7 @@ public class PlayerManager : NetworkBehaviour
         // Destroy all ammos left in the scene. Can't use a foreach as we're changing the array at run time
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("Ammo");
         int length = bullets.Length;
-        for(int i = 0; i < length; i++)
+        for (int i = 0; i < length; i++)
         {
             Destroy(bullets[i]);
         }
@@ -617,6 +617,8 @@ public class PlayerManager : NetworkBehaviour
     {
         int playerID = player.GetInstanceID();
 
+        player.GetComponent<PlayerEntity>().soundControl.PlayHealthPickup();
+
         if (players[playerID].health < maxHealth)
         {
             players[playerID].health += 40;
@@ -650,6 +652,7 @@ public class PlayerManager : NetworkBehaviour
                 player.GetComponent<PlayerEntity>().amountOfChronades = 3;
             }
         }
+        player.GetComponent<PlayerEntity>().soundControl.PlayChronadePickup();
     }
 
     [TargetRpc]
