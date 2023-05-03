@@ -596,8 +596,6 @@ MonoBehaviour:
     type: 3}
   redTeamMaterial: {fileID: 2100000, guid: 4399fb8409b6a664d95cf35fafc8c1fd, type: 2}
   greenTeamMaterial: {fileID: 2100000, guid: f56ba82efef584341806ee1a36275b87, type: 2}
-  clientTimeFieldMaterial: {fileID: 2100000, guid: f06b3226c528efa419ad8c0410067d3a,
-    type: 2}
   armorMesh: {fileID: 829326742971908444}
   bodyMesh: {fileID: 5788562537899422256}
   ownTeamTag: 0
@@ -618,6 +616,8 @@ MonoBehaviour:
     type: 3}
   greenDashTrail: {fileID: 7084719865550816100, guid: e5dce40d62ce2a64ab597117efff0ce3,
     type: 3}
+  regResourceColor: {r: 0.9607844, g: 0.7490196, b: 0.3254902, a: 0}
+  resModifierColor: {r: 0.49803925, g: 0.83921576, b: 0.98823535, a: 0}
 --- !u!1 &832002410115213892
 GameObject:
   m_ObjectHideFlags: 0

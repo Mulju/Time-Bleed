@@ -152,6 +152,9 @@ public class PlayerEntity : NetworkBehaviour
 
     [SerializeField] private GameObject redDashTrail, greenDashTrail;
 
+    public Color regResourceColor, resModifierColor;
+    private Image sliderFill;
+
     public override void OnStartClient()
     {
         // This function is run on all player entities in the scene. Depending on is the user the owner of that object or the server,
@@ -187,6 +190,7 @@ public class PlayerEntity : NetworkBehaviour
             playerCamera.GetComponent<CameraFollow>().target = transform;
 
             resourceSlider = GameObject.FindGameObjectWithTag("ResourceSlider").GetComponent<Slider>();
+            sliderFill = GameObject.FindGameObjectWithTag("SliderFill").GetComponent<Image>();
             TimeFieldServer(timeFieldIsOn);
 
             weaponDictionary = new WeaponDictionary();
@@ -557,10 +561,14 @@ public class PlayerEntity : NetworkBehaviour
             if (losingTeam == ownTeamTag)
             {
                 timeResourceSpendingMultiplier = 0.5f;
+
+                // Efekti UIhin
+                sliderFill.color = resModifierColor;
             }
             else
             {
                 timeResourceSpendingMultiplier = 1f;
+                sliderFill.color = regResourceColor;
             }
         }
     }
