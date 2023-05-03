@@ -25,7 +25,7 @@ public class ChronadePackController : NetworkBehaviour
 
         pickUpHover.enabled = true;
 
-        if(isBig)
+        if (isBig)
         {
             transform.position = ogPosition.position;
             pickUpHover.enabled = false;
@@ -56,9 +56,9 @@ public class ChronadePackController : NetworkBehaviour
     void HideChronadePack()
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
-        
+
         // Stop the cool light beam
-        if(isBig)
+        if (isBig)
         {
             beamEffect.Stop();
             triplePack.SetActive(false);
@@ -77,7 +77,7 @@ public class ChronadePackController : NetworkBehaviour
     void ShowChronadePack()
     {
         // Play cool light beam animation
-        if(isBig)
+        if (isBig)
         {
             beamEffect.Play();
             triplePack.SetActive(true);
