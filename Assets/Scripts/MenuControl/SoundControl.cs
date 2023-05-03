@@ -137,7 +137,7 @@ public class SoundControl : MonoBehaviour
 
     public void PlayHealthPickup()
     {
-        float volume = 1f;
+        float volume = 2f;
         PlaySound(healthPickUpSound, volume, globalPitch);
     }
 
