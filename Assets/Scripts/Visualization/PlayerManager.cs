@@ -664,7 +664,11 @@ public class PlayerManager : NetworkBehaviour
                 player.GetComponent<PlayerEntity>().amountOfChronades = 3;
             }
         }
-        ClientPlayChronadePickupSound(players[player.GetInstanceID()].connection, player);
+
+        if (base.IsServer)
+        {
+            ClientPlayChronadePickupSound(players[player.GetInstanceID()].connection, player);
+        }
     }
 
     [TargetRpc]
