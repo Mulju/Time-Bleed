@@ -1160,7 +1160,6 @@ public class PlayerEntity : NetworkBehaviour
                 {
                     hit.collider.GetComponent<PlayerLegs>().player.GetComponent<PlayerEntity>().ShowDamageDirection(hit.collider.GetComponent<PlayerLegs>().player.gameObject, direction);
                 }
-                
             }
             else if (!hit.collider.gameObject.CompareTag("Player"))
             {
