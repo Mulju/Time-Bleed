@@ -11,6 +11,9 @@ public class ChronadePackController : NetworkBehaviour
     public ParticleSystem beamEffect;
     public GameObject triplePack;
 
+    [SerializeField] private Transform rotator, r1, r2, r3;
+    private float rotation, rot123;
+
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -33,6 +36,21 @@ public class ChronadePackController : NetworkBehaviour
         if(base.IsServer)
         {
             //MatchManager.matchManager.OnStartMoveChronadePack -= MoveChronadeSpawn;
+        }
+    }
+
+    private void Update()
+    {
+        rotation += Time.deltaTime * 150f;
+
+        rotator.transform.eulerAngles = new Vector3(0, rotation, 0);
+
+        if(isBig)
+        {
+            rot123 -= Time.deltaTime * 150f;
+            r1.transform.eulerAngles = new Vector3(0, rot123, 0);
+            r2.transform.eulerAngles = new Vector3(0, rot123, 0);
+            r3.transform.eulerAngles = new Vector3(0, rot123, 0);
         }
     }
 
