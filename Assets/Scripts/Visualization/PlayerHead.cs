@@ -16,7 +16,7 @@ public class PlayerHead : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ammo") && other.TryGetComponent<AmmoController>(out AmmoController ammo) && other.GetComponent<AmmoController>().shooter != player.gameObject)
+        if (other.CompareTag("Ammo") && other.TryGetComponent<AmmoController>(out AmmoController ammo) && other.GetComponent<AmmoController>().teamTag != player.gameObject.GetComponent<PlayerEntity>().ownTeamTag)
         {
             if (base.IsServer)
             {
