@@ -234,7 +234,7 @@ public class MatchManager : NetworkBehaviour
         oldKillsRatio = playerManager.redKills + playerManager.greenKills;
         oldRedKills = playerManager.redKills;
 
-        playerManager.TotalKills();
+        playerManager.TotalKills(killerTeamTag);
         float redKills = playerManager.redKills, greenKills = playerManager.greenKills, totalKills = redKills + greenKills;
 
         if(totalKills == 0)
@@ -264,6 +264,10 @@ public class MatchManager : NetworkBehaviour
                 Debug.Log("Red");
                 playerManager.AllClientsPlayChronadeSpawnChange();
             }
+        }
+        else
+        {
+            playerManager.AllClientsPlayChronadeSpawnChange();
         }
 
         ChangeBigChronadeSpawn(redKills, totalKills);

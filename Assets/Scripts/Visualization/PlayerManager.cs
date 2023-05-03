@@ -696,7 +696,7 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    public void TotalKills()
+    public void TotalKills(int teamTag)
     {
         redKills = 0;
         greenKills = 0;
@@ -711,6 +711,8 @@ public class PlayerManager : NetworkBehaviour
                 greenKills += pair.Value.kills;
             }
         }
+
+        uiControl.UpdateUIKillsServer(false, teamTag);
     }
 
     public void UpdateScoreboard()
@@ -718,7 +720,7 @@ public class PlayerManager : NetworkBehaviour
         players = players.OrderBy(x => x.Value.stolenTime).ToDictionary(x => x.Key, x => x.Value);
         players = players.Reverse().ToDictionary(x => x.Key, x => x.Value);
 
-        TotalKills();
+        //TotalKills();
         LoopScores(players, redKills, greenKills);
     }
 

@@ -48,7 +48,7 @@ public class PlayerUIControl : NetworkBehaviour
 
     public void UpdateUIKillsServer(bool ïrrelevant, int teamTag)
     {
-        playerManager.TotalKills();
+        //playerManager.TotalKills();
 
         if (teamTag == 0)
         {
