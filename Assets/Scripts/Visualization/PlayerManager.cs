@@ -348,10 +348,10 @@ public class PlayerManager : NetworkBehaviour
 
         // Reset the scoreboards
         UpdateScoreboard();
-
+        /*
         uiControl.UpdateUIKillsServer(true, 0);
         uiControl.UpdateUIKillsServer(true, 1);
-
+        
         // Destroy all ammos left in the scene. Can't use a foreach as we're changing the array at run time
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("Ammo");
         int length = bullets.Length;
@@ -359,7 +359,7 @@ public class PlayerManager : NetworkBehaviour
         {
             Destroy(bullets[i]);
         }
-
+        */
         // After start timer is finished, change match state to in progress. Might not need this. MatchManager's update does this for now.
         // MatchManager.matchManager.currentMatchState = MatchManager.MatchState.IN_PROGRESS;
     }
