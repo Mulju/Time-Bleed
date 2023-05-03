@@ -884,7 +884,7 @@ public class PlayerEntity : NetworkBehaviour
         }
 
         // Dash
-        if ((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource > 3.9f * timeResourceSpendingMultiplier)
+        if ((Input.GetKey(KeyCode.LeftShift) || isRunning) && dashTimer < dashTime && timeResource > 3.9f * timeResourceSpendingMultiplier && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
         {
             isRunning = true;
             dashTimer += Time.deltaTime;
