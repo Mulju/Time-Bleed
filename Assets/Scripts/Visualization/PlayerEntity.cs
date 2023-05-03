@@ -1231,7 +1231,7 @@ public class PlayerEntity : NetworkBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("TimeSphere") && other.GetComponent<TimeSphere>().isTimeBind && other.GetComponent<TimeSphere>().teamTag != ownTeamTag && (other.transform.parent == null || !other.transform.parent.CompareTag("Player")))
+        if (other.CompareTag("TimeSphere") && (other.GetComponent<TimeSphere>().isTimeBind || other.gameObject.layer != 0) && other.GetComponent<TimeSphere>().teamTag != ownTeamTag && (other.transform.parent == null || !other.transform.parent.CompareTag("Player")))
         {
             timeSlow = 0.25f;
         }
