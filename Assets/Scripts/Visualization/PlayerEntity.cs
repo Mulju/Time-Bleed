@@ -216,7 +216,7 @@ public class PlayerEntity : NetworkBehaviour
             SkinnedMeshRenderer[] armorMeshes = armorMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (SkinnedMeshRenderer mesh in armorMeshes)
             {
-                mesh.renderingLayerMask = 0;
+                mesh.renderingLayerMask = 1;
             }
         }
         else
